@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card" *ngIf="upcomingMeeting">
+            <h5 class="headingValue">Vote of Thanks </h5>
+            <hr>
+
+            <div class="row" style="padding-top: 10px;padding-bottom: 50px;">
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <label class="control-label col-md-2">Meeting Date :</label>
+                        <div class="col-sm-4">
+                            {{upcomingMeeting.meetingDate }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <form [formGroup]="commentsForm">
+                        <label class="control-label">Write Note <span class="text-danger">
+                                *</span></label>
+                        <div class="form-group">
+                            <textarea formControlName="comments" placeholder="Write Note" cols="3" rows="5" class="form-control" [ngClass]="{ 'is-invalid':  submitted && f.comments.errors }"></textarea>
+                            <div *ngIf=" submitted && f.comments.errors" class="invalid-feedback">
+                                <div *ngIf=" submitted && f.comments.errors.required">
+                                    Please Enter Comments
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 text-right" *ngIf="btnDisable">
+                    <button class="globalBtn clearBtn" (click)="commentsForm.reset()">Reset</button>
+                    <button class="globalBtn acceptBtn" style="width:200px" [disabled]="!commentsForm.valid" (click)="commented()">{{buttonName}}</button>&nbsp;
+                </div>
+            </div>
+        </div>
+
+        <!-- //  upcomingMeeting.momStatus !== 'PRESIDENTAUTHENTICATION')  -->
+    </div>
+</div>

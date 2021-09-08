@@ -1,0 +1,278 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row ">
+                <div class="col-md-4">
+                    <h1 class="headingValue">R & D Section Dispatch Dashboard</h1>
+                </div>
+                <div class="col-md-3 text-right">
+                    <button class="globalBtn acceptBtn" data-toggle="modal" data-toggle="modal" data-target="#myModal" style="cursor: pointer;"><span><i></i></span>&nbsp;Print
+                        Address</button>
+                </div>
+                <div class="col-md-5 text-left">
+                    <button class="globalBtn submitBtn" data-toggle="modal" data-toggle="modal" data-target="#sendmail" style="cursor: pointer;"><span><i></i></span>&nbsp;Send Email to
+                        Postal Department</button>
+                </div>
+            </div>
+            <br>
+            <form [formGroup]="searchForm">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>From :</label>
+                        <input type="date" class="form-control" formControlName="fromDate" [max]="today" (change)="selecetdDate($event.target.value)">
+                    </div>
+                    <div class="col-md-3">
+                        <label>To :</label>
+                        <input type="date" class="form-control" formControlName="toDate" [min]="maxDate">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Via :</label>
+                        <select class="custom-select-sm" class="form-control" formControlName="via">
+                            <option value="" disabled selected style="color:orange">Select VIA</option>
+                            <option *ngFor="let ct of viaList" [value]="ct.dispatchViaId">
+                                {{ct.name}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Language :</label>
+                        <select class="custom-select-sm" class="form-control" formControlName="language">
+                            <option value="" disabled selected style="color:orange">Select Language</option>
+                            <option *ngFor="let ct of languagesList" [value]="ct.receiptLanguageId">
+                                {{ct.name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+           
+                    <div class="col-md-3">
+                        <label>Dispatch No :</label>
+                        <input type="text" class="form-control" name="" placeholder="Enter Dispatch No" formControlName="dispatchNo">
+                    </div>
+                    <div class="col-md-4" style="margin-top:35px">
+                        <button class="btn btn-primary acceptBtn" (click)="searchData()">Search</button>
+                        &nbsp;<button class="btn btn-danger clearBtn" (click)="resetData()">Reset</button>
+                    </div>
+                </div>
+            </form>
+            <br>
+
+
+
+            <div style="width: auto;overflow: auto;">
+
+                <div class="row" style="padding-top: 10px;">
+                    <div class="col-md-12">
+                        <div class="table-responsive-sm">
+                            <form [formGroup]="updateForm">
+
+                                <table class="table table-bordered table-hover" style="width:150rem">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th sortable="createdDate" (sort)="onSort($event)" style="width:8%">Date</th>
+                                            <th sortable="dakDispatchFileNos" (sort)="onSort($event)" style="width:15%">File No.</th>
+
+                                            <th sortable="dispatchNumber" (sort)="onSort($event)" style="width:8%">Dispatch No.</th>
+                                            <th sortable="subDispatchNumber" (sort)="onSort($event)">Sub No.</th>
+                                            <th sortable="recipientName" (sort)="onSort($event)">Name</th>
+                                            <th sortable="address" (sort)="onSort($event)" style="width:10%">Address</th>
+                                            <th sortable="dispatch" (sort)="onSort($event)" style="width:10%">Subject</th>
+                                            <th sortable="dispatchVia" (sort)="onSort($event)">Via</th>
+                                            <th sortable="recipientEmailId " (sort)="onSort($event)">Email</th>
+                                            <th sortable="dakStatus" (sort)="onSort($event)">Status</th>
+                                            <th sortable="barCode" (sort)="onSort($event)" style="width:7%">Barcode</th>
+                                            <th sortable="receiptId" (sort)="onSort($event)" style="width:7%">Weight (grm)</th>
+                                            <th>Action</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of dashboardData">
+                                            <td>{{item.createdDate}}</td>
+                                            <td>{{item.dispatch.dakDispatchFileNos !== null ? item.dispatch.dakDispatchFileNos.dakDispatchFileNo : '-'}}
+                                            </td>
+                                            <td>{{item.dispatchNumber}}</td>
+                                            <td>{{item.subDispatchNumber !== null ? item.subDispatchNumber : '-'}}</td>
+                                            <td>{{item.recipientName}}</td>
+                                            <td>{{item.address !== null ? item.address.line1 :'-'}}, {{item.address !== null ? item.address.line2 :'-'}}, {{item.address !== null ? item.address.city :'-'}}, {{item.address !== null ? item.address.state :'-'}},
+                                                {{item.address !== null ? item.address.city :'-'}}, {{item.address !== null ? item.address.zipCode :'-'}}
+                                            </td>
+                                            <td>{{item.dispatch !== null ? item.dispatch.dfaSubject:'-'}}</td>
+
+                                            <td>{{item.dispatchVia !== null ? item.dispatchVia.name :'-'}} </td>
+                                            <td>{{item.recipientEmailId !== null ? item.recipientEmailId:'-'}} </td>
+                                            <td>
+                                                <span class="text-success" style="color: white;">
+                                                    {{item.dakStatus !== null ? item.dakStatus.statusName :'-'}}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span *ngIf="item.barCode===null && item.dispatchVia !== null && item.dispatchVia.name !=='Email' && item.dispatchVia.name !== 'Email & ByHand' && item.dispatchVia.name !== 'Email & Courier' && item.dispatchVia.name !== 'Paper-Courier' && item.dispatchVia.name !== 'Paper-ByHand' && item.dakStatus.statusName !=='Dispatched'">
+                                                    <input type="text"
+                                                        class="form-control" formControlName="barCode"></span>
+                                                <span *ngIf="item.barCode!==null">{{item.barCode}}</span>
+
+                                            </td>
+                                            <td>
+                                                <span *ngIf="item.weight === null  && item.dispatchVia !== null && item.dispatchVia.name !=='Email' && item.dispatchVia.name !== 'Email & ByHand' && item.dispatchVia.name !== 'Email & Courier' && item.dispatchVia.name !== 'Paper-Courier' && item.dispatchVia.name !== 'Paper-ByHand' && item.dakStatus.statusName !=='Dispatched'"><input type="text"
+                                                        class="form-control" formControlName="weight"></span>
+                                                <span *ngIf="item.weight !== null">{{item.weight}}</span>
+                                            </td>
+                                            <td>
+                                                <button *ngIf="item.barCode===null && item.weight === null && item.dispatchVia !== null && item.dispatchVia.name !=='Email'&& item.dakStatus.statusName !=='Dispatched'" class="globalBtn acceptBtn" (click)="updateBarcode(item.dispatchRecipientDetailId)">Update</button>
+                                                <!-- [disabled]="updateForm.invalid" -->
+                                                <span *ngIf="item.barCode!==null && item.weight !== null">-</span>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="dashboardData.length === 0">
+                                            <td colspan="13" style="text-align: center;padding: 50px !important;">No Data Available in Table</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+
+                            <!--   <div class="col-md-12 text-right" *ngIf="responsePageCount>1">
+                            <ul class="pagination float-right">
+                                <li class="page-item hoverActive"><a class="page-link " [class.my-class]="pageId === 0"
+                                        (click)="previ()"><i class="fas fa-chevron-left"> </i></a></li>
+                                <li class="page-item"><a class="page-link">{{pageId+1}}/{{responsePageCount}}</a>
+                                </li>
+                                <li class="page-item hoverActive"><a class="page-link"
+                                        [class.my-class]="pageId+1 === responsePageCount" (click)="next()"><i
+                                            class="fas fa-chevron-right"></i></a></li>
+                            </ul>
+                        </div> -->
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <br>
+            <div class="col-md-12 text-right" *ngIf="pageCount>1">
+                <ul class="pagination float-right">
+                    <li class="page-item hoverActive"><a class="page-link " [class.my-class]="rowId === 0" (click)="prev()"><i class="fas fa-chevron-left"> </i></a></li>
+                    <li class="page-item"><a class="page-link">{{rowId+1}}/{{pageCount}}</a></li>
+                    <li class="page-item hoverActive"><a class="page-link" [class.my-class]="rowId+1 === pageCount" (click)="next()"><i
+                                    class="fas fa-chevron-right"></i></a></li>
+                </ul>
+            </div>
+
+
+
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <form [formGroup]="printAddress">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Print Address</h4>
+
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row" style="margin-bottom: 10px">
+                                    <div class="col-md-5">
+                                        <label>Enter Dispatch No <span class="text-danger">*</span></label></div>
+                                    <div class="col-md-7"> <input type="text" name="" class="form-control" formControlName="dispatchNumber" placeholder="Enter Dispatch No"></div>
+                                </div>
+                                <div *ngIf="printAddress.controls['dispatchNumber'].hasError('pattern')" class="failed-validation" class="errorColor">
+                                    Please Enter the Valid Dispatch Number
+                                </div>
+                                <div class="row" style="margin-bottom: 10px">
+                                    <div class="col-md-5">
+                                        <label>Select Language <span class="text-danger">*</span></label></div>
+                                    <div class="col-md-7">
+                                        <select class="custom-select-sm" class="form-control" formControlName="language">
+                                        <option value="" disabled selected style="color:orange">Select Language</option>
+                                        <option *ngFor="let ct of staticLanguage" [value]="ct.receiptLanguageId">
+                                            {{ct.name}}
+                                        </option>
+                                    </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" (click)="printAddresses()">Print</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            <!-- </div> -->
+            <!-- </div> -->
+
+            <div class="modal fade" id="sendmail" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <form [formGroup]="postalForm">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Send Email to Postal Department</h4>
+
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="row" style="margin-bottom: 10px">
+                                    <div class="col-md-5">
+                                        <label>Enter Dispatch No <span class="text-danger">*</span></label></div>
+                                    <div class="col-md-7"> <input type="text" name="" class="form-control" formControlName="dispatchNumber" placeholder="Enter Dispatch No"></div>
+                                </div>
+
+                                <!-- <div class="col-md-4">
+                                    <label>Language</label>
+                                    <select class="custom-select-sm" class="form-control" formControlName="language">
+                                        <option value="" disabled selected style="color:orange">Select Language</option>
+                                        <option *ngFor="let ct of staticLanguage" [value]="ct.receiptLanguageId">
+                                            {{ct.name}}
+                                        </option>
+                                    </select>
+                                </div> -->
+
+
+                                <!-- Static data -->
+                                <div class="row" style="margin-bottom: 10px">
+                                    <div class="col-md-5">
+                                        <label>Select Language <span class="text-danger">*</span></label></div>
+                                    <div class="col-md-7"> <select class="form-control" formControlName="language">
+                                            <option value="" disabled selected style="color:orange">Select Language
+                                            </option>
+                                            <option *ngFor="let ct of staticLanguage" [value]="ct.receiptLanguageId">
+                                                {{ct.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- <div class="row" style="margin-bottom: 10px">
+                                    <div class="col-md-5">
+                                        <label>Select Language <span class="text-danger">*</span></label></div>
+                                    <div class="col-md-7"> <select class="form-control" formControlName="language">
+                                            <option value="" disabled selected>Select Language</option>
+                                            <option>English</option>
+                                            <option>Hindi</option>
+
+                                        </select>
+                                    </div>
+                                </div> -->
+                            </div>
+
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" data-dismiss="modal" (click)="sendEmailtoPostal()">Send</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

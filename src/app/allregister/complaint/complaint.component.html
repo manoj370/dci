@@ -1,0 +1,184 @@
+<header>
+    <img src="./assets/login-header.jpg" style="width: 100%;">
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <h5 class="headingValue">Create Your DCI Account</h5>
+            </div>
+            <!-- <div class="col-md-6 text-right">
+                <button class="globalBtn clearBtn" routerLink="../login">Back</button>
+            </div> -->
+        </div>
+        <hr>
+    </div>
+</header>
+<div class="container h-100" style="background: #eee;padding: 15px;">
+    <div class="row">
+        <div class="col-md-12 p-0">
+            <div class="card">
+                <form id="register-form" role="form" action="submitComplaint" method="post" autocomplete="off" class="has-validation-callback">
+							<div class="bt-tab-content-main">
+								
+								<ul class="nav nav-tabs" role="tablist" id="myTabs">
+									<li role="presentation" class="active"> <h5 style="color: blue">Register as Complainant </h5>&nbsp;</li>
+									<!-- <li role="presentation" class="active"> <select class="form-control">
+                                            <option value="" disabled >Select Type</option>
+                                            <option selected>
+                                                Grievance</option>
+                                                <option>Anti Ragging</option>
+                                        </select></li> -->
+
+
+								</ul>
+
+								<div class="tab-content" style="margin-top: 15px">
+									<div id="signin">
+										<div class="row">
+											<div class="col-md-4">
+												<div class="form-group">
+													<label for="grivFirstName" class="required">First Name <span
+                                                    class="text-danger">*</span></label>
+													
+													
+													
+													
+													<input id="grivFirstName" name="grivFirstName" tabindex="1" placeholder="First Name"  type="text" class="form-control" maxlen="20" value="">
+												</div>
+											</div>
+
+											<div class="col-md-4">
+												<label for="state" class="notrequired">Middle Name  <span
+                                                    class="text-danger">*</span></label>
+												<input id="grivMiddleName" name="grivMiddleName" tabindex="2" placeholder="Middle Name" type="text" class="form-control" maxlen="20" value="">
+
+											</div>
+											<div class="form-group col-md-4">
+												<label for="grivLastName" class="required">Last Name  <span
+                                                    class="text-danger">*</span></label>
+												<input id="grivLastName" name="grivLastName" tabindex="3" placeholder="Last Name" type="text" class="form-control" maxlen="20" value="">
+											</div>
+
+										</div>
+										<div class="row">
+
+											<div class="form-group col-md-4">
+												<label for="state" class="required">Email Address <span
+                                                    class="text-danger">*</span></label>
+								<input id="grivEmail" name="grivEmail"  placeholder="Email Address" type="text" class="form-control" value="">
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label for="ethicAddressLine1" class="required">Password  <span
+                                                    class="text-danger">*</span></label>
+													
+													
+													<input placeholder="Password" class="form-control" type="password" value="">
+												</div>
+
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label for="ethicAddressLine1" class="required">Confirm Password  <span
+                                                    class="text-danger">*</span></label>
+													
+													
+													<input placeholder="Confirm Password" class="form-control" type="password" value="">
+												</div>
+
+											</div>
+										</div>
+										<div class="row">
+											
+											<div class="col-md-4">
+												<div class="form-group">
+													  <label for="phoneNo" class="required">Phone Number  <span
+                                                    class="text-danger">*</span></label>
+													<input type="text" class="form-control" id="phoneNo"  placeholder="Phone Number"
+                                                maxlength="10">
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													  <label class="required">Address Line 1 <span
+                                                    class="text-danger">*</span></label>
+													<input type="text" class="form-control" placeholder="Address Line 1" formControlName="addressline1">
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													  <label class="required">Address Line 2 <span
+                                                    class="text-danger">*</span></label>
+													<input type="text" class="form-control" placeholder="Address Line 2" formControlName="addressline1">
+												</div>
+											</div>
+										</div>
+									
+										<div class="row">
+											<div class="col-md-4">
+												<div class="form-group" tabindex="1">
+													<label for="ethicCountry" class="required">Country  <span
+                                                    class="text-danger">*</span></label>
+                                                    <select class="form-control">
+                                            <option value="" disabled selected>Select Country</option>
+                                            <option>
+                                                India</option>
+                                        </select>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group" tabindex="1">
+													<label for="state" class="required">State <span
+                                                    class="text-danger">*</span></label>
+                                                     <select class="form-control">
+                                            <option value="" disabled selected>Select State</option>
+                                            <option>
+                                                Andhra Pradesh</option>
+                                                <option>
+                                                Telengana</option>
+                                        </select>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group" tabindex="1">
+													<label for="state" class="required">City <span
+                                                    class="text-danger">*</span></label>
+                                                     <select class="form-control">
+                                            <option value="" disabled selected>Select City</option>
+                                            <option>
+                                                Hyderabad</option>
+                                                <option>
+                                                Vijaywada</option>
+                                        </select>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-4">
+												<label for="grivZipCode" class="required">PIN Code <span
+                                                    class="text-danger">*</span></label>
+													<input id="grivZipCode" name="grivZipCode" placeholder="PIN Code" class="form-control" type="text" value="">
+												
+											</div>
+										
+										</div>
+										<div class="row">
+											<div class="col-md-12 ">
+											
+											<button type="submit"  class="btn btn-danger" style="float: right;">
+												Cancel
+											</button>&nbsp;
+											<button type="submit" id="grSubmit" class="btn btn-success" style="float: right; margin-right: 5px">
+												Submit
+											</button>&nbsp;&nbsp;&nbsp;
+											</div>
+										</div>
+
+									</div>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+						</form>
+            </div>
+        </div>
+    </div>
+</div>

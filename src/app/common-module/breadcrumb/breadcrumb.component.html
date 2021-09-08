@@ -1,0 +1,447 @@
+<!-- User Management /internalApp/userCreation -->
+<ul class="breadcrumb" *ngIf="displayName==='System Admin'">
+    <li><a routerLink="dashboard">Home</a></li>
+    <li *ngIf="(router.url.includes('usrmgt/internalApp'))">
+        <a routerLink="usrmgt/internalApp" routerLinkActive="active">User Management Dashboard</a>
+    </li>
+    <li *ngIf="(router.url.includes('usrmgt/internalApp/userCreation;key'))">
+        <a>Edit User</a>
+    </li>
+    <li *ngIf="(router.url===('/main/internal/usrmgt/internalApp/userCreation'))">
+        <a>User Creation</a>
+    </li>
+</ul>
+
+<!-- grievance -->
+
+<!--Complainant -->
+<ul class="breadcrumb" *ngIf="(router.url.includes('greviance/complaint/')) &&  displayName==='ARPMComplainant'">
+    <li><a routerLink="dashboard">Home</a></li>
+    <li *ngIf="(router.url.includes('greviance/complaint/new'))">
+        <a routerLink="greviance/complaint/new" routerLinkActive="active">Create New</a>
+    </li>
+    <li *ngIf="(router.url.includes('greviance/complaint/dashboard'))">
+        <a routerLink="greviance/complaint/dashboard" routerLinkActive="active">My Grievance Status</a>
+    </li>
+    <li *ngIf="(router.url.includes('greviance/complaint/dashboard/compView'))">
+        <a routerLinkActive="active">Complaint View</a>
+    </li>
+</ul>
+<!-- section head  -->
+<ul class="breadcrumb" *ngIf="(router.url.includes('greviance/secHead/')) && displayName==='ARPMSecInCharge'">
+    <li><a routerLink="dashboard">Home</a></li>
+    <li *ngIf="(router.url.includes('greviance/secHead'))">
+        <a routerLink="greviance/secHead/dashboard">Grievance Dashboard</a>
+    </li>
+    <li *ngIf="(router.url.includes('greviance/secHead/compView'))">
+        <a>Complaint View</a>
+    </li>
+    <li *ngIf="(router.url.includes('greviance/secHead/history'))">
+        <a>Complaint Process History</a>
+    </li>
+    <li *ngIf="(router.url.includes('greviance/secHead/agendaList'))">
+        <a routerLink="greviance/secHead/agendaList">Agenda List</a>
+    </li>
+    <li *ngIf="(router.url.includes('greviance/secHead/agendaList/viewAgenda'))">
+        <a>Agenda View</a>
+    </li>
+</ul>
+
+<!-- EC Module  -->
+<ul class="breadcrumb" *ngIf="(router.url.includes('excu/sectionHead/')) && displayName==='ARPMSecInCharge'">
+    <li><a routerLink="dashboard">Home</a></li>
+    <li *ngIf="(router.url.includes('excu/sectionHead/sectionDashboard'))">
+        <a>Dashboard</a>
+    </li>
+    <li *ngIf="(router.url.includes('/excu/sectionHead/viewAgend'))">
+        <a>Agenda View</a>
+    </li>
+</ul>
+
+<!--  section Excutive  -->
+<ul class="breadcrumb" *ngIf="(router.url.includes('greviance/secExc/')) && displayName==='ARPMSecExecutive'">
+    <li><a routerLink="dashboard">Home</a></li>
+    <li *ngIf="(router.url.includes('greviance/secExc'))">
+        <a routerLink="greviance/secExc/dashboard" routerLinkActive="active">Grievance Dashboard</a>
+    </li>
+    <li *ngIf="(router.url.includes('greviance/secExc/compView'))">
+        <a>Complaint View</a>
+    </li>
+</ul>
+<!-- subcommittee  greviance/subCom-->
+<ul class="breadcrumb" *ngIf="(router.url.includes('greviance/subCom/')) &&displayName==='ARPMSubCommittee'">
+    <li><a routerLink="dashboard">Home</a></li>
+    <li *ngIf="(router.url.includes('greviance/subCom'))">
+        <a routerLink="greviance/subCom/dashboard" routerLinkActive="active">Agenda Dashboard</a>
+    </li>
+    <li *ngIf="(router.url.includes('greviance/subCom/agenda'))">
+        <a>Agenda View</a>
+    </li>
+</ul>
+
+
+<!-- Executive Committee  -->
+<ul class="breadcrumb" *ngIf="(router.url.includes('excu/ec/') && displayName==='Executive Committee')">
+    <li><a routerLink="dashboard">Home</a></li>
+    <li *ngIf="(router.url.includes('excu/ec/dashboard'))">
+        <a>Dashboard</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/ec/searchagenda'))">
+        <a>Search Decision</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/ec/ecagenda'))">
+        <a>Agenda List</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/ec/downloadmeeting'))">
+        <a>Print/Download</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/ec/conductmeeting'))">
+        <a>Conduct Meeting</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/ec/noterecordapologies'))">
+        <a>Note & Record Apologies</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/ec/arplmatter'))">
+        <a>ARPL Matter</a>
+    </li>
+    <!-- arplmatter -->
+    <li *ngIf="(router.url.includes('excu/ec/confirminutes'))">
+        <a>Confirm Minutes Meeting</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/ec/actiontaken'))">
+        <a>Action Taken On Meeting</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/ec/policymatter'))">
+        <a>Policy Matters</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/ec/academicmatter'))">
+        <a>Academic Matters</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/ec/ARPMmatter'))">
+        <a>ARPM Matters</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/ec/administrationmatter'))">
+        <a>Administration Matters</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/ec/accfinancematter'))">
+        <a>A&F Matters</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/ec/legalpublicmatter'))">
+        <a>Legal/RTI/Public Grievance Matters</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/ec/inspectionmatter'))">
+        <a>Inspection/Membership Matters</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/ec/supplementary'))">
+        <a>Supplementary Items</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/ec/anyotherbusiness'))">
+        <a>Any Other Business</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/ec/maintaindatevenue'))">
+        <a>Date & Venue Next Meeting</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/ec/voteofthanks'))">
+        <a>Vote Of Thanks</a>
+    </li>
+</ul>
+<!-- displayName==='President' -->
+<ul class="breadcrumb" *ngIf="(router.url.includes('excu/secretary/')) && (displayName==='Secretary' || displayName==='President')">
+    <li><a routerLink="dashboard">Home</a></li>
+    <li *ngIf="(router.url.includes('excu/secretary/secDashboard'))">
+        <a>Dashboard</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/secretary/secNoteRecord'))">
+        <a>Note & Record Apologies</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/secretary/secConfirm'))">
+        <a>Confirm Minutes Meeting</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/secretary/secActionTaken'))">
+        <a>Action Taken On Meeting</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/secretary/secPolicy'))">
+        <a>Policy Matters</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/secretary/secAcademic'))">
+        <a>Academic Matters</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/secretary/secARPM'))">
+        <a>ARPM Matters</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/secretary/secAdminstration'))">
+        <a>Administration Matters</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/secretary/secAFC'))">
+        <a>A&F Matters</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/secretary/secLegal'))">
+        <a>Legal/RTI/Public Grievance Matters</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/secretary/secInspection'))">
+        <a>Inspection/Membership Matters</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/secretary/secSupplementary'))">
+        <a>Supplementary Items</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/secretary/secAOB'))">
+        <a>Any Other Business</a>
+    </li>
+    <li *ngIf="(router.url.includes('excu/secretary/secVote'))">
+        <a>Vote Of Thanks</a>
+    </li>
+</ul>
+<!-- Section Head Of Executive Committee  -->
+<!-- <ul class="breadcrumb" *ngIf="displayName==='ARPMSubCommittee'">
+    <li><a routerLink="dashboard">Home</a></li>
+    <li *ngIf="(router.url.includes('greviance/subCom'))">
+        <a routerLink="greviance/subCom/dashboard" routerLinkActive="active">Agenda Dashboard</a>
+    </li>
+    <li *ngIf="(router.url.includes('greviance/subCom/agenda'))">
+        <a>Agenda View</a>
+    </li>
+</ul> -->
+<!-- College -->
+<ul class="breadcrumb" *ngIf="displayName==='CollegeRep'">
+    <li><a routerLink="dashboard">Home</a></li>
+    <li *ngIf="(router.url.includes('greviance/college'))">
+        <a routerLink="greviance/college/dashboard" routerLinkActive="active">Complaints Dashboard</a>
+    </li>
+    <li *ngIf="(router.url.includes('greviance/college/compView'))">
+        <a>Complaint View</a>
+    </li>
+</ul>
+
+
+<!-- Inspection Moodule  -->
+<!-- Inspection Cell  inspectionresponse-->
+<ul class="breadcrumb" *ngIf="displayName==='InspectionCell'">
+    <li><a routerLink="dashboard">Home</a></li>
+    <li *ngIf="(router.url.includes('inspection/insCell/dashboard'))">
+        <a routerLink="inspection/insCell/dashboard" routerLinkActive="active">Inspector List</a>
+    </li>
+    <li *ngIf="(router.url.includes('inspection/insCell/dashboard/inspectorView'))">
+        <a routerLink="inspection/insCell/dashboard/inspectorView" routerLinkActive="active">Inspector View</a>
+    </li>
+    <li *ngIf="(router.url.includes('inspection/insCell/createIns'))">
+        <a routerLink="inspection/insCell/createIns" routerLinkActive="active">Inspection scheduling</a>
+    </li>
+    <li *ngIf="(router.url.includes('inspection/insCell/manageinspec'))">
+        <a routerLink="inspection/insCell/manageinspec" routerLinkActive="active">Manage Inspection</a>
+    </li>
+    <li *ngIf="(router.url.includes('inspection/insCell/manageinspec/inspectionresponse'))">
+        <a routerLink="inspection/insCell/manageinspec/inspectionresponse" routerLinkActive="active">Manage
+            Inspection</a>
+    </li>
+</ul>
+
+<!-- Travel Agent  -->
+<ul class="breadcrumb" *ngIf="displayName==='TravelAgent'">
+    <li><a routerLink="dashboard">Home</a></li>
+    <li *ngIf="(router.url.includes('inspection/tavelagent/shedule'))">
+        <a routerLink="inspection/tavelagent/shedule" routerLinkActive="active">Bookings List</a>
+    </li>
+    <!-- <li *ngIf="(router.url.includes('inspection/tavelagent/shedule/viewshedule'))">
+        <a routerLink="inspection/tavelagent/shedule/viewshedule" routerLinkActive="active">Details</a>
+    </li>
+    <li *ngIf="(router.url.includes('inspection/tavelagent/shedule/viewshedule/uploaddetails'))">
+        <a routerLink="inspection/tavelagent/shedule/viewshedule/:id/uploaddetails" routerLinkActive="active">Upload Booking Details</a>
+    </li> -->
+    <li *ngIf="(router.url.includes('inspection/tavelagent/dashboard'))">
+        <a routerLink="inspection/insCell/tavelagent/dashboard" routerLinkActive="active">Dashboard</a>
+    </li>
+    <li *ngIf="(router.url.includes('inspection/insCell/createIns'))">
+        <a routerLink="inspection/insCell/createIns" routerLinkActive="active">Inspection scheduling</a>
+    </li>
+    <li *ngIf="(router.url.includes('inspection/insCell/manageinspec'))">
+        <a routerLink="inspection/insCell/manageinspec" routerLinkActive="active">Manage Inspection</a>
+    </li>
+    <li *ngIf="(router.url.includes('inspection/insCell/manageinspec/inspectionresponse'))">
+        <a routerLink="inspection/insCell/manageinspec/inspectionresponse" routerLinkActive="active">Manage
+            Inspection</a>
+    </li>
+</ul>
+<!-- DarkSection Head -->
+<ul class="breadcrumb" *ngIf="router.url.includes('inbound/') && displayName==='RDSecInCharge'">
+    <li><a routerLink="dashboard">Home</a></li>
+    <li *ngIf="(router.url.includes('/main/internal/inbound/diarydakincharge/receiptDashboard'))">
+        <a routerLink="/main/internal/inbound/diarydakincharge/receiptDashboard" routerLinkActive="active">R & D Section Receipt
+            Dashboard</a>
+    </li>
+    <li *ngIf="(router.url.includes('/main/internal/inbound/diarydakincharge/createReceipt') &&  !router.url.includes('/main/internal/inbound/diarydakincharge/createReceipt;id='))">
+        <a routerLink="/main/internal/inbound/diarydakincharge/createReceipt">Create Receipt</a>
+    </li>
+    <li *ngIf="(router.url.includes('/main/internal/inbound/diarydakincharge/createReceipt;id='))">
+        <!-- <a routerLink="/main/internal/inbound/diarydakincharge/createReceipt;id">View & Update Receipt</a> -->
+        <a routerLink="/main/internal/inbound/diarydakincharge/createReceipt;id">View & Update Receipt</a>
+
+    </li>
+    <li *ngIf="(router.url.includes('/main/internal/inbound/diarydakincharge/dispatchdashboard'))">
+        <a routerLink="/main/internal/inbound/diarydakincharge/dispatchdashboard" routerLinkActive="active">R & D Section Dispatch Dashboard
+            </a>
+    </li>
+
+</ul>
+<!-- ARPM SectionExecutive -->
+<ul class="breadcrumb" *ngIf="(router.url.includes('outbound/se/')||router.url.includes('inbound/sectionexecutive'))
+ && (displayName==='ARPMSecExecutive' || displayName === 'InspectionSectionOfficer'  || displayName === 'AcademicExecutive' || displayName === 'AEExecutive'
+ || displayName === 'AcademicSectionOfficer' || displayName === 'AcademicAssistantSectionOfficer' || displayName === 'AESectionofficer'
+  || displayName === 'AFSectionOfficer' || displayName === 'AFAssistantSectionOfficer' || displayName === 'AFSecInCharge'|| displayName === 'AFExecutive'
+  ||displayName === 'LegalExecutive' || displayName === 'LegalAssistantSectionOfficer' || displayName === 'RTIExecutive'|| displayName === 'Section Officer'||displayName === 'DAK_Section_Executive') ">
+    <li><a routerLink="dashboard">Home</a></li>
+    <li *ngIf="(router.url.includes('outbound/se/dashboard'))">
+        <a routerLink="outbound/se/dashboard" routerLinkActive="active">Dispatch / Note Sheet Dashboard</a>
+    </li>
+    <li *ngIf="(router.url.includes('/outbound/se/createNoteSheet'))">
+        <a>Put Up Note Sheet</a>
+    </li>
+    <li *ngIf="(router.url.includes('/outbound/se/view'))">
+        <a>Note Sheet View</a>
+    </li>
+    <li *ngIf="(router.url.includes('/outbound/se/correctionList'))">
+        <a>Correct Note Sheet</a>
+    </li>
+    <li *ngIf="(router.url.includes('/outbound/se/correctionView'))">
+        <a>Correction View</a>
+    </li>
+    <li *ngIf="(router.url.includes('inbound/sectionexecutive'))">
+        <a routerLink="inbound/sectionexecutive" routerLinkActive="active">Section Executive Dashboard</a>
+    </li>
+    <li *ngIf="(router.url.includes('inbound/sectionexecutive/view-receipt'))">
+        <a routerLink="inbound/sectionexecutive/view-receipt">View Receipt</a>
+    </li>
+</ul>
+
+<!-- ARPM SectionExecutive -->
+<!-- ARPM SectionIncharge -->
+
+<ul class="breadcrumb" *ngIf="(router.url.includes('outbound/secInch') || router.url.includes('inbound/sectionincharge')) && (displayName==='AcademicIncharge' || displayName === 'AFSecInCharge' ||
+displayName==='ARPMSecInCharge' || displayName=== 'AEAssistantSecretary' || displayName === 'AEIncharge' || displayName === 'AcademicAsstSecty' || displayName ==='LegalSecInCharge'||displayName ==='ISecInCharge'||displayName ==='RTISecInCharge'||displayName ==='ARPMAsstSecty')">
+    <li><a routerLink="dashboard">Home</a></li>
+    <li *ngIf="(router.url.includes('outbound/secInch/'))">
+        <a routerLink="outbound/secInch/dashboard" routerLinkActive="active">Dispatch /Note Sheet Dashboard</a>
+    </li>
+    <li *ngIf="(router.url.includes('outbound/secInch/viewSheetData'))">
+        <a>Note Sheet View</a>
+    </li>
+    <li *ngIf="(router.url.includes('outbound/secInch/correctionList'))">
+        <a>Correct Note Sheet</a>
+    </li>
+    <li *ngIf="(router.url.includes('outbound/secInch/correctionView/'))">
+        <a>Correction View</a>
+    </li>
+    <li *ngIf="(router.url.includes('outbound/secInch/trackNotesheet'))">
+        <a>Track NoteSheet</a>
+    </li>
+    <li *ngIf="(router.url.includes('inbound/sectionincharge'))">
+        <a routerLink="inbound/sectionincharge/receiptDashboard" routerLinkActive="active">Inbound Dashboard</a>
+    </li>
+    <li *ngIf="(router.url.includes('inbound/sectionincharge/view-receipt'))">
+        <a routerLink="inbound/sectionincharge/view-receipt">View Receipt</a>
+    </li>
+
+</ul>
+<!-- ARPM SectionIncharge -->
+
+<!-- Joint Secretary -->
+<ul class="breadcrumb" *ngIf="(router.url.includes('outbound/jointSecretary')) &&displayName==='Joint Secretary'">
+    <li><a routerLink="dashboard">Home</a></li>
+    <li *ngIf="(router.url.includes('outbound/jointSecretary'))">
+        <a routerLink="outbound/jointSecretary/dashboard" routerLinkActive="active">Dispatch /Note Sheet Dashboard</a>
+    </li>
+    <li *ngIf="(router.url.includes('outbound/jointSecretary/noteSheetView'))">
+        <a>Note Sheet View</a>
+    </li>
+
+</ul>
+<!-- Joint Secretary outbound-->
+<ul class="breadcrumb" *ngIf="(router.url.includes('outbound')) && displayName==='President'">
+    <li><a routerLink="dashboard">Home</a></li>
+    <li *ngIf="(router.url.includes('/main/internal/outbound/president/dashboard'))">
+        <a routerLink="/main/internal/outbound/president/dashboard" routerLinkActive="active">Dispatch Dashboard</a>
+    </li>
+    <li *ngIf="(router.url.includes('/main/internal/outbound/president/view'))">
+        <a routerLink="/main/internal/outbound/president/view">View</a>
+    </li>
+
+</ul>
+<!-- Secretary -->
+<ul class="breadcrumb" *ngIf="(router.url.includes('outbound/secretary/')) &&displayName==='Secretary'">
+    <li><a routerLink="dashboard">Home</a></li>
+    <li *ngIf="(router.url.includes('outbound/secretary/'))">
+        <a routerLink="outbound/secretary/dashboard" routerLinkActive="active">Dispatch /Note Sheet Dashboard</a>
+    </li>
+    <li *ngIf="(router.url.includes('outbound/secretary/sheetView/'))">
+        <a>Note Sheet View</a>
+    </li>
+    <li *ngIf="(router.url.includes('outbound/secretary/otherSecDispatches'))">
+        <a>Other Section Dispatches</a>
+    </li>
+</ul>
+<!-- history -->
+<ul class="breadcrumb" *ngIf="(router.url.includes('outbound/history/'))">
+    <li><a routerLink="dashboard">Home</a></li>
+    <li *ngIf="(router.url.includes('outbound/history/'))">
+        <a routerLink="outbound/history/">Chronological History</a>
+    </li>
+</ul>
+<!-- history -->
+<!-- DAK Section Executive -->
+<ul class="breadcrumb" *ngIf="(router.url.includes('outbound/diarydaksechead')) && displayName==='DAK_Section_Executive'">
+    <li><a routerLink="dashboard">Home</a></li>
+    <li *ngIf="(router.url.includes('outbound/diarydaksechead/'))">
+        <a routerLink="outbound/diarydaksechead/dashboard" routerLinkActive="active">Dispatch Dashboard</a>
+    </li>
+    <li *ngIf="(router.url.includes('outbound/diarydaksechead/viewDispatch'))">
+        <a>Dispatch View</a>
+    </li>
+</ul>
+
+<!-- Student Admission -->
+<!-- College Principal -->
+<ul class="breadcrumb" *ngIf="(router.url.includes('college/dean/')) &&displayName==='College Principal'">
+    <li><a routerLink="dashboard">Home</a></li>
+    <li *ngIf="(router.url.includes('college/dean'))">
+        <a routerLink="college/dean/studentsList" routerLinkActive="active">Students List</a>
+    </li>
+    <li *ngIf="(router.url.includes('college/dean/view'))">
+        <a>View</a>
+    </li>
+
+    <li *ngIf="(router.url.includes('college/dean/addStudentForm'))">
+        <a>Add New Student</a>
+    </li>
+    <li *ngIf="(router.url.includes('college/dean/addStudentForm;id'))">
+        <a>Edit Student</a>
+    </li>
+    <li *ngIf="(router.url.includes('college/dean/clarificationList'))">
+        <a>Clarification List</a>
+    </li>
+    <li *ngIf="(router.url.includes('college/dean/approveStudentsList'))">
+        <a>Active Students List</a>
+    </li>
+    <li *ngIf="(router.url.includes('college/dean/dischargeStudentsList'))">
+        <a>Discharged Students List</a>
+    </li>
+
+</ul>
+<!-- Student Admission Executive -->
+<ul class="breadcrumb" *ngIf="(router.url.includes('college/admissionMonitorCellExecutive/')) &&displayName==='Student Admission Executive'">
+    <li><a routerLink="dashboard">Home</a></li>
+    <li *ngIf="(router.url.includes('college/admissionMonitorCellExecutive'))">
+        <a routerLink="college/admissionMonitorCellExecutive/collegelist" routerLinkActive="active">College List</a>
+    </li>
+    <li *ngIf="(router.url.includes('college/admissionMonitorCellExecutive/viewStudentsList'))">
+        <a>Students For The College</a>
+    </li>
+    <li *ngIf="(router.url.includes('college/admissionMonitorCellExecutive/viewStudentDetails'))">
+        <a>View</a>
+    </li>
+    <li *ngIf="(router.url.includes('college/admissionMonitorCellExecutive/agendaList'))">
+        <a>Agenda List</a>
+    </li>
+    <li *ngIf="(router.url.includes('college/admissionMonitorCellExecutive/agendaView'))">
+        <a>View Agenda</a>
+    </li>
+</ul>
+<!-- Student Admission -->

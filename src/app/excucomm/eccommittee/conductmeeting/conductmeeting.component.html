@@ -1,0 +1,170 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-7">
+                    <h5 class="headingValue">Conduct Meeting/Edit MOM</h5>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-2">
+                    <h5>On or After <span class="text-danger">* </span>:</h5>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <input type="date" class="form-control" [(ngModel)]="selectedDate">
+                        </div>
+                        <div class="col-md-3 text-right">
+                            <button class="globalBtn acceptBtn" (click)="agendaList(selectedDate)">Search</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <table id="userTable" class="table table-bordered table-hover" *ngIf="meetingHistoryData">
+                    <thead class="thead-light">
+                        <tr>
+                            <th *ngFor="let header of tableHeaders">{{header}}</th>
+                            <th>Main Finalize Dt</th>
+                            <th>Supplementary finalize Dt</th>
+                            <th>Secretary Review Dt</th>
+                            <th>Minutes Publish Dt</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr *ngFor="let history of meetingHistoryData">
+                            <td>{{history.meetingDate }}</td>
+                            <td>{{history.completeMeetingVenue}}</td>
+                            <td>
+                                {{history.finalizedDate !== null ? (history.finalizedDate ) :'-'}}
+                            </td>
+                            <td>
+                                {{history.finalizedSupplementaryDate !== null ? (history.finalizedSupplementaryDate ) :'-'}}
+                            </td>
+                            <td>{{history.secretaryReviewDate !== null ? (history.secretaryReviewDate ) :'-'}}
+                            </td>
+                            <td>
+                                {{history.momPublishDate !== null ? (history.momPublishDate ) :'-'}}
+                            </td>
+                            <td>
+                                <div class="col-md-2 text-left dropup">
+                                    <button type="button" class="globalBtn submitBtn  dropdown-toggle" data-toggle="dropdown">
+                                        Action
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" (click)="setMeetingDate(history)">Conduct Meeting/Edit
+                                            Minutes </a>
+                                        <a class="dropdown-item" (click)="sendSHReview(history.meetingId)" *ngIf="history.momStatus === 'SECTIONHEADREVIEW' ">
+                                            Send to SH For Refinement
+                                        </a>
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#secyreview" (click)="getMeetingId(history.meetingId)" *ngIf="history.momStatus === 'SECTRETARYREVIEW' ">
+                                            Secretary Review,President Authentication
+                                        </a>
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#sendEC" (click)="getMeetingId(history.meetingId)" *ngIf="history.momStatus === 'ECHMOMFORWARD'">
+                                            EC MOM Forward
+                                        </a>
+                                        <a class="dropdown-item" data-toggle="modal" (click)="getMeetingId(history.meetingId)" data-target="#publishconfirm" *ngIf="history.momStatus === 'PUBLISHMINUTES'">
+                                            Publish Minutes
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr *ngIf="meetingHistoryData.length === 0">
+                            <td colspan="7" style="text-align: center;padding: 50px !important;">
+                                No Data Available in Table
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-12 text-right" *ngIf="pageCount>1">
+                <ul class="pagination float-right">
+                    <li class="page-item hoverActive"><a class="page-link " [class.my-class]="rowId === 0" (click)="previ()"><i class="fas fa-chevron-left"> </i></a></li>
+                    <li class="page-item"><a class="page-link">{{rowId+1}}/{{pageCount}}</a></li>
+                    <li class="page-item hoverActive"><a class="page-link" [class.my-class]="rowId+1 === pageCount" (click)="next()"><i class="fas fa-chevron-right"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="secyreview" class="modal fade">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title headingValue">Send for Secretary Review</h5>
+                    <button type="button" class="close" #secDismissModal data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure want to send for secretary review?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="globalBtn submitBtn" (click)="sendReview()">Yes</button>
+                    <button type="button" class="globalBtn clearBtn" data-dismiss="modal">No</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="publishconfirm" class="modal fade">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title headingValue">Publish Minutes</h5>
+                    <button type="button" class="close" #dismissModal data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure want to publish minutes?</p>
+                    <input type="file" class="form-control" (change)="getFileDetails($event)">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="globalBtn submitBtn" (click)="finalMomPublish()">Yes</button>
+                    <button type="button" class="globalBtn clearBtn" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="sendEC" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title headingValue">Send To EC Members</h4>
+                    <button type="button" class="close" #mailDismissModal data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="sendEcForm">
+                        <div class="row">
+                            <label>Body <span class="aseticcolor">*</span></label>
+                            <tinymce [config]="appConst.config" formControlName="body"></tinymce>
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Final Document </label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="file" class="form-control" (change)="getFileDetails($event)">
+                            </div>
+                        </div>
+                    </div>
+
+                </div><br>
+                <div class="modal-footer">
+                    <button type="button" class="globalBtn acceptBtn" [disabled]="!sendEcForm.valid" style="width:180px;" (click)="sendToEC()">Send To EC
+                        Members</button>
+                    <button type="button" class="globalBtn clearBtn" #mailDismissModal data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>

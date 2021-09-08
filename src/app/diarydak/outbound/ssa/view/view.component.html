@@ -1,0 +1,656 @@
+<div class="row">
+    <div class="col-md-12" *ngIf="sheetDetails">
+
+        <div class="card">
+            <div class="row">
+                <div class="col-md-2">
+                    <h5 class="headingValue">View Note Sheet / Letter &nbsp;
+                        <!-- <span class="badge badge-pill badge-primary" style="color: white; font-size: 60%">
+                            {{sheetDetails.dakStatus.statusName}}
+                        </span> -->
+                    </h5>
+                </div>
+                <div class="col-md-6 text-right">
+                  
+                    <div class="row">
+                        <div class="col-md-10 text-right" *ngIf="((sheetDetails.dakStatus.statusName !=='SendForDispatch')&&(sheetDetails.dakStatus.statusName !=='SendForDispatch')&&(sheetDetails.dakStatus.statusName !=='Dispatched')&&(sheetDetails.dakStatus.statusName !=='ApprovedFinalised')&&(sheetDetails.dakStatus.statusName !=='underCorrection'))">
+                            <button type="button" class="globalBtn submitBtn dropdown-toggle" data-toggle="dropdown" *ngIf="((showSeekApproval)&&((roleName ==='ARPMSecExecutive')||(roleName ==='AcademicExecutive')||(roleName ==='AEExecutive')||(roleName ==='AFExecutive')||(roleName ==='LegalExecutive')
+                    ||(roleName ==='RTIExecutive')))">
+                                Action
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" style="cursor:pointer" (click)="SeekList()" data-toggle="modal" data-target="#seekapproval" *ngIf="((showSeekApproval)&&(sheetDetails.dakStatus.statusName !=='ApprovedFinalised'))">
+                                    Seek Approval
+                                </a>
+                                <!-- <a class="dropdown-item" data-toggle="modal" data-target="#askCorrectionModal" style="cursor:pointer" *ngIf="((sheetDetails.dakStatus.statusName !=='underCorrection')&&(sheetDetails.dakStatus.statusName !== 'ApprovedFinalised')&&((roleName ==='Section Officer')||(roleName ==='AcademicSectionOfficer')||(roleName ==='AESectionofficer')||(roleName ==='AFSectionOfficer')||(roleName ==='LegalAssistantSectionOfficer')
+                    ||(roleName ==='AFAssistantSectionOfficer')||(roleName ==='AcademicAssistantSectionOfficer')||(roleName ==='InspectionSectionOfficer')))">Return For
+                    Correction</a> -->
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10 text-right" *ngIf="((showSeekApproval)&&(sheetDetails.dakStatus.statusName !=='SendForDispatch')&&(sheetDetails.dakStatus.statusName !=='Dispatched')&&(sheetDetails.dakStatus.statusName !=='ApprovedFinalised')&&(sheetDetails.dakStatus.statusName !=='underCorrection'))">
+                            <button type="button" class="globalBtn submitBtn dropdown-toggle" data-toggle="dropdown" *ngIf="((roleName ==='Section Officer')||(roleName ==='AcademicSectionOfficer')||(roleName ==='AESectionofficer')||(roleName ==='AFSectionOfficer')||(roleName ==='LegalAssistantSectionOfficer')
+                    ||(roleName ==='AFAssistantSectionOfficer')||(roleName ==='AcademicAssistantSectionOfficer')||(roleName ==='InspectionSectionOfficer'))">
+                                Action
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" style="cursor:pointer" (click)="SeekList()" data-toggle="modal" data-target="#seekapproval" *ngIf="((showSeekApproval)&&(sheetDetails.dakStatus.statusName !=='ApprovedFinalised'))">
+                                    Seek Approval
+                                </a>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#askCorrectionModal" style="cursor:pointer" *ngIf="((showSeekApproval)&&(sheetDetails.dakStatus.statusName !=='underCorrection')&&(sheetDetails.dakStatus.statusName !== 'ApprovedFinalised')&&((roleName ==='Section Officer')||(roleName ==='AcademicSectionOfficer')||(roleName ==='AESectionofficer')||(roleName ==='AFSectionOfficer')||(roleName ==='LegalAssistantSectionOfficer')
+                    ||(roleName ==='AFAssistantSectionOfficer')||(roleName ==='AcademicAssistantSectionOfficer')||(roleName ==='InspectionSectionOfficer')))">Return
+                                    For
+                                    Correction</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 text-right">
+                    <button type="button" class="globalBtn submitBtn" *ngIf="(sheetDetails.isDispatchWithDfa === true)&&(sheetDetails.dakStatus.statusName !== 'Dispatched')"  (click)="previewPdf()">Preview</button>
+                    <button *ngIf="((sheetDetails.isDispatchWithDfa === true)&&(sheetDetails.dakStatus.statusName === 'Dispatched'))" class="finalBtn submitBtn" style="cursor:pointer"  data-toggle="modal" >
+                        <a href="{{finaldownloadUrl}}" style="color: #ffffff;text-decoration: none;" (click)="previewFinalLetter(this.finalDocumentId)">View Final Letter</a> </button>
+                   
+            </div>
+           
+            <div class="col-md-2 text-right">
+                <button type="button" class="globalBtn submitBtn" (click)="back()">Back</button>
+        </div>
+                <!-- <div class="col-md-8 text-right">
+                    <div class="row">                   
+                        <div class="col-md-10 text-right" *ngIf="((sheetDetails.dakStatus.statusName !=='SendForDispatch')&&(sheetDetails.dakStatus.statusName !=='Dispatched')&&(sheetDetails.dakStatus.statusName !=='SaveDispatch')&&(sheetDetails.dakStatus.statusName !=='ApprovedFinalised'))">
+                            <button type="button" class="globalBtn submitBtn dropdown-toggle" data-toggle="dropdown" *ngIf="((roleName ==='Section Officer')||(roleName ==='AcademicSectionOfficer')||(roleName ==='AESectionofficer')||(roleName ==='AFSectionOfficer')||(roleName ==='LegalAssistantSectionOfficer')
+                            ||(roleName ==='AFAssistantSectionOfficer')||(roleName ==='AcademicAssistantSectionOfficer')||(roleName ==='InspectionSectionOfficer'))">
+                                Action
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" style="cursor:pointer" (click)="SeekList()" data-toggle="modal" data-target="#seekapproval" *ngIf="((showSeekApproval)&&(sheetDetails.dakStatus.statusName !=='ApprovedFinalised'))">
+                                 Seek Approval
+                                </a>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#askCorrectionModal" style="cursor:pointer" *ngIf="((sheetDetails.dakStatus.statusName !=='underCorrection')&&(sheetDetails.dakStatus.statusName !== 'ApprovedFinalised')&&((roleName ==='Section Officer')||(roleName ==='AcademicSectionOfficer')||(roleName ==='AESectionofficer')||(roleName ==='AFSectionOfficer')||(roleName ==='LegalAssistantSectionOfficer')
+                                    ||(roleName ==='AFAssistantSectionOfficer')||(roleName ==='AcademicAssistantSectionOfficer')||(roleName ==='InspectionSectionOfficer')))">Return For
+                                    Correction</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+            <hr>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <b><label>Section </label></b>
+                    <p>{{sheetDetails.dakDispatchFileNos !== null ? (sheetDetails.dakDispatchFileNos.section.sectionName):'-'}}
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <b><label>Sub Section </label></b>
+                    <p>{{sheetDetails.dakDispatchFileNos !== null ? (sheetDetails.dakDispatchFileNos.subSection.name):'-'}}
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <b><label>Category</label><br></b>
+                    <p>{{sheetDetails.dakDispatchFileNos !== null ? (sheetDetails.dakDispatchFileNos.dakFileCategory.name):'-'}}
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <b><label>Sub Category</label><br></b>
+                    <p>{{sheetDetails.dakDispatchFileNos !== null ? (sheetDetails.dakDispatchFileNos.dakFileSubCategory.name):'-'}}
+                    </p>
+                </div>
+                <div class="col-md-4" *ngIf="sheetDetails.dakDispatchFileNos.dakFileSubjectReferenceNonCollege ===null">
+                    <b><label>Reference</label><br></b>
+                    <p>{{sheetDetails.dakDispatchFileNos !== null ? (sheetDetails.dakDispatchFileNos.college.collegeName):'-'}}
+                    </p>
+                </div>
+                <div class="col-md-4" *ngIf="sheetDetails.dakDispatchFileNos.dakFileSubjectReferenceNonCollege ===null">
+                    <b><label>Reference ID</label><br></b>
+                    <p>{{sheetDetails.dakDispatchFileNos !== null ? (sheetDetails.dakDispatchFileNos.college.collegeId):'-'}}
+                    </p>
+                </div>
+                <div class="col-md-4" *ngIf="sheetDetails.dakDispatchFileNos.dakFileSubCategoryReference !==null">
+                    <b><label>Reference</label><br></b>
+                    <p>{{sheetDetails.dakDispatchFileNos !== null ? (sheetDetails.dakDispatchFileNos.dakFileSubCategoryReference.name):'-'}}
+                    </p>
+                </div>
+                <div class="col-md-4" *ngIf="sheetDetails.dakDispatchFileNos.college ===null">
+                    <b><label>Reference ID</label><br></b>
+                    <p>{{sheetDetails.dakDispatchFileNos !== null ? (sheetDetails.dakDispatchFileNos.dakFileSubjectReferenceNonCollege.shortName):'-'}}
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <b> <label>Academic / Financial Year </label></b><br>
+                    <p>{{sheetDetails.dakDispatchFileNos !== null ? (sheetDetails.dakDispatchFileNos.financialYear):'-'}}
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <b> <label>Current Year </label></b><br>
+                    <p>{{sheetDetails.dakDispatchFileNos !== null ? (sheetDetails.dakDispatchFileNos.dispatchYear):'-'}}
+                    </p>
+                </div>
+                <!-- <div class="col-md-4">
+                    <b> <label>Complete By</label></b><br>
+                    <p>{{sheetDetails.dakDispatchFileNos !== null ? (sheetDetails.dakDispatchFileNos.dispatchByDate):'-'}}
+                    </p>
+                </div> -->
+                <div class="col-md-8">
+                    <b><label>Section Reference Number </label></b>
+                    <p>{{sheetDetails.dakDispatchFileNos !== null ? (sheetDetails.dakDispatchFileNos.dakDispatchFileNo):'-'}}
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="headingValue">Dispatch Details</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <b><label>Category </label></b>
+                    <p>{{sheetDetails.dispatchCategories.name}}</p>
+                </div>
+                <div class="col-md-3">
+                    <b><label>Language </label></b>
+                    <p>{{sheetDetails.receiptLanguageId !== null ? (sheetDetails.receiptLanguageId.name):'-'}}</p>
+                </div>
+
+                <div class="col-md-3">
+                    <b><label>Urgency </label><br></b>
+                    <p>{{sheetDetails.dispatchUrgency.name}}</p>
+                </div>
+                <div class="col-md-3">
+                    <b> <label>Confidentiality </label></b><br>
+                    <p>{{sheetDetails.dispatchConfidentialityType !== null ?(sheetDetails.dispatchConfidentialityType.name) :'-'}}
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="headingValue">Issuing Authority</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <b><label>Designation </label><br></b>
+                    <p>{{sheetDetails.senderDesignation.designationName}}</p>
+                </div>
+                <div class="col-md-4">
+                    <b><label>Sender Name </label></b>
+                    <p>{{sheetDetails.senderName}}</p>
+                </div>
+
+            </div>
+            <!-- <div class="row">
+                <div class="col-md-12">
+                    <h5 class="headingValue">Note Sheet Contents</h5><br>
+                    <p [innerHTML]="sheetDetails.noteSheetContents"></p>
+
+                </div>
+            </div> -->
+            <div>
+                <form [formGroup]="noteSheetContentsForm">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h5 class="headingValue">Note Sheet Contents</h5><br>
+                            <b><label>Note Sheet Contents<span>&nbsp;
+                                <i class="fas fa-edit" title="Edit" style="color:#74AEB5" *ngIf="((sheetDetails.dakStatus.statusName !== 'Dispatched')&&(sheetDetails.dakStatus.statusName !== 'SendForDispatch')&&(sheetDetails.dakStatus.statusName !== 'ApprovedFinalised')&&
+                                ((roleName ==='Section Officer')||(roleName ==='AcademicSectionOfficer')||(roleName ==='AESectionofficer')||(roleName ==='AFSectionOfficer')||(roleName ==='LegalAssistantSectionOfficer')
+                    ||(roleName ==='AFAssistantSectionOfficer')||(roleName ==='AcademicAssistantSectionOfficer')||(roleName ==='InspectionSectionOfficer')))"
+                                    (click)="editnoteSheet()"></i></span> </label></b>
+                            <p [innerHTML]="sheetDetails.noteSheetContents" *ngIf="!shownotesheeteditor"></p>
+                        </div>
+                        <div class="col-md-2 text-right" *ngIf="shownotesheeteditor">
+                            <button class="btn btn-primary" (click)="updateNotesheetContents()">Update</button>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="shownotesheeteditor">
+                        <div class="col-md-12">
+                            <tinymce [config]="appConst.config" formControlName="notesheetcontents"></tinymce>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="headingValue">Comments</h5>
+                </div>
+
+            </div>
+            <hr>
+
+            <div class="row" *ngFor="let item of sheetDetails.dakWorkflowCommentsDTO">
+                <div class="col-md-10">
+                    <div>
+                        <h5 class="headingValue">{{item.senderActor}}</h5><span class="badge badge-pill badge-primary" style="color: white; font-size: 60%">{{item.dakStatus.statusName}}</span>
+                        <p style="font-size: 12px;">
+                            {{item.createdDate}}
+                        </p>
+                        <p style="margin-bottom: 4px;">
+                            {{(item.comments !==null && item.comments !==" ") ?(item.comments):'-'}}
+                        </p>
+                        <!-- <div class="subheadingValue">
+                            
+                        </div> -->
+                    </div>
+                   
+                </div>
+            </div>
+            <hr>
+            <div>
+                <!-- <div *ngIf="hidedfadetails">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="headingValue">Draft For Approval</h5>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="sheetDetails.receiptLanguageId.receiptLanguageId === 1">
+                        <div class="col-md-12">
+                            <b><label>DFA Subject </label></b>
+                            <p>{{sheetDetails.dfaSubject}}</p>
+                        </div>
+                        <div class="col-md-12">
+                            <b><label>DFA Contents </label></b>
+                            <p [innerHTML]="sheetDetails.dfaContents"></p>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="sheetDetails.receiptLanguageId.receiptLanguageId === 2">
+                        <div class="col-md-12">
+                            <b><label>DFA Hindi Subject </label></b>
+                            <p [innerHTML]="sheetDetails.dfaHindiSubject"></p>
+                        </div>
+                        <div class="col-md-12">
+                            <b><label>DFA Contents </label></b>
+                            <p [innerHTML]="sheetDetails.dfaHindiContents"></p>
+                        </div>
+                    </div>
+                </div> -->
+               
+               
+                <div *ngIf="hidedfadetails">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="headingValue">Draft For Approval</h5>
+                        </div>
+                    </div>
+                   
+                    <form [formGroup]="dfaForm" *ngIf=" sheetDetails.receiptLanguageId.receiptLanguageId === 1">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <b><label>DFA Subject <span>
+                                            <i class="fas fa-edit" title="Edit" style="color:#74AEB5" *ngIf="((sheetDetails.dakStatus.statusName !== 'Dispatched')&&(sheetDetails.dakStatus.statusName !== 'SendForDispatch')&&(sheetDetails.dakStatus.statusName !== 'ApprovedFinalised')&&
+                                ((roleName ==='Section Officer')||(roleName ==='AcademicSectionOfficer')||(roleName ==='AESectionofficer')||(roleName ==='AFSectionOfficer')||(roleName ==='LegalAssistantSectionOfficer')
+                    ||(roleName ==='AFAssistantSectionOfficer')||(roleName ==='AcademicAssistantSectionOfficer')||(roleName ==='InspectionSectionOfficer')))"
+                                                (click)="editdfa()"></i></span> </label></b>
+                                <p [innerHTML]="sheetDetails.dfaSubject" *ngIf="!showdfa"></p>
+                            </div>
+                            <div class="col-md-2 text-right" *ngIf="showdfa">
+                                <button class="btn btn-primary" (click)="updateDfa()">Update</button>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="showdfa">
+                            <div class="col-md-12">
+                                <textarea rows="5" cols="20" class="form-control" formControlName="dfasubject"></textarea>
+    
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <b><label>DFA Contents &nbsp;
+                                    </label></b>
+                                <p [innerHTML]="sheetDetails.dfaContents" *ngIf="!showdfa"></p>
+                            </div>
+    
+                        </div>
+                        <div class="row" *ngIf="showdfa">
+                            <div class="col-md-12">
+                                <tinymce [config]="appConst.config" formControlName="dfacontents"></tinymce>
+                            </div>
+    
+                        </div>
+                    </form>
+                    <form [formGroup]="dfaForm" *ngIf=" sheetDetails.receiptLanguageId.receiptLanguageId === 2">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <b><label>DFA Subject <span>
+                                            <i class="fas fa-edit" title="Edit" style="color:#74AEB5" *ngIf="((sheetDetails.dakStatus.statusName !== 'Dispatched')&&(sheetDetails.dakStatus.statusName !== 'SendForDispatch')&&(sheetDetails.dakStatus.statusName !== 'ApprovedFinalised'))"
+                                                (click)="editdfa()"></i></span> </label></b>
+                                <p [innerHTML]="sheetDetails.dfaHindiSubject" *ngIf="!showdfa"></p>
+                            </div>
+                            <div class="col-md-2 text-right" *ngIf="showdfa">
+                                <button class="btn btn-primary" (click)="updateDfa()">Update</button>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="showdfa">
+                            <div class="col-md-12">
+                                <textarea rows="5" cols="20" class="form-control" formControlName="dfasubject"></textarea>
+    
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <b><label>DFA Contents &nbsp;
+                                    </label></b>
+                                <p [innerHTML]="sheetDetails.dfaHindiContents" *ngIf="!showdfa"></p>
+                            </div>
+    
+                        </div>
+                        <div class="row" *ngIf="showdfa">
+                            <div class="col-md-12">
+                                <tinymce [config]="appConst.config" formControlName="dfacontents"></tinymce>
+                            </div>
+    
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue"> Address</h5>
+                    </div>
+                </div>
+				<!-- <div class="row" >
+                <div class="col-md-4" *ngFor="let add of sheetDetails.dakDispatchRecipientDetails">
+                    <div class="row" *ngIf="add.dakAddressType.addressTypeId !==3">
+                      <div class="col-md-12" *ngIf="sheetDetails.dakDispatchRecipientDetails.dakAddressType !==undefined ||sheetDetails.dakDispatchRecipientDetails.dakAddressType !==null" >
+                            <p style="color:#3D78BE; margin-top:10px;font-size:18px;font-weight:600;">
+                                    {{add.dakAddressType !== null ? (add.dakAddressType.name) :'-'}}</p>
+                        </div>
+						 <div class="col-md-12">
+						   <p style="margin:0px; margin-left:10px !important;" *ngIf="sheetDetails.dakDispatchRecipientDetails.dispatchVia !==undefined ||sheetDetails.dakDispatchRecipientDetails.dispatchVia !==null">{{add.dispatchVia !== null ? (add.dispatchVia.name) :'-'}}</p>
+						<p style="margin:0px; margin-left:10px !important;" *ngIf="sheetDetails.dakDispatchRecipientDetails.recipientName !==undefined ||sheetDetails.dakDispatchRecipientDetails.recipientName !==null">{{add.recipientName !== null ? (add.recipientName) :'-'}}</p>
+						  <p style="margin:0px; margin-left:10px !important;" *ngIf="sheetDetails.dakDispatchRecipientDetails.recipientEmailId !==undefined ||sheetDetails.dakDispatchRecipientDetails.recipientEmailId !==null">{{add.recipientEmailId !== null ? (add.recipientEmailId) :'-'}}</p>
+						 <p style="margin:0px; margin-left:10px !important;" *ngIf="sheetDetails.dakDispatchRecipientDetails.recipientContactNumber !==undefined ||sheetDetails.dakDispatchRecipientDetails.recipientContactNumber !==null">{{add.recipientContactNumber !== null ? (add.recipientContactNumber) :'-'}}</p>
+						  <p style="margin:0px; margin-left:10px !important;" *ngIf="sheetDetails.dakDispatchRecipientDetails.dakAddressCategories !==undefined ||sheetDetails.dakDispatchRecipientDetails.dakAddressCategories !==null">{{add.dakAddressCategories !== null ? (add.dakAddressCategories.name) :'-'}}</p>
+						 <p style="margin:0px; margin-left:10px !important;" *ngIf="sheetDetails.dakDispatchRecipientDetails.address !==null">
+                                {{add.address !== null ? (add.address.line1) :'-'}}, {{add.address !== null ? (add.address.line2) :'-'}}, {{add.address !== null ? (add.address.zipCode) :'-'}},
+                            </p>
+						</div>
+                
+                    
+
+                    </div>
+                </div>
+				</div> -->
+                <div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5 class="headingValue">To </h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <span *ngIf="sheetDetails.dakDispatchRecipientDetails !==null"> 
+                        <div class="col-md-6" *ngFor="let add of sheetDetails.dakDispatchRecipientDetails; let i=index" style="float:left">
+                           
+                            <span *ngIf="add.dakAddressType.addressTypeId ==1">
+                              <b>  <p style="margin:0px; margin-left:10px !important;"
+                                *ngIf="sheetDetails.dakDispatchRecipientDetails.dakAddressCategories !==undefined ||sheetDetails.dakDispatchRecipientDetails.dakAddressCategories !==null">
+                                {{add.dakAddressCategories !== null ? (add.dakAddressCategories.name) :'-'}} -  <span style="margin:0px; "
+                                *ngIf="sheetDetails.dakDispatchRecipientDetails.recipientName !==undefined ||sheetDetails.dakDispatchRecipientDetails.recipientName !==null">
+                                {{add.recipientName !== null ? (add.recipientName) :'-'}}</span></p></b>
+                                   
+                                    <p style="margin:0px; margin-left:10px !important;"
+                                        *ngIf="sheetDetails.dakDispatchRecipientDetails.recipientEmailId !==undefined ||sheetDetails.dakDispatchRecipientDetails.recipientEmailId !==null">
+                                        {{add.recipientEmailId !== null ? (add.recipientEmailId) :'-'}}, <span style="margin:0px; "
+                                        *ngIf="sheetDetails.dakDispatchRecipientDetails.recipientContactNumber !==undefined ||sheetDetails.dakDispatchRecipientDetails.recipientContactNumber !==null">
+                                        {{add.recipientContactNumber !== null ? (add.recipientContactNumber) :'-'}}</span></p>
+       
+                   
+                                    <p style="margin:0px; margin-bottom: 10px; margin-left:10px !important;"
+                                        *ngIf="sheetDetails.dakDispatchRecipientDetails.address !==null">
+                                        {{add.address !== null ? (add.address.line1) :'-'}},
+                                        {{add.address !== null ? (add.address.line2) :'-'}},
+                                        {{add.address !== null ? (add.address.zipCode) :'-'}}. ( <span style="margin:0px;"
+                                        *ngIf="sheetDetails.dakDispatchRecipientDetails.dispatchVia !==undefined ||sheetDetails.dakDispatchRecipientDetails.dispatchVia !==null">
+                                        {{add.dispatchVia !== null ? (add.dispatchVia.name) :'-'}}</span> )
+                                    </p>
+                            </span>
+                     
+                        </div>
+                    </span>
+                    <span *ngIf="sheetDetails.dakDispatchBulkCategory !==null">
+                       <div *ngFor="let add of sheetDetails.dakDispatchBulkCategory; let i=index" > <!-- {{i>0 && sheetDetails.dakDispatchRecipientDetails[i-1].dakDispatchBulkCategory !==null ==add.dakDispatchBulkCategory !==null?'':add.dakDispatchBulkCategory.name}} -->
+                  {{add.name}}
+                </div>
+                    </span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5 class="headingValue">Endorsee </h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <span>
+                            <div class="col-md-6" *ngFor="let add of sheetDetails.dakDispatchRecipientDetails"
+                                style="float:left">
+                                <span *ngIf="add.dakAddressType.addressTypeId ==2">
+                                    <b><p style="margin:0px; margin-left:10px !important;"
+                                    *ngIf="sheetDetails.dakDispatchRecipientDetails.dakAddressCategories !==undefined ||sheetDetails.dakDispatchRecipientDetails.dakAddressCategories !==null">
+                                    {{add.dakAddressCategories !== null ? (add.dakAddressCategories.name) :'-'}} -   <span style="margin:0px; "
+                                    *ngIf="sheetDetails.dakDispatchRecipientDetails.recipientName !==undefined ||sheetDetails.dakDispatchRecipientDetails.recipientName !==null">
+                                    {{add.recipientName !== null ? (add.recipientName) :'-'}}</span></p>  </b>
+                 
+                                    <p style="margin:0px; margin-left:10px !important;"
+                                        *ngIf="sheetDetails.dakDispatchRecipientDetails.recipientEmailId !==undefined ||sheetDetails.dakDispatchRecipientDetails.recipientEmailId !==null">
+                                        {{add.recipientEmailId !== null ? (add.recipientEmailId) :'-'}}, <span style="margin:0px; "
+                                        *ngIf="sheetDetails.dakDispatchRecipientDetails.recipientContactNumber !==undefined ||sheetDetails.dakDispatchRecipientDetails.recipientContactNumber !==null">
+                                        {{add.recipientContactNumber !== null ? (add.recipientContactNumber) :'-'}}</span></p>
+                                    
+              
+                                    <p style="margin:0px; margin-left:10px !important;"
+                                        *ngIf="sheetDetails.dakDispatchRecipientDetails.address !==null">
+                                        {{add.address !== null ? (add.address.line1) :'-'}},
+                                        {{add.address !== null ? (add.address.line2) :'-'}},
+                                        {{add.address !== null ? (add.address.zipCode) :'-'}}. &nbsp; (<span style="margin:0px; "
+                                        *ngIf="sheetDetails.dakDispatchRecipientDetails.dispatchVia !==undefined ||sheetDetails.dakDispatchRecipientDetails.dispatchVia !==null">
+                                        {{add.dispatchVia !== null ? (add.dispatchVia.name) :'-'}}</span>)
+                                    </p>
+                                </span>
+                            </div>
+                        </span>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="headingValue">CC</h5><br>
+                    <div *ngFor="let cc of sheetDetails.dakDispatchRecipientDetails">
+                        <div class="row" *ngIf="cc.dakAddressType.addressTypeId ===3">
+                            <span *ngIf="cc.ccType ==='SECTION'">
+                            <div class="col-md-12" *ngIf="sheetDetails.dakDispatchRecipientDetails.section !==undefined ||sheetDetails.dakDispatchRecipientDetails.section !==null">
+                                {{cc.section !== null ? (cc.section.sectionName) :'-'}}
+                            </div>
+                        </span>
+                        <span *ngIf="cc.ccType ==='FILE'">
+                            <div class="col-md-12" *ngIf="sheetDetails.dakDispatchRecipientDetails.dakDispatchFileNos !==undefined ||sheetDetails.dakDispatchRecipientDetails.dakDispatchFileNos !==null">
+                                {{cc.dakDispatchFileNos !== null ? (cc.dakDispatchFileNos.dakDispatchFileNo) :'-'}}
+                            </div>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div><br>
+            <div class="row" *ngIf="sheetDetails.dispatchDocuments.length!==0">
+
+                <div class="col-md-3">
+                    <h5 class="headingValue">Dispatch Documents</h5>
+                    <hr>
+                    <div *ngFor="let item of sheetDetails.dispatchDocuments; let i=index">
+                        <div class="iconCard" (click)="download(item.documentId)">
+                            <span><i class="far fa-file-alt docIcons"></i> File{{i+1}}</span>
+                            <!-- <a class="downloadView">
+                                <i class="fas fa-eye" style=" cursor: pointer;color: #3D78BE;" title="Preview" (click)="previewDoc(item.documentId)"></i>
+                            </a> -->
+                            <a href="{{downloadUrl}}" class="downloadView">
+                                <i class="fas fa-cloud-download-alt" style=" cursor: pointer;color: #3D78BE;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-md-6">
+                    <label>Type Of Attachment</label>
+                    <p>.docs</p>
+                </div> -->
+
+            </div>
+            <div class="row" *ngIf="sheetDetails.receiptDocuments!==null">
+
+                <div class="col-md-3">
+                    <h5 class="headingValue">Receipt Documents</h5>
+                    <hr>
+                    <div *ngFor="let item of sheetDetails.receiptDocuments; let i=index">
+                        <div class="iconCard" (click)="download(item.documentId)">
+                            <span><i class="far fa-file-alt docIcons"></i>File{{i+1}}</span>
+                            <!-- <a class="downloadView">
+                                <i class="fas fa-eye" style=" cursor: pointer;color: #3D78BE;" title="Preview" (click)="previewDoc(item.documentId)"></i>
+                            </a> -->
+                            <a href="{{downloadUrl}}" class="downloadView">
+                                <i class="fas fa-cloud-download-alt" style=" cursor: pointer;color: #3D78BE;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-md-6">
+                    <label>Type Of Attachment</label>
+                    <p>.docs</p>
+                </div> -->
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Seek Approval starts -->
+<div class="modal fade" id="seekapproval" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title headingValue">Seek Approval</h4>
+                <button type="button" class="close" #dismissModal data-dismiss="modal" (click)="reset()">&times;</button>
+            </div>
+            <div class="modal-body" style="padding:30px">
+                <form [formGroup]="seekApprovalForm">
+                    <div class="row">
+                        <label>Select Designations <span class="aseticcolor">*</span></label>&nbsp;
+                        <select class="custom-select-sm" class="form-control" formControlName="designation" (change)="selectedDesignation($event.target.value)" [ngClass]="{ 'is-invalid':  submitted && f.designation.errors }">
+                            <option value="" disabled selected style="color:orange">Select Designation</option>
+                            <option *ngFor="let sc of designationList" [value]="sc">
+                                {{sc}}
+                            </option>
+                        </select>
+
+                        <div *ngIf=" submitted && f.designation.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && f.designation.errors.required">
+                                {{jsaConst.seekFormErrors.designation}}
+                            </div>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <label>Select Person <span class="aseticcolor">*</span></label>
+
+                        <select class="custom-select-sm" class="form-control" formControlName="person" [ngClass]="{ 'is-invalid':  submitted && f.person.errors }">
+                            <option value="" disabled selected style="color:orange">Select Person</option>
+                            <option *ngFor="let person of personList" [value]="person.userId">
+                                {{person.firstName}}
+                            </option>
+                        </select>
+                        <div *ngIf=" submitted && f.person.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && f.person.errors.required">
+                                {{jsaConst.seekFormErrors.person}}
+                            </div>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <label>Comments </label>
+                        <!-- <span class="aseticcolor">*</span> -->
+                        <textarea class="form-control" rows="5" cols="20" placeholder="Write Comment" formControlName="comment"></textarea>
+                        <!-- [ngClass]="{ 'is-invalid':  submitted && f.comment.errors }"
+                        <div *ngIf=" submitted && f.comment.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && f.comment.errors.required">
+                                {{jsaConst.seekFormErrors.comments}}
+                            </div>
+                        </div> -->
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" #dismissModal class="globalBtn clearBtn" (click)="reset()">Reset</button>
+                <button type="button" style="width: 170px;" class="globalBtn acceptBtn" #dismissModal [disabled]="!seekApprovalForm.valid" (click)="seekApproval()">Seek Approval</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- seek approval ends -->
+<!-- Modal -->
+<div class="modal fade" id="askCorrectionModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title headingValue">Return For Correction</h4>
+                <button type="button" class="close" #correctModal data-dismiss="modal" (click)="reset()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="returnCorrection">
+                    <div class="row">
+                        <label>Select Designations <span class="aseticcolor">*</span></label>&nbsp;
+                        <select class="custom-select-sm" class="form-control" formControlName="designation" (change)="selectedCorrectionDesignation($event.target.value)" [ngClass]="{ 'is-invalid':  submitted && g.designation.errors }">
+                            <option value="" disabled selected style="color:orange">Select Designation</option>
+                            <option *ngFor="let sc of correctionDesignationList" [value]="sc">
+                                {{sc}}
+                            </option>
+                        </select>
+
+                        <div *ngIf=" submitted && g.designation.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && g.designation.errors.required">
+                                {{jsaConst.seekFormErrors.designation}}
+                            </div>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <label>Select Person <span class="aseticcolor">*</span></label>
+
+                        <select class="custom-select-sm" class="form-control" formControlName="person" [ngClass]="{ 'is-invalid':  submitted && g.person.errors }">
+                            <option value="" disabled selected style="color:orange">Select Person</option>
+                            <option *ngFor="let person of correctionPersonList" [value]="person.userId">
+                                {{person.firstName}}
+                            </option>
+                        </select>
+                        <div *ngIf=" submitted && g.person.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && g.person.errors.required">
+                                {{jsaConst.seekFormErrors.person}}
+                            </div>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <label>Comments <span class="aseticcolor">*</span></label>
+                        <textarea class="form-control" rows="5" cols="20" placeholder="Write Comment" formControlName="comment" [ngClass]="{ 'is-invalid':  submitted && g.comment.errors }"></textarea>
+                        <div *ngIf=" submitted && g.comment.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && g.comment.errors.required">
+                                {{jsaConst.seekFormErrors.comments}}
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="globalBtn acceptBtn" style="width: 170px;" (click)="sendCorrection()" data-dismiss="modal" #correctModal [disabled]="!returnCorrection.valid">Send For Correction</button>
+                <button type="button" class="globalBtn clearBtn" data-dismiss="modal" #correctModal (click)="reset()">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Ask Correction Modal Ends -->

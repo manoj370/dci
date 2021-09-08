@@ -1,0 +1,37 @@
+::-webkit-input-placeholder {
+    color: var(--main-suhheading-color);
+    font-size: 13px;
+}
+
+ ::-moz-placeholder {
+    color: var(--main-suhheading-color);
+    font-size: 13px;
+}
+
+ :-ms-input-placeholder {
+    color: var(--main-suhheading-color);
+    font-size: 13px;
+}
+
+ ::placeholder {
+    color: var(--main-suhheading-color);
+    font-size: 13px;
+}
+
+.Count {
+    font-size: 25px;
+    color: #FFAF2F;
+}
+
+.subHeading {
+    color: var(--main-suhheading-color);
+    font-size: var(--main-font-size);
+}
+
+.badge-pill {
+    font-size: 12px !important;
+    height: 30px !important;
+    /* width: 20px !important; */
+    border-radius: 4px !important;
+    padding-top: 10px !important;
+}

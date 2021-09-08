@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-2">
+                    <h5>On or After <span class="text-danger">* </span>:</h5>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <input type="date" class="form-control">
+                        </div>
+                        <div class="col-md-4 text-left">
+                            <!-- <button class="globalBtn acceptBtn" (click)="agendaList()">Search</button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="theadRow thead-light">
+                                <tr>
+                                    <th>Meeting Date</th>
+                                    <th>Meeting Venue</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbodyRow">
+                                <tr *ngFor="let item of agendaListData">
+                                    <td>{{item.meetingDate }}</td>
+                                    <td>{{item.completeMeetingVenue}}
+                                    </td>
+                                    <!-- <td><span class="text-primary" (click)="getAgendaList(item)"><i class="fas fa-eye"> </i></span></td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

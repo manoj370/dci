@@ -1,0 +1,13 @@
+.badge-pill {
+    font-size: 12px !important;
+    height: 30px !important;
+    width: 110px !important;
+    border-radius: 4px !important;
+    padding-top: 10px !important;
+}
+.avatar {
+    vertical-align: middle;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }

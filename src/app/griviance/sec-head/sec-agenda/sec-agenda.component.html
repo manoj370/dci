@@ -1,0 +1,104 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-2">
+                    <h5>On or After <span class="text-danger">* </span>:</h5>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <input type="date" class="form-control">
+                        </div>
+                        <div class="col-md-4 text-left">
+                            <button class="globalBtn acceptBtn">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+
+                <div class="col-md-12" *ngIf="show">
+                    <h5>Meeting List</h5>
+
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="theadRow thead-light">
+                                <tr>
+                                    <th>Meeting Date</th>
+                                    <th>Meeting Venue</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbodyRow">
+                                <tr *ngFor="let item of agendaListData">
+                                    <td>{{item.meetingDate }}</td>
+                                    <td>{{item.completeMeetingVenue}}
+                                    </td>
+                                    <td><span class="text-primary" (click)="getAgendaList(item)">
+                                      <i class="fas fa-eye"> </i></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-12" *ngIf="!show">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Agenda Items</h5>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <button class="globalBtn acceptBtn" style="width: 200px;" data-toggle="modal" data-target="#deletModal">Minutes Refined</button>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="theadRow thead-light">
+                                <tr>
+                                    <th>Item Number</th>
+                                    <th>Sub-Section</th>
+                                    <th>Subject</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbodyRow">
+                                <tr *ngFor="let item of agendaList">
+                                    <td>{{item.itemNumber }}</td>
+                                    <td>{{item.subsection}} </td>
+                                    <td>{{item.subject}} </td>
+                                    <td>
+                                        <span class="text-primary" [routerLink]="['../agendaList/viewAgenda','207','6']"> <i class="fas fa-eye"> </i></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="deletModal" class="modal fade">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 20px;border: none !important;">
+                    <h5 class="modal-title headingValue">Refine Minutes</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <hr style="margin: 0px !important;">
+                <div class="modal-body">
+                    <p>Do you really want to Submit?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="globalBtn submitBtn">Yes</button>
+                    <button type="button" class="globalBtn clearBtn" data-dismiss="modal">No</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

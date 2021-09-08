@@ -1,0 +1,26 @@
+input:focus {
+    color: black;
+}
+
+select:focus {
+    color: black;
+}
+.aseticcolor{
+    color: red;
+}
+.smallCard {
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2) !important;
+    transition: 0.3s !important;
+    margin: 5px 0;
+    padding: 10px;
+}
+
+.smallCard:hover {
+    box-shadow: 0 8px 10px 0 rgba(0, 0, 0, 0.2) !important;
+}
+.iconCard {
+    height: 40px;
+    width: 150px;
+    box-shadow: 1px 1px 5px #88888852;
+    border-radius: 5px;
+}

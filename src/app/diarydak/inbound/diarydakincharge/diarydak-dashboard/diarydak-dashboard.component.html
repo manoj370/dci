@@ -1,0 +1,428 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <form [formGroup]="searchForm">
+                <div class="row ">
+
+                    <div class="col-md-6">
+                        <h1 class="headingValue">R & D Section Receipt Dashboard</h1>
+
+                    </div>
+                    <!-- <button class="btn btn-primary" onclick="printDiv('printableArea')">
+                <i class="fa fa-print" aria-hidden="true"> Print</i></button> -->
+
+                    <!-- <div class="col-md-6" style=" text-align: end; ">
+                        <button type="button" class="btn btn-primary"
+                            style="cursor: pointer; "><span><i></i></span>&nbsp;Print</button>
+                    </div> -->
+
+                </div>
+                <br>
+
+                <div class="row">
+
+                    <div class="  col-md-3 ">
+                        <label>From:</label>
+                        <input type="date" class="form-control" formControlName="startDate" />
+                    </div>
+                    <div class="  col-md-3 ">
+                        <label>To:</label>
+
+                        <input type="date" class="form-control" formControlName="endDate" />
+                    </div>
+
+
+                    <div class="col-md-3 " >
+                        <label>Status:</label>
+                        <!-- (change)="getFilterValue($event.target.value)" -->
+                        <select class="form-control" formControlName="receiptStatus">
+                            <option value="" disabled selected>Select Status</option>
+                            <option *ngFor="let language of ReceiptStatuses" [value]="language.statusName">
+                                {{language.statusName}}</option>
+                        </select>
+                    </div>
+                    <hr>
+                    <!-- <option value="" disabled selected>Select Status</option>
+                    <option *ngFor="let status of receiptData" [value]="status.statusId">
+                        {{status.statusName}}
+                    </option> -->
+                    <!-- <option value="NEW">Created</option>
+                    <option value="FWD">Forwarded</option>
+                    <option value="ASG">Assigned</option>
+                    <option value="RSG">ReAssigned</option>
+                    <option value="RTN">Returned</option> -->
+
+
+
+                    <div class="col-md-3 ">
+                        <label>Language:</label>
+                        <select class="form-control" formControlName="receiptLanguage">
+                            <option value="" disabled selected>Select Language</option>
+                            <option *ngFor="let language of allLanguages" [value]="language.name">
+                                {{language.name}}</option>
+
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                   
+                    <div class="col-md-12 ">
+                        <button type="button" class="btn btn-primary" (click)="fetchResults()">Search</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-danger" (click)="resetSearch()">Reset</button>&nbsp;
+                    </div>
+                  
+                </div>
+            </form>
+            <br>
+
+            <!-- <div class="col-md-3 text-right">
+                    <label>From Date:</label>
+                    <input type="date" class="form-control" />
+                </div>
+                <div class="col-md-3 text-right">
+                    <label>To Date:</label>
+                    <input type="date" class="form-control" />
+                </div>
+
+
+                <div class="col-md-3 text-right" style=" margin-left: -18px; ">
+                    <select class="form-control" (change)="getFilterValue($event.target.value)">
+                        <option value="" disabled selected>Select Status</option>
+                        <option value="NEW">Created</option>
+                        <option value="FWD">Forwarded</option>
+                        <option value="ASG">Assigned</option>
+                        <option value="RSG">ReAssigned</option>
+                        <option value="RTN">Returned</option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-3 text-right ">
+                    <select class="form-control" (change)="getFilterValue($event.target.value)">
+                        <option value="" disabled selected>Select Language</option>
+                        <option value="NEW">Hindi</option>
+                        <option value="FWD">English</option>
+
+                    </select>
+
+                </div>
+                &nbsp; -->
+
+
+            <!-- Date Picker -->
+
+
+            <!-- <div class="col-md-3 text-right">
+                    <input type="text" ngxDaterangepickerMd placeholder="Select Date" (change)="datePicker($event)"
+                        style="width: 200px;" class="form-control " />
+                    <label class="fa fa-calendar fa-lg imagecalender calendar"></label>
+                </div>
+                &nbsp; -->
+            <!-- SEARCH BTN -->
+            <!-- <div class="col-md-3 ">
+                    <div class="icon-addon" style="height: 0;">
+                        <input type="text" placeholder="Search" class="form-control searchValue"
+                            [(ngModel)]="myProperty" (keyup)="searchValue(myProperty)"
+                            [ngModelOptions]="{standalone: true}">
+
+                        <label class="fas fa-search iconValue"></label>
+                    </div>
+
+                </div> -->
+
+            <!-- ADD   BUTTON -->
+            <!-- <div class="col-md-1">
+                    <button type="button" class="btn btn-success" routerLink="createReceipt">Add</button>
+
+                </div> -->
+            <!-- <div class="col-md-2 ">
+                        
+                </div>
+                <div class="col-md-3" >
+                   
+                   
+                   
+                </div> -->
+
+
+
+
+
+            <!-- <div class="row col-md-12" style="padding-top: 10px;padding-bottom:50px;"> -->
+            <!-- <div class="col-md-12"> -->
+
+            <!-- <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Reference No/File No</th>
+                                    <th>Dispatches/Recipets</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>DCI/ARPL/STD/fds/1/2020/2020-21</td>
+                                    <td>5</td>
+                                    <td>Created</td>
+                                    <td>
+                                        <i class="fas fa-eye" style="color:#74AEB5" data-toggle="collapse"
+                                            data-target="#demo"></i>&nbsp;
+                                        <i class="fas fa-edit" title="Edit" style="color:#74AEB5"
+                                            (click)="createReceiptPage('DCI/ARPL/STD/fds/1/2020/2020-21')"></i>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td id="demo" class="collapse" colspan="4">
+                                        <table class="table table-bordered table-hover">
+                                            <thead style="background-color: #cae9fb !important;
+                                            color: #3D78BE !important;
+                                            font-size: var(--main-font-size);">
+                                                <th>Ref.ID </th>
+                                                <th>Type</th>
+                                                <th>Sender Name </th>
+                                                <th>Date </th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>DCI/ARPL/STD/fds/1/2020/2020-21</td>
+                                                    <td>Dispatch</td>
+                                                    <td>MukeshKumar </td>
+                                                    <td>23-09-2020</td>
+                                                    <td>Created</td>
+                                                    <td>
+                                                        <i class="fas fa-eye" style="color:#74AEB5"></i>&nbsp;
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>DCI/ARPL/STD/fds/1/2020/2020-21</td>
+                                                    <td>Receipt</td>
+                                                    <td>Debanand </td>
+                                                    <td>23-09-2020</td>
+                                                    <td>Created</td>
+                                                    <td>
+                                                        <i class="fas fa-eye" style="color:#74AEB5"></i>&nbsp;
+
+                                                    </td>
+                                                </tr>
+
+
+                                            </tbody>
+                                        </table>
+
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>DCI/ARPL/STD/sub/2/2020/2020-21</td>
+                                    <td>5</td>
+                                    <td>Created</td>
+                                    <td>
+                                        <i class="fas fa-eye" style="color:#74AEB5" (click)="viewSubSection(2)">
+                                        </i>&nbsp;
+                                        <i class="fas fa-edit" title="Create NoteSheet For this file"
+                                            style="color:#74AEB5"></i>
+                                        <tr>
+                                                                    <div *ngIf="sectionId===2&&sectionVisible">
+                                                                        2
+                                                                    </div>
+                                                                </tr>
+                                    </td>
+
+
+                                </tr>
+
+                                <td>DCI/ARPL/SS/subref/3/2020/2020-21</td>
+                                <td>5</td>
+                                <td>Created</td>
+                                <td>
+                                    <i class=" fas fa-eye" style="color:#74AEB5"></i>&nbsp;
+                                    <i class="fas fa-edit" title="Create NoteSheet For this file"
+                                        style="color:#74AEB5"></i>
+                                </td>
+
+                                <tr>
+                                    <td>DCI/ARPL/SS/subrefernce/4/2020/2020-21</td>
+                                    <td>3</td>
+                                    <td>Created</td>
+                                    <td>
+                                        <i class="fas fa-eye" style="color:#74AEB5"></i>&nbsp;
+                                        <i class="fas fa-edit" title="Create NoteSheet For this file"
+                                            style="color:#74AEB5"></i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>DCI/ARPL/STD/subject/5/2020/2020-21</td>
+                                    <td>4</td>
+                                    <td>Created</td>
+                                    <td>
+                                        <i class="fas fa-eye" style="color:#74AEB5"></i>&nbsp;
+                                        <i class="fas fa-edit" title="Create NoteSheet For this file"
+                                            style="color:#74AEB5"></i>
+                                    </td>
+                                </tr>
+
+
+
+
+                            </tbody>
+                        </table>
+
+                    </div> -->
+
+
+
+
+            <div class="row" style="padding-top: 10px;padding-bottom: 50px;">
+
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <!-- <th *ngFor="let item of dairyDak.table">{{item}} </th> -->
+                                    <th sortable="receiptId" (sort)="onSort($event)">Receipt No</th>
+                                    <th sortable="name" (sort)="onSort($event)">Eng/Hin</th>
+                                    <th sortable="createdDate" (sort)="onSort($event)">Date</th>
+                                    <th sortable="name" (sort)="onSort($event)">Via</th>
+                                    <!-- <th>Receipt Type</th> -->
+                                    <th sortable="receiptSubject" (sort)="onSort($event)">Subject</th>
+                                    <!-- <th>From City</th> -->
+                                    <!-- <th>Assigned To Whom</th> -->
+                                    <th sortable="statusName" (sort)="onSort($event)">Status</th>
+                                    <th>Action</th>
+                                    <!-- <th>Status</th> -->
+                                    <!-- <th>Ref.Id</th>
+                                            <th>Receipt Type</th>
+                                            <th>Sender Name</th>
+                                            <th>Subject</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                            <th>Action</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="cursor: pointer;" *ngFor="let list of receiptData">
+
+
+                                    <td>{{list.receiptId}}</td>
+                                    <td>{{list.receiptLanguageId.name}}</td>
+                                    <td>{{list.createdDate }} </td>
+                                    <td>{{list.receiptVia.name}}</td>
+                                    <td>{{list.receiptSubject | titlecase}} </td>
+                                    <!-- <td>{{list.senderAddress.city}}</td> -->
+                                    <!-- <td>{{list.receiptToAddress}}</td> -->
+
+                                    <!-- <td>{{list.dakStatus.statusName === 'Disposed' ? 'Finalized' :list.dakStatus.statusName }} </td> -->
+                                    <td [innerHTML]="list.forwardSecStatus">{{list.forwardSecStatus !==null ?(list.forwardSecStatus):'-'}} </td>
+                                    {{chartMethod(list.forwardSecStatus)}}
+                                    <td align="center" >
+                                    <span>
+                                        <i class="fas fa-edit" style="color:#74AEB5" title="Edit" *ngIf="showreturnBtn" (click)="createReceiptPage(list.receiptId)">
+                                        </i> &nbsp;&nbsp;
+                                        <i class="fas fa-eye" style="color:#74AEB5" title="view"  (click)="viewReceipt(list.receiptId)">
+                                        </i>
+                                    </span>
+                                    <span *ngIf="list.dakStatus ===null">-</span>
+                                    </td>
+
+
+                                    <!-- <td>
+                                        <span class="text-warning" style="color: white;"
+                                            *ngIf="list.dakStatusStatusName === 'Forwarded'">{{list.dakStatusStatusName}}</span>
+                                        <span class="text-warning" style="color: white;"
+                                            *ngIf="list.dakStatusStatusName === 'Processing'">{{list.dakStatusStatusName}}</span>
+                                        <span class="text-warning" class="text-success" style="color: white;"
+                                            *ngIf="list.dakStatusStatusName === 'Assigned' || list.dakStatusStatusName === 'Reassigned'">{{list.dakStatusStatusName}}</span>
+                                        <span class="text-secondary" style="color: white;"
+                                            *ngIf="list.dakStatusStatusName === 'Returned'">{{list.dakStatusStatusName}}</span>
+                                        <span class="text-info" style="color: white;"
+                                            *ngIf="list.dakStatusStatusName === 'Created'|| list.dakStatusStatusName === 'Disposed'">{{list.dakStatusStatusName}}</span>
+                                    </td> -->
+
+                                </tr>
+
+                                <!-- <tr *ngfor="let list of receiptdata">
+
+                                    <td>{{list.receiptId}}</td>
+                                    <td>receiptLanguageId</td>
+                                    <td>{{list.createdDate }} </td>
+                                    <td>receiptVia</td>
+                                    <td>{{list.receiptSubject | titlecase}} </td>
+                                    <td>list.Receipt to address</td>
+                                    <td>{{list.receiptToAddress}}</td>
+
+
+
+                                    <td>
+                                        <i class="fas fa-edit" style="color:#74AEB5" title="Edit"
+                                            (click)="createReceiptPage(1)">
+                                        </i>&nbsp;
+                                    </td>
+                                </tr> -->
+
+
+                            </tbody>
+                        </table>
+
+
+                        <div class="col-md-12 text-right" *ngIf="responsePageCount>1">
+                            <ul class="pagination float-right">
+                                <li class="page-item hoverActive"><a class="page-link " [class.my-class]="pageId === 0" (click)="previ()"><i class="fas fa-chevron-left"> </i></a></li>
+                                <li class="page-item"><a class="page-link">{{pageId+1}}/{{responsePageCount}}</a>
+                                </li>
+                                <li class="page-item hoverActive"><a class="page-link" [class.my-class]="pageId+1 === responsePageCount" (click)="next()"><i
+                                            class="fas fa-chevron-right"></i></a></li>
+                            </ul>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Othersection_Dispatches_For_Me</h4>
+
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p> Sender</p>
+
+                            <p>
+                                Concatenated File Number
+                            </p>
+                            <p>Date Received</p>
+                            <p>Subject</p>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- </div> -->
+            <!-- </div> -->
+
+
+        </div>
+    </div>
+</div>

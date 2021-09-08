@@ -1,0 +1,532 @@
+<div class="row" *ngIf="admissionDetails">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+
+                <div class="col-md-6">
+                    <h5 class="headingValue">{{admissionDetails.studentAdmission.firstName}} {{admissionDetails.studentAdmission.lastName}}
+                        <span class="badge badge-pill badge-success" style="font-size: 70%;">
+                            {{admissionDetails.studentAdmission.studentStatus !== null ? (admissionDetails.studentAdmission.studentStatus.statusName) : '-'}}</span>
+
+                    </h5>&nbsp;
+                </div>
+                <div class="col-md-6 text-right">
+                    <button type="button" *ngIf="showHide" (click)="viewPopupData()" class="globalBtn acceptBtn" data-toggle="modal" data-target="#promote">Promote
+                    </button>&nbsp;
+                    <button type="button" *ngIf="btnName === 'Terminate'" class="globalBtn clearBtn" data-toggle="modal" data-target="#terminate">Terminate
+                    </button>&nbsp;
+                    <button type="button" class="globalBtn clearBtn" [routerLink]="['./../../coursecompletionStudentList']">Back</button>
+                </div>
+            </div>
+            <hr>
+            <div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Personal Information</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <b><label>Student Name </label></b>
+                        <p>{{admissionDetails.studentAdmission.firstName}} {{admissionDetails.studentAdmission.lastName}}
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>Father Name</label></b>
+                        <p>{{admissionDetails.studentAdmission.fatherName}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>Gender</label></b>
+                        <p>{{admissionDetails.studentAdmission.gender}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <b><label>Date Of Birth </label></b>
+                        <p>{{admissionDetails.studentAdmission.dateOfBirth}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>Email</label></b>
+                        <p>{{admissionDetails.studentAdmission.emailId}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>Mobile Number</label></b>
+                        <p>{{admissionDetails.studentAdmission.phoneNumber}}</p>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                    <div class="col-md-4">
+                        <b><label>Alternate Mobile Number</label></b>
+                        <p>8695412362</p>
+                    </div>
+
+                </div> -->
+                <div>
+
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Academic Information</h5>
+                    </div>
+                </div>
+                <!-- 
+                <div id="accordion" class="accordion">
+                    <div class="card" *ngFor="let student of courseProgress">
+                        <div class="card-header" id="{{student.headingValue}}">
+                            <h2 class="mb-0">
+                                <button class="d-flex align-items-center justify-content-between btn btn-link" data-toggle="collapse" [attr.data-target]="'#' + student.studentPromotedFrom" aria-expanded="true" aria-controls="collapseOne">
+                                    {{student.studentPromotedFrom}}
+                                    <span class="fa-stack fa-sm">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="{{student.studentPromotedFrom}}" class="collapse" [attr.aria-labelledby]="'#' + student.studentPromotedFrom" data-parent="#accordion">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <h5 class="header">{{student.label}} </h5>
+                                    </div>
+
+                                </div>
+                                <hr>
+
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <div>
+
+                    <div *ngFor="let student of courseProgress">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 class="headingValue">{{student.studentPromotedFrom}}</h5>
+                            </div>
+                            <hr>
+                            <!-- <div class="row"> -->
+                            <div class="col-md-3">
+                                <b><label>Year</label></b>
+                                <p>{{student.studentPromotedFrom}}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <b><label>Start Date </label></b>
+                                <p> {{student.createdDate}}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <b><label>End Date </label></b>
+                                <p>{{student.promotedDate}}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <b><label>Status </label></b>
+                                <p>{{student.status !== null ? student.status : '-'}}</p>
+                            </div>
+                        </div>
+
+
+                        <!-- <div class=" bootstrap snippet">
+                        <div class="div">
+                            <div class="col-sm-12" style="padding: 0">
+                                <div class="panel-group drop-accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingOne">
+                                            <h4 class="panel-title">
+                                                <a class="collapse-controle" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                              1st Year
+                                                <button class="d-flex align-items-center justify-content-between btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                     <span class="expand-icon-wrap">
+                                                    <span class="fa-stack fa-sm">
+                                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                                        <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+                                                    </span>
+                                                </span>
+                                                </button>
+                                            </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <b><label>Year</label></b>
+                                                        <p>1st Year</p>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <b><label>Start Date </label></b>
+                                                        <p> 01-07-16</p>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <b><label>End Date </label></b>
+                                                        <p>01-07-17</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <b><label>Status </label></b>
+                                                        <p>Passed</p>
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingTwo">
+                                            <h4 class="panel-title">
+                                                <a class="collapse-controle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                   2nd Year
+                                                     <button class="d-flex align-items-center justify-content-between btn btn-link" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                                     <span class="expand-icon-wrap">
+                                                    <span class="fa-stack fa-sm">
+                                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                                        <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+                                                    </span>
+                                                </span>
+                                                </button>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" aria-expanded="false" style="height: 0px;">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <b><label>Year</label></b>
+                                                        <p>2nd Year</p>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <b><label>Start Date </label></b>
+                                                        <p> 02-07-18 </p>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <b><label>End Date </label></b>
+                                                        <p>01-07-19</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <b><label>Status </label></b>
+                                                        <p>Passed</p>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingTwo">
+                                            <h4 class="panel-title">
+                                                <a class="collapse-controle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                   3rd Year
+                                     <button class="d-flex align-items-center justify-content-between btn btn-link" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                                     <span class="expand-icon-wrap">
+                                    <span class="fa-stack fa-sm">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </span>
+                                </button>
+                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading" aria-expanded="false" style="height: 0px;">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <b><label>Year</label></b>
+                                                        <p>3rd Year</p>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <b><label>Start Date </label></b>
+                                                        <p>02-07-19</p>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <b><label>End Date </label></b>
+                                                        <p>01-07-24 </p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <b><label>Status </label></b>
+                                                        <p>Passed</p>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingTwo">
+                                            <h4 class="panel-title">
+                                                <a class="collapse-controle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                   4th Year
+                                     <button class="d-flex align-items-center justify-content-between btn btn-link" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseOne">
+                                     <span class="expand-icon-wrap">
+                                    <span class="fa-stack fa-sm">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </span>
+                                </button>
+                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" aria-expanded="false" style="height: 0px;">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <b><label>Year</label></b>
+                                                        <p>4th Year</p>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <b><label>Start Date </label></b>
+                                                        <p>02-7-24</p>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <b><label>End Date </label></b>
+                                                        <p>02-07-25</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <b><label>Status </label></b>
+                                                        <p>Passed</p>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingTwo">
+                                            <h4 class="panel-title">
+                                                <a class="collapse-controle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                               Intern
+                                     <button class="d-flex align-items-center justify-content-between btn btn-link" data-toggle="collapse" data-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
+                                     <span class="expand-icon-wrap">
+                                    <span class="fa-stack fa-sm">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </span>
+                                </button>
+                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" aria-expanded="false" style="height: 0px;">
+                                            <div class="panel-body">
+                                                <div class="row">
+
+                                                    <div class="col-md-4">
+                                                        <b><label>Start Date </label></b>
+                                                        <p> 02-07-26</p>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <b><label>End Date </label></b>
+                                                        <p></p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <b><label>Status </label></b>
+                                                        <p></p>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    </div>
+                    <hr>
+                    <!-- /////// -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="headingValue">Admission Information</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <b><label>NEET Percentile </label></b>
+                            <p>{{admissionDetails.studentAdmission.studentNeetResultBDSDetails.neetPercentile}} %</p>
+                        </div>
+                        <div class="col-md-4">
+                            <b><label>Admission Date </label></b>
+                            <p>{{admissionDetails.studentAdmission.admissionDate}}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <b><label>Admission Quota </label></b>
+                            <p>{{admissionDetails.studentAdmission.studentAdmissionQuota.name}}</p>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <b><label>Course </label></b>
+                            <p>UG</p>
+                        </div>
+
+                        <div class="col-md-4">
+                            <b><label>Academic Year </label></b>
+                            <p>{{admissionDetails.studentAdmission.academicYear}}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="headingValue">Evidence Documents</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-6" *ngFor="let document of admissionDetails.studentAdmission.studentDocuments">
+                            <div class="iconCard">
+                                <div class="iconCard" (click)="download(document.documentId)">
+                                    <span><i class="far fa-file-alt docIcons"></i> {{document.documentLocation}}</span>
+                                    <a href="{{downloadUrl}}" class="downloadView">
+                                        <i class="fas fa-cloud-download-alt" style=" cursor: pointer;color: #3D78BE;"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- promote Modal Starts -->
+    <!-- The Modal -->
+    <div class="modal" id="promote">
+        <div class="modal-dialog" style="max-width: 47%;">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title headingValue">Promote</h4>
+                    <button type="button" class="close" data-dismiss="modal" #dismissModal>&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form [formGroup]="promotedForm">
+                        <div class="row">
+                            <input type="text" *ngIf="pursingStage !== 'Internship'" class="form-control" formControlName="pursuingYear">
+                            <input type="text" *ngIf="pursingStage === 'Internship'" class="form-control" placeholder="Passed-Out" disabled>
+
+                        </div>
+                        <hr>
+
+                        <div class="row" *ngIf="pursingStage !== 'Internship'">
+                            <div class="col-md-4">
+                                <b><label>Pursuing Year </label></b>
+                                <p *ngIf="pursingStage">{{pursingStage}}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <b><label>Total Marks</label></b>
+                                <input type="text" maxlength="4" class="form-control" formControlName="totalMarks" (keyup)="percentage()" minlength="3" maxlength="4" [ngClass]="{ 'is-invalid':  submitted && f.totalMarks.errors }">
+                                <div *ngIf=" submitted && f.totalMarks.errors" class="invalid-feedback">
+                                    <div *ngIf="f.totalMarks.errors.required">
+                                        Enter Enter Total Marks
+                                    </div>
+                                    <div *ngIf="f.totalMarks.errors?.maxlength">
+                                        Please Enter 3 or 4 Digits Only
+                                    </div>
+                                    <div *ngIf="f.totalMarks.errors?.minlength">
+                                        Please Enter 3 or 4 Digits Only
+                                    </div>
+                                    <div *ngIf="f.totalMarks.errors?.pattern">
+                                        Please Enter Digits Only
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <b><label>Marks Obtained </label></b>
+                                <input type="text" class="form-control" formControlName="marksObtained" (keyup)="percentage()" minlength="3" maxlength="4" [ngClass]="{ 'is-invalid':  submitted && f.marksObtained.errors }">
+                                <div *ngIf=" submitted && f.marksObtained.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && f.marksObtained.errors.required">
+                                        Enter Please Enter Marks Obtained
+                                    </div>
+                                    <div *ngIf="f.marksObtained.errors?.maxlength">
+                                        Please Enter 3 or 4 Digits Only
+                                    </div>
+                                    <div *ngIf="f.marksObtained.errors?.minlength">
+                                        Please Enter 3 or 4 Digits Only
+                                    </div>
+                                    <div *ngIf="f.marksObtained.errors?.pattern">
+                                        Please Enter Digits Only
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-2">
+                                <b><label>Percentage </label></b>
+                                <input type="number" class="form-control" formControlName="percentage">
+                            </div>
+                        </div>
+
+                        <div class="row" *ngIf="pursingStage === 'Internship'">
+                            <label>Upload Internship Certificate </label>
+                            <input type="file" placeholder="" class="form-control" (change)="onSelectFile($event)">
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="globalBtn submitBtn" (click)="promoteStudent()"> Promote</button>
+                    <button type="button" class="globalBtn clearBtn" data-dismiss="modal" style="cursor: pointer;">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- promote Modal Ends -->
+
+    <!-- The Modal -->
+    <div class="modal" id="terminate">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title headingValue">Terminate</h4>
+                    <button type="button" class="close" data-dismiss="modal" #terminateDismissModal>&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <label>Comments <span class="aseticcolor">*</span></label>
+                            <textarea rows="5" cols="20" class="form-control" [(ngModel)]="comment" [ngModelOptions]="{standalone: true}" placeholder="Write Comments"></textarea>
+                        </div><br>
+
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="globalBtn submitBtn" [disabled]="comment === ''" (click)="terminatedStudent()"> Terminate</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- promote Modal Ends -->

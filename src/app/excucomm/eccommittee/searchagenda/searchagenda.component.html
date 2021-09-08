@@ -1,0 +1,88 @@
+<div class="row">
+    <div class="col-md-12" style="height: 100vh;">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-7">
+                    <h5 class="headingValue">Search Decision</h5>
+                </div>
+            </div>
+            <hr>
+
+            <div class="row">
+                <form [formGroup]="searchForm">
+
+                    <div class="form-group row">
+                        <div class="col-md-6" style="border-right: 1px solid #eee">
+                            <input type="text" class="form-control" placeholder="Enter Keyword" formControlName="searchText">
+                            <div *ngIf=" submitted && f.searchText.errors" class="invalid-feedback">
+                                <div *ngIf=" submitted && f.searchText.errors.required">
+                                    Please Enter Search Value
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <ng-multiselect-dropdown name="city" [placeholder]="'Select Meeting Date'" (onSelectAll)="onSelectAll($event)" [settings]="dropdownSettings" [data]="meetingDatesList" (onSelect)="onItemSelect($event)" formControlName="dateValue">
+                            </ng-multiselect-dropdown>
+                            <!-- <app-multiselect [list]="meetingDatesList" (shareCheckedList)="shareCheckedList($event)" (shareIndividualCheckedList)="shareIndividualCheckedList($event)"></app-multiselect> -->
+                            <div *ngIf=" submitted && f.dateValue.errors" class="invalid-feedback">
+                                <div *ngIf=" submitted && f.dateValue.errors.required">
+                                    Please Select Date
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2 text-left">
+                            <button class="globalBtn acceptBtn" (click)="searchData()" [disabled]="!searchForm.valid">Search</button>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <div class="form-check">
+                                <div class="custom-control custom-checkbox mb-3 custom-control-inline" *ngFor="let item of checkedList">
+                                    <input type="checkbox" class="custom-control-input" id="{{item.label}}" name="{{item.label}}" (change)="checkChange($event)" formControlName="optionValue">
+                                    <label class="custom-control-label" for="{{item.label}}">{{item.label}}</label>
+                                    <div *ngIf=" submitted && f.optionValue.errors" class="invalid-feedback">
+                                        <div *ngIf=" submitted && f.optionValue.errors.required">
+                                            Please Choose Any Option
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="col-md-12">
+                    <hr>
+                    <table id="userTable" class="table table-bordered table-hover" *ngIf="searchResult && viewTable===true">
+                        <thead class="thead-light">
+                            <tr>
+                                <!-- <th>Meeting Date</th> -->
+                                <th>Agenda Item No</th>
+                                <th>Subject</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of searchResult">
+
+                                <!-- <td>{{item.meetingDate!==null ? (item.meetingDate) : '-'}}</td> -->
+                                <td>{{item.agendaCategroyItemRefNumber}}</td>
+                                <td>{{item.agendaItemSubject}}</td>
+                                <td>
+                                    <span [routerLink]="['../arplmatterview',item.agendaId, '6','Search']"><i class="fa fa-eye"
+                                            style="color: green"></i></span>
+
+                                </td>
+                            </tr>
+                            <tr *ngIf="searchResult.length === 0">
+                                <td colspan="4" style="text-align: center;padding: 50px !important;">No Data Available in Table</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,67 @@
+.accordion .card,
+.accordion .card:last-child .card-header {
+    border: none;
+}
+
+.accordion .fa-stack {
+    font-size: 15px;
+}
+
+.accordion .btn {
+    width: 100%;
+    font-weight: bold;
+    color: #3D78BE;
+    padding: 0;
+}
+
+.accordion .btn-link:hover,
+.accordion .btn-link:focus {
+    text-decoration: none;
+    box-shadow: none;
+}
+
+.accordion li+li {
+    margin-top: 10px;
+}
+
+.globalBtn {
+    width: 150px;
+}
+
+.smallCard {
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2) !important;
+    transition: 0.3s !important;
+    margin: 5px 0;
+    padding: 10px;
+}
+
+.smallCard:hover {
+    box-shadow: 0 8px 10px 0 rgba(0, 0, 0, 0.2) !important;
+}
+
+.removeIcon {
+    color: #3D78BE;
+    cursor: pointer;
+}
+
+::-webkit-input-placeholder {
+    /* Edge */
+    text-align: right;
+}
+
+ :-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    text-align: right;
+}
+
+ ::placeholder {
+    text-align: right;
+}
+
+.header {
+    text-transform: lowercase !important;
+}
+
+.header::first-letter {
+    text-transform: uppercase !important;
+}

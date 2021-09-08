@@ -1,0 +1,86 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-9">
+                    <h5 class="headingValue">Inspection Report</h5>
+                </div>
+            </div>
+            <hr />
+
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>From Date  <span class="errorColor">*</span></label>
+                        <input type="date" class="form-control" (change)="seleceteddate($event)">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>To Date <span class="errorColor">*</span></label>
+                        <input type="date" class="form-control" [min]="fromdate" [(ngModel)]="todate">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>State  <span class="errorColor">*</span></label>
+                        <select class="custom-select-sm" class="form-control" (change)="getCollegeName($event)">
+                            <option value="" disabled selected style="color:orange">Select State</option>
+                            <option *ngFor="let ct of allStates" [value]="ct.stateName">
+                                {{ct.stateName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>College  <span class="errorColor">*</span></label>
+                        <select class="custom-select-sm" class="form-control" [(ngModel)]="collegeId">
+                            <option value="" disabled selected style="color:orange">Select College</option>
+                            <option *ngFor="let cs of collbyStates" [value]="cs.collegeId">
+                                {{cs.collegeName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button class="globalBtn acceptBtn" (click)="getReports()">Search</button>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th *ngFor="let theaders of tableheaders">{{theaders}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>112233</td>
+                                    <td>SRM Dental College</td>
+                                    <td>Ram Veer , Ravi</td>
+                                    <td>10-05-2020</td>
+                                    <td>
+                                        <a href="./../../../../assets/profoma/IPDI-2006-50-Starting-final.html?abcd={{staticData}}" target="_blank"> View</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-12 text-right" *ngIf="pageCount>1">
+                    <ul class="pagination float-right">
+                        <li class="page-item hoverActive"><a class="page-link " [class.my-class]="rowId === 0" (click)="previ()"><i class="fas fa-chevron-left"> </i></a></li>
+                        <li class="page-item"><a class="page-link">{{rowId+1}}/{{pageCount}}</a></li>
+                        <li class="page-item hoverActive"><a class="page-link" [class.my-class]="rowId+1 === pageCount" (click)="next()"><i class="fas fa-chevron-right"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>

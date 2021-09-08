@@ -1,0 +1,138 @@
+<div class="row" *ngIf="admissionDetails">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="headingValue">{{admissionDetails.studentAdmission.firstName}} {{admissionDetails.studentAdmission.lastName}}
+                        <span class="badge badge-pill badge-success" style="font-size: 70%;">
+                            {{admissionDetails.studentAdmission.studentStatus !== null ? (admissionDetails.studentAdmission.studentStatus.statusName) : '-'}}</span>
+                    </h5>
+                </div>
+                <div class="col-md-6">
+                    <button class="globalBtn clearBtn">Back</button>
+                    <!--  viewCollegeList/18/Meghana%20BDS%20College -->
+                </div>
+            </div>
+            <hr>
+            <div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Persodnal Information</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <b><label>Student Name </label></b>
+                        <p>{{admissionDetails.studentAdmission.firstName}} {{admissionDetails.studentAdmission.lastName}}
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>Father Name</label></b>
+                        <p>{{admissionDetails.studentAdmission.fatherName}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>Gender</label></b>
+                        <p>{{admissionDetails.studentAdmission.gender}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <b><label>Date Of Birth </label></b>
+                        <p>{{admissionDetails.studentAdmission.dateOfBirth}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>Email</label></b>
+                        <p>{{admissionDetails.studentAdmission.emailId}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>Mobile Number</label></b>
+                        <p>{{admissionDetails.studentAdmission.phoneNumber}}</p>
+                    </div>
+                </div>
+                <div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Academic Information</h5>
+                    </div>
+                </div>
+                <div>
+                    <div *ngFor="let student of courseProgress">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 class="headingValue">{{student.studentPromotedFrom}}</h5>
+                            </div>
+                            <hr>
+                            <!-- <div class="row"> -->
+                            <div class="col-md-3">
+                                <b><label>Year</label></b>
+                                <p>{{student.studentPromotedFrom}}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <b><label>Start Date </label></b>
+                                <p> {{student.createdDate}}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <b><label>End Date </label></b>
+                                <p>{{student.promotedDate}}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <b><label>Status </label></b>
+                                <p>{{student.status !== null ? student.status : '-'}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr>
+                    <!-- /////// -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="headingValue">Admission Information</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <b><label>NEET Percentile </label></b>
+                            <p>{{admissionDetails.studentAdmission.studentNeetResultBDSDetails.neetPercentile}} %</p>
+                        </div>
+                        <div class="col-md-4">
+                            <b><label>Admission Date </label></b>
+                            <p>{{admissionDetails.studentAdmission.admissionDate}}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <b><label>Admission Quota </label></b>
+                            <p>{{admissionDetails.studentAdmission.studentAdmissionQuota.name}}</p>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <b><label>Course </label></b>
+                            <p>UG</p>
+                        </div>
+
+                        <div class="col-md-4">
+                            <b><label>Academic Year </label></b>
+                            <p>{{admissionDetails.studentAdmission.academicYear}}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="headingValue">Evidence Documents</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-2" *ngIf="admissionDetails.studentAdmission.studentDocuments">
+                        <div class="iconCard" *ngFor="let document of admissionDetails.studentAdmission.studentDocuments">
+                            <span><i class="far fa-file-alt docIcons"></i> File 1</span>
+                            <a class="downloadView">
+                                <i class="fas fa-cloud-download-alt" style=" cursor: pointer;color: #3D78BE;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

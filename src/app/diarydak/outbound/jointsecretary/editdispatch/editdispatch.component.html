@@ -1,0 +1,556 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="headingValue">Edit NoteSheet/Letter</h5>
+                </div>
+                <div class="col-md-6 text-right">
+                    <!-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#responseModal">Response
+                        To
+                        Correction</button>&nbsp;
+                    <button type="button" class="btn btn-primary backbtn" (click)="back()"><span><i
+                                class="fas fa-angle-left"></i></span>&nbsp;Back</button> -->
+
+                </div>
+            </div>
+            <hr>
+            <form [formGroup]="edittForm">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Section Reference Number <span class="aseticcolor">*</span></label>
+                        <input type="text" class="form-control" readonly placeholder="Sec/Subsec/year/no"
+                            formControlName="dfno"
+                            [ngClass]="{ 'is-invalid': f.dfno.invalid && (f.dfno.dirty || f.dfno.touched) }">
+                        <div *ngIf="edittForm.controls['dfno'].hasError('required') && edittForm.controls['dfno'].touched"
+                            class="failed-validation" class="errorColor">
+                            Section Reference Number Required
+                        </div>
+                        <div *ngIf="edittForm.controls['dfno'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid Section Reference Number
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Section <span class="aseticcolor">*</span></label>
+                        <select class="form-control" aria-placeholder="Select Section"
+                            (change)="sectionId($event.target.value)" formControlName="section" [ngClass]="{ 'is-invalid': f.section.invalid && 
+                            (f.section.dirty || f.section.touched) }">
+                            <option value="" selected disabled>Select Section</option>
+                            <option *ngFor="let section of dcisections" [value]="section.sectionId">
+                                {{section.sectionName}}</option>
+                        </select>
+                        <div *ngIf="edittForm.controls['section'].hasError('required') && edittForm.controls['section'].touched"
+                            class="failed-validation" class="errorColor">
+                            Section Required
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Sub Section <span class="aseticcolor">*</span></label>
+                        <select class="form-control" aria-placeholder="Select Section" formControlName="subsection"
+                            (change)="subsectionId($event.target.value)" [ngClass]="{ 'is-invalid': f.subsection.invalid && 
+                        (f.subsection.dirty || f.subsection.touched) }">
+                            <option value="" selected disabled>Select Section</option>
+                            <option *ngFor="let section of subsections" [value]="section.subSectionId">{{section.name}}
+                            </option>
+                        </select>
+                        <div *ngIf="edittForm.controls['subsection'].hasError('required') && edittForm.controls['subsection'].touched"
+                            class="failed-validation" class="errorColor">
+                            Sub Section Required
+                        </div>
+                    </div>
+
+
+                </div><br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Subject <span class="aseticcolor">*</span></label><br>
+                        <input type="text" class="form-control" placeholder="Subject" formControlName="subject"
+                            [ngClass]="{ 'is-invalid': f.subject.invalid && 
+(f.subject.dirty || f.subject.touched) }">
+                        <div *ngIf="edittForm.controls['subject'].hasError('required') && edittForm.controls['subject'].touched"
+                            class="failed-validation" class="errorColor">
+                            Subject Required
+                        </div>
+                        <div *ngIf="edittForm.controls['subject'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid Subject
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Dispatch Date <span class="aseticcolor">*</span></label><br>
+                        <input type="date" class="form-control" placeholder="Date" formControlName="year" [ngClass]="{ 'is-invalid': f.year.invalid && 
+(f.year.dirty || f.year.touched) }">
+                        <div *ngIf="edittForm.controls['year'].hasError('required') && edittForm.controls['year'].touched"
+                            class="failed-validation" class="errorColor">
+                            Dispatch Date Required
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Dispatch Via <span class="aseticcolor">*</span></label>
+                        <select class="form-control" aria-placeholder="Select type"
+                            (change)="dispatchId($event.target.value)" formControlName="despatchvia" [ngClass]="{ 'is-invalid': f.despatchvia.invalid && 
+                            (f.despatchvia.dirty || f.despatchvia.touched) }">
+                            <option value="" selected disabled>Select Type</option>
+                            <option *ngFor="let type of dispatchtypes" [value]="type.dispatchTypeId">{{type.name}}
+                            </option>
+                        </select>
+                        <div *ngIf="edittForm.controls['despatchvia'].hasError('required') && edittForm.controls['despatchvia'].touched"
+                            class="failed-validation" class="errorColor">
+                            Dispatch Type Required
+                        </div>
+                    </div>
+                </div><br>
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <label>Dispatch Item <span class="aseticcolor">*</span></label>
+                        <select class="form-control" aria-placeholder="Select Item"
+                            (change)="dispatchItem($event.target.value)" formControlName="despatchitem" [ngClass]="{ 'is-invalid': f.despatchitem.invalid && 
+(f.despatchitem.dirty || f.despatchitem.touched) }">
+                            <option value="" selected disabled>Select Item</option>
+                            <option *ngFor="let item of dispatchitems" [value]="item.dispatchItemTypeId">{{item.name}}
+                            </option>
+                        </select>
+                        <div *ngIf="edittForm.controls['despatchitem'].hasError('required') && edittForm.controls['despatchitem'].touched"
+                            class="failed-validation" class="errorColor">
+                            Dispatch Item Required
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Sender Section</h5>
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Sender Name <span class="aseticcolor">*</span></label>
+
+                        <input type="text" class="form-control" placeholder="Sender Name" formControlName="sendername"
+                            [ngClass]="{ 'is-invalid': f.sendername.invalid && 
+                        (f.sendername.dirty || f.sendername.touched) }">
+                        <div *ngIf="edittForm.controls['sendername'].hasError('required') && edittForm.controls['sendername'].touched"
+                            class="failed-validation" class="errorColor">
+                            Sender Name Required
+                        </div>
+                        <div *ngIf="edittForm.controls['sendername'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid Sender Name
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>File Heading <span class="aseticcolor">*</span></label><br>
+                        <input type="text" class="form-control" placeholder="File Heading" formControlName="fileheading"
+                            [ngClass]="{ 'is-invalid': f.fileheading.invalid && 
+(f.fileheading.dirty || f.fileheading.touched) }">
+                        <div *ngIf="edittForm.controls['fileheading'].hasError('required') && edittForm.controls['fileheading'].touched"
+                            class="failed-validation" class="errorColor">
+                            File Heading Required
+                        </div>
+                        <div *ngIf="edittForm.controls['fileheading'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid File Heading
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Sending Section <span class="aseticcolor">*</span></label>
+                        <select class="form-control" aria-placeholder="Select Section"
+                            (change)="sectionId($event.target.value)" formControlName="sendingsection" [ngClass]="{ 'is-invalid': f.sendingsection.invalid && 
+(f.sendingsection.dirty || f.sendingsection.touched) }">
+                            <option value="" selected disabled>Select Section</option>
+                            <option *ngFor="let section of dcisections" [value]="section.sectionId">
+                                {{section.sectionName}}</option>
+                        </select>
+                        <div *ngIf="edittForm.controls['sendingsection'].hasError('required') && edittForm.controls['sendingsection'].touched"
+                            class="failed-validation" class="errorColor">
+                            Sender Section Required
+                        </div>
+                    </div>
+                </div><br>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Designation <span class="aseticcolor">*</span></label><br>
+                        <select class="form-control" aria-placeholder="Select Designation"
+                            (change)="designationId($event.target.value)" formControlName="designation" [ngClass]="{ 'is-invalid': f.designation.invalid && 
+(f.designation.dirty || f.designation.touched) }">
+                            <option value="" selected disabled>Select Designation</option>
+                            <option *ngFor="let des of designations" [value]="des.designationId">{{des.designationName}}
+                            </option>
+
+                        </select>
+                        <div *ngIf="edittForm.controls['designation'].hasError('required') && edittForm.controls['designation'].touched"
+                            class="failed-validation" class="errorColor">
+                            Designation Required
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label>File Number</label><br>
+                        <input type="text" class="form-control" placeholder="File Number" formControlName="fileno"
+                            (keypress)="keyPress($event)">
+
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Recipient</h5>
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Recipient Name <span class="aseticcolor">*</span></label><br>
+                        <input type="text" class="form-control" placeholder="Recipient Name"
+                            formControlName="recepientname" [ngClass]="{ 'is-invalid': f.section.invalid && 
+                        (f.section.dirty || f.section.touched) }">
+                        <div *ngIf="edittForm.controls['recepientname'].hasError('required') && edittForm.controls['recepientname'].touched"
+                            class="failed-validation" class="errorColor">
+                            Recipient Name Required
+                        </div>
+                        <div *ngIf="edittForm.controls['recepientname'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid Recipient Name
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Email Id <span class="aseticcolor">*</span></label><br>
+                        <input type="text" class="form-control" placeholder="Enter Email Id" formControlName="emailId"
+                            [ngClass]="{ 'is-invalid': f.emailId.invalid && 
+(f.emailId.dirty || f.emailId.touched) }">
+                        <div *ngIf="edittForm.controls['emailId'].hasError('required') && edittForm.controls['emailId'].touched"
+                            class="failed-validation" class="errorColor">
+                            Email Id Required
+                        </div>
+                        <div *ngIf="edittForm.controls['emailId'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid Email Id
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Contact Number <span class="aseticcolor">*</span></label><br>
+                        <input type="text" class="form-control" placeholder="Enter Mobile No"
+                            formControlName="contactno" (keypress)="keyPress($event)" [ngClass]="{ 'is-invalid': f.contactno.invalid && 
+                        (f.contactno.dirty || f.contactno.touched) }">
+                        <div *ngIf="edittForm.controls['contactno'].hasError('required') && edittForm.controls['contactno'].touched"
+                            class="failed-validation" class="errorColor">
+                            Contact Number Required
+                        </div>
+
+                        <div *ngIf="edittForm.controls['contactno'].hasError('maxlength')" class="failed-validation"
+                            class="errorColor">
+                            Contact number should have minimum 10 characters
+                        </div>
+                        <div *ngIf="edittForm.controls['contactno'].hasError('minlength')" class="failed-validation"
+                            class="errorColor">
+                            Contact number should have minimum 10 characters
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">To Address</h5>
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Organization / Others <span class="aseticcolor">*</span></label><br>
+                        <select class="form-control" aria-placeholder="Select Organization" formControlName="org"
+                            (change)="entityId($event.target.value)" [ngClass]="{ 'is-invalid': f.org.invalid && 
+(f.org.dirty || f.org.touched) }">
+                            <option value="" selected disabled>Select Organization</option>
+                            <option *ngFor="let org of organizations" [value]="org.entityMasterId">{{org.name}}</option>
+                        </select>
+                        <div *ngIf="edittForm.controls['org'].hasError('required') && edittForm.controls['org'].touched"
+                            class="failed-validation" class="errorColor">
+                            Organization Required
+                        </div>
+
+                    </div>
+                    <div class="col-md-4">
+                        <label>If Others</label><br>
+                        <input type="text" class="form-control" placeholder="Enter Others" formControlName="others">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Address <span class="aseticcolor">*</span></label><br>
+
+                        <input type="text" class="form-control" placeholder="Address" formControlName="address"
+                            [ngClass]="{ 'is-invalid': f.address.invalid && 
+(f.address.dirty || f.address.touched) }">
+                        <div *ngIf="edittForm.controls['address'].hasError('required') && edittForm.controls['address'].touched"
+                            class="failed-validation" class="errorColor">
+                            Address Required
+                        </div>
+                        <div *ngIf="edittForm.controls['address'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid Address
+                        </div>
+                    </div>
+
+                </div><br>
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <label>Country <span class="aseticcolor">*</span></label>
+                        <select class="form-control" formControlName="country" (change)="getStates($event.target.value)"
+                            [ngClass]="{ 'is-invalid': f.country.invalid && 
+(f.country.dirty || f.country.touched) }">
+                            <option value="" disabled selected>Select Country</option>
+                            <option *ngFor="let country of countries" [value]="country.countryId">
+                                {{country.countryName}}</option>
+                        </select>
+                        <div *ngIf="edittForm.controls['country'].hasError('required') && edittForm.controls['country'].touched"
+                            class="failed-validation" class="errorColor">
+                            Country Required
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>State <span class="aseticcolor">*</span></label><br>
+                        <select class="form-control" formControlName="state" (change)="getCities($event.target.value)"
+                            [ngClass]="{ 'is-invalid': f.state.invalid && 
+                        (f.state.dirty || f.state.touched) }">
+                            <option value="" disabled>Select State</option>
+                            <option *ngFor="let states of statesList" [value]="states.stateId">
+                                {{states.stateName}}</option>
+                        </select>
+                        <div *ngIf="edittForm.controls['state'].hasError('required') && edittForm.controls['state'].touched"
+                            class="failed-validation" class="errorColor">
+                            State Required
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>City <span class="aseticcolor">*</span></label><br>
+                        <select class="form-control" formControlName="city" [ngClass]="{ 'is-invalid': f.city.invalid && 
+                        (f.city.dirty || f.city.touched) }">
+                            <option value="" disabled selected>Select City</option>
+                            <option *ngFor="let city of citiesList" [value]="city.cityId">
+                                {{city.cityName}}</option>
+                        </select>
+                        <div *ngIf="edittForm.controls['city'].hasError('required') && edittForm.controls['city'].touched"
+                            class="failed-validation" class="errorColor">
+                            City Required
+                        </div>
+                        <div *ngIf="edittForm.controls['city'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid City
+                        </div>
+                    </div>
+                </div><br>
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <label>Pincode <span class="aseticcolor">*</span></label><br>
+                        <input type="text" class="form-control" placeholder="Enter Pincode" formControlName="pincode"
+                            maxlength="6" [ngClass]="{ 'is-invalid': f.pincode.invalid && 
+(f.pincode.dirty || f.pincode.touched) }">
+                        <div *ngIf="edittForm.controls['pincode'].hasError('required') && edittForm.controls['pincode'].touched"
+                            class="failed-validation" class="errorColor">
+                            ZipCode Required
+                        </div>
+                        <div *ngIf="edittForm.controls['pincode'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid ZipCode
+                        </div>
+                    </div>
+
+                </div><br>
+       <!--          <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Dak Info</h5>
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Matter <span class="aseticcolor">*</span></label><br>
+                        <app-tinyeditor></app-tinyeditor>
+                        <textarea rows="5" class="form-control" placeholder="Enter Matter" formControlName="matter"
+                            [ngClass]="{ 'is-invalid': f.matter.invalid && 
+                        (f.matter.dirty || f.matter.touched) }"></textarea>
+                        <div *ngIf="edittForm.controls['matter'].hasError('required') && edittForm.controls['matter'].touched"
+                            class="failed-validation" class="errorColor">
+                            Matter Required
+                        </div>
+                        <div *ngIf="edittForm.controls['matter'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid Matter
+                        </div>
+                    </div>
+                </div><br> -->
+
+                <!-- <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">OR</h5>
+                    </div>
+                </div> -->
+                <!-- <div class="row">
+                    <div class="col-md-6">
+                        <label>Upload Documents <span class="aseticcolor">*</span></label><br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div formArrayName="items"
+                            *ngFor="let item of edittForm.get('items')['controls']; let i = index;">
+                            <div class="form-group row" [formGroupName]="i">
+                                <label class="control-label col-sm-4 text-right">Upload Document {{i+1}}:</label>
+                                <div class="col-sm-4">
+                                    <input type="file" #myInput class="form-control-file border"
+                                        (change)="onSelectFile($event)">
+
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="globalBtn submitBtn" *ngIf="i===0" (click)="addItem()"
+                                        style="width: 200px;"><i class="fas fa-plus-circle"></i> Add New
+                                        Document</button>
+                                    <button class="globalBtn clearBtn" *ngIf="i>=1" (click)="deleteFieldValue(i)"
+                                        style="width: 200px;"><i class="fas fa-minus-circle"></i> Remove Document
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><br> -->
+               <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Upload Letter</h5><hr>
+                        <div class="row">
+                        <div class="col-md-4">Uploaded Letter</div>
+                          <div class="col-md-4">
+                    <div class="iconCard">
+                        <a href=""> <i class="far fa-file-alt docIcons"></i>
+                            <span style=" cursor: pointer;">file1<i class="fas fa-cloud-download-alt" style=" cursor: pointer;color: #3D78BE;"></i></span></a>
+
+                    </div>
+                </div>
+                </div><br>
+                        <div class="form-group row">
+                            <label class="control-label col-md-4">Letter:</label>
+                            <div class="col-md-6">
+                                <input type="file" class="form-control" id="file" multiple (change)="getFileDetails($event)"
+                                    formControlName="evidence">
+                                <div class="smallCard" *ngFor="let file of files; let i=index">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            {{i+1}}.{{file.name}}
+                                        </div>
+                                        <div class="col-md-2 text-right">
+                                            <span class="fas fa-times" style="color:red;font-size: 20px;cursor: pointer;"
+                                                (click)="removed(i)"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Upload Draft</h5><hr>
+                        <div class="form-group row">
+                            <label class="control-label col-md-3">Draft/Final:</label>
+                            <div class="col-md-6">
+                                <input type="file" class="form-control" id="file" multiple (change)="getFileDetails($event)"
+                                    formControlName="evidence">
+                                <div class="smallCard" *ngFor="let file of files; let i=index">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            {{i+1}}.{{file.name}}
+                                        </div>
+                                        <div class="col-md-2 text-right">
+                                            <span class="fas fa-times" style="color:red;font-size: 20px;cursor: pointer;"
+                                                (click)="removed(i)"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-12 text-right">
+                        <button type="button" class="btn btn-primary submitbtn" (click)="updateDespatch()"
+                            [disabled]="!edittForm.valid">Update</button>&nbsp;
+                        <button type="button" class="btn btn-danger" (click)="clear()">Clear</button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title headingValue">Forward To Secretary</h4>
+                <button type="button" class="close" data-dismiss="modal" style="cursor: pointer;">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <input type="text" class="form-control" placeholder="Secretary">
+                    </div><br>
+                    <div class="row">
+                        <textarea rows="5" cols="20" class="form-control">Write Comments</textarea>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal"
+                    style="cursor: pointer;">Forward</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Response To Correction Modal Starts -->
+<!-- Modal -->
+<div class="modal fade" id="responseModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title headingValue">Send Correction Response</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <label>Subject <span class="aseticcolor">*</span></label>
+                    <input type="text" placeholder="update details" class="form-control" readonly>
+                </div><br>
+                <div class="row">
+                    <label>Matter <span class="aseticcolor">*</span></label>
+                    <textarea rows="5" cols="20" class="form-control" placeholder="Update Details" readonly></textarea>
+                </div><br>
+                <div class="row">
+                    <label>Correction Response <span class="aseticcolor">*</span></label>
+                    <textarea rows="5" cols="20" class="form-control" placeholder="Correction Response"></textarea>
+                </div><br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Send Response</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Response To Correction Modal Ends -->

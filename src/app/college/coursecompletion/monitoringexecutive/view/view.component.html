@@ -1,0 +1,115 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <form [formGroup]="searchForm">
+                <!-- <div class="row">
+                    <div class="col-md-4">
+                        <label>Academic Year:</label>
+                        <input type="text" class="form-control" placeholder="Academic Year" formControlName="academicYear">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Course:</label>
+                        <select class="form-control" (change)="specializations($event.target.value)" [(ngModel)]="course" formControlName="academicCourse">
+                            <option value="" disabled selected style="color:orange">Select Course </option>
+                            <option *ngFor="let sec of courseList" [value]="sec.courseId">
+                                {{sec.courseName}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Specialization:</label>
+                        <select class="form-control" [(ngModel)]="specializationName" formControlName="academicSpe">
+                            <option value="" disabled selected style="color:orange">Select Specialization </option>
+                            <option *ngFor="let sec of specializationData" [value]="sec.specialisationId">
+                                {{sec.name}}
+                            </option>
+                        </select>
+                    </div>
+                </div> -->
+                <div class="row pt-2">
+
+                    <div class="col-md-4">
+                        <label>Student Name:</label>
+                        <input type="text" placeholder="Student Name" class="form-control" formControlName="studentName" />
+                    </div>
+                    <div class="col-md-4">
+                        <label>Student Roll Number </label>
+                        <input type="text" placeholder="Student Roll Number " class="form-control" formControlName="studentRollNumber" />
+                    </div>
+                </div>
+            </form>
+            <div class="row pt-2">
+                <div class="col-md-12 text-right">
+                    <button type="button" class="globalBtn submitBtn" (click)="searchData()">Search</button>
+                    <button type="button" class="globalBtn clearBtn">Reset</button>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+
+                <div class="col-md-9">
+                    <h5 class="headingValue" *ngIf="collegeValue">View Student List <span>({{collegeValue}})</span></h5>
+                    &nbsp;
+                </div>
+                <div class="col-md-3 text-right">
+                    <button type="button" class="globalBtn submitBtn dropdown-toggle" data-toggle="dropdown">
+                            Download
+                        </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" (click)="download('PDF')">PDF </a>
+                        <a class="dropdown-item" (click)="download('Excel')">Excel</a>
+
+                    </div>
+                </div>
+
+            </div>
+            <hr>
+            <div class="row" style="padding-top: 10px;padding-bottom: 50px;">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Student Name</th>
+                                    <th>Father Name</th>
+                                    <th>Course</th>
+                                    <th>Specialization</th>
+                                    <th>Academic Year</th>
+                                    <th>NEET Percentage</th>
+                                    <th>Admission Date</th>
+                                    <th>Category</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr *ngFor="let item of listOfStudents" [routerLink]="['../../../view', item.admissionId,this.id]">
+                                    <td>{{item.studentName}}</td>
+                                    <td>{{item.fatherName}}</td>
+                                    <td>{{item.courseName !== null ? (item.courseName) :'-'}} </td>
+                                    <td>{{item.specializationName}}</td>
+                                    <td>{{item.academicYear}}</td>
+                                    <td>{{item.neetPercentile !== null ? (item.neetPercentile) : '0'}} %</td>
+                                    <td>{{item.dateOfAdmission | date: 'dd/MM/yyyy'}}</td>
+                                    <td>{{item.categoryName}}</td>
+                                    <td> {{item.statusName !== null ? (item.statusName) :'-'}}
+                                    </td>
+                                </tr>
+                                <tr *ngIf="listOfStudents.length === 0">
+                                    <td colspan="9" style="text-align: center;padding: 50px !important;">No Data Available in Table</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-12 text-right" *ngIf="pageCount>1">
+                    <ul class="pagination float-right">
+                        <li class="page-item hoverActive"><a class="page-link " [class.my-class]="rowId === 0" (click)="previ()"><i class="fas fa-chevron-left"> </i></a></li>
+                        <li class="page-item"><a class="page-link">{{rowId+1}}/{{pageCount}}</a></li>
+                        <li class="page-item hoverActive"><a class="page-link" [class.my-class]="rowId+1 === pageCount" (click)="next()"><i class="fas fa-chevron-right"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

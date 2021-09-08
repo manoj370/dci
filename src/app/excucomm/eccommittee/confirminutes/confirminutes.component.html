@@ -1,0 +1,151 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <h5 class="headingValue">Confirm Minutes of Preceding Meeting </h5>
+
+            <hr>
+
+            <div class="row" style="padding-top: 10px;padding-bottom: 50px;">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Item No</th>
+                                    <th>Sub-Section</th>
+                                    <th>Subject</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of confirmMetingDetails">
+                                    <td>{{item.agendaCategroyItemRefNumber}}</td>
+                                    <td>{{item.agendaSectionDTO !== null ? (item.agendaSectionDTO.agendaSectionName) :'-'}}</td>
+                                    <td>{{item.agendaItemSubject}} </td>
+                                    <td style="text-align: center;" [routerLink]="['../arplmatterview', item.agendaId,'2','Confirm']">
+                                        <i class="fas fa-edit" style="color:#74AEB5"></i>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="confirmMetingDetails.length === 0">
+                                    <td colspan="4" style="text-align: center;padding: 50px !important;">No Data Available in Table</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <hr>
+
+        </div>
+    </div>
+</div>
+<!-- Ask Correction Modal Starts -->
+<!-- Modal -->
+<!-- <div class="modal fade" id="createagenda" role="dialog">
+    <div class="modal-dialog ">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title headingValue">Create Agenda</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <label class="col-sm-5 pl-0">Select Meeting Date <span class="text-danger">*</span></label>
+                    <div class="col-sm-7 pr-0">
+                        <select class="form-control">
+                            <option value="" selected disabled>Select Date </option>
+                            <option value="">20-04-2020</option>
+                            <option value="">20-03-2020</option>
+                            <option value="">19-02-2020</option>
+
+                        </select>
+                    </div>
+
+                </div><br>
+                <div class="row">
+
+                    <label class="col-sm-5 pl-0">Item Number <span class="text-danger">*</span></label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" placeholder="Item Number" [(ngModel)]="itemNumber">
+                    </div>
+                    <div class="col-sm-2  pr-0">
+                        <p style="color: brown; font-weight: 600; cursor: pointer; font-size: 14px; margin-top: 9px"
+                            (click)="viewData()">View
+                        </p>
+                    </div>
+
+
+                </div><br>
+
+                <div class="row" *ngIf="viewdiv">
+                    <form [formGroup]="agendaForm">
+
+                        <div class="form-group row">
+                            <label class="col-sm-3">Subject </label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" rows="2" placeholder="Item Subject"
+                                    formControlName="subject"></textarea>
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group row">
+                            <label class="col-sm-3">Matter </label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" rows="5" placeholder="Write Matter"
+                                    formControlName="matters" style="text-align: justify;">
+                          </textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label class="col-sm-3">Discussion </label>
+                            <div class="col-sm-9 ">
+                                <textarea class="form-control" rows="5" placeholder="Write Discussion"
+                                    formControlName="discussions"
+                                    [ngClass]="{ 'is-invalid':  submitted && f.discussions.errors }"></textarea>
+                                <div *ngIf=" submitted && f.discussions.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && f.discussions.errors.required">
+                                        Please Enter Discussion
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label class="col-sm-3">Decision </label>
+                            <div class="col-sm-9">
+                                <app-tinyeditor id="dta" formControlName="decision"
+                                    [ngClass]="{ 'is-invalid':  submitted && f.decision.errors }"></app-tinyeditor>
+                                <div *ngIf=" submitted && f.decision.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && f.decision.errors.required">
+                                        Please Enter Decision
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </form>
+
+                </div>
+            </div>
+
+
+            <div class="modal-footer" *ngIf="viewdiv">
+                <button class="globalBtn forwardBtn" [disabled]="!agendaForm.dirty"
+                    (click)="updateAgenda()">Create</button>&nbsp;
+            </div>
+        </div>
+
+    </div>
+</div> -->
+
+<!-- Ask Correction Modal Ends -->

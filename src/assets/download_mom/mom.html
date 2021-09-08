@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title id="titlehead"></title>
+    <link rel="icon" type="image/x-icon" href="../favicion.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Base64/1.1.0/base64.min.js"></script>
+    <script src="main.js"></script>
+</head>
+<style type="text/css">
+    input {
+        outline: 0;
+        border-width: 0 0 2px;
+        width: 100px;
+    }
+    
+    @page {
+        size: auto;
+        margin: 5mm;
+    }
+    
+    @media print {
+        #printPage {
+            display: none;
+        }
+    }
+</style>
+<script type="text/javascript">
+    const MainUrl = window.location.href;
+    // console.log(MainUrl)
+    var url = new URL(MainUrl);
+    // var c = url.searchParams.get("meetingId");
+    // console.log(url.searchParams.get("meetingdate"));
+    const sectionId = url.searchParams.get("sectionId") !== null ? url.searchParams.get("sectionId") : "";
+    console.log(window.location.hostname);
+    if (window.location.hostname === 'localhost' || window.location.hostname === '103.210.72.123') {
+        var downloadUrl = `http://103.210.72.123:8080/executivecommittee/api/v1/exe_com/download_meeting?userId=` +
+            url.searchParams.get("userid") + '&meetingId=' + url.searchParams.get("meetingId") + '&sectionId=' + sectionId;
+    } else {
+        // UAT    
+        var downloadUrl = `http://36.255.253.200:8080/executivecommittee/api/v1/exe_com/download_meeting?userId=` +
+            url.searchParams.get("userid") + '&meetingId=' + url.searchParams.get("meetingId") + '&sectionId=' + sectionId;
+    }
+    $(document).ready(function() {
+        document.title = 'Minutes of -' + url.searchParams.get("meetingdate");
+
+        // ()
+        $("#demo").html(url.searchParams.get("meetingdate"));
+        $("#venue").html(url.searchParams.get("meetingVenue"));
+
+        $.ajax({
+            url: downloadUrl,
+            dataType: "text",
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('Authorization', 'Bearer ' + url.searchParams.get("accestoken"));
+            },
+            success: function(data) {
+                var data = JSON.parse(data);
+                // console.log(data)
+                render(data);
+
+            }
+        });
+        $('#printPage').click(function() {
+            window.print();
+            return false;
+        });
+
+    });
+</script>
+
+<body>
+    <div class="container-fluid" onload="myFunction()">
+
+        <div class="row" style="padding-left: 30px; padding-right: 15px; margin-top: 12px">
+
+            <div class="col-md-3 col-sm-3">
+                <p id="venue"></p>
+            </div>
+            <div class="col-md-6 text-center">
+                <h4 align="center">DENTAL COUNCIL OF INDIA</h4>
+                <hr width="50%" align="center" style="margin-top: 12px;border-top: 3px double #8c8b8b;">Meeting Date :
+                <span id="demo">date</span>
+            </div>
+            <div class="col-md-3 text-right">
+                <p class="text-right  " style="width: 100%"><button class="btn btn-success" id="printPage">Print</button>
+                </p>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container" style=" margin-left: 10px">
+        <div class="row">
+            <div class="col-md-10">
+                <div id="show_medicalattachment"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

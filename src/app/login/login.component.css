@@ -1,0 +1,72 @@
+header {
+    position: relative;
+    height: 100%;
+    min-height: 25rem;
+    width: 100%;
+    overflow: hidden;
+}
+
+header .container {
+    position: relative;
+    z-index: 2;
+    top: 10%;
+}
+
+.d-flex {
+    position: relative;
+    top: 10%;
+}
+
+.eyeIcon {
+    position: relative;
+    left: 88%;
+    bottom: 2rem;
+    cursor: pointer;
+}
+
+.headerStyles {
+    border-bottom: 1px solid #c6c6c6;
+    padding-bottom: 15px;
+    color: #2680EB;
+    font-weight: bold;
+}
+
+.global-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3%;
+}
+
+.login-form {
+    width: 330px;
+}
+
+.card {
+    border: 1px solid rgba(0, 0, 0, 0.125) !important;
+}
+
+::placeholder {
+    color: #8f8585cc;
+}
+
+.input-group {
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.capchImage {
+    /* font-family: 'Shadows Into Light', cursive; */
+    background: #2680EB;
+    color: white;
+    width: 100%;
+    letter-spacing: 2px;
+    /* text-decoration: line-through; */
+    font-size: 20px;
+    text-align: center;
+}
+
+.capchImage i {
+    cursor: pointer;
+}

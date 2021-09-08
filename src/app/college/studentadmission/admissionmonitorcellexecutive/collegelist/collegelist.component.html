@@ -1,0 +1,89 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-8">
+                    <h5 class="headingValue">Registered College</h5>
+                </div>
+                <div class="col-md-4 text-right">
+                    <button type="button" class="btn btn-primary"  href="#demo"
+                    data-toggle="collapse">Search</button>&nbsp;
+                </div>
+            </div>
+                <div id="demo" class="collapse">
+                    <form [formGroup]="searchForm">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Country:</label>
+                            <select class="form-control"(change)="getStates($event.target.value)" formControlName="country">
+                            <option value="" disabled selected>Select Country</option>
+                            <option *ngFor="let country of countries" [value]="country.countryId">
+                                {{country.countryName}}</option>
+                        </select>
+                        </div>
+                    <div class="col-md-4">
+                        <label>State:</label>
+                        <select class="form-control" (change)="getCollegesListBasedOnState($event.target.value)" formControlName="state">
+                                    <option value="" disabled selected>Select State</option>
+                                    <option *ngFor="let states of statesList" [value]="states.stateName">
+                                        {{states.stateName}}</option>
+                                </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label>College:</label>
+                        <select class="form-control" formControlName="college">
+                            <option value="" disabled selected>Select College</option>
+                            <option *ngFor="let college of collegesList" >
+                                {{college.collegeName}}</option>
+                        </select>
+                    </div>
+                </div><br>
+                    <div class="row">
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary" (click)="search()">Search</button>&nbsp;&nbsp;
+                            <button type="button" class="btn btn-danger" (click)="reset()">Reset</button>&nbsp;
+          </div>
+        
+                        <div class="col-md-4">
+                        </div>
+                    </div>
+                </form>
+                </div>
+            <hr>
+            <div class="row" style="padding-top: 10px;padding-bottom:50px;">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th style="width:30%">College Name</th>
+                                    <th style="width:30%">State</th>
+                                    <th style="width:40%">E-mail</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of collegelist" (click)="view(data)">
+                                    <td>{{data.collegeName | titlecase}}</td>
+                                    <td *ngIf="data.address !==null">{{data.address.state | titlecase}}</td>
+                                    <td>{{data.emailId}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="col-md-12 text-right" *ngIf="responsePageCount>1">
+                            <ul class="pagination float-right">
+                                <li class="page-item hoverActive"><a class="page-link " [class.my-class]="pageId === 0"
+                                        (click)="previ()"><i class="fas fa-chevron-left"> </i></a></li>
+                                <li class="page-item"><a class="page-link">{{pageId+1}}/{{responsePageCount}}</a></li>
+                                <li class="page-item hoverActive"><a class="page-link"
+                                        [class.my-class]="pageId+1 === responsePageCount" (click)="next()"><i
+                                            class="fas fa-chevron-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

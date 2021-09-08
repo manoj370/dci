@@ -1,0 +1,11 @@
+.globalBtn {
+    width: 75px !important;
+}
+
+tr {
+    cursor: default;
+}
+
+.dropdown-item {
+    cursor: pointer;
+}

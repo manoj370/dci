@@ -1,0 +1,57 @@
+<!-- Assistant Secretary -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card" *ngIf="complaintDetails">
+            <div class="row">
+                <div class="col-md-9">
+                    <h5 class="headingValue">Chronological History</h5>
+                    <span class="badge badge-pill badge-success" style="font-size: 60%;">{{complaintDetails.complaint.complaintStatus.complaintStatusName}}</span>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="heading">
+                        Complaint Id
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintDetails.complaint.complainantNumber}}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="heading">
+                        Complaint Against
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintDetails.complaint.complaintAgainst.name}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="theadRow thead-light">
+                                <tr>
+                                    <th>Who</th>
+                                    <th>Date</th>
+                                    <th>Action Taken</th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="tbodyRow">
+                                <tr *ngFor="let item of chronicalData" [routerLink]="['../../compView', item.complaint.cgrComplaintId]" [state]="item.complaintStatus.complaintStatusName">
+                                    <td class="name-transfer"> {{item.workflowCode.workflowCodeName}}</td>
+                                    <td>{{item.createdDate}}</td>
+                                    <td>
+                                        <span class="badge badge-pill badge-success" style="color: white;">{{item.complaintStatus.complaintStatusName}}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

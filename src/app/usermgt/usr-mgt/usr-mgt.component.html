@@ -1,0 +1,674 @@
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mt-3 tab-card">
+                <div class="card-header tab-card-header">
+                    <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" *ngFor="let wallet of coinwallet; let first = first;" [ngClass]="{firstItem: first}" role="presentation" class="accounts_li" [class.active]="selectedwallet===wallet">
+                            <a class="nav-link" style="
+                                cursor: pointer;
+                            " (click)="selectedwallet = wallet " (click)="resetRolesAndPrivilizesPage(wallet)" aria-controls="one" role="tab" data-toggle="tab">{{wallet}}</a>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <div class="tab-content" id="myTabContent">
+                    <!-- Groups -->
+                    <div *ngIf="selectedwallet === coinwallet[0]" role="tabpanel" class="tab-pane active" id="one">
+                        <!-- Group Form -->
+                        <div class="row" style="margin: 5px 0 5px 0;padding: 5px 0px;">
+                            <div class="col-md-6">
+                                <h5>Groups</h5>
+                            </div>
+                            <div class="col-md-6">
+                                <form>
+                                    <div class="row">
+                                        <div class="col">
+                                            &nbsp;
+                                        </div>
+
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel-body">
+                                    <div class="table-responsive-sm">
+                                        <table id="userTable" class="table table-bordered table-hover">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <!-- <th>Sl No#</th> -->
+                                                    <th>Group Name</th>
+                                                    <th>Group Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- <tr>
+                                                    <td>1</td>
+                                                    <td>Grievance</td>
+                                                    <td>Active</td>
+                                                    <td>Dci Grievance Group</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>System Admin</td>
+                                                    <td>Active</td>
+                                                    <td>Create manage portal users authority</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>Create Admin</td>
+                                                    <td>Active</td>
+                                                    <td>To create system admin</td>
+                                                </tr> -->
+
+                                                <tr *ngFor="let item of allGroups; let i=index">
+                                                    <!-- <td>{{i+1}}</td> -->
+                                                    <td>{{item.moduleName}}</td>
+                                                    <td>{{item.description}}</td>
+                                                </tr>
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- Pagination -->
+                        <div class="row">
+                            <div class="col-sm-9">
+
+                            </div>
+                            <div class="float-right" style="right: 0px;
+                            margin-top: 10px;" *ngIf="responseGroupPageCount>1">
+                                <button (click)="groupBtnnPrevious()" class="btn btn-outline-primary" [disabled]="disableGroupPreviousButton">Previous</button>
+                                <b>{{groupPage+1}}/{{responseGroupPageCount}}&nbsp;</b>
+                                <button (click)="groupBtnNext()" class="btn btn-outline-primary" [disabled]="disableGroupNextButton">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Privileges -->
+                    <div *ngIf="selectedwallet === coinwallet[1]" role="tabpanel" class="tab-pane active" id="two">
+                        <div class="row" style="margin: 5px 0 5px 0;padding: 5px 0px;">
+                            <div class="col-md-6">
+                                <h5>Privileges</h5>
+                            </div>
+                            <div class="col-md-6">
+                                <form>
+                                    <div class="row">
+                                        <div class="col">
+                                            <ul class="pagination float-right">
+                                                <li class="page-item " style="
+                                                    margin-top: -5px;
+                                                ">
+                                                    <form>
+                                                        <!-- <p
+                                                                style="font-weight: bold;color: white;font-size: 15px; margin: 5px">
+                                                                <select class="custom-select-sm"
+                                                                    class="input-group__field" class="form-control"
+                                                                    (change)="getListOfPrivillagesByGroup($event)">
+                                                                    <option value="" disabled selected
+                                                                        style="color:orange">
+                                                                        Filter With Group Name</option>
+                                                                    <option *ngFor="let data of groupListForDropDown"
+                                                                        [value]="data.appModuleId">{{data.moduleName}}
+                                                                    </option>
+                                                                    <option *ngFor="let c of groupList" [ngValue]="c.appModuleId">
+                {{c.value}}
+            </option>
+
+                                                                </select>
+                                                            </p> -->
+
+                                                    </form>
+                                                </li>
+                                                <li></li>
+                                            </ul>
+
+                                            <!-- <input type="text" class="form-control" placeholder="Filter with Group"> -->
+                                        </div>
+                                        <div class="col">
+                                            <!-- <input type="text" class="form-control" placeholder="Search"> -->
+                                            <!-- 
+                                                <ul class="pagination float-right">
+                                                    <li class="page-item ">
+                                                        <form [formGroup]="searchForm">
+                                                            <input type="text" class="form-control"
+                                                                placeholder="Search by Name"
+                                                                formControlName="searchvalue">
+                                                        </form>
+                                                    </li>
+                                                    <li class="page-item"><button type="button" class="btn btn-primary"
+                                                            [disabled]="!searchForm.valid"
+                                                            (click)="searchPrivilegesData()"><i class="fa fa-search"
+                                                                aria-hidden="true"></i></button></li>
+                                                    <li class="page-item hoverActive"><a class="page-link" [class.my-class]="groupRowId+1 === groupPageCount" (click)="groupTableNextButton()">Next</a></li>
+                                                </ul> -->
+                                        </div>
+
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-12" style="padding-top: 20px;">
+                                <div class="table-responsive-sm">
+                                    <table id="userTable" class="table table-bordered table-hover">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>Group Name</th>
+                                                <th style="
+
+                                                padding-left: 26px;
+                                            " colspan="5"> Privileges</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <!-- *ngIf="item.applicationModule.moduleName !=='SYSTEM'" -->
+                                            <!-- *ngIf="item.applicationModule.moduleName !=='SYSTEM'" -->
+                                            <tr *ngFor="let item of arrayDataOfPrivillizes; let i=index">
+                                                <td style="width:17%">
+                                                    {{item.key}}</td>
+                                                <td>
+                                                    <div class="row rolesclass">
+                                                        <div class="custom-control custom-checkbox col-md-4 " *ngFor="let y of item.values " style="margin:0 0 15px 0 !important;cursor: pointer !important;">
+
+
+
+                                                            <!-- <input type="checkbox" class="custom-control-input"  >
+                                                                <label class="custom-control-label" style="cursor: pointer !important;"></label> -->
+                                                            {{y.authorityName}}
+                                                        </div>
+
+                                                    </div>
+                                                    <hr>
+
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- <div class="float-right" style="position: absolute;
+                                right: 0px;
+                                bottom: -50px;" *ngIf="responsePriviliagePageCount>1">
+                                    <button (click)="privillageTablePreviousButton()" class="btn btn-outline-primary"
+                                        [disabled]="disablePriviliagePreviousButton">Previous</button>
+                                    <b>{{priviliagePageId+1}}/{{responsePriviliagePageCount}}&nbsp;</b>
+                                    <button (click)="privillageTableNextButton()" class="btn btn-outline-primary"
+                                        [disabled]="disablePriviliageNextButton">Next</button>
+                                </div> -->
+                        </div>
+                    </div>
+                    <!-- Roles -->
+                    <div *ngIf="selectedwallet === coinwallet[2]" role="tabpanel" class="tab-pane active" id="three">
+                        <div class="row" style="margin: 5px 0 5px 0;padding: 5px 0px;">
+                            <div class="col-md-7">
+                                <h5>Roles</h5>
+                            </div>
+                            <div class="col-md-5 text-right">
+                                <form>
+
+                                    <div class="row">
+
+                                        <div class="col" style="
+                                            padding-left: 200px;
+                                        ">
+                                            <!-- <input type="text" class="form-control" placeholder="Search"> -->
+                                            <ul class="pagination float-right">
+                                                <li class="page-item style ">
+                                                    <form [formGroup]="searchForm">
+                                                        <input type="text" class="form-control" placeholder="Search" formControlName="searchvalue">
+                                                    </form>
+                                                </li>
+                                                <li class="page-item ">
+                                                    <button type="button" class="btn btn-primary" [disabled]="!searchForm.valid" (click)="searchRolesData()"><i
+                                                            class="fa fa-search" aria-hidden="true"></i></button>
+
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button type="button" (click)="showSubmitButton()" class="btn btn-success" data-toggle="modal" data-target="#roleModel">Add Role</button>
+                                        </div>
+
+                                    </div>
+                                </form>
+
+                            </div>
+                            <div class="row" style="width: -webkit-fill-available;">
+                                <div class="col-md-12" style="padding-top: 20px;">
+                                    <div class="table-responsive-sm">
+                                        <table id="userTable" class="table table-bordered table-hover">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <!-- <th>Sl No#</th> -->
+                                                    <th>Role Name</th>
+                                                    <th>Description</th>
+                                                    <th>Edit</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let roleData of getALLRoles; let i=index">
+                                                    <!-- <td>{{i+1}}</td> -->
+                                                    <td>{{roleData.roleName}}</td>
+                                                    <td>{{roleData.remarks}}</td>
+                                                    <td><span><i data-toggle="modal" data-target="#roleModel"
+                                                                (click)="EditRole(roleData)"
+                                                                class="far fa-edit"></i></span></td>
+                                                    <!-- <td><button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#roleModel" (click)="EditRole(roleData)">Edit</button> -->
+                                                    <!-- </td> -->
+                                                </tr>
+                                                <tr *ngIf="getALLRoles.length === 0">
+                                                    <td colspan="3" style="text-align: center;padding: 50px !important;">No Data
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="float-right" style="right: 0px;
+                        margin-top: 10px;" *ngIf="responseRolePageCount>1">
+                            <button (click)="rolePrevi()" class="btn btn-outline-primary" [disabled]="disableRolePreviousButton">Previous</button>
+                            <b>{{rolePageId+1}}/{{responseRolePageCount}}&nbsp;</b>
+                            <button (click)="roleNext()" class="btn btn-outline-primary" [disabled]="disableRoleNextButton">Next</button>
+                        </div>
+                    </div>
+                    <!-- Roles And Privilliges -->
+                    <div *ngIf="selectedwallet === coinwallet[3]" role="tabpanel" class="tab-pane active" id="four">
+                        <div class="row" style="margin: 5px 0 5px 0; padding: 5px 0px;">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <h5>Roles & Privileges</h5>
+                                </div>
+                                <div class="card-body" style="padding: 10px;">
+                                    <div class="row">
+                                        <div class="col-md-2" style="padding-left: 21px;">
+                                            <label for="userList" class="control-label required">Select Role * </label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <form [formGroup]="roleDropdownSearch">
+                                                <div class="form-group">
+                                                    <select class="form-control" id="roleList " (change)="getRoleDetails($event)" formControlName="roleSearchForm">
+                                                        <option value="" disabled selected="selected">Select Role 
+                                                        </option>
+                                                        <option *ngFor="let role of allRoles" [value]="role.roleId">
+                                                            {{role.roleName}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2" style="padding-left: 21px;">
+                                            <label for="userList" class="control-label required">Select Privileges *</label>
+                                        </div>
+                                        <!-- </div>
+                                    <div class="row"> -->
+                                        <div class="col-md-10" style="padding: 7px">
+                                            <div class="table-responsive-sm">
+                                                <table id="userTable" class="table table-bordered table-hover">
+                                                    <thead class="thead-light">
+                                                        <tr>
+                                                            <th>Group Name</th>
+                                                            <th style="padding-left: 26px;" colspan="5"> Privileges</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let item of arrayDataOfPrivillizes; let i=index">
+
+                                                            <td>
+                                                                {{item.key}}
+                                                            </td>
+                                                            <td>
+                                                                <div class="row rolesclass">
+                                                                    <div class="custom-control custom-checkbox col-md-4" *ngFor="let y of item.values " style="margin:0 0 15px 0 !important;width: max-content;">
+                                                                        <label class="checkbox" style="cursor: pointer !important;">
+                                                                            <input type="checkbox" [checked]="y.checked"
+                                                                                (change)="bindPrivilliagesData($event)"
+                                                                                [value]="y.authorityId"
+                                                                                 />
+                                                                            <span class="default"></span>
+                                                                        </label>{{y.authorityName}}
+                                                                    </div>
+                                                                </div>
+                                                                <hr>
+
+
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row text-right">
+                                        <div class="col-md-12">
+                                            <button type="button" class="btn btn-success" id="map" (click)="updateRoleAuthorithy()">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Manage Users -->
+                    <div *ngIf="selectedwallet === coinwallet[4]" role="tabpanel" class="tab-pane active" id="five">
+                        <div class="row" style="margin: 5px 0 5px 0; padding: 5px 0px;">
+                            <div class="col-md-6">
+                                <h5>Manage Users</h5>
+                            </div>
+                            <div class="col-md-6 text-right pull-right">
+                                <p class="font-weight-bold btn btn-sm btn-success" data-toggle="modal" data-target="#userModal" (click)="showSubmitButtonForUser()">Add User</p>
+                            </div>
+
+                        </div>
+                        <form [formGroup]="searchUserForm">
+                            <div class="row " style="    padding: 0px 11px;">
+
+                                <div class="col-md-2">
+                                    <!-- <input type="text" class="form-control"
+                                    placeholder="Filter with Group/Role/Usertype"> -->
+                                    <select class="form-control" formControlName="organisation" (change)="entitySelection($event.target.value)">
+                                        <option value="" disabled selected="selected">Select Organisation</option>
+                                        <option *ngFor="let entity of entityMaster" [value]="entity.entityMasterId">
+                                            {{entity.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2" *ngIf="showSectionDropDown">
+                                    <select class="form-control" formControlName="section" (change)="SectionId($event.target.value)">
+                                        <option value="" disabled selected>Select Section</option>
+                                        <!-- <option *ngFor="let entity of entityMaster" [value]="entity.entityMasterId">
+                                        {{entity.name}}</option> -->
+                                        <option *ngFor="let section of entitySelectedData" [value]="section.sectionId">
+                                            {{section.sectionName}}</option>
+
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <!-- <label class="checkbox-inline p-1">
+                                        <input type="radio" value="" name="radio1" (change)="checkboxValue('true')">
+                                        Active
+                                    </label>
+                                    <label class="checkbox-inline p-1">
+                                        <input type="radio" value="" name="radio1"
+                                            (change)="checkboxValue('false')"> InActive
+                                    </label> -->
+                                    <select class="form-control" formControlName="status" (change)="changeActiveOrInactiveStatus($event.target.value)">
+                                        <option value="" disabled selected>Select Status</option>
+                                        <!-- <option *ngFor="let entity of entityMaster" [value]="entity.entityMasterId">
+                                        {{entity.name}}</option> -->
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
+
+                                    </select>
+
+                                </div>
+                                <div class="col-md-2 searchrespbtn">
+                                    <span class=" btn btn-primary" style="
+                                    cursor: pointer;
+                                " (click)="filterWithRoleOrUserType()">Search</span>
+                                </div>
+                                <div class="col-md-2" *ngIf="!showSectionDropDown"></div>
+                                <div class="col-md-4">
+                                    <!-- <div class="form-group col-md- pull-right text-right">
+                                    <div class="icon-addon">
+                                        <form [formGroup]="searchForm">
+                                            <input type="text" class="form-control" (keyup)="searchUsersData()" placeholder="Search" formControlName="searchvalue">
+                                        </form>
+                                        <label class="fa fa-search iconValue"></label>
+                                    </div>
+                                </div> -->
+                                    <ul class="pagination float-right textAlignStyling">
+                                        <li class="page-item style ">
+                                            <form [formGroup]="searchForm">
+                                                <input type="text" class="form-control" placeholder="Search" formControlName="searchvalue">
+                                            </form>
+                                        </li>
+                                        <li class="page-item ">
+                                            <button type="button" class="btn btn-primary" [disabled]="!searchForm.valid" (click)="searchUsersData()"><i class="fa fa-search"
+                                                    aria-hidden="true"></i></button>
+
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- <div class="col-md-3">
+                                    <p class=" btn  btn-success" data-toggle="modal" data-target="#userModal"
+                                        (click)="showSubmitButtonForUser()">Add User</p>
+                                </div> -->
+                            </div>
+                        </form>
+                        <div>
+                            <div class="table-responsive-sm">
+                                <table id="userTable" class="table table-bordered table-hover ">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Phone.No</th>
+                                            <th>Email Id</th>
+                                            <th>Created on</th>
+                                            <th>Status</th>
+                                            <th class="no-sort" style="
+                                        padding-left: 74px;
+                                    ">Action(s)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of allUsersList; let i=index" (click)="getId(item.userId)">
+                                            <td>{{item.firstName}}</td>
+                                            <td>{{item.phoneNumber}}</td>
+                                            <td>{{item.emailId}}</td>
+                                            <td>{{item.createDate}}</td>
+                                            <td>
+                                                <span class="text-success" style="color: white;" *ngIf="item.active ==  true">Active</span>
+                                                <span class="text-danger" style="color: white;" *ngIf="item.active ==  false">Inactive</span>
+                                                <!-- <span class="badge badge-pill badge-danger " style="color: white;" *ngIf="item.active ==false ">InActive</span>
+                                                <span class="badge badge-pill badge-success" style="color: white;" *ngIf="item.active ==  true">&nbsp;&nbsp;Active&nbsp;</span> -->
+                                                <!-- <td>{{item.roleNames}}</td> -->
+                                            </td>
+                                            <td style="cursor: pointer;text-align: center;">
+                                                <span><i (click)="getEditDetails(item)" style="cursor:pointer"
+                                                        class="far fa-edit"></i></span></td>
+
+                                            <!-- <span class="btn-primary btn-sm reponsivebtn" data-toggle="modal" data-target="#myModal" style="cursor:pointer" (click)="getAllAssignRoles(item)">Assign Role</span>&nbsp;
+                                                <span class="btn-danger btn-sm text-light reponsivebtn" data-toggle="modal" data-target="#deletModal" (click)="getUserData(item)" *ngIf="item.active == true">InActive</span>
+                                                <span class="btn-success btn-sm text-light reponsivebtn" data-toggle="modal" data-target="#activeModal" (click)="getUserData(item)" *ngIf="item.active == false">&nbsp;&nbsp;Active&nbsp;</span> -->
+
+                                        </tr>
+
+                                        <tr *ngIf="allUsersList.length === 0">
+                                            <td colspan="6" style="text-align: center;padding: 50px !important;">No Data Available in Table</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="float-right" style="right: 0px;
+                            margin-top: 10px;" *ngIf="responsePageCount>1">
+                                <button (click)="onBtnnPrevious()" class="btn btn-outline-primary" [disabled]="disablePreviousButton">Previous</button>
+                                <b>{{pageid+1}}/{{responsePageCount}}&nbsp;</b>
+                                <button (click)="onBtnNext()" class="btn btn-outline-primary" [disabled]="disableNextButton">Next</button>
+                            </div>
+                            <!-- <div class="col-md-12 text-right" *ngIf="groupPageCount>1">
+                                <ul class="pagination float-right">
+                                    <li class="page-item hoverActive"><a class="page-link " [class.my-class]="groupRowId === 0" (click)="privillageTablePreviousButton()">Previous</a></li>
+                                    <li class="page-item"><a class="page-link">{{groupRowId+1}}/{{groupPageCount}}</a>
+                                    </li>
+                                    <li class="page-item hoverActive"><a class="page-link" [class.my-class]="groupRowId+1 === groupPageCount" (click)="userTableNextButton()">Next</a></li>
+                                </ul>
+                            </div> -->
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-xl">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="assignRolesRefresh()" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title pull-left text-left" style="position: absolute;">Assign Role:&nbsp;
+                    <span>{{UserName}}</span></h4>
+
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="row ">
+                                <div class="col-md-4 pb-2" *ngFor="let role of allRoles">
+
+                                    <label class="checkbox">
+                                        <input type="checkbox" (change)="selectedRoles($event)" [value]="role.roleId"
+                                            [checked]="role.checked" />
+                                        <span class="default"></span>
+                                    </label> {{role.roleName}}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <label><b>Select Default Role</b></label>
+                    <div class="row">
+
+                        <div class="col-md-3" *ngFor="let role of names">
+
+                            <label class="radio-inline">
+
+
+                                <input type="radio" name="optradio" [checked]="role.checked"
+                                    (change)="getingRoleId($event)" [value]="role.roleId" />{{role.rolename}}
+
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="assignRole()">Save</button>
+                    <button type="button" class="btn btn-danger" (click)="assignRolesRefresh()" data-dismiss="modal">Cancel</button>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div id="roleModel" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="resetForm()" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title pull-left text-left" *ngIf="!showUpdateButtonForRole" style="position: absolute;">Add Role </h4>
+                <h4 class="modal-title pull-left text-left" *ngIf="showUpdateButtonForRole" style="position: absolute;">
+                    Update Role </h4>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="addRoleForm">
+                    <div class="form-group row">
+                        <label class="control-label col-sm-4 " for="email">Role Name <span
+                                class="requiredClass">*</span></label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Role Name" formControlName="roleName">
+                            <span *ngIf="addRoleForm.controls['roleName'].hasError('required') &&addRoleForm.controls['roleName'].touched"   class="c-red">Field Required</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-4" for="email">Role Description <span class="requiredClass">
+                                *</span></label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" rows="5" placeholder="Role Description" formControlName="roleDescription"></textarea>
+                            <span *ngIf="addRoleForm.controls['roleDescription'].hasError('required') &&addRoleForm.controls['roleName'].touched"   class="c-red">Field Required</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+
+                &nbsp;
+                <button type="submit" *ngIf="!showUpdateButtonForRole" class="btn btn-primary" id="processSubmit" [disabled]="!addRoleForm.valid" data-dismiss="modal" (click)="createRole()">Submit</button>
+                <button type="submit" *ngIf="showUpdateButtonForRole" class="btn btn-primary" id="processUpdate" data-dismiss="modal" (click)="updateRoleData()">Update</button>&nbsp;
+                <button type="button" class="btn btn-danger" (click)="resetForm()" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div id="deletModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="icon-box">
+                    <i class="fas fa-user-times remove"></i>
+
+                </div> <br>
+            </div>
+            <h4 class="modal-title">Are you sure?</h4>
+            <div class="modal-body">
+                <p>Do you really want to Inactive <b style="color:#f15e5e">{{userName}}</b> record?
+                </p>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" (click)="inActiveTheuser()" data-dismiss="modal" class="btn btn-danger">Inactive</button>
+                <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="activeModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="icon-box">
+                    <i class="fa fa-user-plus addingStyle"></i>
+
+                </div> <br>
+            </div>
+            <h4 class="modal-title">Are you sure?</h4>
+            <div class="modal-body">
+                <p>Do you really want to active <b style="color:#f15e5e">{{userName}}</b> records?
+                </p>
+
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" (click)="ActiveTheuser()" data-dismiss="modal" class="btn btn-success">Active</button>
+                <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,117 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-9">
+                    <h5 class="headingValue">Inspector Fee Report</h5>
+                </div>
+            </div>
+            <hr />
+            <div class="panel panel-default" id="accordionExample">
+                <div class="card">
+                    <div class="panel-heading tab-collapsed" id="headingOne">
+                        <h2 class="mb-0 ">
+                            <p class="headstyle" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Search Inspector Fee <span class="expand-icon-wrap"><i class="fa expand-icon"></i></span>
+                            </p>
+                        </h2>
+                    </div>
+                    <div class="collapse show" data-parent="#accordionExample" id="collapseOne">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>From Date</label>
+                                    <input type="date" class="form-control" id="fromDate" name="fromDate">
+                                </div>
+                            </div>
+                            <div class="col-sm-3" style="border-right: 2px solid #eee">
+                                <div class="form-group">
+                                    <label>To Date</label>
+                                    <input type="date" id="toDate" name="toDate" class="form-control">
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label>Select State</label>
+                                    <select class="form-control">
+                             <option value="Select Country" selected="">Select State</option>
+                             <option  value="">
+                                Andhra Pradesh
+                             </option>
+                             <option  value="">
+                                Gujarat 
+                             </option>
+                             <option  value="">
+                                Haryana
+                             </option>
+                          </select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Select College</label>
+                                    <select class="form-control">
+                             <option value="Select Country" selected="">Select College</option>
+                             <option  value="">
+                                SRM Dental College 
+                             </option>
+                             <option  value="">
+                                VVS Dental College 
+                             </option>
+                             <option  value="">
+                                Sri Dental College 
+                             </option>
+                          </select>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div (click)="showMyContainer=!showMyContainer" class="col-md-6 text-right"> <button type="button" class="btn btn-primary" id="search">Search</button></div>
+                    </div>
+                </div>
+                <br>
+                <div class="row" *ngIf="showMyContainer">
+                    <div class="col-md-12">
+                        <div class="table-responsive-sm">
+                            <table class="table table-hover">
+                                <thead class="theadRow">
+                                    <tr>
+                                        <th>S.No </th>
+                                        <th>Bill Id</th>
+                                        <th>Inspector Name</th>
+                                        <th>Inspected College</th>
+                                        <th>Net Payable</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>1212</td>
+                                        <td>Ram Veer</td>
+                                        <td>SIT Dental College</td>
+                                        <td>14500.0</td>
+                                        <td> <span class="success text-success">Paid</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>1216</td>
+                                        <td>Vikash</td>
+                                        <td>SRM Dental College</td>
+                                        <td>15500.0</td>
+                                        <td> <span class="success text-danger">Pending</span></td>
+                                    </tr>
+                                </tbody>
+                                <!-- <p>No Data</p> -->
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

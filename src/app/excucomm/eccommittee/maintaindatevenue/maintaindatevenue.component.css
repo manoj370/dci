@@ -1,0 +1,14 @@
+.globalBtn {
+    width: 140px;
+}
+
+td,
+th {
+    text-align: center;
+}
+
+@media screen and (max-width:426px) {
+    .globalBtn {
+        margin-top: 5px;
+    }
+}

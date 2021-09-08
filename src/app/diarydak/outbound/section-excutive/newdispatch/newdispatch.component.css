@@ -1,0 +1,10 @@
+input:focus {
+    color: black;
+}
+
+select:focus {
+    color: black;
+}
+.aseticcolor{
+    color: red;
+}

@@ -1,0 +1,358 @@
+[
+    {
+        "aegndaSectionId": 1,
+        "agendaSectionName": "Notes and Record Apologies",
+        "agendaSubSectionName": null,
+        "agendaSubject": "Noted and Recorded",
+        "createdOn": null,
+        "ecAgendaList": null
+    },
+    {
+        "aegndaSectionId": 2,
+        "agendaSectionName": "Confirm Minutes of Preceeding Meeting",
+        "agendaSubSectionName": "Confirm Minutes of Preceeding Meeting",
+        "agendaSubject": null,
+        "createdOn": null,
+        "ecAgendaList": [
+            {
+                "agendaId": 135,
+                "agendaCategroyItemRefNumber": "2(1)",
+                "agendaItemSubject": "Subject7",
+                "agendaItemMatter": "Item7",
+                "agendaItemDiscussion": null,
+                "agendaItemDecision": "The ouncil may recommend to the Central Government to grant its permission for establishment of a new dental college in the name of Tirumala Institute of Dental Sciences & Research Centre, Bardipur for starting BDS Course with 100 admissions for the academic session 2019-20 after obtaining the Performance Bank Guarantee of Rs.200 Iakhs from the applicant.",
+                "createdOn": "03-09-2020",
+                "ecAgendaReference": {
+                    "agendaId": 127,
+                    "agendaCategroyItemRefNumber": "12.6.1(10)",
+                    "agendaItemSubject": "Agenda sub",
+                    "agendaItemMatter": "Agenda matter",
+                    "agendaItemDiscussion": null,
+                    "agendaItemDecision": null,
+                    "createdOn": "01-09-2020",
+                    "ecAgendaReference": null,
+                    "meetingDate": null
+                },
+                "meetingDate": "09-07-2020"
+            },
+            {
+                "agendaId": 136,
+                "agendaCategroyItemRefNumber": "2(1)",
+                "agendaItemSubject": "Subject7",
+                "agendaItemMatter": "Item7",
+                "agendaItemDiscussion": null,
+                "agendaItemDecision": null,
+                "createdOn": "04-09-2020",
+                "ecAgendaReference": null,
+                "meetingDate": null
+            },
+            {
+                "agendaId": 137,
+                "agendaCategroyItemRefNumber": "2(2)",
+                "agendaItemSubject": "test",
+                "agendaItemMatter": "tedt",
+                "agendaItemDiscussion": null,
+                "agendaItemDecision": null,
+                "createdOn": "04-09-2020",
+                "ecAgendaReference": null,
+                "meetingDate": null
+            },
+            {
+                "agendaId": 138,
+                "agendaCategroyItemRefNumber": "2(2)",
+                "agendaItemSubject": "Subject7",
+                "agendaItemMatter": "Item7",
+                "agendaItemDiscussion": null,
+                "agendaItemDecision": null,
+                "createdOn": "04-09-2020",
+                "ecAgendaReference": null,
+                "meetingDate": null
+            },
+            {
+                "agendaId": 153,
+                "agendaCategroyItemRefNumber": "2(3)",
+                "agendaItemSubject": "2.1 value added by EC",
+                "agendaItemMatter": "2.1  matter",
+                "agendaItemDiscussion": null,
+                "agendaItemDecision": null,
+                "createdOn": "05-09-2020",
+                "ecAgendaReference": null,
+                "meetingDate": null
+            },
+            {
+                "agendaId": 158,
+                "agendaCategroyItemRefNumber": "2(4)",
+                "agendaItemSubject": "Agenda sub 6.1.6",
+                "agendaItemMatter": "Agenda matter 6.1.6",
+                "agendaItemDiscussion": null,
+                "agendaItemDecision": null,
+                "createdOn": "07-09-2020",
+                "ecAgendaReference": {
+                    "agendaId": 107,
+                    "agendaCategroyItemRefNumber": "6.1(2)",
+                    "agendaItemSubject": "Agenda sub 6.1.6",
+                    "agendaItemMatter": "Agenda matter 6.1.6",
+                    "agendaItemDiscussion": null,
+                    "agendaItemDecision": "PHA+U3ViIENvbW1pdHRlZSBSZWNvbW1lbmRhdGlvbi0tLTE5Jm5ic3A7QWdlbmRhIG1hdHRlciA2LjEuNjwvcD4=",
+                    "createdOn": "30-08-2020",
+                    "ecAgendaReference": null,
+                    "meetingDate": null
+                },
+                "meetingDate": "09-07-2020"
+            },
+            {
+                "agendaId": 159,
+                "agendaCategroyItemRefNumber": "2(5)",
+                "agendaItemSubject": "dfgdg",
+                "agendaItemMatter": "dfgdg",
+                "agendaItemDiscussion": null,
+                "agendaItemDecision": null,
+                "createdOn": "07-09-2020",
+                "ecAgendaReference": null,
+                "meetingDate": null
+            }
+        ]
+    },
+    {
+        "aegndaSectionId": 3,
+        "agendaSectionName": "Action Taken on meeting",
+        "agendaSubSectionName": null,
+        "agendaSubject": "Action taken",
+        "createdOn": null,
+        "ecAgendaList": null
+    },
+    {
+        "aegndaSectionId": 4,
+        "agendaSectionName": "Policy Matters",
+        "agendaSubSectionName": "Policy Matters",
+        "agendaSubject": null,
+        "createdOn": null,
+        "ecAgendaList": []
+    },
+    {
+        "aegndaSectionId": 5,
+        "agendaSectionName": "Academic Matters",
+        "agendaSubSectionName": "Academic Matters",
+        "agendaSubject": null,
+        "createdOn": null,
+        "ecAgendaList": []
+    },
+    {
+        "aegndaSectionId": 6,
+        "agendaSectionName": "ARPL Matters",
+        "agendaSubSectionName": null,
+        "agendaSubject": null,
+        "createdOn": null,
+        "ecAgendaList": [
+            {
+                "agendaId": 106,
+                "agendaCategroyItemRefNumber": "6.1(8)",
+                "agendaItemSubject": "sub 6.1",
+                "agendaItemMatter": "matter 6.1 ",
+                "agendaItemDiscussion": null,
+                "agendaItemDecision": "U3ViIENvbW1pdHRlZSBSZWNvbW1lbmRhdGlvbi0zMgo=",
+                "createdOn": "30-08-2020",
+                "ecAgendaReference": null,
+                "meetingDate": "09-09-2020"
+            },
+            {
+                "agendaId": 109,
+                "agendaCategroyItemRefNumber": "6.1(2)",
+                "agendaItemSubject": "Agenda subject 6.1",
+                "agendaItemMatter": "Agenda matter 6.1",
+                "agendaItemDiscussion": null,
+                "agendaItemDecision": "U3ViIENvbW1pdHRlZSBSZWNvbW1lbmRhdGlvbi0zMgo=",
+                "createdOn": "30-08-2020",
+                "ecAgendaReference": null,
+                "meetingDate": "09-09-2020"
+            },
+            {
+                "agendaId": 116,
+                "agendaCategroyItemRefNumber": "6.1(3)",
+                "agendaItemSubject": "Agenda make",
+                "agendaItemMatter": "Agenda make",
+                "agendaItemDiscussion": null,
+                "agendaItemDecision": "U3ViIENvbW1pdHRlZSBSZWNvbW1lbmRhdGlvbi0zMgo=",
+                "createdOn": "31-08-2020",
+                "ecAgendaReference": null,
+                "meetingDate": "09-09-2020"
+            },
+            {
+                "agendaId": 143,
+                "agendaCategroyItemRefNumber": "6.1(4)",
+                "agendaItemSubject": "Subjected4",
+                "agendaItemMatter": "Subjected4",
+                "agendaItemDiscussion": null,
+                "agendaItemDecision": "U3ViIENvbW1pdHRlZSBSZWNvbW1lbmRhdGlvbi0zMgo=",
+                "createdOn": "04-09-2020",
+                "ecAgendaReference": null,
+                "meetingDate": "09-09-2020"
+            }
+        ]
+    },
+    {
+        "aegndaSectionId": 7,
+        "agendaSectionName": "Administration Matters",
+        "agendaSubSectionName": "Administration Matters",
+        "agendaSubject": null,
+        "createdOn": null,
+        "ecAgendaList": []
+    },
+    {
+        "aegndaSectionId": 8,
+        "agendaSectionName": "A&F Matters",
+        "agendaSubSectionName": "A&F Matters",
+        "agendaSubject": null,
+        "createdOn": null,
+        "ecAgendaList": []
+    },
+    {
+        "aegndaSectionId": 9,
+        "agendaSectionName": "Legal/RTI/Public Grievance Matters",
+        "agendaSubSectionName": "Legal/RTI/Public Grievance Matters",
+        "agendaSubject": null,
+        "createdOn": null,
+        "ecAgendaList": []
+    },
+    {
+        "aegndaSectionId": 10,
+        "agendaSectionName": "Inspection/Membership Matters",
+        "agendaSubSectionName": "Inspection/Membership Matters",
+        "agendaSubject": null,
+        "createdOn": null,
+        "ecAgendaList": []
+    },
+    {
+        "aegndaSectionId": 11,
+        "agendaSectionName": "Supplementary Item",
+        "agendaSubSectionName": "Supplementary Item",
+        "agendaSubject": null,
+        "createdOn": null,
+        "ecAgendaList": [
+            {
+                "agendaId": 124,
+                "agendaCategroyItemRefNumber": "6.1(5)",
+                "agendaItemSubject": "Agenda 38",
+                "agendaItemMatter": "Agenda matter38",
+                "agendaItemDiscussion": null,
+                "agendaItemDecision": "U3ViIENvbW1pdHRlZSBSZWNvbW1lbmRhdGlvbi0zMgo=",
+                "createdOn": "01-09-2020",
+                "ecAgendaReference": null,
+                "meetingDate": "09-09-2020"
+            },
+            {
+                "agendaId": 144,
+                "agendaCategroyItemRefNumber": "6.1(6)",
+                "agendaItemSubject": "Subjected3",
+                "agendaItemMatter": "Subjected3",
+                "agendaItemDiscussion": null,
+                "agendaItemDecision": "U3ViIENvbW1pdHRlZSBSZWNvbW1lbmRhdGlvbi0zMgo=",
+                "createdOn": "04-09-2020",
+                "ecAgendaReference": null,
+                "meetingDate": "09-09-2020"
+            },
+            {
+                "agendaId": 156,
+                "agendaCategroyItemRefNumber": "6.1(7)",
+                "agendaItemSubject": "623 CGR_Complaint College Agenda creation",
+                "agendaItemMatter": "623 Complaint Need",
+                "agendaItemDiscussion": null,
+                "agendaItemDecision": "U3ViIENvbW1pdHRlZSBSZWNvbW1lbmRhdGlvbi0zMgo=",
+                "createdOn": "05-09-2020",
+                "ecAgendaReference": null,
+                "meetingDate": "09-09-2020"
+            },
+            {
+                "agendaId": 157,
+                "agendaCategroyItemRefNumber": "6.1(8)",
+                "agendaItemSubject": "Agenda creation on 05th",
+                "agendaItemMatter": "Matter is on the listing",
+                "agendaItemDiscussion": null,
+                "agendaItemDecision": "U3ViIENvbW1pdHRlZSBSZWNvbW1lbmRhdGlvbi0zMgo=",
+                "createdOn": "05-09-2020",
+                "ecAgendaReference": null,
+                "meetingDate": "09-09-2020"
+            }
+        ]
+    },
+    {
+        "aegndaSectionId": 12,
+        "agendaSectionName": "Any Other Business ",
+        "agendaSubSectionName": "Any Other Business ",
+        "agendaSubject": null,
+        "createdOn": null,
+        "ecAgendaList": [
+            {
+                "agendaId": 114,
+                "agendaCategroyItemRefNumber": "12.6.1(9)",
+                "agendaItemSubject": "Agednba",
+                "agendaItemMatter": "Agednba",
+                "agendaItemDiscussion": null,
+                "agendaItemDecision": "U3ViIENvbW1pdHRlZSBSZWNvbW1lbmRhdGlvbi0zMgo=",
+                "createdOn": "31-08-2020",
+                "ecAgendaReference": null,
+                "meetingDate": "09-09-2020"
+            },
+            {
+                "agendaId": 125,
+                "agendaCategroyItemRefNumber": "12.6.1(10)",
+                "agendaItemSubject": "Agenda 41",
+                "agendaItemMatter": "Agenda matter41",
+                "agendaItemDiscussion": null,
+                "agendaItemDecision": "U3ViIENvbW1pdHRlZSBSZWNvbW1lbmRhdGlvbi0zMgo=",
+                "createdOn": "01-09-2020",
+                "ecAgendaReference": null,
+                "meetingDate": "09-09-2020"
+            },
+            {
+                "agendaId": 126,
+                "agendaCategroyItemRefNumber": "12.6.1(11)",
+                "agendaItemSubject": "Agenda sub",
+                "agendaItemMatter": "Agenda matter",
+                "agendaItemDiscussion": null,
+                "agendaItemDecision": "U3ViIENvbW1pdHRlZSBSZWNvbW1lbmRhdGlvbi0zMgo=",
+                "createdOn": "01-09-2020",
+                "ecAgendaReference": null,
+                "meetingDate": "09-09-2020"
+            },
+            {
+                "agendaId": 147,
+                "agendaCategroyItemRefNumber": "12.6.1(12)",
+                "agendaItemSubject": "499 CGR_Complaint College Agenda creation",
+                "agendaItemMatter": "499 Complaint Need",
+                "agendaItemDiscussion": null,
+                "agendaItemDecision": null,
+                "createdOn": "04-09-2020",
+                "ecAgendaReference": null,
+                "meetingDate": "09-09-2020"
+            },
+            {
+                "agendaId": 152,
+                "agendaCategroyItemRefNumber": "12.6.1(13)",
+                "agendaItemSubject": "Testing",
+                "agendaItemMatter": "Matter in ARPL",
+                "agendaItemDiscussion": null,
+                "agendaItemDecision": null,
+                "createdOn": "05-09-2020",
+                "ecAgendaReference": null,
+                "meetingDate": "09-09-2020"
+            }
+        ]
+    },
+    {
+        "aegndaSectionId": 13,
+        "agendaSectionName": "Date and Venue Next Meeting",
+        "agendaSubSectionName": null,
+        "agendaSubject": "Date and Venue Next Meeting",
+        "createdOn": null,
+        "ecAgendaList": null
+    },
+    {
+        "aegndaSectionId": 14,
+        "agendaSectionName": "Vote of Thanks",
+        "agendaSubSectionName": null,
+        "agendaSubject": "Voted and Thanked",
+        "createdOn": null,
+        "ecAgendaList": null
+    }
+]

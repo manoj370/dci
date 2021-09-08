@@ -1,0 +1,66 @@
+<!-- Assistant Secretary -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card" *ngIf="chronologicalData">
+            <div class="row">
+                <div class="col-md-9">
+                    <h5 class="headingValue">Chronological History</h5>
+                    <span class="badge badge-pill badge-success" style="font-size: 60%;">{{chronologicalData.dakDispatch.dakStatus.statusName}}</span>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="heading">
+                        Reference Number
+                    </div>
+                    <div class="subheadingValue">
+                        {{chronologicalData.dakDispatch.sectionRefNo}}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="heading">
+                        Dispatch Created Date
+                    </div>
+                    <div class="subheadingValue">
+                        {{chronologicalData.dakDispatch.createdDate}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="theadRow thead-light">
+                                <tr>
+                                    <th>Assign By</th>
+                                    <th>Assign To</th>
+                                    <th>Comments</th>
+                                    <th>Create Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbodyRow">
+                                <tr *ngFor="let item of canonicalData" [routerLink]="['../../sheetView', item.dakDispatch.dispatchId]">
+                                    <td>
+                                        {{item.assignedToUserId !== null ? ((item.assignedToUserId.firstName)+' '+(item.assignedToUserId.lastName)) :'-'}}
+                                    </td>
+                                    <td>
+                                        {{item.whoAssignedUserId !== null ? ((item.whoAssignedUserId.firstName)+' '+(item.whoAssignedUserId.lastName)) :'-'}}
+                                    </td>
+                                    <td> {{item.comments !== null ? item.comments:'-'}}</td>
+                                    <td> {{item.createdDate !== null ? item.createdDate:'-'}}</td>
+                                    <td>
+                                        <span class="badge badge-pill badge-success" style="color: white;">
+                      {{item.dakStatus.statusName !==null ? item.dakStatus.statusName :'-'}}
+                    </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

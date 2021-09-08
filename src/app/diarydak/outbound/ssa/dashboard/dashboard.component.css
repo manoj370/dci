@@ -1,0 +1,55 @@
+.badge-pill {
+    font-size: 12px !important;
+    height: 30px !important;
+    width: 110px !important;
+    border-radius: 4px !important;
+    padding-top: 10px !important;
+}
+
+.globalBtn {
+    margin-top: 30px
+}
+
+.imagecalender {
+    position: absolute;
+    top: 8px;
+    right: 60px;
+}
+
+@media screen and (max-width:726px) {
+    .imagecalender {
+        position: absolute;
+        top: 8px;
+        right: 130px;
+    }
+}
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    width: 100vw;
+    /* height: 100vh; */
+    background-color: #fff;
+}
+/* th[sortable].asc:before {
+    content: '\f0dc';
+    display: block;
+  
+    background-size: 15px;
+    width: 22px;
+    height: 22px;
+    float: right;
+    font-family: "Font Awesome 5 Free";
+}
+th[sortable].desc:before {
+    font-family: "Font Awesome 5 Free";
+    content: '\f0dc';
+    display: block;
+   
+    background-size: 15px;
+    width: 22px;
+    height: 22px;
+    float: right;
+ 
+} */

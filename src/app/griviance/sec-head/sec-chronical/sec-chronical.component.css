@@ -1,0 +1,7 @@
+.name-transfer {
+    text-transform: lowercase;
+}
+
+.name-transfer::first-letter {
+    text-transform: uppercase;
+}

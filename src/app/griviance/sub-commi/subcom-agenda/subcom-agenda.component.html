@@ -1,0 +1,259 @@
+<!-- Assistant Secretery -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card" *ngIf="complaintviewDta">
+            <div class="row" style="padding-bottom: 0px;">
+                <div class="col-md-6">
+                    <h5 class="headingValue">Agenda View</h5>
+                </div>
+                <div class="col-md-6 text-right" *ngIf="statusComp==='INPROGRESS_SUBCOM'">
+                    <button class="globalBtn forwardBtn" data-toggle="modal" data-target="#myModal" style="width: 150px;">Recommendation</button>
+                </div>
+            </div>
+            <hr>
+            <div>
+                <div class="row" *ngIf="agendaData">
+                    <div class="col-md-3">
+                        <div class="heading">
+                            Agenda Reference Number
+                        </div>
+                        <div class="subheadingValue">
+                            {{agendaData.agendaCategroyItemRefNumber !== null ? (agendaData.agendaCategroyItemRefNumber) : '-'}}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="heading">
+                            Agenda Matter
+                        </div>
+                        <div class="subheadingValue">
+                            {{agendaData.agendaItemMatter}}
+
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="heading">
+                            Agenda Subject
+                        </div>
+                        <div class="subheadingValue">
+                            {{agendaData.agendaItemSubject}}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row" *ngFor="let item of complaintviewDta.commentSections">
+                <div class="col-md-10" *ngIf="item.sectionAt !== 'COMPLAINANT'">
+                    <div *ngIf="item.comments!==null">
+                        <h5 class="headingValue" *ngIf="item.sectionAt === 'SECTIONEXECUTIVE'">Section Executive</h5>
+                        <h5 class="headingValue" *ngIf="item.sectionAt === 'SECTIONHEAD'">Section Head</h5>
+                        <h5 class="headingValue" *ngIf="item.sectionAt === 'SUBCOMMITTEE'">Sub Committee</h5>
+                        <h5 class="headingValue" *ngIf="item.sectionAt === 'EXECUTIVECOMMITTEE'">Executive Committee</h5>
+                        <h5 class="headingValue" *ngIf="item.sectionAt === 'COLLEGE'">College</h5>
+                    </div>
+                    <p style="font-size: 12px;" *ngIf="item.comments!==null">
+                        {{item.createdDate}}
+                    </p>
+                    <div class="subheadingValue" *ngIf="item.comments!==null">
+                        <p>
+                            {{item.comments}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <h6 class="headingValue">Complaint Details</h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="heading">
+                        Name
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complaintRaisedBy.firstName}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="heading">
+                        Mobile Number
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complaintRaisedBy.phoneNumber}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="heading">
+                        Email ID
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complaintRaisedBy.emailId}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="heading">
+                        Address
+                    </div>
+                    <div class="subheadingValue" *ngIf="complaintviewDta.complaintRaisedBy.addresses.length !==0">
+                        {{complaintviewDta.complaintRaisedBy.addresses[0].line1}}, {{complaintviewDta.complaintRaisedBy.addresses[0]. landmark}}<br> {{complaintviewDta.complaintRaisedBy.addresses[0].city}}, {{complaintviewDta.complaintRaisedBy.addresses[0].
+                        state}} <br> {{complaintviewDta.complaintRaisedBy.addresses[0].zipCode}},
+                        <span *ngIf="complaintviewDta.complaintRaisedBy.addresses[0].country === 1">
+                            India
+                           </span>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <h6 class="headingValue">Complaint Details</h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="heading">
+                        Complaint Id
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complainantNumber}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="heading">
+                        Complaint Against
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complaintAgainst.name}}
+                    </div>
+                </div>
+                <div class="col-md-3" *ngIf="complaintviewDta.complaintAgainst.name === 'College'">
+                    <div class="heading">
+                        College Name
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complaintAgainstEntityMasterId.name}}
+                    </div>
+                </div>
+                <div class="col-md-3" *ngIf="complaintviewDta.complaintAgainst.name === 'Dentist'">
+                    <div class="heading">
+                        Dentist Name
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complaintAgainstDentistId.firstName}} {{complaintviewDta.complaintAgainstDentistId.lastName}}
+                    </div>
+                </div>
+                <div class="col-md-3" *ngIf="complaintviewDta.complaintAgainst.name === 'Dentist'">
+                    <div class="heading">
+                        Dentist State Council
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complaintAgainstDentistId.stateCouncil}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="heading">
+                        Subject
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complainantSubject}}
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="heading">
+                        Complaint Type
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complaintType.complaintTypeName}}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="heading">
+                        Complaint Description
+                    </div>
+                    <div class="subheadingValue">
+                        <p>
+                            {{complaintviewDta.complainantDescription}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="(complaintviewDta.workflowDocuments!==null) && (complaintviewDta.workflowDocuments.length!==0)">
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h6 class="headingValue">Evidence Documents</h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6" *ngFor="let item of complaintviewDta.workflowDocuments; let i=index">
+                        <div class="iconCard" (click)="download(item.documentId)">
+                            <span><i class="far fa-file-alt docIcons"></i> {{item.documentLocation}}</span>
+                            <a href="{{downloadUrl}}" class="downloadView">
+                                <i class="fas fa-cloud-download-alt" style=" cursor: pointer;color: #3D78BE;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row" *ngIf="complaintviewDta.reappealComments!==null">
+                <div class="col-md-10">
+                    <div>
+                        <h5 class="headingValue">Appeal Comments</h5>
+                    </div>
+                    <div class="subheadingValue">
+                        <p>
+                            {{complaintviewDta.reappealComments}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- Modal Popup  -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog modal-md" style="top: 5%;">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header" style="padding: 20px;">
+                <h5 class="modal-title headingValue">Sub Committee Recommendation</h5>
+                <button type="button" class="close" data-dismiss="modal" (click)="clearValidation()">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form [formGroup]="recomForm">
+                            <textarea class="form-control" formControlName="recom" rows="5" placeholder="Sub Committee Summary Recommendation" [ngClass]="{ 'is-invalid': f.recom.errors && submitted}"></textarea>
+                            <div *ngIf=" submitted && f.recom.errors" class="invalid-feedback">
+                                <div *ngIf=" submitted && f.recom.errors.required">
+                                    Please Enter Recommendation Comment
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" #dismissModal class="globalBtn clearBtn" style="background-color: #c1c1c1;" (click)="clearValidation()">Reset</button>
+                <button class="globalBtn submitBtn" style="width: 300px;" data-dismiss="modal" [disabled]="!recomForm.valid" (click)="forwardExc()">Forward To Executive Committee</button>
+            </div>
+        </div>
+    </div>
+</div>

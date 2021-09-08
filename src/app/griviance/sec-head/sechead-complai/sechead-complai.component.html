@@ -1,0 +1,284 @@
+<!-- Assistant Secretery -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card" *ngIf="complaintviewDta">
+            <div class="row" style="border-bottom: 1px solid #0000000d;">
+                <div class="col-md-6">
+                    <h5 class="headingValue">Complaint View </h5>
+                    <span class="badge badge-pill badge-success" style="font-size: 60%;">{{complaintviewDta.complaintStatus.complaintStatusName}}</span>
+                </div>
+                <div class="col-md-6 text-right">
+                    <button class="globalBtn forwardBtn" data-toggle="modal" data-target="#myModal" *ngIf="(complaintviewDta.complaintStatus.complaintStatusName === 'OPEN') && (statusComp ==='INPROGRESS_SECTIONHEAD')">Assign</button>
+                    <button class="globalBtn submitBtn" [routerLink]="['../../../history', paramsId]">History</button>
+                    <button style="width: 175px;" class="globalBtn acceptBtn" data-toggle="modal" data-target="#reappeal" *ngIf="(complaintviewDta.complaintStatus.complaintStatusName === 'APPEAL')">Handling
+                        Appeal</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="heading">
+                        Complaint Id
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complainantNumber}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="heading">
+                        Complaint Against
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complaintAgainst.name}}
+                    </div>
+                </div>
+                <div class="col-md-3" *ngIf="complaintviewDta.complaintAgainst.name === 'College'">
+                    <div class="heading">
+                        College Name
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complaintAgainstEntityMasterId.name}}
+                    </div>
+                </div>
+                <div class="col-md-3" *ngIf="complaintviewDta.complaintAgainst.name === 'Dentist'">
+                    <div class="heading">
+                        Dentist Name
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complaintAgainstDentistId.firstName}} {{complaintviewDta.complaintAgainstDentistId.lastName}}
+                    </div>
+                </div>
+                <div class="col-md-3" *ngIf="complaintviewDta.complaintAgainst.name === 'Dentist'">
+                    <div class="heading">
+                        Dentist State Council
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complaintAgainstDentistId.stateCouncil}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" *ngFor="let item of complaintviewDta.commentSections">
+                <div class="col-md-10" *ngIf="item.sectionAt !== 'COMPLAINANT'">
+                    <div *ngIf="item.comments!==null">
+                        <h5 class="headingValue" *ngIf="item.sectionAt === 'SECTIONEXECUTIVE'">Section Executive</h5>
+                        <h5 class="headingValue" *ngIf="item.sectionAt === 'SECTIONHEAD'">Section Head</h5>
+                        <h5 class="headingValue" *ngIf="item.sectionAt === 'SUBCOMMITTEE'">Sub Committee</h5>
+                        <h5 class="headingValue" *ngIf="item.sectionAt === 'EXECUTIVECOMMITTEE'">Executive Committee
+                        </h5>
+                        <h5 class="headingValue" *ngIf="item.sectionAt === 'COLLEGE'">College</h5>
+                    </div>
+                    <p style="font-size: 12px;">{{item.createdDate}}</p>
+                    <div class="subheadingValue">
+                        <p>
+                            {{item.comments}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <h6 class="headingValue">Complainant Details</h6>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="heading">
+                        Name
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complaintRaisedBy.firstName}} {{complaintviewDta.complaintRaisedBy.lastName}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="heading">
+                        Mobile Number
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complaintRaisedBy.phoneNumber}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="heading">
+                        Email ID
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complaintRaisedBy.emailId}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="heading">
+                        Address
+                    </div>
+                    <div class="subheadingValue" *ngIf="complaintviewDta.complaintRaisedBy.addresses.length !==0">
+                        {{complaintviewDta.complaintRaisedBy.addresses[0].line1}}, {{complaintviewDta.complaintRaisedBy.addresses[0]. landmark}}<br> {{complaintviewDta.complaintRaisedBy.addresses[0].city}}, {{complaintviewDta.complaintRaisedBy.addresses[0].
+                        state}} <br> {{complaintviewDta.complaintRaisedBy.addresses[0].zipCode}},{{complaintviewDta.complaintRaisedBy.addresses[0].country}}
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <h6 class="headingValue">Complaint Details</h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="heading">
+                        Subject
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complainantSubject}}
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="heading">
+                        Complaint Type
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complaintType.complaintTypeName}}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="heading">
+                        Complaint Description
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complainantDescription}}
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="(complaintviewDta.workflowDocuments!==null) && (complaintviewDta.workflowDocuments.length!==0)">
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h6 class="headingValue">Evidence Documents</h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6" *ngFor="let item of complaintviewDta.workflowDocuments; let i=index">
+                        <div class="iconCard" (click)="download(item.documentId)">
+                            <span><i class="far fa-file-alt docIcons"></i> {{item.documentLocation}}</span>
+                            <a href="{{downloadUrl}}" class="downloadView">
+                                <i class="fas fa-cloud-download-alt" style=" cursor: pointer;color: #3D78BE;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row" *ngIf="complaintviewDta.reappealComments!==null">
+                <div class="col-md-10">
+                    <div>
+                        <h5 class="headingValue">Appeal Comments</h5>
+                    </div>
+                    <div class="subheadingValue">
+                        <p>
+                            {{complaintviewDta.reappealComments}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal" id="myModal">
+    <div class="modal-dialog modal-md" style="top: 20%;">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header" style="padding: 20px;">
+                <h5 class="modal-title headingValue">Assign</h5>
+                <button type="button" class="close" data-dismiss="modal" #dismissModal (click)="resetControls()">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form [formGroup]="assignForm">
+                    <div class="form-group row" style="padding:0">
+                        <div class="col-sm-12">
+                            <select class="custom-select-sm" class="form-control" formControlName="asiignRole" [ngClass]="{ 'is-invalid':submitted && f.asiignRole.errors}" (change)="selectedRole($event.target.value)">
+                                <option value="" disabled selected style="color:orange">Select Role *</option>
+                                <option *ngFor="let le of asiignRoles" [value]="le.designationId">
+                                    {{le.designationName}}
+                                </option>
+                            </select>
+                            <div *ngIf=" submitted && f.asiignRole.errors && formErrors" class="invalid-feedback">
+                                <div *ngIf=" submitted && f.asiignRole.errors.required">
+                                    {{formErrors.roleRequired}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row" style="padding:0">
+                        <div class="col-sm-12">
+                            <select class="custom-select-sm" class="form-control" formControlName="assignPerson" [ngClass]="{ 'is-invalid': submitted && f.assignPerson.errors}">
+                                <option value="" disabled selected style="color:orange">Select Person *</option>
+                                <option *ngFor="let ap of assignPerson" [value]="ap.userId">
+                                    {{ap.firstName}}--({{ap.emailId}})
+                                </option>
+                            </select>
+                            <div *ngIf=" submitted && f.assignPerson.errors && formErrors" class="invalid-feedback">
+                                <div *ngIf=" submitted && f.assignPerson.errors.required">
+                                    {{formErrors.personRequired}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row" style="padding:0">
+                        <div class="col-sm-12">
+                            <textarea class="form-control" rows="5" placeholder="Write Comments *" formControlName="assignComment" [ngClass]="{ 'is-invalid': submitted && f.assignComment.errors}"></textarea>
+                            <div *ngIf=" submitted && f.assignComment.errors && formErrors" class="invalid-feedback">
+                                <div *ngIf=" submitted && f.assignComment.errors.required">
+                                    Please Enter Comments
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" #dismissModal class="globalBtn clearBtn" style="background-color: #c1c1c1;" (click)="resetControls()">Reset</button>
+
+                <button class="globalBtn submitBtn" (click)="assign()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal" id="reappeal" *ngIf="complaintviewDta">
+    <div class="modal-dialog modal-md" style="top: 20%;">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header" style="padding: 20px;">
+                <h5 class="modal-title headingValue">Handling Appeal</h5>
+                <button type="button" class="close" data-dismiss="modal" (click)="resetControls()">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" *ngIf="complaintviewDta.reappealComments !== null">
+                <h4>Comments</h4>
+
+                <textarea class="form-control" rows="5" placeholder="Comments" [(ngModel)]="reappealComments">
+
+                </textarea>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button class="globalBtn acceptBtn" (click)="acceptReappeal('Accept')" data-dismiss="modal">Accept</button>
+                <button class="globalBtn rejectBtn" (click)="acceptReappeal('Reject')" data-dismiss="modal">Reject</button>
+            </div>
+        </div>
+    </div>
+</div>

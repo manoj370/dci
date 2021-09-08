@@ -1,0 +1,692 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card" *ngIf="receiptData">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="headingValue">View Receipt </h5>
+                </div>
+                <div class="col-md-6 text-right">
+                    <button type="button" class="globalBtn acceptBtn" data-toggle="modal"  data-target="#assignModal" style="cursor: pointer;" 
+                    *ngIf="(receiptData.dakStatus.statusName !== 'File Tagged')&&(showassign)&&((roleName ==='Section Officer')||(roleName ==='AcademicSectionOfficer')
+                    ||(roleName ==='AESectionofficer')||(roleName ==='AFSectionOfficer')
+                    ||(roleName ==='LegalAssistantSectionOfficer')
+                    ||(roleName ==='AFAssistantSectionOfficer')||(roleName ==='AcademicAssistantSectionOfficer')
+                    ||(roleName ==='InspectionSectionOfficer')||(roleName ==='AcademicAsstSecty')
+                    ||(roleName ==='AEAssistantSecretary')||(roleName ==='LegalAsstSecty')
+                    ||(roleName ==='ARPMAsstSecty'))">
+                        <span><i class="fas fa-user-plus"></i></span>&nbsp;Assign</button>
+                    <button type="button" class="btn btn-primary reponsivebtn" data-toggle="modal" *ngIf="(receiptData.dakStatus.statusName !== 'File Tagged')&&showtagBtn&&showassign" data-target="#myModal2" (click)="updateReceipt()" style="cursor: pointer;"><span><i
+                                class="fas fa-receipt"></i></span>&nbsp; Tag Receipt To File
+                    </button>&nbsp;
+                    <!-- <button type="button" class="btn btn-success reponsivebtn" data-toggle="modal" *ngIf="showbtns" data-target="#myModal" style="cursor: pointer;"><span><i
+                                class="fas fa-receipt"></i></span>&nbsp;Finalize 
+                        Receipt</button>&nbsp; -->
+                    <button type="button" class="btn btn-success " style="cursor: pointer;" 
+                    *ngIf="(receiptData.dakStatus.statusName === 'File Tagged')" (click)="createNoteSheet()"><span><i
+                            ></i></span>&nbsp;Create Note Sheet</button>&nbsp;
+                    <button type="button" class="btn btn-primary " style="cursor: pointer;" (click)="back()"><span><i
+                                class="fas fa-angle-left"></i></span>&nbsp;Back</button>
+                </div>
+            </div>
+            <hr>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <b> <label>Diary Date</label></b>
+                    <p>{{receiptData.receiptDairyDate !==undefined ? (receiptData.receiptDairyDate):'-'}}</p>
+                </div>
+                <div class="col-md-4">
+                    <b> <label>Ref.Id</label></b>
+                    <p> {{receiptData.receiptFileNum !==null ? (receiptData.receiptFileNum.dakDispatchFileNo) : '-'}}</p>
+                </div>
+
+                <div class="col-md-4">
+                    <b> <label>Receipt Language</label></b>
+                    <p>{{receiptData.receiptLanguageId.name}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <b> <label>Date Received</label></b>
+                    <p>{{receiptData.dairyReceivedDate}}</p>
+                </div>
+                <div class="col-md-4">
+                    <b> <label>Sender Name</label></b><br>
+                    <p>{{receiptData.senderName}}</p>
+                </div>
+                <div class="col-md-4 wordBreak">
+                    <b> <label>Subject</label></b>
+                    <p>{{receiptData.receiptSubject}} </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <b> <label>Assigned To Whom</label></b><br>
+                    <!-- <p>{{receiptData.receiptToAddress}}</p> -->
+                    <p *ngFor="let section of sectionNames">Section Head - {{section}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <b> <label>Address</label></b><br>
+                    <p>{{receiptData.senderAddress.line1}}, {{receiptData.senderAddress.line2}},{{receiptData.senderAddress.state}},{{receiptData.senderAddress.city}},{{receiptData.senderAddress.country}}, {{receiptData.senderAddress.zipCode}}
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <b> <label>Enclosure Details</label></b>
+                    <p>{{receiptData.enclosureDetails !=="" ? (receiptData.enclosureDetails) : '-'}}
+                    </p>
+                </div>
+            </div>
+            <!-- ///// -->
+            <div class="row">
+                <div class="col-md-12" *ngIf="receiptData.receiptDocuments.length !==0">
+                    <h6 class="headingValue" style="color: black;"> Documents</h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2" *ngFor="let document of receiptData.receiptDocuments ;let i=index">
+                    <div class="iconCard" (click)="getDocumentId(document)">
+                        <a href="{{downloadUrl}}"> <i class="far fa-file-alt docIcons"></i>
+                            <span style="   
+    cursor: pointer;
+">file{{i+1}}<i class="fas fa-cloud-download-alt" style=" cursor: pointer;color: #3D78BE;"></i></span></a>
+                    </div>
+                </div>
+            </div><br>
+
+            <hr style="color:black">
+            <div class="col-md-12" style="
+           
+            margin-left: -19px;
+        ">
+                <div id="accordion" class="myaccordion">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <span class="headingValue">View Comments</span>
+                            <h2 class="mb-0" style="float: right;">
+                                <button class="d-flex align-items-center justify-content-between btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <span class="fa-stack fa-sm">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseOne" class="collapse " aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+
+                                <!-- <div class="col-md-12" *ngFor="let history  of assigngedUserDetails">
+                                <h5 class="headingValue"> Assign Receipt To</h5>
+                                <p>{{history.lastModifiedDate}}</p><br>
+                                <b><label>{{history.assignedToUserId.roles[0].roleName}}</label></b>
+                                <p>{{ history.assignedToUserId.firstName}}</p>
+                                <b><label>Comments</label></b>
+                                <p>{{history.comments}}  </p><hr>
+                            </div> -->
+                               <div class="col-md-12">
+                                <h5 class="headingValue"> Diary & Forwarded by</h5>&nbsp;<span>-</span>&nbsp;<span> {{this.firstname}}&nbsp;{{this.lastname}}</span>
+                                &nbsp;
+                                <!-- <span class="badge badge-pill badge-success" style="color: white;">
+                                    {{item.dakStatus.statusName !==null ? item.dakStatus.statusName :'-'}}
+                                  </span><br> -->
+                               </div>
+                                <div class="col-md-12" *ngFor="let item  of resultSet">
+                                   
+                                    <h5 class="headingValue">To</h5>&nbsp;<span>-</span>&nbsp;<span>{{item.assignedToUserId !== null ? ((item.assignedToUserId.firstName)+' '+(item.assignedToUserId.lastName)) :'-'}}</span>
+                                    &nbsp;<span class="badge badge-pill badge-success" style="color: white;">
+                                        {{item.dakStatus.statusName !==null ? item.dakStatus.statusName :'-'}}
+                                      </span>&nbsp;<span>{{item.createdDate !== null ? item.createdDate:'-'}}</span>
+                                      <br>
+                                      <h5 class="headingValue">Comment</h5>&nbsp;<span>-</span>&nbsp;<span>{{item.comments !== "" ? item.comments:'-'}}</span>
+                                    
+                                </div>
+
+<!-- <h5 class="headingValue"> Assign Receipt To</h5>
+                                    <p>{{history.lastModifiedDate}}</p><br>
+                                    <b><label>{{history.assignedToUserId.roles[0].roleName}}</label></b>
+                                    <p>{{ history.assignedToUserId.firstName}}</p>
+                                    <b><label>Comments</label></b>
+                                    <p>{{history.comments}} </p>
+                                    <hr>
+                                    <b><label>Assigned By</label></b>
+                                    <p>{{history.whoAssignedUserId.firstName}}&nbsp; {{history.whoAssignedUserId.lastName}} </p>
+                                    <hr> -->
+                                <!-- <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive-sm">
+                                            <table class="table table-bordered table-hover">
+                                                <thead class="theadRow thead-light">
+                                                    <tr>
+                                                        <th>Assign By</th>
+                                                        <th>Assign To</th>
+                                                        <th>Comments</th>
+                                                        <th>Create Date</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="tbodyRow">
+                                                    <tr *ngFor="let item  of history">
+                                                        <td>
+                                                            {{item.whoAssignedUserId !== null ? ((item.whoAssignedUserId.firstName)+' '+(item.whoAssignedUserId.lastName)) :'-'}}
+                                                        </td>
+                                                        <td>
+                                                            {{item.assignedToUserId !== null ? ((item.assignedToUserId.firstName)+' '+(item.assignedToUserId.lastName)) :'-'}}
+                                                        </td>
+                                                        <td> {{item.comments !== "" ? item.comments:'-'}}</td>
+                                                        <td> {{item.createdDate !== null ? item.createdDate:'-'}}</td>
+                                                        <td>
+                                                            <span class="badge badge-pill badge-success" style="color: white;">
+                                        {{item.dakStatus.statusName !==null ? item.dakStatus.statusName :'-'}}
+                                      </span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- //Integrate -->
+            <div id="demo" class="collapse">
+                <div class="row">
+                    <div class="col-md-6" *ngFor="let history  of assigngedUserDetails">
+                        <h5 class="headingValue">Assign Receipt To</h5>
+                        <p>{{history.lastModifiedDate}}</p><br>
+                        <b><label>{{history.assignedToUserId.roles[0].roleName}}</label></b>
+                        <p>{{ history.assignedToUserId.firstName}}</p>
+                        <b><label>Comments</label></b>
+                        <p>{{history.comments}} </p>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <i class="fas fa-minus-circle"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title headingValue">Finalize  Receipt</h4>
+                <button type="button" class="close" data-dismiss="modal" style="cursor: pointer;">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form [formGroup]="disposedReceiptForm">
+
+                    <div class="row">
+                        <textarea rows="5" cols="20" placeholder="comments" formControlName="comments" class="form-control">Add Comments</textarea>
+                        <div *ngIf="disposedReceiptForm.controls['comments'].hasError('required') && disposedReceiptForm.controls['comments'].touched" class="failed-validation" style="color:red;">
+                            Comment Required
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" style="cursor: pointer;" [disabled]="!disposedReceiptForm.valid" (click)="desiposedReceipt()">Finalize</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Return Receipt Modal Ends -->
+
+<!-- update -->
+<div class="modal fade" id="myModal2">
+    <div class="modal-dialog modal-xl">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" (click)="reset()" #closeModal>&times;</button>
+            </div>
+
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Search With Existing File</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" (click)="reset()" aria-controls="profile" aria-selected="false">Create Reference/File Number</a>
+
+                </li>
+
+
+                <!-- <button type="button" class="close" data-dismiss="modal" #dismissModal>&times;</button> -->
+
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                    <div class="modal-body">
+                        <form [formGroup]="searchForm">
+                            <div class="row">
+                                <div class="col-md-3 form-group mb-1">
+                                    <label>File Number :</label>
+                                </div>
+                                <div class="col-md-6 form-group" *ngIf="showsearch">
+                                    <div class="form-group">
+                                        <div class="icon-addon" style="height: 0;">
+                                            <input type="text" placeholder="Enter File Number" class="form-control" formControlName="fileno">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 form-group mb-5" *ngIf="showsearch">
+                                    <button type="button" class="btn btn-primary" (click)="search()">Search</button>
+
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-md-12" *ngIf="showradio">
+                                <div class="table-responsive-sm">
+                                    <table class="table table-bordered table-hover">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>Select</th>
+                                                <th>Reference No/File No</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngFor="let existingfile of existingFilesList">
+                                            <tr>
+                                                <td> <input type="radio" name="optradio" (change)="updateReceiptWithFileNo(existingfile)" #closeBtn></td>
+                                                <td>{{existingfile.dakDispatchFileNo}}</td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- <div class="modal-footer">
+                                    <button type="button" class="btn btn-success" data-dismiss="modal">Select</button>
+                                </div> -->
+                            </div>
+
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <br>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <h5 class="headingValue"> Reference/File Number</h5>
+                        </div>
+                    </div>
+                    <form [formGroup]="refForm">
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label>Section <span class="errorColor">*</span></label>
+                                <input type="textbox" class="form-control" readonly tabindex="0" formControlName="refSection">
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label>Sub Section <span class="errorColor">*</span></label>
+                                <select class="form-control" tabindex="1" formControlName="refSubSection" (change)="subSection($event.target.value)" [ngClass]="{ 'is-invalid': receipt.refSubSection.invalid && (receipt.refSubSection.dirty || receipt.refSubSection.touched) }">
+                                    <option value="" disabled selected style="color:orange">Select Sub Section</option>
+                                    <option *ngFor="let sec of subSectionList" [value]="sec.subSectionId">
+                                        {{sec.name}}
+                                    </option>
+
+                                </select>
+                                <div *ngIf="refForm.controls['refSubSection'].hasError('required') && refForm.controls['refSubSection'].touched" class="failed-validation" class="errorColor">
+                                    SubSection Required
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label>Category <span class="errorColor">*</span></label>
+                                <select class="form-control" formControlName="category" (change)="category($event.target.value)" [ngClass]="{ 'is-invalid': receipt.category.invalid && (receipt.category.dirty || receipt.category.touched) }">
+                                    <option value="" disabled selected style="color:orange">Select Category</option>
+                                    <option *ngFor="let category of categoriesList" [value]="category.fileCategoryId">
+                                        {{category.name}}
+                                    </option>
+                                
+                                </select>
+                                <div *ngIf="refForm.controls['category'].hasError('required') && refForm.controls['category'].touched" class="failed-validation" class="errorColor">
+                                    Category Required
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label>Sub Category <span class="errorColor">*</span></label>
+                                <select class="form-control" tabindex="3" formControlName="subCategory" [ngClass]="{ 'is-invalid': receipt.subCategory.invalid && (receipt.subCategory.dirty || receipt.subCategory.touched) }" (change)="subcategory($event.target.value)">
+                                        <option value="" disabled selected style="color:orange">Select Sub Category</option>
+                                        <option *ngFor="let subcategory of subcategoriesList" [value]="subcategory.fileSubCategoryId">
+                                            {{subcategory.name}}
+                                        </option>
+                                    
+                                    </select>
+                                <div *ngIf="refForm.controls['subCategory'].hasError('required') && refForm.controls['subCategory'].touched" class="failed-validation" class="errorColor">
+                                    Sub Category Required
+                                </div>
+
+                            </div>
+                            <div class="col-md-4 form-group" *ngIf="showcollege">
+                                <label>College <span class="errorColor">*</span></label>
+                                <select class="form-control" formControlName="college" tabindex="4" (change)="referenceValue($event.target.value)">
+                                            <option value="" disabled selected style="color:orange">Select College</option>
+                                            <option *ngFor="let college of collegeList" [value]="college.collegeId">
+                                                {{college.collegeName}}
+                                            </option>
+                                        </select>
+                                        <div *ngIf="refForm.controls['college'].hasError('required') && refForm.controls['college'].touched" class="failed-validation" class="errorColor">
+                                            College Required
+                                        </div>
+                            </div>
+                            <div class="col-md-4 form-group" *ngIf="showcollege">
+                                <label>Reference Id <span class="errorColor">*</span></label>
+                                <input type="text" readonly class="form-control" placeholder="Reference Id" tabindex="5" maxlength="30" formControlName="refCollegeId" tabindex="3" [ngClass]="{ 'is-invalid':  submitted && f.refCollegeId.errors }">
+                                <div *ngIf="refForm.controls['refCollegeId'].hasError('required') && refForm.controls['refCollegeId'].touched" class="failed-validation" class="errorColor">
+                                    Reference Id Required
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 form-group" *ngIf="showreference">
+                                <label>Reference </label>
+                                <select class="form-control"  readonly formControlName="reference" tabindex="4">
+                                    <option value="" disabled selected style="color:orange">Select Reference</option>
+                                    <option *ngFor="let reference of subcategoryReference" [value]="reference.fileSubCategoryReferenceId">
+                                        {{reference.name}}
+                                    </option>
+                                </select>
+                                </div>
+                            
+                            <div class="col-md-4 form-group" *ngIf="showreference">
+                                <label>Reference Id <span class="errorColor">*</span></label>
+                                <select class="form-control" formControlName="refSubjectId" tabindex="5"   (change)="referenceIdValue($event.target.value)">
+                                    <option value="" disabled selected style="color:orange">Select Reference Id</option>
+                                    <option *ngFor="let references of referenceValues" [value]="references.fileSubjectReferenceId">
+                                        {{references.shortName}}
+                                    </option>
+                                </select> 
+                                <div *ngIf="refForm.controls['refSubjectId'].hasError('required') && refForm.controls['refSubjectId'].touched" class="failed-validation" class="errorColor">
+                                    Reference Id Required
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-4 form-group" >
+                                <label>Reference </label>
+                                <select class="form-control" formControlName="reference" tabindex="4">
+                                    <option value="" disabled selected style="color:orange">Select Reference</option>
+                                    <option *ngFor="let reference of subcategoryReference" [value]="reference.fileSubCategoryReferenceId">
+                                        {{reference.name}}
+                                    </option>
+                                </select>
+                                
+                                </div> -->
+                            
+                                                     <!-- <div class="col-md-4 form-group" *ngIf="showcollege">
+                                <label>Reference Id <span class="errorColor">*</span></label>
+                                <select class="form-control" formControlName="refCollegeId" tabindex="5"  [ngClass]="{ 'is-invalid':  submitted && f.refCollegeId.errors }" (change)="referenceValue($event.target.value)">
+                                    <option value="" disabled selected style="color:orange">Select Reference Id</option>
+                                    <option *ngFor="let college of collegeList" [value]="college.collegeId">
+                                        {{college.collegeName}}
+                                    </option>
+                                </select> 
+                                <div *ngIf=" submitted && f.refCollegeId.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && f.refCollegeId.errors.required">
+                                        Reference Id Required
+                                    </div>
+                                    <div *ngIf=" submitted && f.refCollegeId.errors.pattern">
+                                        Invalid Reference Id
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group" *ngIf="showreference">
+                                <label>Reference Id <span class="errorColor">*</span></label>
+                                <select class="form-control" formControlName="refSubjectId" tabindex="5"  [ngClass]="{ 'is-invalid':  submitted && f.refSubjectId.errors }" (change)="referenceValue($event.target.value)">
+                                    <option value="" disabled selected style="color:orange">Select Reference Id</option>
+                                    <option *ngFor="let references of referenceValues" [value]="references.fileSubjectReferenceId">
+                                        {{references.shortName}}
+                                    </option>
+                                </select> 
+                                <div *ngIf=" submitted && f.refSubjectId.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && f.refSubjectId.errors.required">
+                                        Reference Id Required
+                                    </div>
+                                    <div *ngIf=" submitted && f.refSubjectId.errors.pattern">
+                                        Invalid Reference Id
+                                    </div>
+                                </div>
+                            </div> -->
+                           
+                            <div class="col-md-4 form-group">
+                                <label>Academic Session/Financial year <span class="errorColor">*</span></label>
+                                <select class="form-control" formControlName="refAcademicYear" (click)="refno()" [ngClass]="{ 'is-invalid': receipt.refAcademicYear.invalid && (receipt.refAcademicYear.dirty || receipt.refAcademicYear.touched) }" (change)="changeAcademic($event.target.value)">
+                                    <option value="" disabled selected style="color:orange">Select</option>
+                                    <!-- <option *ngFor="let year of academicYear">{{year}}</option> -->
+                                    <option>2021-22</option>
+                                    <option>2020-21</option>
+                                    <option>2019-20</option>
+                                    <option>2018-19</option>
+                                    <option>2017-18</option>
+                                    <option>2016-17</option>
+                                    <option>2015-16</option>
+                                    <option>2014-15</option>
+                                    <option>2013-14</option>
+                                    <option>2012-13</option>
+                                    <option>2011-12</option>
+                                    <option>2010-11</option>
+                                    <option>2009-10</option>
+                                   
+                                    <!-- <option>2021-20</option>
+                                    <option>2020-19</option>
+                                    <option>2019-18</option>
+                                    <option>2018-17</option>
+                                    <option>2017-16</option>
+                                    <option>2016-15</option>
+                                    <option>2015-14</option>
+                                    <option>2014-13</option>
+                                    <option>2013-12</option>
+                                    <option>2012-11</option>
+                                    <option>2011-10</option>
+                                    <option>2010-09</option> -->
+                                </select>
+                                <div *ngIf="refForm.controls['refAcademicYear'].hasError('required') && refForm.controls['refAcademicYear'].touched" class="failed-validation" class="errorColor">
+                                    Academic Session/Financial year
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label>Year <span class="errorColor">*</span></label>
+                                <input type="text" class="form-control" placeholder="Year" tabindex="4" formControlName="refYear">
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label>Section Reference No/File No <span class="errorColor">*</span></label>
+                                <input type="text" class="form-control" placeholder="Section Reference" formControlName="refReferenceNumber" tabindex="7">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button class="btn btn-secondary" (click)="reset()">Reset</button>&nbsp;
+                                <button class="btn btn-success" [disabled]="!refForm.valid" data-dismiss="modal" (click)="updateNewFile()">Tag To File</button>&nbsp;
+                            </div>
+                        </div>
+
+                    </form>
+
+
+                    <!-- <div class="row">
+
+
+                        <div class="col-md-4 form-group">
+                            <label>Section <span class="errorColor">*</span></label>
+                            <select class="form-control" readonly tabindex="0">
+
+                                <option disabled selected>Act regulations and policy matters section </option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label>Sub Section <span class="errorColor">*</span></label>
+                            <select class="form-control" tabindex="0">
+                                <option value="" selected style="color:orange">Select Sub Section</option>
+                                <option> Student Admission & Course Co</option>
+                                <option> Sub Section1</option>
+                            </select>
+
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label>Subject Reference <span class="errorColor">*</span></label>
+
+                            <input type="text" class="form-control" placeholder="Subject Reference Number"
+                                formControlName="refSubject" tabindex="2">
+
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label>Subject Id <span class="errorColor">*</span></label>
+
+                            <input type="text" class="form-control" placeholder="Subject Id" formControlName="Subjectid"
+                                tabindex="2">
+
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label>Year <span class="errorColor">*</span></label>
+                            <input type="text" class="form-control" placeholder="Year" tabindex="4"
+                                formControlName="refYear">
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label>Academic Session/Financial year <span class="errorColor">*</span></label>
+                            <select class="form-control" tabindex="0">
+                                <option value="" selected style="color:orange">Select Financial year</option>
+                                <option> 2020-21</option>
+                            </select>
+
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        not
+                        <div class="col-md-4 form-group">
+                            <label>Dispatch by Date <span class="errorColor">*</span></label>
+
+                            <input type="date" class="form-control" tabindex="6" formControlName="refDispatchDate">
+
+                        </div>
+                        not
+                        <div class="col-md-8 form-group">
+                            <label>Section Reference No/File No <span class="errorColor">*</span></label>
+                            <input type="text" class="form-control" disabled placeholder="Section Reference"
+                                formControlName="refReferenceNumber" tabindex="7">
+
+                        </div>
+                    </div> -->
+
+
+
+                </div>
+
+            </div>
+
+
+
+
+
+            <!-- Dispose Btn -->
+
+        </div>
+
+        <!-- Modal footer -->
+        <!-- model body -->
+
+
+    </div>
+</div>
+
+
+
+<div class="modal" id="assignModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title headingValue">Assign To -Section Executive</h4>
+                <button type="button" class="close" data-dismiss="modal"  (click)="resetValidations()"  style="cursor: pointer;">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form [formGroup]="assignReceiptForm">
+
+                    <!-- Select Designations -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Select Designations <span class="aseticcolor">*</span></label>&nbsp;
+                            <select class="custom-select-sm" [ngClass]="{ 'is-invalid':  submitted && f.designation.errors }" class="form-control" formControlName="designation" (change)="selectedCorrectionDesignation($event.target.value)">
+                                <option value="" disabled selected style="color:orange">Select Designation</option>
+                                <option *ngFor="let sc of correctionDesignationList" [value]="sc">
+                                    {{sc}}
+                                </option>
+                            </select>
+                            <div *ngIf=" submitted && f.designation.errors" class="invalid-feedback">
+                                <div *ngIf=" submitted && f.designation.errors.required">
+                                    Designation is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <!-- Selected Person  -->
+                        <div class="col-md-12">
+                            <label>Select Person <span class="aseticcolor">*</span></label>
+                            <select class="custom-select-sm" [ngClass]="{ 'is-invalid':  submitted && f.sectionExecuite.errors }" class="form-control" formControlName="sectionExecuite">
+                                <option value="" disabled selected style="color:orange">Select Person</option>
+                                <option *ngFor="let person of correctionPersonList" [value]="person.userId">
+                                    {{person.firstName}}
+                                </option>
+                            </select>
+                            <div *ngIf=" submitted && f.sectionExecuite.errors" class="invalid-feedback">
+                                <div *ngIf=" submitted && f.sectionExecuite.errors.required">
+                                    Person is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Comments <span class="aseticcolor">*</span></label>
+                            <textarea rows="5" cols="20" placeholder="comments" formControlName="comment" class="form-control" [ngClass]="{ 'is-invalid':  submitted && f.comment.errors }">Write Comments</textarea>
+                            <div *ngIf=" submitted && f.comment.errors" class="invalid-feedback">
+                                <div *ngIf=" submitted && f.comment.errors.required">
+                                    Comment is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="globalBtn submitBtn"  (click)="assignReceiptToSectionExecutive()" [disabled]="!assignReceiptForm.valid" data-dismiss="modal" style="cursor: pointer;">Assign</button>
+            </div>
+
+        </div>
+    </div>
+</div>

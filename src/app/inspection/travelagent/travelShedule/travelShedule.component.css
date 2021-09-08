@@ -1,0 +1,19 @@
+.badge-pill {
+    font-size: 12px !important;
+    height: 30px !important;
+    border-radius: 4px !important;
+    padding-top: 10px !important;
+}
+
+.thead-light {
+    text-align: center !important;
+    text-transform: capitalize;
+}
+
+tbody tr td {
+    text-align: center !important;
+}
+
+tbody tr {
+    cursor: default !important;
+}

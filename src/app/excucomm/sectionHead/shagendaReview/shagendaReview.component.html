@@ -1,0 +1,149 @@
+<!-- Assistant Secretery -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card" *ngIf="agendaDetails">
+            <div class="row" style="padding-bottom: 0px;">
+                <div class="col-md-6">
+                    <h5 class="headingValue">Discussion & Decision on Agenda Item</h5>
+                </div>
+                <div class="col-md-6 text-right">
+                    <button class="globalBtn clearBtn" [routerLink]="['../../../../sectionDashboard']">Back</button>
+                </div>
+            </div>
+            <hr>
+            <div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="heading">
+                            Agenda Item No
+                        </div>
+                        <div class="subheadingValue">
+                            {{agendaDetails.agendaCategroyItemRefNumber}}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="heading">
+                            Section
+                        </div>
+                        <div class="subheadingValue">
+                            {{agendaDetails.agendaSectionDTO.agendaSectionName}}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="heading">
+                            Sub-Section
+                        </div>
+                        <div class="subheadingValue">
+                            {{agendaDetails.agendaSubSectionDTO !== null ?(agendaDetails.agendaSubSectionDTO.agendaSubSectionName) : '-'}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="heading">
+                            Subject
+                        </div>
+                        <div class="subheadingValue">
+                            {{agendaDetails.agendaItemSubject}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="heading">
+                            Matter
+                        </div>
+                        <div class="subheadingValue">
+                            {{agendaDetails.agendaItemMatter}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <form [formGroup]="AgendaForm">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="heading">
+                            Discussions
+                        </div>
+                        <div class="subheadingValue">
+                            <textarea class="form-control" rows="4" formControlName="discussion" [ngClass]="{ 'is-invalid':  submitted && f.discussion.errors }"></textarea>
+                            <div *ngIf=" submitted && f.discussion.errors" class="invalid-feedback">
+                                <div *ngIf=" submitted && f.discussion.errors.required">
+                                    {{formError.discussion}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="heading">
+                            Decision
+                        </div>
+                        <div class="subheadingValue">
+                            <tinymce [config]="appConst.config" formControlName="decision"></tinymce>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+
+                <div>
+                    <hr>
+                    <div class="row ">
+                        <div class="text-center col-md-12" *ngIf="status!=='SH_Review_Completed'">
+                            <button class="globalBtn forwardBtn" [disabled]="!AgendaForm.dirty" style="width: 170px" (click)="save()">Submit Refinement </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- </div> -->
+
+    <div class="modal" id="myModal">
+        <div class="modal-dialog modal-lg" style="top: 10%;">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header" style="padding: 20px;">
+                    <h5 class="modal-title headingValue">Override Sub Committee Decision/Recommendation</h5>
+                    <button type="button" class="close" data-dismiss="modal" #dismissModal>&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h6>Sub Committe Decision</h6>
+                                <p style="font-size: 13px;">
+
+                                </p>
+                            </div>
+                            <div class="col-md-12">
+                                <h6> Executive Committee Final Decision
+                                </h6>
+                                <textarea rows="5" class="commentsArea">The Server Room be directed to delete the name & details of ore students namely Mr. Chiranjeevi Divakaran J. admitted in BDS Course at Chettinad Dental College & Research Institute,Chennai (Tamil Nadu) for the academic session 2019-20, from the DCI Website, since he has discontinued the BDS Course from the college.
+                    </textarea>
+
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button class="globalBtn acceptBtn " data-dismiss="modal">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>

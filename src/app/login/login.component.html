@@ -1,0 +1,66 @@
+<header>
+    <img src="./assets/login-header.jpg" style="width: 100%;">
+    <div class="container h-100">
+        <div class="align-items-center">
+            <div>
+                <div class="global-container">
+                    <div class="card login-form">
+                        <div class="card-body">
+                            <div class="card-text">
+                                <h4 class="headerStyles">Login</h4>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <form [formGroup]="loginFrom">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    <input type="text" class="form-control" formControlName="emailId" placeholder="Email Id" [ngClass]="{ 'is-invalid':  submitted && f.emailId.errors }">
+
+                                                    <div *ngIf=" submitted && f.emailId.errors" class="invalid-feedback">
+                                                        <div *ngIf=" submitted && f.emailId.errors.required">EmailId {{errorMsgs.required}}</div>
+                                                        <div *ngIf=" submitted && f.emailId.errors.email">{{errorMsgs.email}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12 m-0">
+                                                    <input [type]="showpassword ? 'text' : 'password'" class="form-control" placeholder="Password" formControlName="passsword" [ngClass]="{ 'is-invalid':  submitted && f.passsword.errors }">
+                                                    <span (click)="eyeToggel()" class="eyeIcon"> <i class="icon"
+                                                        [ngClass]="eyeShow ? 'fa fa-eye ' : 'fa fa-eye-slash '"
+                                                        aria-hidden="true"></i></span>
+                                                    <div *ngIf=" submitted && f.passsword.errors" class="invalid-feedback">
+                                                        <div *ngIf=" submitted && f.passsword.errors.required">Password {{errorMsgs.required}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    <label class="capchImage">{{captchImage}}
+                                                        <span (click)="generateCaptcha()" style="padding: 0 15px;"><i class="fas fa-sync-alt"></i></span>
+                                                    </label>
+                                                    <input type="text" class="form-control" placeholder="Enter Captcha" formControlName="captch" [ngClass]="{ 'is-invalid':  submitted && f.captch.errors }">
+                                                    <div *ngIf=" submitted && f.captch.errors" class="invalid-feedback">
+                                                        <div *ngIf=" submitted && f.captch.errors.required">Captcha {{errorMsgs.required}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div style="padding-bottom: 5px;" class="col-md-12">
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <button class="submitBtn globalBtn btn-block" type="button" [disabled]="!loginFrom.valid" (click)="login()">Login</button>
+                                                </div>
+                                                <!-- <div class="col-md-12" style="padding-top: 5px;">
+                                                    <p>Don't have an account? <a routerLink="../register">Register</a> </p>
+                                                </div> -->
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

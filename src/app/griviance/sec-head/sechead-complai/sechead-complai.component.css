@@ -1,0 +1,36 @@
+.btn {
+    padding: 4px;
+    margin: 0 5px 0 0;
+    font-size: 13px;
+}
+
+.dropdown-item {
+    font-size: 12px;
+}
+
+.iconCard {
+    height: 40px;
+    margin: 5px 0px;
+    /* box-shadow: 1px 1px 5px #88888852; */
+    border-radius: 5px;
+}
+
+.row {
+    padding-bottom: 15px;
+}
+
+
+/* .subheadingValue {
+    font-size: 14px;
+} */
+
+.commentsArea {
+    width: 100%;
+    border: 1px solid #8888;
+    resize: none;
+    border-radius: 10px;
+}
+
+.commentsArea:focus {
+    outline: none;
+}

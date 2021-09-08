@@ -1,0 +1,91 @@
+<div class="bodyValue">
+    <div class="row" style="background-color:#e9ecef;margin: 0 5px;padding: 15px 0;">
+        <div class="col-md-6" style="text-transform: capitalize;">
+            Home
+        </div>
+    </div>
+
+    <div style="margin: 10px 5px 0;">
+        <div class="row mb-2">
+            <!-- User Management -->
+            <aside class="col-sm-4 col-md-4" *ngIf="moduleName.includes('User-Management')">
+                <div class="card-banner  overlay-grad" style="width: 100%;">
+                    <div class="overlay m-2 w-100 text-center">
+                        <h5 class="card-title">User management</h5>
+                        <a routerLink="../usrmgt/internalApp" routerLinkActive="router-link-active" class="btn btn-primary btn-sm">Click Here</a>
+                    </div>
+                </div>
+            </aside>
+            <!-- Grievance  -->
+            <aside class="col-sm-4 col-md-4" *ngIf="moduleName.includes('Grievance')">
+                <div class="card-banner  overlay-grad" style="width: 100%;">
+                    <div class="overlay m-2 w-100 text-center">
+                        <h5 class="card-title">Grievance management</h5>
+                        <a class="btn btn-primary btn-sm" (click)="sendUser('Grievance')">Click Here</a>
+                    </div>
+                </div>
+            </aside>
+            <!-- Dairy Dak  -->
+            <aside class="col-sm-4 col-md-4" *ngIf="moduleName.includes('DakDairy')">
+                <div class="card-banner  overlay-grad" style="width: 100%;">
+                    <div class="overlay m-2 w-100 text-center">
+                        <h5 class="card-title">Diary Dak</h5>
+                        <a class="btn btn-primary btn-sm" (click)="sendUser('DakDairy')">Click Here</a>
+                    </div>
+                </div>
+            </aside>
+            <!-- Inspection -->
+            <aside class="col-sm-4 col-md-4" *ngIf="moduleName.includes('Inspection')">
+                <div class="card-banner overlay-grad" style="width: 100%;">
+                    <div class="overlay m-2 w-100 text-center">
+                        <h5 class="card-title">Inspection</h5>
+                        <a class="btn btn-primary btn-sm" (click)="sendUser('Inspection')">Click Here</a>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- College Module -->
+            <aside class="col-sm-4 col-md-4" *ngIf="moduleName.includes('StudentAdmission&CourseCompletion')">
+                <div class="card-banner overlay-grad" style="width: 100%;">
+                    <div class="overlay m-2 w-100 text-center">
+                        <h5 class="card-title">Student Admission</h5>
+                        <a class="btn btn-primary btn-sm" (click)="sendUser('StudentAdmission')">Click Here</a>
+                    </div>
+                </div>
+            </aside>
+
+            <aside class="col-sm-4 col-md-4" *ngIf="moduleName.includes('StudentAdmission&CourseCompletion')">
+                <div class="card-banner overlay-grad" style="width: 100%;">
+                    <div class="overlay m-2 w-100 text-center">
+                        <h5 class="card-title">Student Course Progression</h5>
+                        <a class="btn btn-primary btn-sm" (click)="sendUser('courseCompletion')">Click Here</a>
+                    </div>
+                </div>
+            </aside>
+            <aside class="col-sm-4 col-md-4" *ngIf="moduleName.includes('Executive Committee')">
+                <div class="card-banner overlay-grad" style="width: 100%;">
+                    <div class="overlay m-2 w-100 text-center">
+                        <h5 class="card-title">EC Agenda</h5>
+                        <a class="btn btn-primary btn-sm" (click)="sendUser('ecAgenda')">Click Here</a>
+                    </div>
+                </div>
+            </aside>
+            <aside class="col-sm-4 col-md-4" *ngIf="moduleName.includes('DMS')">
+                <div class="card-banner overlay-grad" style="width: 100%;">
+                    <div class="overlay m-2 w-100 text-center">
+                        <h5 class="card-title">Document Management System</h5>
+                        <a class="btn btn-primary btn-sm" (click)="dms()">Click Here</a>
+                    </div>
+                </div>
+            </aside>
+            <aside class="col-sm-4 col-md-4" *ngIf="moduleName.includes('ERP')">
+                <div class="card-banner overlay-grad" style="width: 100%;">
+                    <div class="overlay m-2 w-100 text-center">
+                        <h5 class="card-title">ERP</h5>
+                        <a class="btn btn-primary btn-sm" (click)="ERP()">Click Here</a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</div>

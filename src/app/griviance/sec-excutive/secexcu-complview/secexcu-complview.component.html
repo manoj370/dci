@@ -1,0 +1,324 @@
+<!-- Assistant Secretery -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card" *ngIf="complaintviewDta">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="headingValue">Complaint View </h5>
+                    <span class="badge badge-pill badge-success" style="font-size: 60%;">{{complaintviewDta.complaintStatus.complaintStatusName}}</span>
+                </div>
+                <div class="col-md-6 text-right">
+                    <button type="button" (click)="AgendaItemNumber()" class="globalBtn forwardBtn" *ngIf="((complaintviewDta.complaintAgainst.name === 'College')&& (statusComp === 'COLLEGE'))||
+                    ((complaintviewDta.complaintAgainst.name === 'DCI') && (statusComp==='SECTIONHEAD'))
+                     && (previlizesList.includes('CREATEAGENDA'))">Make Agenda</button>
+                    <button type="button" class="globalBtn forwardBtn" style="width: 230px;" data-toggle="modal" data-target="#myModal" *ngIf="(statusComp===('SECTIONHEAD'))
+                    &&(complaintviewDta.complaintAgainst.name === 'Dentist')">
+                        Forward to SDC and Close
+                        <i class="fas fa-share"></i>
+                    </button>
+                    <button type="button" class="globalBtn forwardBtn" style="width: 230px;" data-toggle="modal" data-target="#colModal" *ngIf="(statusComp===('SECTIONHEAD'))
+                    &&(complaintviewDta.complaintAgainst.name === 'College')">
+                        Forward to College
+                        <i class="fas fa-share"></i>
+                    </button>
+
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="heading">
+                        Complaint Id
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complainantNumber}}
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    <div class="heading">
+                        Complaint Against
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complaintAgainst.name}}
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row" *ngFor="let item of complaintviewDta.commentSections">
+                <div class="col-md-10" *ngIf="item.sectionAt !== 'COMPLAINANT'">
+                    <div *ngIf="item.comments!==null">
+                        <h5 class="headingValue" *ngIf="item.sectionAt === 'SECTIONEXECUTIVE'">Section Executive</h5>
+                        <h5 class="headingValue" *ngIf="item.sectionAt === 'SECTIONHEAD'">Section Head</h5>
+                        <h5 class="headingValue" *ngIf="item.sectionAt === 'SUBCOMMITTEE'">Sub Committee</h5>
+                        <h5 class="headingValue" *ngIf="item.sectionAt === 'EXECUTIVECOMMITTEE'">Executive Committee
+                        </h5>
+                        <h5 class="headingValue" *ngIf="item.sectionAt === 'COLLEGE'">College</h5>
+                    </div>
+                    <p style="font-size: 12px;" *ngIf="item.comments!==null">
+                        {{item.createdDate}}
+                    </p>
+                    <div class="subheadingValue" *ngIf="item.comments!==null">
+                        <p>
+                            {{item.comments}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <h6 class="headingValue">Complaint Details</h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="heading">
+                        Name
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complaintRaisedBy.firstName}} {{complaintviewDta.complaintRaisedBy.lastName}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="heading">
+                        Mobile Number
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complaintRaisedBy.phoneNumber}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="heading">
+                        Email ID
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complaintRaisedBy.emailId}}
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="heading">
+                        Address
+                    </div>
+                    <div class="subheadingValue" *ngIf="complaintviewDta.complaintRaisedBy.addresses.length !==0">
+                        {{complaintviewDta.complaintRaisedBy.addresses[0].line1}}, {{complaintviewDta.complaintRaisedBy.addresses[0].landmark}}
+                        <br> {{complaintviewDta.complaintRaisedBy.addresses[0].city}}, {{complaintviewDta.complaintRaisedBy.addresses[0]. state}} <br> {{complaintviewDta.complaintRaisedBy.addresses[0].zipCode}}, {{complaintviewDta.complaintRaisedBy.addresses[0].country}}
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <h6 class="headingValue">Complaint Details</h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="heading">
+                        Subject
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complainantSubject}}
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="heading">
+                        Complaint Type
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complaintType.complaintTypeName}}
+
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="heading">
+                        Complaint Description
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintviewDta.complainantDescription}}
+
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="(complaintviewDta.workflowDocuments!==null) && (complaintviewDta.workflowDocuments.length!==0)">
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h6 class="headingValue">Evidence Documents</h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6" *ngFor="let item of complaintviewDta.workflowDocuments; let i=index">
+                        <div class="iconCard" (click)="download(item.documentId)">
+                            <span><i class="far fa-file-alt docIcons"></i> {{item.documentLocation}}</span>
+                            <a href="{{downloadUrl}}" class="downloadView">
+                                <i class="fas fa-cloud-download-alt" style=" cursor: pointer;color: #3D78BE;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" *ngFor="let item of complaintviewDta.commentSections">
+                <div class="col-md-12" *ngIf="item.sectionAt === 'EXECUTIVECOMMITTEE'">
+                    <div *ngIf="item.comments!==null">
+                        <h5 class="headingValue" style="text-transform: capitalize;">{{item.sectionAt}} - Decision</h5>
+                    </div>
+                    <div class="subheadingValue">
+                        <p>
+                            {{item.comments}}
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+            <hr>
+            <div class="row" *ngIf="complaintviewDta.reappealComments!==null">
+                <div class="col-md-10">
+                    <div>
+                        <h5 class="headingValue">Appeal Comments</h5>
+                    </div>
+                    <div class="subheadingValue">
+                        <p>
+                            {{complaintviewDta.reappealComments}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="statusComp === 'EXECUTIVECOMMITTEE'">
+                <div class="col-md-12">
+                    <h6 class="headingValue">Final Response</h6>
+                </div>
+                <div class="col-md-12">
+                    <form [formGroup]="finalResponseForm">
+                        <textarea rows="5" class="commentsArea" placeholder="Comments *" formControlName="commenst" [ngClass]="{ 'is-invalid': g.commenst.errors && submitted}"></textarea>
+                        <div *ngIf=" submitted && g.commenst.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && g.commenst.errors.required">
+                                Please Enter Comments
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-12 text-right">
+                    <button class="globalBtn reappealBtn" [disabled]="!finalResponseForm.valid" style="width: 210px;background-color: #28A724;" (click)="finalRes()">
+                        <i class="fas fa-file-signature"></i>
+                        Save & close </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal" id="myModal">
+    <div class="modal-dialog modal-md" style="top: 5%;">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header" style="padding: 20px;">
+                <h5 class="modal-title headingValue">Forward To SDC</h5>
+                <button type="button" class="close" data-dismiss="modal" (click)="clearValidations()">&times;</button>
+
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body container">
+                <form [formGroup]="forwardsdcForm">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <textarea class="form-control" rows="5" placeholder="Comments *" formControlName="sdcDes" [ngClass]="{ 'is-invalid': h.sdcDes.errors && submitted}"></textarea>
+                            <div *ngIf=" submitted && h.sdcDes.errors" class="invalid-feedback">
+                                <div *ngIf=" submitted && h.sdcDes.errors.required">
+                                    Please Enter Comments
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="file" class="form-control" #sdcInput (change)="onSelectFile($event)">
+                            <div class="smallCard" *ngFor="let file of files; let i=index">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        {{i+1}}.{{file.name}}
+                                    </div>
+                                    <div class="col-md-2 text-right">
+                                        <span class="fas fa-times" style="color:red;font-size: 20px;cursor: pointer;" (click)="removed(i)"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" #dismissModal class="globalBtn clearBtn" style="background-color: #c1c1c1;" (click)="clearValidations()">Reset</button>
+                <button class="globalBtn submitBtn" data-dismiss="modal" (click)="forwardSDC()" [disabled]="!forwardsdcForm.valid">Submit</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="colModal">
+    <div class="modal-dialog modal-md" style="top: 5%;">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header" style="padding: 20px;">
+                <h5 class="modal-title headingValue">Forward To College</h5>
+                <button type="button" class="close" data-dismiss="modal" (click)="clearValidations()">&times;</button>
+
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body container">
+                <form [formGroup]="forwardcollegeForm">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <textarea class="form-control" rows="5" placeholder="Comments *" formControlName="colleageDes" [ngClass]="{ 'is-invalid': submitted && (i.colleageDes.errors)}"></textarea>
+                            <div *ngIf=" submitted && i.colleageDes.errors" class="invalid-feedback">
+                                <div *ngIf=" submitted && i.colleageDes.errors.required">
+                                    Please Enter Comments
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="file" class="form-control" #myInput (change)="onSelectFile($event)">
+                            <div class="smallCard" *ngFor="let file of files; let i=index">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        {{i+1}}.{{file.name}}
+                                    </div>
+                                    <div class="col-md-2 text-right">
+                                        <span class="fas fa-times" style="color:red;font-size: 20px;cursor: pointer;" (click)="removed(i)"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" #dismissModal class="globalBtn clearBtn" style="background-color: #c1c1c1;" (click)="clearValidations()">Reset</button>
+                <button class="globalBtn submitBtn" data-dismiss="modal" #dismissModal [disabled]="!forwardcollegeForm.valid" (click)="forwardColleage()">Submit</button>
+            </div>
+
+        </div>
+    </div>
+</div>

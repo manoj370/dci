@@ -1,0 +1,90 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-9">
+                    <h5 class="headingValue">Bookings - <span class="text-danger">{{name}}</span></h5>
+                </div>
+                <div class="col-md-3 text-right">
+                    <select class="form-control" (change)="bookingChange($event.target.value)" [(ngModel)]="bookingStatus">
+                        <option value="" disabled selected style="color:orange">Select Booking Status</option>
+                        <option *ngFor="let ct of statusList" [value]="ct">
+                            {{ct}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover" *ngIf="(bookingStatus==='Pending Bookings')">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th *ngFor="let head of tableHeaders">{{head}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of upcomingData">
+                                    <td>{{item.inspectionId}}</td>
+                                    <td>{{item.fromScheduleDate | date: 'dd-MM-yyyy'}}</td>
+                                    <td>{{item.toScheduleDate | date: 'dd-MM-yyyy'}}</td>
+                                    <td>{{item.inspectorCount}}</td>
+                                    <td> <span class="badge badge-pill badge-warning" style="color: white;width: 120px !important;">Pending</span></td>
+                                    <td> <button class="globalBtn acceptBtn" [routerLink]="['./viewshedule',item.inspectionId]" [disabled]="item.inspectorCount===0">Update </button></td>
+                                </tr>
+                                <tr *ngIf="upcomingData.length === 0">
+                                    <td colspan="6" style="text-align: center;padding: 50px !important;">No Data Available in Table</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-bordered table-hover" *ngIf="(bookingStatus==='Completed Bookings') ">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th *ngFor="let head of tableHeaders">{{head}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of completedData">
+                                    <td>{{item.inspectionId}}</td>
+                                    <td>{{item.fromScheduleDate | date: 'dd-MM-yyyy'}}</td>
+                                    <td>{{item.toScheduleDate | date: 'dd-MM-yyyy'}}</td>
+                                    <td>{{item.inspectorCount}}</td>
+                                    <td> <span class="badge badge-pill badge-warning" style="color: white;width: 120px !important;">Pending</span></td>
+                                    <td> <button class="globalBtn acceptBtn" [disabled]="item.inspectorCount===0">Update </button></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" style="text-align: center;padding: 50px !important;">No Data Available in Table</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-bordered table-hover" *ngIf="(bookingStatus==='Upcoming Bookings')">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th *ngFor="let head of tableHeaders">{{head}}</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of pendingData">
+                                    <td>{{item.inspectionId}}</td>
+                                    <td>{{item.fromScheduleDate | date: 'dd-MM-yyyy'}}</td>
+                                    <td>{{item.toScheduleDate | date: 'dd-MM-yyyy'}}</td>
+                                    <td>{{item.inspectorCount}}</td>
+                                    <td> <span class="badge badge-pill badge-primary" style="color: white;width: 120px !important;">Upcoming</span></td>
+                                    <td><button class="globalBtn acceptBtn" [disabled]="item.inspectorCount===0" (click)="booking(item.inspectionId)"> Book</button>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="pendingData.length === 0">
+                                    <td colspan="6" style="text-align: center;padding: 50px !important;">No Data Available in Table</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

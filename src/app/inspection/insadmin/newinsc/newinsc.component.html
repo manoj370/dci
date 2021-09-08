@@ -1,0 +1,206 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="headingValue">Inspection Scheduling </h5>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <select class="form-control" [(ngModel)]="stateId" (change)="getcityBystate($event.target.value)">
+                            <option value="" disabled selected style="color:orange">Select State *</option>
+                            <option *ngFor="let ct of statesList" [value]="ct.stateId">
+                                {{ct.stateName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <select class="form-control" [disabled]="cityList.length===0" [(ngModel)]="cityId">
+                            <option value="" disabled selected style="color:orange">Select City *</option>
+                            <option *ngFor="let ct of cityList" [value]="ct.cityId">
+                                {{ct.cityName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="globalBtn forwardBtn" [disabled]="cityId===''" (click)="getCollegeList()">Submit</button>
+                </div>
+            </div>
+            <div class="row" *ngIf="collegeList.length !==0" style="margin-top: 5px">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th *ngFor="let theaders of insAdmin.newInsTable">{{theaders}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of collegeList; let i=index">
+                                    <td>{{item.collegeName}}</td>
+                                    <td>{{item.emailId}}</td>
+                                    <td>{{item.address.city}}</td>
+                                    <td>{{item.address.state}}</td>
+                                    <td>
+                                        <button class="btn btn-info btn-sm" (click)="getTypes(item.collegeId,item.collegeName)" data-toggle="modal" data-target="#assigndateauto">Set Inspection </button>
+                                    </td>
+                                </tr>
+
+                                <tr *ngIf="collegeList.length === 0">
+                                    <td colspan="5" style="text-align: center;padding: 50px !important;">No Data Available in Table
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="assigndateauto" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-xl">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="cleraValidations()" data-dismiss="modal" #dismissModal>&times;</button>
+                <h5 class="modal-title pull-left text-left" style="position: absolute;">Schedule Inspection - {{modalName}}</h5>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="sheduleInspForm">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group required">
+                                <label for="Type" class="control-label">Type</label>
+                                <select class="custom-select-sm" formControlName="type" class="form-control" (change)="getSubTypes($event.target.value)" [ngClass]="{ 'is-invalid':  submitted && f.type.errors }">
+                                    <option value="" disabled selected style="color:orange">Select Type</option>
+                                    <option *ngFor="let inty of inspectionTypes" [value]="inty.inspectionTypeId">
+                                        {{inty.name}}
+                                    </option>
+                                </select>
+
+                                <div *ngIf=" submitted && f.type.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && f.type.errors.required">Type {{errorMsgs.required}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group required">
+                                <label for="subType" class="control-label">Sub Type</label>
+                                <select class="custom-select-sm" formControlName="subtype" class="form-control" (change)="getCourse($event.target.value)" [ngClass]="{ 'is-invalid':  submitted && f.subtype.errors }">
+                                    <option value="" disabled selected style="color:orange">Select SubType</option>
+                                    <option *ngFor="let inty of insCoursSubType" [value]="inty.inspectionSubTypeId">
+                                        {{inty.name}}
+                                    </option>
+                                </select>
+
+                                <div *ngIf=" submitted && f.subtype.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && f.subtype.errors.required">Sub Type {{errorMsgs.required}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group required">
+                                <label for="purpose" class="control-label">Purpose</label>
+                                <select class="custom-select-sm" formControlName="purpose" class="form-control" (change)="inspeCoursePurpo($event.target.value)" [ngClass]="{ 'is-invalid':  submitted && f.purpose.errors }">
+                                    <option value="" disabled selected style="color:orange">Select Purpose</option>
+                                    <option *ngFor="let pur of insPurposeData" [value]="pur.inspectionPurposeId">
+                                        {{pur.name}}
+                                    </option>
+                                </select>
+                                <div *ngIf=" submitted && f.purpose.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && f.purpose.errors.required">Purpose {{errorMsgs.required}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group required">
+                                <label for="Course" class="control-label">Course</label>
+                                <select class="form-control" formControlName="course" (change)="inspePurpoCourse($event.target.value)" [ngClass]="{ 'is-invalid':  submitted && f.course.errors }">
+                                    <option value="" disabled selected style="color:orange">Select Course</option>
+                                    <option *ngFor="let cou of inspeCoursePurpoData" [value]="cou.courseId">
+                                        {{cou.courseName}}
+                                    </option>
+                                </select>
+                                <div *ngIf=" submitted && f.course.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && f.course.errors.required">Course {{errorMsgs.required}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group required">
+                                <label for="Specialisation" class="control-label">Specialization</label>
+                                <select class="form-control" formControlName="specilization" (change)="getspecId($event.target.value)" [ngClass]="{ 'is-invalid':  submitted && f.specilization.errors }">
+                                    <option value="" disabled selected style="color:orange">Select Specialization
+                                    </option>
+                                    <option *ngFor="let spe of inspePurpoCourseData" [value]="spe.specialisationId">
+                                        {{spe.name}}
+                                    </option>
+                                </select>
+                                <div *ngIf=" submitted && f.specilization.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && f.specilization.errors.required">Specialization {{errorMsgs.required}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group required">
+                                <label class="control-label">From Date</label>
+                                <input type="date" class="form-control" formControlName="fromDate" [min]="maxDate" (change)="selecetdDate($event.target.value)" [ngClass]="{ 'is-invalid':  submitted && f.fromDate.errors }">
+                                <div *ngIf=" submitted && f.fromDate.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && f.fromDate.errors.required">From Date {{errorMsgs.required}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3" style="border-right: 2px solid #eee">
+                            <div class="form-group required">
+                                <label class="control-label">To Date</label>
+                                <input type="date" formControlName="toDate" class="form-control" [max]="minDate" [min]="selecetdDat" [ngClass]="{ 'is-invalid':  submitted && f.toDate.errors }">
+                                <div *ngIf=" submitted && f.toDate.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && f.toDate.errors.required">To Date {{errorMsgs.required}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group required">
+                                <label class="control-label">From Seat</label>
+                                <input type="text" class="form-control" formControlName="fromSeat" placeholder="From Seat">
+                            </div>
+                        </div>
+                        <div class="col-sm-3" *ngIf="(subTypeId!=='1' && subTypeId!=='12')">
+                            <div class="form-group required">
+                                <label class="control-label">To Seat</label>
+                                <input type="number" formControlName="toSeat" class="form-control" [min]="fromSeats" placeholder="To Seat" [ngClass]="{ 'is-invalid':  submitted && f.toSeat.errors }">
+                                <div *ngIf=" submitted && f.toSeat.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && f.toSeat.errors.required">To Seat {{errorMsgs.required}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button class="globalBtn clearBtn" (click)="cleraValidations()">Reset</button>
+                            <button class="globalBtn forwardBtn" (click)="addInspection()" [disabled]="!sheduleInspForm.valid">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

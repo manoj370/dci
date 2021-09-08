@@ -1,0 +1,125 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+
+                <div class="col-md-6">
+                    <h5 class="headingValue">View Receipt </h5>
+                </div>
+
+            </div>
+            <hr>
+            <div *ngIf="receiptData">
+                <div class="row">
+                    <div class="col-md-3">
+                        <b> <label>Diary Date</label></b>
+                        <p>{{receiptData.receiptDairyDate !==undefined ? (receiptData.receiptDairyDate):'-'}}</p>
+                    </div>
+              
+              
+                    <div class="col-md-3">
+                        <b> <label>Receipt Category</label></b>
+                        <p>{{receiptData.dispatchCategories !== null ? (receiptData.dispatchCategories.name):'-'}}</p>
+                    </div>
+                    <!-- <div class="col-md-4">
+                        <b> <label>Receipt Category</label></b>
+                        <p>{{receiptData.categoryCode.name}}</p>
+                    </div> -->
+                    <div class="col-md-3">
+                        <b> <label>Receipt Language</label></b>
+                        <p>{{receiptData.receiptLanguageId.name}}</p>
+                    </div>
+            
+              
+                    <div class="col-md-3">
+                        <b> <label>Date Received</label></b>
+                        <p>{{receiptData.dairyReceivedDate}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <b> <label>Sender Name</label></b><br>
+                        <p>{{receiptData.senderName}}</p>
+                        <!-- <p class="c">{{receiptData.senderAddress.line1}},
+                        {{receiptData.senderAddress.line2}},
+                         {{receiptData.senderAddress.zipCode}}</p> -->
+
+                    </div>
+         
+                    <div class="col-md-9 wordBreak">
+                        <b> <label>Subject</label></b>
+                        <!-- <p>I have worked very closely with Jane Dae,both as her supervisor while
+                        she worked in the career office ,and as her advisor.In both situations i was
+                        impressed by the dedicated manner with which jane carried out her work assignments
+                        and pursued her academic course work.
+                        Jane has displayed a maturity ,motivational level,and seriousness of purpose, which i have
+                        rarely
+                        encountered during my extensive interactions with college students.Jane is very bright and has
+                        demonstarted an
+                        eagerness to him.
+                    </p> -->
+                        <p>{{receiptData.receiptSubject}} </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <b> <label>Assigned To Whom</label></b><br>
+                        <!-- <p>{{receiptData.receiptToAddress}}</p> -->
+                        <p *ngFor="let section of sectionNames">Section Head - {{section}}</p>
+                    </div>
+               
+                    <div class="col-md-3">
+                        <b> <label>Address</label></b><br>
+                        <p>{{receiptData.senderAddress.line1}}, {{receiptData.senderAddress.line2}},{{receiptData.senderAddress.state}},{{receiptData.senderAddress.city}},{{receiptData.senderAddress.country}}, {{receiptData.senderAddress.zipCode}}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4" *ngFor="showDetail">
+                        <b> <label>Enclosure Details</label></b>
+                        <p>{{receiptData.enclosureDetails !=="" ? (receiptData.enclosureDetails) : '-'}}
+                        </p>
+                    </div>
+                </div>
+                <div class="row" *ngIf="receiptData.receiptDocuments.length !==0">
+                    <div class="col-md-12">
+                        <h6 class="headingValue" style="color: black;"> Documents</h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2" *ngFor="let document of receiptData.receiptDocuments ;let i=index">
+                        <div class="iconCard" (click)="getDocumentId(document)">
+                            <a href="{{downloadUrl}}"> <i class="far fa-file-alt docIcons"></i>
+                                <span style="   
+    cursor: pointer;
+">file{{i+1}}<i class="fas fa-cloud-download-alt" style=" cursor: pointer;color: #3D78BE;"></i></span></a>
+                        </div>
+                    </div>
+                </div><br>
+                <div *ngIf="showcomments">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5 class="headingValue">Comments</h5>
+                        </div>
+                
+                    </div>
+                    <hr>
+                    <div class="row"  *ngFor="let name of names"> 
+                        <div class="col-md-12" >
+                        <h5 class="headingValue">{{name.name}}</h5>
+                    </div>
+                    <div class="col-md-12" >
+                         <p>{{name.comments}}</p>
+                          </div>  
+                    </div>
+                    
+                  
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

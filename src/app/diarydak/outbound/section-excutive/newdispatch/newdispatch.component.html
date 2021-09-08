@@ -1,0 +1,97 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="headingValue">Create NoteSheet</h5>
+                </div>
+            </div>
+            <hr>
+            <form [formGroup]="createDispatchForm">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Create Reference Number</h5>
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Section <span class="aseticcolor">*</span></label>
+                        <select class="form-control" aria-placeholder="Select Section"
+                            (change)="sectionId($event.target.value)" formControlName="section"
+                            [ngClass]="{ 'is-invalid': f.section.invalid && (f.section.dirty || f.section.touched) }">
+                            <option value="" selected disabled>Select Section</option>
+                            <option *ngFor="let section of dcisections">
+                                {{section.sectionName}}</option>
+                        </select>
+                        <div *ngIf="createDispatchForm.controls['section'].hasError('required') && createDispatchForm.controls['section'].touched"
+                            class="failed-validation" class="errorColor">
+                            Section Required
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Sub Section <span class="aseticcolor">*</span>
+                        </label>
+                        <select class="form-control" aria-placeholder="Select Section" formControlName="subsection"
+                            (change)="subsectionId($event.target.value)"
+                            [ngClass]="{ 'is-invalid': f.subsection.invalid && (f.subsection.dirty || f.subsection.touched) }">
+                            <option value="" selected disabled>Select Section</option>
+                            <option *ngFor="let section of subsections">{{section.name}}</option>
+                        </select>
+                        <div *ngIf="createDispatchForm.controls['subsection'].hasError('required') && createDispatchForm.controls['subsection'].touched"
+                            class="failed-validation" class="errorColor">
+                            Sub Section Required
+                        </div>
+                    </div>
+
+                </div><br>
+                     <div class="row">
+                    
+                     <div class="col-md-6">
+                        <label>Reference Subject <span class="aseticcolor">*</span></label>
+                        <input type="text" class="form-control" placeholder="Subject" >
+                        <!-- <div *ngIf="createDispatchForm.controls['subject'].hasError('required') && createDispatchForm.controls['subject'].touched"
+                            class="failed-validation" class="errorColor">
+                            Subject Required
+                        </div> -->
+                       <!--  <div *ngIf="createDispatchForm.controls['subject'].hasError('pattern')"
+                            class="failed-validation" class="errorColor">
+                            Invalid Subject
+                        </div> -->
+
+                    </div>
+                     <div class="col-md-6">
+                        <label>Section Number <span class="aseticcolor">*</span></label><br>
+                        <input type="text" class="form-control" placeholder="Section Number">
+                        
+
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Year <span class="aseticcolor">*</span>
+                        </label><br>
+                        <input type="text" disabled class="form-control" formControlName="date" [(ngModel)]="today"
+                            [ngClass]="{ 'is-invalid': f.date.invalid && (f.date.dirty || f.date.touched) }">
+                        <div *ngIf="createDispatchForm.controls['date'].hasError('required') && createDispatchForm.controls['date'].touched"
+                            class="failed-validation" class="errorColor">
+                           
+                        </div>
+                    </div>
+
+                </div><br>
+                <div class="row">
+
+
+                </div><br>
+                <div class="row">
+                    <div class="col-sm-12 text-right">
+
+                        <button type="button" class="btn btn-primary" (click)="next()"
+                            [disabled]="!createDispatchForm.valid">Next</button>&nbsp;
+                        <button type="button" class="btn btn-danger" (click)="clear()">Clear</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

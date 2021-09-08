@@ -1,0 +1,1436 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h5 class="headingValue">Put Up Note Sheet</h5>
+            <hr>
+        </div>
+        <div class="col-md-12">
+            <form [formGroup]="noteSheetForm">
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <h5 class="headingValue">Reference/File Number</h5>
+                    </div>
+                    <div class="col-md-2 form-group mt-2">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" (change)="existingFile($event)" data-toggle="modal"
+                                formControlName="checkoruncheck" data-target="#myModal">&nbsp;Existing File</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label>Section <span class="errorColor">*</span></label>
+                        <input type="textbox" class="form-control" readonly tabindex="0" formControlName="refSection">
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label>Sub Section <span class="errorColor">*</span></label>
+                        <select class="form-control"  tabindex="1" formControlName="refSubSection" (change)="subSection($event.target.value)" [ngClass]="{ 'is-invalid':  submitted && f.refSubSection.errors }">
+                            <option value="" disabled selected style="color:orange">Select Sub Section</option>
+                            <option *ngFor="let sec of subSectionList" [value]="sec.subSectionId">
+                                {{sec.name}}
+                            </option>
+                        </select>
+                        <div *ngIf=" submitted && f.refSubSection.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && f.refSubSection.errors.required">
+                                {{jasConst.formErrors.referenceSubsection}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label>Category <span class="errorColor">*</span></label>
+                        <select class="form-control" formControlName="category" tabindex="2" (change)="category($event.target.value)" [ngClass]="{ 'is-invalid':  submitted && f.category.errors }">
+                            <option value="" disabled selected style="color:orange">Select Category</option>
+                            <option *ngFor="let category of categoriesList" [value]="category.fileCategoryId">
+                                {{category.name}}
+                            </option>
+                        
+                        </select>
+                        <div *ngIf=" submitted && f.category.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && f.category.errors.required">
+                                Category Required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label>Sub Category <span class="errorColor">*</span></label>
+                        <select class="form-control" tabindex="3" formControlName="subCategory" (change)="subcategory($event.target.value)" [ngClass]="{ 'is-invalid':  submitted && f.subCategory.errors }">
+                            <option value="" disabled selected style="color:orange">Select Sub Category</option>
+                            <option *ngFor="let subcategory of subcategoriesList" [value]="subcategory.fileSubCategoryId">
+                                {{subcategory.name}}
+                            </option>
+                        
+                        </select>
+                        <div *ngIf=" submitted && f.subCategory.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && f.subCategory.errors.required">
+                                Sub Category Required
+                            </div>
+                        </div>
+                    </div>
+                  
+                    <div class="col-md-4 form-group" *ngIf="showcollege">
+                        <label>College <span class="errorColor">*</span></label>
+                        <select class="form-control" formControlName="college" tabindex="4" [ngClass]="{ 'is-invalid':  submitted && f.college.errors }" (change)="referenceValue($event.target.value)">
+                                    <option value="" disabled selected style="color:orange">Select College</option>
+                                    <option *ngFor="let college of collegeList" [value]="college.collegeId">
+                                        {{college.collegeName}}
+                                    </option>
+                                </select>
+                        <div *ngIf=" submitted && f.college.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && f.college.errors.required">
+                                College Required
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4 form-group" *ngIf="showcollege">
+                        <label>Reference Id <span class="errorColor">*</span></label>
+                        <input type="text" class="form-control" readonly placeholder="Reference Id" tabindex="5" maxlength="30" formControlName="refCollegeId" (keyup)="sectionReference()" tabindex="3" [ngClass]="{ 'is-invalid':  submitted && f.refCollegeId.errors }">
+                        <div *ngIf=" submitted && f.refCollegeId.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && f.refCollegeId.errors.required">
+                                Reference Id Required
+                            </div>
+                            <div *ngIf=" submitted && f.refCollegeId.errors.pattern">
+                                Invalid Reference Id
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group" *ngIf="showreference">
+                        <label>Reference </label>
+                        <select class="form-control" formControlName="reference" tabindex="4" readonly>
+                            <option value="" disabled selected style="color:orange">Select Reference</option>
+                            <option *ngFor="let reference of subcategoryReference" [value]="reference.fileSubCategoryReferenceId">
+                                {{reference.name}}
+                            </option>
+                        </select>
+                        </div>
+                    
+                    <div class="col-md-4 form-group" *ngIf="showreference">
+                        <label>Reference Id <span class="errorColor">*</span></label>
+                        <select class="form-control"  formControlName="refSubjectId" tabindex="5"  [ngClass]="{ 'is-invalid':  submitted && f.refSubjectId.errors }" (change)="referenceIdValue($event.target.value)">
+                            <option value="" disabled selected style="color:orange">Select Reference Id</option>
+                            <option *ngFor="let references of referenceValues" [value]="references.fileSubjectReferenceId">
+                                {{references.shortName}}
+                            </option>
+                        </select> 
+                        <div *ngIf=" submitted && f.refSubjectId.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && f.refSubjectId.errors.required">
+                                Reference Id Required
+                            </div>
+                            <div *ngIf=" submitted && f.refSubjectId.errors.pattern">
+                                Invalid Reference Id
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label>Academic Year <span class="errorColor">*</span></label>
+                        <select class="form-control" formControlName="refAcademicYear" (change)="sectionReference()" tabindex="7">
+                            <option value="" disabled selected style="color:orange">Select</option>
+                            <option *ngFor="let year of academicYear" value={{year}}>
+                                {{year}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label>Current Year <span class="errorColor">*</span></label>
+                        <input type="text" class="form-control" placeholder="Year" tabindex="6" formControlName="refYear">
+                    </div>
+                    <!-- <div class="col-md-4 form-group">
+                        <label>Complete By </label>
+                        <input type="date" class="form-control" [min]="today" tabindex="6" formControlName="refDispatchDate">
+                    </div> -->
+                    <div class="col-md-4 form-group">
+                        <label>Section Reference No/File No <span class="errorColor">*</span></label>
+                        <input type="text" class="form-control" placeholder="Section Reference" tabindex="8" formControlName="refReferenceNumber" tabindex="7">
+                    </div>
+                </div>
+                <hr>
+                <h5 class="headingValue mb-3">Dispatch Details </h5>
+                <div class="row">
+                    <div class="col-md-3 form-group">
+                        <label>Category <span class="errorColor">*</span></label>
+                        <select class="form-control" tabindex="9" formControlName="cateDispatchCate" [ngClass]="{ 'is-invalid':  submitted && f.cateDispatchCate.errors }">
+                            <option value="" disabled selected style="color:orange">Select Category</option>
+                            <option *ngFor="let sec of categoryList" [value]="sec.categoryId">
+                                {{sec.name}}
+                            </option>
+                        </select>
+                        <div *ngIf=" submitted && f.cateDispatchCate.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && f.cateDispatchCate.errors.required">
+                                {{jasConst.formErrors.DispatchCategory}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label>Language <span class="errorColor">*</span></label>
+                        <select class="form-control" tabindex="10" formControlName="cateDispatchLanguage" (change)="editorByLanguage($event.target.value)" [ngClass]="{ 'is-invalid':  submitted && f.cateDispatchLanguage.errors }">
+                            <option value="" disabled selected style="color:orange">Select Language</option>
+                            <option *ngFor="let sec of languagesList" [value]="sec.receiptLanguageId">
+                                {{sec.name}}
+                            </option>
+                        </select>
+                        <div *ngIf=" submitted && f.cateDispatchLanguage.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && f.cateDispatchLanguage.errors.required">
+                                {{jasConst.formErrors.DispatchLanguages}}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3 form-group">
+                        <label>Urgency <span class="errorColor">*</span></label>
+                        <select class="form-control" tabindex="11" formControlName="cateDispatchUrgency" [ngClass]="{ 'is-invalid':  submitted && f.cateDispatchUrgency.errors }">
+                            <option value="" disabled selected style="color:orange">Select Urgency</option>
+                            <option *ngFor="let sec of urgencyList" [value]="sec.urgencyId">
+                                {{sec.name}}
+                            </option>
+                        </select>
+                        <div *ngIf="submitted && f.cateDispatchUrgency.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && f.cateDispatchUrgency.errors.required">
+                                {{jasConst.formErrors.DispatchUrgency}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label>Confidentiality </label>
+                        <select class="form-control" tabindex="12" formControlName="cateDispatchConfidential">
+                            <!-- [ngClass]="{ 'is-invalid':  submitted && f.cateDispatchConfidential.errors }"> -->
+                            <option value="" disabled selected style="color:orange">Select Confidentiality
+                            </option>
+                            <option *ngFor="let sec of confidentialityList" [value]="sec.dispatchModeId">
+                                {{sec.name}}
+                            </option>
+                        </select>
+                    </div>
+                    <!-- <div class="col-md-4 form-group">
+                        <label>With DFA</label>
+                        <div class="checkbox mt-2">
+                            <label><input type="checkbox" formControlName="attachdfa" class="largerCheckbox"
+                                    (change)="dfa($event.target.checked,'ToAddress',0)">&nbsp;</label>
+                        </div>
+                    </div> -->
+                </div>
+                <hr>
+
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Note Sheet Contents</h5>&nbsp;<span class="errorColor">*</span>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-md-12">
+                        <tinymce [config]="appConst.config" formControlName="comments" tabindex="13" [ngClass]="{ 'is-invalid':  submitted && f.comments.errors }"></tinymce>
+                        <div *ngIf=" submitted && f.comments.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && f.comments.errors.required">
+                                Note Sheet Contents Required
+                            </div>
+                        </div>
+                    </div>
+                  
+                </div>
+               
+                <hr>
+                <div class="row">
+                    <div class="col-md-4 " *ngIf="showdfa">
+                        <h5 class="headingValue">With DFA</h5>
+                        </div>
+                        <div class="col-md-8 ">
+                            <h5 class="headingValue mb-3">Issuing Authority</h5>
+                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group" *ngIf="showdfa">
+                       
+                        <!-- <label>With DFA</label> -->
+                        <div class="checkbox mt-2">
+                            <label><input type="checkbox" formControlName="attachdfa" class="largerCheckbox"
+                                    (change)="dfa($event.target.checked,'ToAddress',0)">&nbsp;</label>
+                        </div>
+                    </div>
+               
+             
+    
+                    <div class="col-md-4 form-group">
+                        <label>Designation <span class="errorColor">*</span></label>
+                        <!-- <input type="text" class="form-control" formControlName="senderDesignation" [ngClass]="{ 'is-invalid':  submitted && f.senderDesignation.errors }"> -->
+                        <select class="form-control" formControlName="senderDesignation" tabindex="14" [ngClass]="{ 'is-invalid':  submitted && f.senderDesignation.errors }" (change)="selectedCorrectionDesignation($event.target.value)">
+                            <option value="" disabled selected style="color:orange">Select Designation</option>
+                            <option *ngFor="let sc of designationsList" [value]="sc">
+                                {{sc}}
+                            </option>
+                        </select>
+                        <div *ngIf=" submitted && f.senderDesignation.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && f.senderDesignation.errors.required">
+                                Designation Required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label>Sender Name <span class="errorColor">*</span></label>
+                        <input type="text" class="form-control"tabindex="15" placeholder="Sender Name" formControlName="senderName" [ngClass]="{ 'is-invalid':  submitted && f.senderName.errors }">
+
+                        <div *ngIf=" submitted && f.senderName.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && f.senderName.errors.required">
+                                {{jasConst.formErrors.senderName}}
+                            </div>
+                            <div *ngIf=" submitted && f.senderName.errors.pattern">
+                                Only Characters are allowed
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <hr *ngIf="showEditor">
+                <div *ngIf="showEditor">
+
+                    <h5 class="headingValue">Recipient </h5>
+                    <hr>
+                    <div>
+                        <!-- TEST -->
+                        <form [formGroup]="form" novalidate>
+                            <div formArrayName="itemRows">
+                                <div class="row" *ngFor="let item of form.get('itemRows')['controls'];let i=index">
+                                    <div class="col-md-12 pl-0" style="display: flex;">
+                                        <div class="col-md-2">
+                                            <h5>To :{{i+1}}</h5>
+                                        </div>
+                                        <div class="col-md-2 form-group" [formGroupName]="i">
+
+                                            <input type="radio" value="Single" formControlName="radioOption" (change)="changeReceiptType('Single',i)">
+                                            <label for="Single" class="p-2">Single</label>
+                                            <input id="Bulk" type="radio" value="Bulk" formControlName="radioOption" (change)="changeReceiptType('Bulk',i)">
+                                            <label for="Bulk" class="p-2">Bulk</label>
+
+                                            <!-- <span *ngFor="let customRadio of receiptTypes">
+                                                 <input type="radio"  class="radioBtn" (change)="radioOption(customRadio,i)" 
+                                                 formControlName="radioOption" value="{{customRadio}}" checked="{{customRadio}}">
+                                            {{customRadio}}
+                                        </span> -->
+                                            <!-- <input type="radio" id="gender_{{i}}" (change)="changeReceiptType($event.target.value,i)" formControlName="radioOption"  value="Bulk">&nbsp; Bulk -->
+                                        </div>
+                                        <div class="col-md-6 form-group" [formGroupName]="i" *ngIf="item.get('radioOption').value ==='Single' || item.get('radioOption').value ==='Bulk'">
+
+                                            <label class="p-2" style="margin-right: 41px;">Dispatch Via <span
+                                                    class="errorColor">*</span></label>
+                                            <label class="checkbox-inline p-2" style="padding: 0 10px 0 0;">
+                                                <input type="checkbox"  formControlName="addressviaType1" (click)="toAddresscheckbox($event)">
+                                                Email
+                                            </label>&nbsp;
+                                            <label class="checkbox-inline p-2">
+                                                <input type="checkbox"  formControlName="addressviaType2" (click)="toAddresscheckbox($event)"
+                                                    > Paper
+                                            </label>
+                                            <!-- <div *ngIf="item.get('addressviaType1').value ===false && item.get('addressviaType2').value ===false" style="color:red;">You should check at least one</div> -->
+                                            <div *ngIf="showerrormsg" style="color:red;">You should check at least one</div>
+                                            <div class="col-md-12 pl-0" *ngIf="item.get('addressviaType2').value ===true">
+                                                <label class="radio-inline" *ngFor="let type of dispatchViaList" style="padding: 0 10px 0 0;">
+                                                    <input type="radio"  value="{{type}}"
+                                                        formControlName="addressviaType3"> 
+                                                        {{type}}
+                                                </label>
+                                                <!-- <label class="radio-inline">
+                                                    <input type="radio"  value="By Courier"
+                                                        formControlName="addressviaType4"
+                                                       > By Courier
+                                                </label>&nbsp;&nbsp;&nbsp;
+                                                <label class="radio-inline">
+                                                    <input type="radio"  value="By SpeedPost"
+                                                        formControlName="addressviaType5"
+                                                        > By SpeedPost
+                                                </label> -->
+                                            </div>
+    
+                                        </div>
+                                    </div>
+                                   
+
+                                    <!-- <div class="col-md-4 form-group" [formGroupName]="i" *ngIf="item.get('radioOption').value ==='Single' || item.get('radioOption').value ==='Bulk'">
+                                        <label>Dispatch Via <span class="errorColor">*</span></label>
+                                        <select class="form-control" tabindex="8" formControlName="addressvia" (change)="dispatchVia($event.target.value,'toAddress')" [ngClass]="{ 'is-invalid':  submitted && item.controls.addressvia.errors }">
+                                        <option value="" disabled selected style="color:orange">Select Dispatch Via
+                                        </option>
+                                        <option *ngFor="let sec of viaList" [value]="sec.dispatchViaId">
+                                            {{sec.name}}
+                                        </option>
+                                    </select>
+                                        <div *ngIf=" submitted && item.controls.addressvia.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && item.controls.addressvia.errors.required">
+                                                Via Required
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-md-3 form-group" [formGroupName]="i" *ngIf="item.get('radioOption').value ==='Single'">
+                                        <label>Category/Others <span class="errorColor">*</span></label>
+                                        <select class="form-control" formControlName="addressOrganization" (change)="orgCategory($event.target.value,'ToAddress',i,item)">
+                                            <option value="" selected disabled>Select Category</option>
+                                            <option *ngFor="let addcategory of addresscategory"
+                                                [value]="addcategory.addressCategoryId">{{addcategory.name}}</option>
+                                        </select>
+                                        <!-- <div *ngIf=" submitted && item.controls.addressOrganization.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && item.controls.addressOrganization.errors.required">
+                                                Category Required
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    <div class="col-md-3 form-group dropdown-container" [formGroupName]="i" *ngIf="item.get('radioOption').value ==='Single'">
+                                        <label>Selected Category/Others <span class="errorColor">*</span></label>
+                                        <select class="form-control " formControlName="selectedCategory" [ngClass]="{ 'is-invalid':  submitted && item.controls.selectedCategory.errors }">
+                                            <option value="" selected disabled>Select Category</option>
+                                            <option *ngFor="let addcategory of addresscategory"
+                                                [value]="addcategory.addressCategoryId">{{addcategory.name}}</option>
+                                        </select>
+                                        <div *ngIf=" submitted && item.controls.selectedCategory.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && item.controls.selectedCategory.errors.required">
+                                                Category Required
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- selectedCategory -->
+                                    <div class="col-md-3 form-group" [formGroupName]="i" *ngIf="item.get('radioOption').value ==='Single'">
+                                        <label>Recipient Name <span class="errorColor">*</span></label>
+                                        <input type="text" class="form-control" placeholder="Recipient's Name" formControlName="addressReceiptName" [ngClass]="{ 'is-invalid':  submitted && item.controls.addressReceiptName.errors }">
+
+                                        <div *ngIf=" submitted && item.controls.addressReceiptName.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && item.controls.addressReceiptName.errors.required">
+                                                Recipient Name Required
+                                            </div>
+                                            <div *ngIf=" submitted && item.controls.addressReceiptName.errors.pattern">
+                                                Invalid Recipient Name
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 form-group" [formGroupName]="i" *ngIf="item.get('radioOption').value ==='Single'">
+
+                                        <label>Email Id <span
+                                                *ngIf="addressHideRequired === '1' || addressHideRequired==='2'"
+                                                class="errorColor">*</span></label>
+                                        <input type="text" class="form-control" placeholder="Email ID" formControlName="addressReceiptEmailId" [ngClass]="{ 'is-invalid':  submitted && item.controls.addressReceiptEmailId.errors }">
+                                        <div *ngIf=" submitted && item.controls.addressReceiptEmailId.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && item.controls.addressReceiptEmailId.errors.required">
+                                                Email Id Required
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 form-group" [formGroupName]="i" *ngIf="item.get('radioOption').value ==='Single'">
+                                        <label>Contact Number </label>
+                                        <input type="text" class="form-control" (keypress)="keyPress($event)" placeholder="Contact Number" formControlName="addressContactNumber" maxlength="15">
+                                    </div>
+                                    <div class="col-md-3 form-group" [formGroupName]="i" *ngIf="item.get('radioOption').value ==='Single'">
+                                        <label>Address Line 1 <span class="errorColor">*</span></label>
+                                        <input type="text" class="form-control" placeholder="line1" formControlName="addressLine1" [ngClass]="{ 'is-invalid':  submitted && item.controls.addressLine1.errors }">
+                                        <div *ngIf=" submitted && item.controls.addressLine1.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && item.controls.addressLine1.errors.required">
+                                                Address Line1 Required
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 form-group" [formGroupName]="i" *ngIf="item.get('radioOption').value ==='Single'">
+                                        <label>Address Line 2</label>
+                                        <input type="text" class="form-control" placeholder="line2" formControlName="addressLine2">
+                                    </div>
+                                    <div class="col-md-3 form-group"  id="state_{{i}}" [formGroupName]="i" *ngIf="item.get('radioOption').value ==='Single'">
+                                        <label>State <span class="errorColor">*</span></label>
+                                        <select class="form-control" (change)="getCities($event.target.value, 'R', i)" formControlName="addressState" [ngClass]="{ 'is-invalid':  submitted && item.controls.addressState.errors }">
+                                            <option value="" disabled selected style="color:orange">Select State
+                                            </option>
+                                            <option *ngFor="let org of statesList" [value]="org.stateId">
+                                                {{org.stateName}}
+                                            </option>
+                                        </select>
+                                        
+                                        <div *ngIf=" submitted && item.controls.addressState.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && item.controls.addressState.errors.required">
+                                                State Required
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 form-group" [formGroupName]="i" *ngIf="item.get('radioOption').value ==='Single'">
+                                        <label>City <span class="errorColor">*</span></label>
+                                        <select class="form-control"  id="city_{{i}}" tabindex="0" formControlName="addressCity" [ngClass]="{ 'is-invalid':  submitted && item.controls.addressCity.errors }">
+                                            <option value="" disabled selected style="color:orange">Select City</option>
+                                            <option *ngFor="let org of citiesResponse[i]" [value]="org.cityName">
+                                                {{org.cityName}}
+                                            </option>
+                                        </select>
+                                        <div *ngIf=" submitted && item.controls.addressCity.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && item.controls.addressCity.errors.required">
+                                                City Required
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 form-group" [formGroupName]="i" style="margin-bottom: 30px;" *ngIf="item.get('radioOption').value ==='Single'">
+                                        <label>Pin Code <span class="errorColor">*</span></label>
+                                        <input type="text" class="form-control" maxlength="6" placeholder="Pin Code" formControlName="addressZipCode" [ngClass]="{ 'is-invalid':  submitted && item.controls.addressZipCode.errors }">
+                                        <div *ngIf=" submitted && item.controls.addressZipCode.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && item.controls.addressZipCode.errors.required">
+                                                Pin Code Required
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 form-group" [formGroupName]="i" *ngIf="item.get('radioOption').value ==='Bulk'">
+                                        <label>Bulk <span class="errorColor">*</span></label>
+                                        <!-- {{item.controls.receiptBulkOption.value}} -->
+                                        <select class="form-control" formControlName="receiptBulkOption" [ngClass]="{ 'is-invalid': submitted && item.controls.receiptBulkOption.errors }">
+                                            <option value="" disabled selected style="color:orange">Select Bulk Option
+                                            </option>
+                                            <option *ngFor="let bulk of bulkList" [value]="bulk.dakDispatchCategoryId">
+                                                {{bulk.name}}
+                                            </option>
+                                        </select>
+                                        <div *ngIf=" submitted && item.controls.receiptBulkOption.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && item.controls.receiptBulkOption.errors.required">
+                                                Bulk Required
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 text-right" style="margin-top: 2em;">
+                                    
+                                        <button class="btn btn-success btn-sm" *ngIf="i>=0" (click)="addRow('ToAddress',i)">
+                                            <i class="fas fa-plus-circle"></i> Add
+                                        </button>
+                                        &nbsp;&nbsp;<button class="btn btn-secondary btn-sm" *ngIf="i>0" (click)="removeRows(i)"><i
+                                                class="fas fa-minus-circle"></i> Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- TEST -->
+
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3 form-group">
+                                <h5 class="headingValue">Draft For Approval(DFA)</h5>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-12 form-group" *ngIf="showEnglishEditor">
+                                <label>DFA Subject <span class="errorColor">*</span></label>
+                                <textarea rows="2" cols="50" class="form-control" placeholder="DFA Subject" formControlName="dfaSubject" [ngClass]="{ 'is-invalid':  submitted && f.dfaSubject.errors }">
+                            </textarea>
+                                <div *ngIf=" submitted && f.dfaSubject.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && f.dfaSubject.errors.required">
+                                        DFA Subject Required
+                                    </div>
+                                </div>
+
+                                <!-- <div *ngIf="noteSheetForm.controls['dfaSubject'].hasError('required') && noteSheetForm.controls['dfaSubject'].touched" class="failed-validation" class="errorColor">
+                            DFA Subject Required
+                        </div>
+                        <div *ngIf="noteSheetForm.controls['dfaSubject'].hasError('pattern')" class="failed-validation" class="errorColor">
+                            DFA Subject Required
+                        </div> -->
+                            </div>
+                            <!-- *ngIf="showEnglishEditor" -->
+                            <div class="col-md-12 form-group" *ngIf="showHindiEditor">
+                                <label>DFA Hindi Subject <span class="errorColor">*</span></label>
+                                <textarea rows="2" cols="50" class="form-control" placeholder="DFA Hindi Subject" formControlName="dfaHindiSubject" tabindex="2" [ngClass]="{ 'is-invalid':  submitted && f.dfaHindiSubject.errors }">
+                            </textarea>
+                                <div *ngIf=" submitted && f.dfaHindiSubject.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && f.dfaHindiSubject.errors.required">
+                                        DFA Hindi Subject Required
+                                    </div>
+                                    <div *ngIf=" submitted && f.dfaHindiSubject.errors.pattern">
+                                        Invalid DFA Hindi Subject
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 form-group">
+                                <label>DFA Contents</label>&nbsp;<span class="errorColor">*</span>
+                            </div>
+                        </div>
+                        <div class="row p-4">
+                            <div class="col-md-12" style="padding: 0px;">
+                                <!-- <tinymce [config]="appConst.config" formControlName="dfacomments"></tinymce> -->
+                                <tinymce [config]="appConst.config" formControlName="dfacomments" *ngIf="showEnglishEditor"
+                                [ngClass]="{ 'is-invalid':  submitted && f.dfacomments.errors }"></tinymce>
+                                <div *ngIf=" showEnglishEditor && submitted && f.dfacomments.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && f.dfacomments.errors.required">
+                                        DFA Contents English Required
+                                    </div>
+                                </div>
+                                <tinymce [config]="appConst.config" formControlName="dfahindiComments" *ngIf="showHindiEditor"
+                                [ngClass]="{ 'is-invalid':  submitted && f.dfahindiComments.errors }"></tinymce>
+                                <div *ngIf=" showHindiEditor && submitted && f.dfahindiComments.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && f.dfahindiComments.errors.required">
+                                        DFA Contents Hindi Required
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="headingValue">Endorsee </h5>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <button class="btn btn-success btn-sm" (click)="addEndorseAddress('EndorseeAddress',0)">
+                                <i class="fas fa-plus-circle"></i> Add
+                                Endorsee </button>
+                        </div>
+                    </div>
+                    <div formArrayName="endorseAddress" *ngFor="let endorse of noteSheetForm.get('endorseAddress')['controls']; let i = index">
+                        <div class="row" [formGroupName]="i">
+                            <div class="col-md-2 mb-2">
+                                <h5>Endorsee :{{i+1}} </h5>
+                            </div>
+                            <!-- <div class="row" style="padding-left: 15px;padding-right: 15px;"> -->
+                            <div class="col-md-4 form-group">
+                                <label style="margin-right: 41px;">Dispatch Via <span
+                                        class="errorColor">*</span></label>
+                                <label class="checkbox-inline" style="padding: 0 10px 0 0;">
+                                    <input type="checkbox"  formControlName="endorseeviaType1" (click)="toEndorseecheckbox($event)"> Email
+                                </label>&nbsp;&nbsp;&nbsp;
+                                <label class="checkbox-inline">
+                                    <input type="checkbox"  formControlName="endorseeviaType2" (click)="toEndorseecheckbox($event)"> Paper
+                                </label>
+                                <div *ngIf="showendorsemsg" style="color:red;">You should check at least one</div>
+                                <div class="col-md-12 pl-0" *ngIf="endorse.controls.endorseeviaType2.value===true">
+                                    <label class="radio-inline" *ngFor="let type of dispatchViaList" style="padding: 0 10px 0 0;">
+                                        <input type="radio"  value="{{type}}"
+                                            formControlName="endorseeviaType3"> 
+                                            {{type}}
+                                    </label>
+                                    <!-- <label class="radio-inline">
+                                        <input type="radio" value="By Hand" formControlName="endorseeviaType3"
+                                            > By Hand
+                                    </label>&nbsp;&nbsp;&nbsp; -->
+                                    <!-- <label class="radio-inline">
+                                        <input type="radio"  value="By Courier" formControlName="endorseeviaType4"
+                                            > By Courier
+                                    </label>&nbsp;&nbsp;&nbsp;
+                                    <label class="radio-inline">
+                                        <input type="radio"  value="By SpeedPost" formControlName="endorseeviaType5"
+                                            > By SpeedPost
+                                    </label> -->
+                                </div>
+
+                            </div>
+                            <!-- </div> -->
+                            <!-- <div class="col-md-3 form-group">
+                                <label>Dispatch Via <span class="errorColor">*</span></label>
+                                <select class="form-control" tabindex="8" formControlName="endorseevia" (change)="dispatchVia($event.target.value,'EndorseAddress')" [ngClass]="{ 'is-invalid': submitted && endorse.controls.endorseevia.errors }">
+                                        <option value="" disabled selected style="color:orange">Select Dispatch Via
+                                        </option>
+                                        <option *ngFor="let sec of viaList" [value]="sec.dispatchViaId">
+                                            {{sec.name}}
+                                        </option>
+                                    </select>
+                                <div *ngIf=" submitted && endorse.controls.endorseevia.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && endorse.controls.endorseevia.errors.required">
+                                        Via Required
+                                    </div>
+                                </div>
+
+                            </div> -->
+                            <div class="col-md-3 form-group">
+                                <label>Category/Others <span class="errorColor">*</span></label>
+                                <select class="form-control" [ngClass]="{ 'is-invalid': submitted && endorse.controls.endorseeOrg.errors }" formControlName="endorseeOrg" (change)="endorseOrgCateg($event.target.value,'EndorseAddress',i)">
+                                    <option value="" selected disabled>Select Category</option>
+                                    <option *ngFor="let addcategory of addresscategory"
+                                        [value]="addcategory.addressCategoryId">{{addcategory.name}}
+                                    </option>
+                                </select>
+                                <div *ngIf=" submitted && endorse.controls.endorseeOrg.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && endorse.controls.endorseeOrg.errors.required">
+                                        Category Required
+                                    </div>
+                                </div>
+                                <!-- <div *ngIf="endorse.get('endorseeOrg').hasError('required')&&endorse.get('endorseeOrg').touched" class="failed-validation" class="errorColor">
+                                        Category Required
+                                    </div> -->
+                            </div>
+
+                            <div class="col-md-3 form-group">
+                                <label>Endorsee Name <span class="errorColor">*</span></label>
+                                <input type="text" class="form-control" placeholder="Endorsee Name" formControlName="endorseeName" [ngClass]="{ 'is-invalid': submitted && endorse.controls.endorseeName.errors }">
+                                <div *ngIf=" submitted && endorse.controls.endorseeName.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && endorse.controls.endorseeName.errors.required">
+                                        Endorsee Name Required
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label>Email Id <span *ngIf="endorseHideRequired === '1' || endorseHideRequired==='2'"
+                                        class="errorColor">*</span></label>
+                                <input type="text" class="form-control" placeholder="Email ID" formControlName="endorseeEmail" [ngClass]="{ 'is-invalid': submitted && endorse.controls.endorseeEmail.errors }">
+                                <div *ngIf=" submitted && endorse.controls.endorseeEmail.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && endorse.controls.endorseeEmail.errors.required">
+                                        Endorsee EmailId Required
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label>Contact Number </label>
+                                <input type="text" class="form-control" placeholder="Contact Number" maxlength="15" (keypress)="keyPress($event)" formControlName="endorseeContact">
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label>Address Line 1 <span class="errorColor">*</span></label>
+                                <input type="text" class="form-control" placeholder="Address Line 1" formControlName="endorseeAddressLine1" [ngClass]="{ 'is-invalid': submitted && endorse.controls.endorseeAddressLine1.errors }">
+                                <div *ngIf=" submitted && endorse.controls.endorseeAddressLine1.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && endorse.controls.endorseeAddressLine1.errors.required">
+                                        Endorsee Address Line 1 Required
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label>Address Line 2</label>
+                                <input type="text" class="form-control" placeholder="Address Line 2" formControlName="endorseeAddressLine2">
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label>State <span class="errorColor">*</span></label>
+                                <select class="form-control" (change)="getCities($event.target.value, 'E', i)" formControlName="endorseeState" [ngClass]="{ 'is-invalid': submitted && endorse.controls.endorseeState.errors }">
+                                    <option value="" disabled selected style="color:orange">Select State</option>
+                                    <option *ngFor="let org of statesList" [value]="org.stateId">
+                                        {{org.stateName}}
+                                    </option>
+                                </select>
+
+                                <div *ngIf=" submitted && endorse.controls.endorseeState.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && endorse.controls.endorseeState.errors.required">
+                                        State Required
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label>City <span class="errorColor">*</span></label>
+                                <select   class="form-control" id="city_{{i}}"  formControlName="endorseeCity" [ngClass]="{ 'is-invalid': submitted && endorse.controls.endorseeCity.errors }">
+                                    <option value="" disabled selected style="color:orange">Select City</option>
+                                    <option *ngFor="let org of citiesEndorResponse[i]" [value]="org.cityName">
+                                        {{org.cityName}}
+                                    </option>
+                                </select>
+                                <div *ngIf=" submitted && endorse.controls.endorseeCity.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && endorse.controls.endorseeCity.errors.required">
+                                        City Required
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-3 form-group">
+                                <label>Pin Code <span class="errorColor">*</span></label>
+                                <input type="text" class="form-control" placeholder="Pin Code" formControlName="endorseeZipCode" (keypress)="keyPress($event)" [ngClass]="{ 'is-invalid': submitted && endorse.controls.endorseeZipCode.errors }">
+
+                                <div *ngIf=" submitted && endorse.controls.endorseeZipCode.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && endorse.controls.endorseeZipCode.errors.required">
+                                        Pin Code Required
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label>Remark</label>
+                                <input type="text" class="form-control" placeholder="Remark" formControlName="endorseeRemark">
+                            </div>
+                            <!-- *ngIf="i >=1 " for both  -->
+                            <div class="col-md-12 text-right" style="margin-top:1em;margin-bottom:1rem">
+                                <button class="btn btn-success btn-sm" (click)="addEndorseAddress('EndorseeAddress',i+1)"><i
+                                        class="fas fa-plus-circle"></i> Add Endorsee</button>&nbsp;
+                                <button class="btn btn-secondary btn-sm" (click)="removeRow(i,'Endorsee')"><i
+                                        class="fas fa-minus-circle"></i> Remove Endorsee
+                                </button>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <hr>
+                <!-- </div> -->
+
+                <div class="row">
+                    <div class="col-md-6" *ngIf="showEditor">
+                        <h5 class="headingValue">CC </h5>
+                    </div>
+                    <div class="col-md-6 text-right" style="margin-top:5px;">
+                        <button class="btn btn-success btn-sm acceptBtn" *ngIf="showEditor && showccbtn" (click)="addccAddress('CCAddress')"><i class="fas fa-plus-circle"></i> Add</button>
+                    </div>
+                </div>
+                <hr>
+                <div formArrayName="ccAddress" *ngFor="let cc of noteSheetForm.get('ccAddress')['controls']; let i = index">
+                    <div class="row" [formGroupName]="i">
+                        <div class="col-md-3">
+                            <h5>Section:{{i+1}} </h5>
+                        </div>
+                        <div  class="col-md-3 form-group">
+                            <select [hidden]="cc.get('isSectionReference').value"  id="select+{{i}}" class="form-control" (change)="getSection($event.target.value,i)" formControlName="ccInternalSection">
+                                <option value="" disabled selected style="color:orange">Select Section</option>
+                                <option *ngFor="let sec of filterSectionList" [value]="sec.sectionId">
+                                    {{sec.sectionName}}
+                                </option>
+                            </select>
+                            <span [hidden]="!cc.get('isSectionReference').value" id="span+{{i}}" >{{cc.get('sectionRef').value}}</span>
+                        </div>
+                        <!-- <div [hidden]="!isSectionReference" class="col-md-3 form-group">
+                            <span id="span+{{i}}" >{{sectionReference}}</span>
+                        </div> -->
+                        <div class="col-md-3 text-right">
+                            <button class="btn btn-success btn-sm" (click)="addccAddress('CCAddress')"><i
+                                    class="fas fa-plus-circle"></i> Add</button>&nbsp;
+                            <button class="btn btn-secondary btn-sm" (click)="removeRow(i,'CC')"><i
+                                    class="fas fa-minus-circle"></i> Remove</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="showdocs">
+                <div class="col-md-3">
+                    <h5 class="headingValue">Documents</h5>
+                    <hr>
+                    <div *ngFor="let item of notesheetData.dispatchDocuments; let i=index">
+                        <div class="iconCard" (click)="download(item.documentId)">
+                            <span><i class="far fa-file-alt docIcons"></i>File {{i+1}}</span>
+                            <a href="{{downloadUrl}}" class="downloadView">
+                                <i class="fas fa-cloud-download-alt" style=" cursor: pointer;color: #3D78BE;"></i>
+                            </a>
+                            <a class="downloadView">
+                                <i class="fas fa-trash-alt" style=" cursor: pointer;color: #3D78BE;" title="Delete" (click)="deleteDocument(item.dispatchDocumentId)"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="row" *ngIf="showreceiptdocs">
+                <div class="col-md-3">
+                    <h5 class="headingValue">Documents</h5>
+                    <hr>
+                    <div >
+                        <!-- <p><a style="cursor: pointer;" >View Receipt Doc</a></p> -->
+                        <div *ngFor="let item of docList; let i=index">
+                            <div class="iconCard" (click)="download(item)">
+                            <span><i class="far fa-file-alt docIcons"></i>Receipt Documents</span>
+                            <a href="{{downloadUrl}}" class="downloadView">
+                            <i class="fas fa-cloud-download-alt" style=" cursor: pointer;color: #3D78BE;"></i>
+                            </a>
+                            </div></div>
+                        <!-- <div class="iconCard" (click)="download(this.receiptFileData.docid)">
+                            <span><i class="far fa-file-alt docIcons"></i>Receipt Documents</span>
+                            <a href="{{downloadUrl}}" class="downloadView">
+                                <i class="fas fa-cloud-download-alt" style=" cursor: pointer;color: #3D78BE;"></i>
+                            </a>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5 class="headingValue">Upload Supporting Document</h5>
+                    </div>
+                    <div class="col-md-4" style="margin-top:8px; margin-bottom:8px;">
+                        <input type="file" class="form-control" id="file" multiple (change)="getFileDetails($event)" formControlName="file" [ngClass]="{ 'is-invalid':  submitted && f.file.errors }">
+                        <div class="smallCard" *ngFor="let file of files; let i=index">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    {{i+1}}.{{file.name}}
+                                </div>
+                                <div class="col-md-2 text-right">
+                                    <span class="fas fa-times" style="color:red;font-size: 20px;cursor: pointer;" (click)="removed(i)"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <!-- <div class="col-md-2">
+                        <label>Upload Documents</label>
+                    </div> -->
+        
+                </div>
+            </form>
+            <div class="row">
+                <div class="col-md-12 text-right" style="margin-top:8px;">
+                  
+                    <!-- <button class="globalBtn acceptBtn" *ngIf="dispatchId === '0'" (click)="noteSheetSubmit('save')">Save</button>
+                    <button class="globalBtn acceptBtn" *ngIf="dispatchId !== '0' && dispatchId !== 0" (click)="noteSheetSubmit('update')">Submit</button>
+                    <button class="globalBtn submitBtn" *ngIf="dispatchId === '0' " (click)="noteSheetSubmit('create')">Submit</button> -->
+                    <button class=" btn btn-primary acceptBtn" *ngIf="dispatchId === '0'" (click)="noteSheetSubmit('save')">Save</button>
+                    <button class=" btn btn-primary submitBtn" *ngIf="dispatchId !== '0' && dispatchId !== 0" (click)="noteSheetSubmit('update')">Update</button>
+                    &nbsp;&nbsp;<button class="btn btn-danger clearBtn" (click)="clear()">Reset</button>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal Popup for Existing File -->
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Search With Existing File</h4>
+                <button type="button" class="close" data-dismiss="modal" (click)="reset()" #closeModal>&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form [formGroup]="searchFileForm">
+                    <div class="row">
+                        <div class="col-md-3 form-group mb-1">
+                            <label>File Number :</label>
+                        </div>
+                        <div class="col-md-6 form-group" *ngIf="showsearch">
+                            <div class="form-group">
+                                <div class="icon-addon" style="height: 0;">
+                                    <input type="text" placeholder="Enter File Number" class="form-control" formControlName="fileno">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 form-group mb-5" *ngIf="showsearch">
+                            <button type="button" class="btn btn-primary" (click)="searchFileNo()">Search</button>
+
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-md-12" *ngIf="showradio">
+                        <div class="table-responsive-sm">
+                            <table class="table table-bordered table-hover">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Select</th>
+                                        <th>Reference No/File No</th>
+                                        <!-- <th>Date</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let existingfile of existingFilesList">
+                                    <tr>
+                                        <td> <input type="radio" name="optradio" (change)="selectFile(existingfile)" #filebtn></td>
+                                        <td>{{existingfile.dakDispatchFileNo}}</td>
+                                        <!-- <td>{{existingfile.date}}</td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-dismiss="modal">Select</button>
+                        </div> -->
+
+                    </div>
+
+                </div>
+                <div class="col-md-12 text-right" *ngIf="responsePageCount>1">
+                    <ul class="pagination float-right">
+                        <li class="page-item hoverActive"><a class="page-link " [class.my-class]="pageId === 0" (click)="previ()"><i class="fas fa-chevron-left"> </i></a></li>
+                        <li class="page-item"><a class="page-link">{{pageId+1}}/{{responsePageCount}}</a></li>
+                        <li class="page-item hoverActive"><a class="page-link" [class.my-class]="pageId+1 === responsePageCount" (click)="next()"><i
+                                    class="fas fa-chevron-right"></i></a></li>
+                    </ul>
+                </div>
+                <!-- <div class="col-md-12 text-right" *ngIf="pageCount>1">
+                    <ul class="pagination float-right">
+                        <li class="page-item hoverActive"><a class="page-link " [class.my-class]="rowId === 0" (click)="prev()"><i class="fas fa-chevron-left"> </i></a></li>
+                        <li class="page-item"><a class="page-link">{{rowId+1}}/{{pageCount}}</a></li>
+                        <li class="page-item hoverActive"><a class="page-link" [class.my-class]="rowId+1 === pageCount" (click)="next()"><i class="fas fa-chevron-right"></i></a></li>
+                    </ul>
+                </div> -->
+            </div>
+        </div>
+
+        <!-- Modal footer -->
+        <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div> -->
+
+    </div>
+</div>
+<!-- Modal Popup for Existing File -->
+
+<!--  searching Dentist List  -->
+<button type="button" #openModal class="btn btn-primary" data-toggle="modal" data-backdrop="static" data-target="#dentistModal" style="display: none;">
+    Open modal
+</button>
+<!-- The Modal -->
+<div class="modal" id="dentistModal">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">{{categoryname}} List</h4>
+                <button type="button" class="close" data-dismiss="modal" #dismissModal (click)="reset()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="searchForm">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <select class="form-control" formControlName="state">
+                                <option value="" disabled selected style="color:orange">Select State</option>
+                                <option *ngFor="let org of statesList" [value]="org.stateId">
+                                    {{org.stateName}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" placeholder="Search" formControlName="searchValue">
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary" (click)="SearchWithStateandValue()">Search</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="row" style="padding-top: 10px;">
+                    <div class="col-md-12" *ngIf="categoryname === 'Principal'">
+                        <div class="table-responsive-sm">
+                            <table class="table table-bordered table-hover">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Select</th>
+                                        <th style="width: 10%;">Id</th>
+                                        <th style="width: 25%;">Name</th>
+                                        <th>College Name</th>
+                                        <th colspan="2">Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let principal of selectedOrgList">
+                                    <tr>
+                                        <td> <input type="radio" name="optradio" (change)="getPrincipalDetails(principal,popupindex)"></td>
+                                        <td>{{principal.userId}}</td>
+                                        <td>{{principal.firstName}} {{principal.lastName}}</td>
+                                        <td>{{principal.collegeName}}</td>
+                                        <td>{{principal.address.line1}},{{principal.address.line2}},{{principal.address.state}},{{principal.address.zipCode}}
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="selectedOrgList.length === 0">
+
+                                        <td colspan="5" style="text-align: center;padding: 50px !important;">No Data Available in Table</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="col-md-12 text-right" *ngIf="responsePageCount>1">
+                                <ul class="pagination float-right">
+                                    <li class="page-item hoverActive"><a class="page-link "
+                                            [class.my-class]="pageId === 0" (click)="categoryPaginationPrevi()"><i
+                                                class="fas fa-chevron-left"> </i></a></li>
+                                    <li class="page-item"><a class="page-link">{{pageId+1}}/{{responsePageCount}}</a>
+                                    </li>
+                                    <li class="page-item hoverActive"><a class="page-link"
+                                            [class.my-class]="pageId+1 === responsePageCount" (click)="categoryPaginationNext()"><i
+                                                class="fas fa-chevron-right"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" *ngIf="categoryname === 'DME'">
+                        <div class="table-responsive-sm">
+                            <table class="table table-bordered table-hover">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Select</th>
+                                        <th style="width: 10%;">Id</th>
+                                        <th style="width: 25%;">Name</th>
+                                        <th colspan="2">Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let dme of selectedOrgList">
+                                    <tr>
+                                        <td> <input type="radio" name="optradio" (change)="getDMEDetails(dme,popupindex)"></td>
+                                        <td>{{dme.userId}}</td>
+                                        <td>{{dme.firstName}} {{dme.lastName}}</td>
+                                        <td>{{dme.address.line1}},{{dme.address.line2}},{{dme.address.state}},{{dme.address.zipCode}}
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="selectedOrgList.length === 0">
+                                        <td colspan="4" style="text-align: center;padding: 50px !important;">No Data Available in Table</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="col-md-12 text-right" *ngIf="responsePageCount>1">
+                                <ul class="pagination float-right">
+                                    <li class="page-item hoverActive"><a class="page-link "
+                                            [class.my-class]="pageId === 0" (click)="categoryPaginationPrevi()"><i
+                                                class="fas fa-chevron-left"> </i></a></li>
+                                    <li class="page-item"><a class="page-link">{{pageId+1}}/{{responsePageCount}}</a>
+                                    </li>
+                                    <li class="page-item hoverActive"><a class="page-link"
+                                            [class.my-class]="pageId+1 === responsePageCount" (click)="categoryPaginationNext()"><i
+                                                class="fas fa-chevron-right"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" *ngIf="categoryname === 'Health Secretary'">
+                        <div class="table-responsive-sm">
+                            <table class="table table-bordered table-hover">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Select</th>
+                                        <th style="width: 10%;">Id</th>
+                                        <th style="width: 25%;">Name</th>
+                                        <th colspan="2">Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let healthsec of selectedHealthList">
+                                    <tr>
+                                        <td> <input type="radio" name="optradio" (change)="getHelathSecDetails(healthsec,popupindex)"></td>
+                                        <td>{{healthsec.userId}}</td>
+                                        <td>{{healthsec.firstName}} {{healthsec.lastName}}</td>
+                                        <td>{{healthsec.address.line1}},{{healthsec.address.line2}},{{healthsec.address.state}},{{healthsec.address.zipCode}}
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="selectedHealthList.length === 0">
+                                        <td colspan="4" style="text-align: center;padding: 50px !important;">No Data Available in Table</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12" *ngIf="categoryname === 'Advocate'">
+                        <div class="table-responsive-sm">
+                            <table class="table table-bordered table-hover">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Select</th>
+                                        <th style="width: 10%;">Id</th>
+                                        <th style="width: 25%;">Name</th>
+                                        <th colspan="2">Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let advocate of selectedAdvocateList">
+                                    <tr>
+                                        <td> <input type="radio" name="optradio" (change)="getAdvocateDetails(advocate,popupindex)"></td>
+                                        <td>{{advocate.userId}}</td>
+                                        <td>{{advocate.firstName}} {{advocate.lastName}}</td>
+                                        <td>{{advocate.address.line1}},{{advocate.address.line2}},{{advocate.address.state}},{{advocate.address.zipCode}}
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="selectedAdvocateList.length === 0">
+                                        <td colspan="4" style="text-align: center;padding: 50px !important;">No Data Available in Table</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Open others modal -->
+<button type="button" #openOthersModal class="btn btn-primary" data-toggle="modal" data-backdrop="static" data-target="#openOthersModal" style="display: none;">
+    Open modal
+</button>
+<!-- open others modal -->
+
+<!-- open Others Modal -->
+<div class="modal" id="openOthersModal">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">{{categoryname}} List</h4>
+                <button type="button" class="close" data-dismiss="modal" #openOthersModal (click)="resetSearchOthersForm(popupindex)" >&times;</button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="searchOthersForm">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" placeholder="Search With Name" formControlName="name">
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" placeholder="Search With Phone" formControlName="phoneno">
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary" (click)="SearchWithNameAndPhone()">Search</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="row" style="padding-top: 10px;">
+                    <div class="col-md-12" *ngIf="categoryname === 'Others'">
+                        <div class="table-responsive-sm">
+                            <table class="table table-bordered table-hover">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Select</th>
+                                        <th style="width: 25%;">Name</th>
+                                        <th>Email Id</th>
+                                        <th>Phone Number</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let others of otherList">
+                                    <tr>
+                                        <td> <input type="radio" name="optradio" (change)="getOthersDetails(others,popupindex)"></td>
+                                        <td>{{others.firstName}} {{others.lastName}}</td>
+                                        <td>{{others.emailId}}</td>
+                                        <td>{{others.phoneNumber}}</td>
+                                       
+                                    </tr>
+                                    <tr *ngIf="otherList.length === 0">
+
+                                        <td colspan="5" style="text-align: center;padding: 50px !important;">No Data Available in Table</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="col-md-12 text-right" *ngIf="responseOthersPageCount>1">
+                                <ul class="pagination float-right">
+                                    <li class="page-item hoverActive"><a class="page-link "
+                                            [class.my-class]="pageId === 0" (click)="othersPaginationPrevi()"><i
+                                                class="fas fa-chevron-left"> </i></a></li>
+                                    <li class="page-item"><a class="page-link">{{pageId+1}}/{{responseOthersPageCount}}</a>
+                                    </li>
+                                    <li class="page-item hoverActive"><a class="page-link"
+                                            [class.my-class]="pageId+1 === responseOthersPageCount" (click)="othersPaginationNext()"><i
+                                                class="fas fa-chevron-right"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- open Others Modal -->
+
+<!-- File Modal Start-->
+
+<button type="button" #openFileModal class="btn btn-primary" data-toggle="modal" data-backdrop="static" data-target="#fileModal" style="display: none;">
+    Open modal
+</button>
+
+<div class="modal fade" id="fileModal">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" (click)="fileReset()" #selectFileModal>&times;</button>
+            </div>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Search With Existing File</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" (click)="reset()" aria-controls="profile" aria-selected="false">Create Reference/File Number</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="modal-body">
+                        <form [formGroup]="searchFileForm">
+                            <div class="row">
+                                <div class="col-md-3 form-group mb-1">
+                                    <label>File Number :</label>
+                                </div>
+                                <div class="col-md-6 form-group" >
+                                    <div class="form-group">
+                                        <div class="icon-addon" style="height: 0;">
+                                            <input type="text" placeholder="Enter File Number" class="form-control" formControlName="fileno">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 form-group mb-5" >
+                                    <button type="button" class="btn btn-primary" (click)="searchFileNo()">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-md-12" *ngIf="showradio">
+                                <div class="table-responsive-sm">
+                                    <table class="table table-bordered table-hover">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>Select</th>
+                                                <th>Reference No/File No</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngFor="let existingfile of existingFilesList">
+                                            <tr>
+                                                <td> <input type="radio" name="optradio" (change)="selectFilee(existingfile)"></td>
+                                                <td>{{existingfile.dakDispatchFileNo}}</td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <br>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <h5 class="headingValue"> Reference/File Number</h5>
+                        </div>
+                    </div>
+                    <form [formGroup]="refForm">
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label>Section <span class="errorColor">*</span></label>
+                                <input type="textbox" class="form-control" readonly tabindex="0" formControlName="filerefSection">
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label>Sub Section <span class="errorColor">*</span></label>
+                                <select class="form-control" tabindex="1" formControlName="filerefSubSection" (change)="subSections($event.target.value)" [ngClass]="{ 'is-invalid': receipt.filerefSubSection.invalid && (receipt.filerefSubSection.dirty || receipt.filerefSubSection.touched) }">
+                                    <option value="" disabled selected style="color:orange">Select Sub Section</option>
+                                    <option *ngFor="let sec of subSectionList" [value]="sec.subSectionId">
+                                        {{sec.name}}
+                                    </option>
+
+                                </select>
+                                <div *ngIf="refForm.controls['filerefSubSection'].hasError('required') && refForm.controls['filerefSubSection'].touched" class="failed-validation" class="errorColor">
+                                    SubSection Required
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label>Category <span class="errorColor">*</span></label>
+                                <select class="form-control" formControlName="filecategory" (change)="categorys($event.target.value)"  [ngClass]="{ 'is-invalid': receipt.filecategory.invalid && (receipt.filecategory.dirty || receipt.filecategory.touched) }">
+                                    <option value="" disabled selected style="color:orange">Select Category</option>
+                                    <option *ngFor="let category of categoriesListt" [value]="category.fileCategoryId">
+                                        {{category.name}}
+                                    </option>
+                                
+                                </select>
+                                <div *ngIf="refForm.controls['filecategory'].hasError('required') && refForm.controls['filecategory'].touched" class="failed-validation" class="errorColor">
+                                    Category Required
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label>Sub Category <span class="errorColor">*</span></label>
+                                <select class="form-control" tabindex="3" formControlName="filesubCategory" [ngClass]="{ 'is-invalid': receipt.filesubCategory.invalid && (receipt.filesubCategory.dirty || receipt.filesubCategory.touched) }"(change)="subcategorys($event.target.value)" >
+                                        <option value="" disabled selected style="color:orange">Select Sub Category</option>
+                                        <option *ngFor="let subcategory of subcategoriesListt" [value]="subcategory.fileSubCategoryId">
+                                            {{subcategory.name}}
+                                        </option>
+                                    
+                                    </select>
+                                <div *ngIf="refForm.controls['filesubCategory'].hasError('required') && refForm.controls['filesubCategory'].touched" class="failed-validation" class="errorColor">
+                                    Sub Category Required
+                                </div>
+
+                            </div>
+                            <div class="col-md-4 form-group" *ngIf="showfilecollege">
+                                <label>College <span class="errorColor">*</span></label>
+                                <select class="form-control" formControlName="filecollege" tabindex="4" (change)="fileReferenceValue($event.target.value)">
+                                            <option value="" disabled selected style="color:orange" >Select College</option>
+                                            <option *ngFor="let college of collegeListt" [value]="college.collegeId">
+                                                {{college.collegeName}}
+                                            </option>
+                                        </select>
+                                        <div *ngIf="refForm.controls['filecollege'].hasError('required') && refForm.controls['filecollege'].touched" class="failed-validation" class="errorColor">
+                                            College Required
+                                        </div>
+                            </div>
+                            <div class="col-md-4 form-group" *ngIf="showfilecollege">
+                                <label>Reference Id <span class="errorColor">*</span></label>
+                                <input type="text" readonly class="form-control" placeholder="Reference Id" tabindex="5" maxlength="30" formControlName="filerefCollegeId" tabindex="3" [ngClass]="{ 'is-invalid':  submitted && f.filerefCollegeId.errors }" >
+                                <div *ngIf="refForm.controls['filerefCollegeId'].hasError('required') && refForm.controls['filerefCollegeId'].touched" class="failed-validation" class="errorColor">
+                                    Reference Id Required
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 form-group" *ngIf="showfilereference">
+                                <label>Reference </label>
+                                <select class="form-control"  readonly formControlName="filereference" tabindex="4">
+                                    <option value="" disabled selected style="color:orange">Select Reference</option>
+                                    <option *ngFor="let reference of subcategoryReferences" [value]="reference.fileSubCategoryReferenceId">
+                                        {{reference.name}}
+                                    </option>
+                                </select>
+                                </div>
+                            
+                            <div class="col-md-4 form-group" *ngIf="showfilereference">
+                                <label>Reference Id <span class="errorColor">*</span></label>
+                                <select class="form-control" formControlName="filerefSubjectId" tabindex="5"   (change)="referenceIdValues($event.target.value)">
+                                    <option value="" disabled selected style="color:orange">Select Reference Id</option>
+                                    <option *ngFor="let references of referenceValuess" [value]="references.fileSubjectReferenceId">
+                                        {{references.shortName}}
+                                    </option>
+                                </select> 
+                                <div *ngIf="refForm.controls['filerefSubjectId'].hasError('required') && refForm.controls['filerefSubjectId'].touched" class="failed-validation" class="errorColor">
+                                    Reference Id Required
+                                </div>
+                            </div>
+                        
+                            <div class="col-md-4 form-group">
+                                <label>Academic Session/Financial year <span class="errorColor">*</span></label>
+                                <select class="form-control" formControlName="filerefAcademicYear" (click)="refno()" (change)="changeAcademic($event.target.value)" [ngClass]="{ 'is-invalid': receipt.filerefAcademicYear.invalid && (receipt.filerefAcademicYear.dirty || receipt.filerefAcademicYear.touched) }" >
+                                    <option value="" disabled selected style="color:orange">Select</option>
+                                    <option>2021-22</option>
+                                    <option>2020-21</option>
+                                    <option>2019-20</option>
+                                    <option>2018-19</option>
+                                    <option>2017-18</option>
+                                    <option>2016-17</option>
+                                    <option>2015-16</option>
+                                    <option>2014-15</option>
+                                    <option>2013-14</option>
+                                    <option>2012-13</option>
+                                    <option>2011-12</option>
+                                    <option>2010-11</option>
+                                    <option>2009-10</option>
+                                </select>
+                                <div *ngIf="refForm.controls['filerefAcademicYear'].hasError('required') && refForm.controls['filerefAcademicYear'].touched" class="failed-validation" class="errorColor">
+                                    Academic Session/Financial year
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label>Year <span class="errorColor">*</span></label>
+                                <input type="text" class="form-control" placeholder="Year" tabindex="4" formControlName="filerefYear">
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label>Section Reference No/File No <span class="errorColor">*</span></label>
+                                <input type="text" class="form-control" placeholder="Section Reference" formControlName="filerefReferenceNumber" tabindex="7">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button class="btn btn-secondary" (click)="fileReset()">Reset</button>&nbsp;
+                                <button class="btn btn-success" [disabled]="!refForm.valid" data-dismiss="modal" (click)="tagCcFile()">Tag CC File</button>&nbsp;
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- File Modal End-->
+
+
+
+<!-- <div class="col-md-4 form-group" *ngIf="showreferenc
+                        <label>Reference <span class="errorColor">*</span></label>
+                        <select class="form-control" formControlName="reference" tabindex="4" [ngClass]="{ 'is-invalid':  submitted && f.reference.errors }" (change)="referenceValue($event.target.value)">
+                                <option value="" disabled selected style="color:orange">Select Reference</option>
+                                <option *ngFor="let references of referenceValues" [value]="references.fileSubjectReferenceId">
+                                    {{references.name}}
+                                </option>
+                            </select>
+                        <div *ngIf=" submitted && f.reference.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && f.reference.errors.required">
+                                Reference Required
+                            </div>
+
+                        </div>
+                    </div> -->
+                   
+                    <!-- <div class="col-md-4 form-group" *ngIf="showcollege">
+                        <label>Reference Id <span class="errorColor">*</span></label>
+                        <select class="form-control" formControlName="refCollegeId" tabindex="5"  [ngClass]="{ 'is-invalid':  submitted && f.refCollegeId.errors }" (change)="referenceValue($event.target.value)">
+                            <option value="" disabled selected style="color:orange">Select Reference Id</option>
+                            <option *ngFor="let college of collegeList" [value]="college.collegeId">
+                                {{college.collegeName}}
+                            </option>
+                        </select> 
+                        <div *ngIf=" submitted && f.refCollegeId.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && f.refCollegeId.errors.required">
+                                Reference Id Required
+                            </div>
+                            <div *ngIf=" submitted && f.refCollegeId.errors.pattern">
+                                Invalid Reference Id
+                            </div>
+                        </div>
+                    </div> -->

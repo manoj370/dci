@@ -1,0 +1,244 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+
+                <div class="col-md-4">
+                    <h5 class="headingValue">View Dispatch &nbsp;
+                        <span class="badge badge-pill badge-primary" style="color: white;">TopSecret</span></h5>
+                </div>
+                <div class="col-md-8 text-right">
+                    <button type="button" class="btn btn-success reponsivebtn" style="cursor: pointer;">&nbsp;Print</button>&nbsp;
+                    <button type="button" class="btn btn-primary reponsivebtn" data-toggle="modal" data-target="#myModal" style="cursor: pointer;">&nbsp;Send To Section Executive</button>&nbsp;
+                    <button type="button" class="btn btn-success reponsivebtn" data-toggle="modal" data-target="#myModall" style="cursor: pointer;"><span><i
+                            class="fas fa-undo-alt"></i></span>&nbsp;Approve & Send</button>&nbsp;
+                    <button type="button" class="btn btn-primary backbtn" style="cursor: pointer;" (click)="back()"><span><i
+                                class="fas fa-angle-left"></i></span>&nbsp;Back</button>
+                </div>
+            </div>
+            <hr>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <b><label>Dispatch Reference Number </label></b>
+                    <p>ACA/NC/2020/87</p>
+
+                </div>
+                <div class="col-md-4">
+                    <b><label>Section </label></b>
+                    <p>Academic</p>
+                </div>
+                <div class="col-md-4">
+                    <b><label>Sub Section </label></b>
+                    <p>New College</p>
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <b><label>Subject </label><br></b>
+                    <p>Subject</p>
+                </div>
+                <div class="col-md-4">
+                    <b> <label>Year </label></b><br>
+                    <p>2020</p>
+                </div>
+                <div class="col-md-4">
+                    <b><label>Dispatch Via </label></b>
+                    <p>By Post</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="headingValue">Sender Section</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <b><label>Sender Name </label></b>
+                    <p>Mr.Ravi</p>
+                </div>
+                <div class="col-md-4">
+                    <b> <label>File Heading </label></b><br>
+                    <p>Invoice For HR</p>
+                </div>
+                <div class="col-md-4">
+                    <b><label>Sending Section *</label></b>
+                    <p>Finance</p>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <b><label>Designation *</label><br></b>
+                    <p>Finance Head</p>
+                </div>
+                <div class="col-md-4">
+                    <b> <label>Dispatch By Date</label></b><br>
+                    <p>12-5-2020</p>
+                </div>
+                <div class="col-md-4">
+                    <b> <label>File Number</label></b><br>
+                    <p>#2354</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="headingValue">Recipient</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <b> <label>Recipient Name </label></b><br>
+                    <p>Vikram Kumar S</p>
+                </div>
+                <div class="col-md-4">
+                    <b> <label>Email Id </label></b><br>
+                    <p>info@finanace.com</p>
+                </div>
+                <div class="col-md-4">
+                    <b> <label>Contact Number </label></b><br>
+                    <p>9867526963</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="headingValue">To Address</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <b><label>Organization / Others *</label><br></b>
+                    <p>Vikram Kumar S</p>
+                </div>
+                <div class="col-md-4">
+                    <b><label>Address *</label><br></b>
+                    <p>The Executive Engineer<br> Public Health Engineering Division1<br> Public Office Building,Mueseum Road,New Delhi Agra,282003
+                    </p>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="headingValue">Dak Info</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <b> <label>Matter *</label></b><br>
+                    <tinymce [config]="appConst.config"></tinymce>
+
+                    <!-- <textarea class="form-control" rows="6" cols="20"> have worked very closely with Jane Dae,both as her supervisor while she worked in the career office ,and as her advisor.In both situations i was impressed by the dedicated manner with which jane carried out her work assignments and pursued her academic course work.Jane has displayed a maturity ,motivational level,and seriousness of purpose, which i have rarely encountered during my extensive interactions with college students.Jane is very bright and has demonstarted an eagerness to him.
+                    </textarea> -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <b><label>Dispatch Scanned Document</label></b><br>
+
+                    <div class="iconCard">
+                        <i class="far fa-file-alt docIcons"></i>
+                        <span>file1.doc</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <button class="btn btn-success">Update</button>&nbsp;
+                    <button class="btn btn-danger">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title headingValue">Send To Section Executive</h4>
+                <button type="button" class="close" data-dismiss="modal" style="cursor: pointer;">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form>
+                    <!-- <div class="row">
+                        <input type="text" class="form-control" readonly placeholder="Section Executive">
+                    </div><br> -->
+                    <div class="row">
+                        <select class="form-control">
+                            <option value="" selected disabled>Select Section</option>
+                            <option>ARPL</option>
+                            <option>Legal</option>
+                            <option>Academic</option>
+                        </select>
+                    </div>
+                    <!-- <div class="row">
+                        <label>Subject <span class="aseticcolor">*</span></label>
+                        <input type="text" placeholder="subject" class="form-control" >
+                    </div><br>
+                    <div class="row">
+                        <label>Matter <span class="aseticcolor">*</span></label>
+                        <textarea rows="5" cols="20" class="form-control" placeholder="Write Matter" ></textarea>
+                    </div><br> -->
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" style="cursor: pointer;">Send</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Return Receipt Modal Starts -->
+<!-- The Modal -->
+<div class="modal" id="myModall">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title headingValue">Approve</h4>
+                <button type="button" class="close" data-dismiss="modal" style="cursor: pointer;">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <input type="text" class="form-control" readonly placeholder="Section Incharge/Section Head">
+                        <!-- <select class="form-control" aria-placeholder="Select Type">
+                            <option selected disabled>Section Incharge</option>
+                            <option value="academic">Academic</option>
+                            <option value="legal">Legal</option>
+                            <option value="hr">HR</option>
+                            <option value="finance">Finance</option>
+                        </select> -->
+                    </div><br>
+                    <div class="row">
+                        <label>Comments <span class="aseticcolor">*</span></label>
+                        <textarea rows="5" cols="20" class="form-control">Write Comments</textarea>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" style="cursor: pointer;">Approve and Send </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Return Receipt Modal Ends -->

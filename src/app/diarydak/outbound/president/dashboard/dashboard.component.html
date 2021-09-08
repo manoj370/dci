@@ -1,0 +1,119 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-2">
+                    <h5 class="headingValue">Dispatch Dashboard</h5>
+                </div>
+
+                <div class="col-md-3 text-right">
+                    <input type="text" ngxDaterangepickerMd placeholder="Select Date" style="width: 200px;"
+                        class="form-control " />
+                    <label class="fa fa-calendar fa-lg imagecalender calendar"></label>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control">
+                        <option value="" disabled selected>Select Status</option>
+                        <option value="Corrected">Pending</option>
+                        <option value="UnderCorrection">Approved</option>
+                    </select>
+                </div>
+
+
+                <div class="col-md-3 text-right">
+                    <div class="form-group">
+                        <div class="icon-addon" style="height: 0;">
+                            <input type="text" placeholder="Search" class="form-control">
+
+                            <label class="fas fa-search iconValue"></label>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <hr>
+
+            <div class="row" style="padding-top: 10px;padding-bottom:50px;">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Ref.ID</th>
+                                    <th style="width:22%">Dispatch Type</th>
+                                    <th style="width:15%">Dispatch Item</th>
+                                    <th>Sender Name</th>
+                                    <th style="width:15%">To Organization</th>
+                                    <th style="width:15%">Dispatch Date</th>
+                                    <th>Confidentiality</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr (click)="view()">
+                                    <td>ACA/NC/2020/87 </td>
+                                    <td>Email</td>
+                                    <td>Letter </td>
+                                    <td>Mr.Ravi</td>
+                                    <td>ABC College</td>
+                                    <td>1 April 2020 </td>
+                                    <td>Confidentiality</td>
+                                    <td> <span class="badge badge-pill badge-success"
+                                            style="color: white">Approved</span>
+
+                                    </td>
+
+                                </tr>
+                                <tr (click)="view()">
+                                    <td>ACA/NC/2020/989</td>
+                                    <td>Print</td>
+                                    <td>Invoice </td>
+                                    <td>Kiran</td>
+                                    <td>ABC College</td>
+                                    <td>29 March 2020 </td>
+                                    <td>Secret</td>
+                                    <td><span class="badge badge-pill badge-warning"
+                                            style="color: white">Pending </span>
+
+                                    </td>
+                                </tr>
+                                <tr (click)="view()">
+                                    <td>ACA/NC/2020/900</td>
+                                    <td>Both</td>
+                                    <td>Legal Document </td>
+                                    <td>Rahul</td>
+                                    <td>ABC College</td>
+                                    <td>22 march 2020 </td>
+                                    <td>Top Secret</td>
+                                    <td> <span class="badge badge-pill badge-success"
+                                            style="color: white">Approved</span>
+                                    </td>
+
+                                </tr>
+                                <tr (click)="view()">
+                                    <td>ACA/NC/2020/997 </td>
+                                    <td>Email</td>
+                                    <td>Document </td>
+                                    <td>Viktam Kumar</td>
+                                    <td>Gandhi College</td>
+                                    <td>22 march 2020 </td>
+                                    <td>Confidentiality</td>
+                                    <td><span class="badge badge-pill badge-warning"
+                                            style="color: white">Pending</span>
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

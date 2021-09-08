@@ -1,0 +1,1058 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="headingValue" *ngIf="!showButton">Create Reciept</h5>
+                    <h5 class="headingValue" *ngIf="showButton">Update Reciept</h5>
+                </div>
+                <div class="col-md-6" style=" text-align: end; " *ngIf="showAssignReceiptButton">
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">Forward To
+                        Section Head</button>&nbsp;
+                    <!-- <button type="button" class="btn btn-primary" (click)="back()" style="cursor: pointer;"><span><i
+                                class="fas fa-angle-left"></i></span>&nbsp;Back</button> -->
+                </div>
+            </div>
+            <hr>
+            <form [formGroup]="receiptForm">
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <label>Diary Date <span class="requiredClass">*</span></label>
+                        <input type="date" class="form-control" formControlName="dairyDate"
+                            [ngClass]="{ 'is-invalid': f.dairyDate.invalid && (f.dairyDate.dirty || f.dairyDate.touched) }"
+                            placeholder="Date">
+                        <div *ngIf="receiptForm.controls['dairyDate'].hasError('required') && (receiptForm.controls['dairyDate'].touched || isSubmitted)"
+                            class="failed-validation" style="color:red;">
+                            Diary Date Required
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-4">
+                        <b><label>Recipient Name</label></b>
+                        <input type="text" class="form-control"  formControlName="recipitName"placeholder="Enter Name">
+                    </div> -->
+
+
+                    <!-- <div class="col-md-4">
+                        <label> Type <span class="requiredClass">*</span></label>
+                        <select class="form-control" formControlName="recipitType"
+                            [ngClass]="{ 'is-invalid': f.recipitType.invalid && (f.recipitType.dirty || f.recipitType.touched) }">
+                            <option value="" disabled selected>Select Type</option>
+                            <option *ngFor="let types of allReceiptTypes" [value]="types.receiptTypeId">{{types.name}}
+                            </option>
+                        </select>
+                        <div *ngIf="receiptForm.controls['recipitType'].hasError('required') && receiptForm.controls['recipitType'].touched"
+                            class="failed-validation" style="color:red;">
+                            ReceiptType Required
+                        </div>
+                    </div> -->
+
+
+                    <!-- Type Static -->
+                    <!-- <div class="col-md-4">
+                        <label> Type <span class="requiredClass">*</span></label>
+                        <select class="form-control" formControlName="recipitType"
+                            [ngClass]="{ 'is-invalid': f.recipitType.invalid && (f.recipitType.dirty || f.recipitType.touched) }">
+                            <option value="" disabled selected>Select Type>
+                            <option *ngFor="let types of allReceiptTypes" [value]="types.receiptTypeId">{{types.name}}
+                            </option> 
+
+                            <option value="">Demi Official(DO) letter </option>
+                            <option value="">Office Memorandum </option>
+                            <option value="">Sanction </option>
+                            <option value=""> Notification</option>
+                            <option value="">Order </option>
+                            <option value="">Guideline </option>
+                            <option value="">Financial Instrument </option>
+                            <option value="">Other </option>
+                        </select>
+                        <div *ngIf="receiptForm.controls['recipitType'].hasError('required') && receiptForm.controls['recipitType'].touched"
+                            class="failed-validation" style="color:red;">
+                            ReceiptType Required
+                        </div>
+                    </div> -->
+
+                    <div class="col-md-3">
+                        <label>Date Received <span class="requiredClass">*</span></label>
+                        <input (change)="getRefId()" onkeydown="return false" [max]="today" type="date"
+                            class="form-control" formControlName="dateRecieved"
+                            [ngClass]="{ 'is-invalid': f.dateRecieved.invalid && (f.dateRecieved.dirty || f.dateRecieved.touched) }">
+                        <div *ngIf="receiptForm.controls['dateRecieved'].hasError('required') && (receiptForm.controls['dateRecieved'].touched || isSubmitted) "
+                            class="failed-validation" style="color:red;">
+                            Date Received Required
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label> Category <span class="requiredClass">*</span></label>
+                        <select class="form-control" aria-placeholder="Select Category"
+                            formControlName="recipitCategory"
+                            [ngClass]="{ 'is-invalid': f.recipitCategory.invalid && (f.recipitCategory.dirty || f.recipitCategory.touched) }">
+                            <option value="" disabled selected>Select Category</option>
+                            <option *ngFor="let category of allCategories" [value]="category.categoryId">
+                                {{category.name}}</option>
+                        </select>
+                        <div *ngIf="receiptForm.controls['recipitCategory'].hasError('required') && (receiptForm.controls['recipitCategory'].touched || isSubmitted)"
+                            class="failed-validation" style="color:red;">
+                            Receipt Category Required
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Language <span class="requiredClass">*</span></label>
+                        <select class="form-control" aria-placeholder="Select Language"
+                            formControlName="recipitLanguage"
+                            [ngClass]="{ 'is-invalid': f.recipitLanguage.invalid && (f.recipitLanguage.dirty || f.recipitLanguage.touched) }">
+                            <option value="" disabled selected>Select Language</option>
+                            <option *ngFor="let language of allLanguages" [value]="language.receiptLanguageId">
+                                {{language.name}}</option>
+
+                        </select>
+                        <div *ngIf="receiptForm.controls['recipitLanguage'].hasError('required') && (receiptForm.controls['recipitLanguage'].touched || isSubmitted)"
+                            class="failed-validation" style="color:red;">
+                            Receipt Language Required
+                        </div>
+                    </div>
+                </div><br>
+
+                <div class="row">
+
+
+
+
+                    <!-- VIA -->
+                    <div class="col-md-3">
+                        <label>Received via <span class="requiredClass">*</span></label>
+                        <select class="form-control" aria-placeholder="Select Via" formControlName="recipitVia"
+                            [ngClass]="{ 'is-invalid': f.recipitVia.invalid && (f.recipitVia.dirty || f.recipitVia.touched) }">
+                            <option value="" disabled selected>Select Via</option>
+                            <option *ngFor="let via of allVias" [value]="via.receiptViaId">
+                                {{via.name}}</option>
+
+                        </select>
+                        <div *ngIf="receiptForm.controls['recipitLanguage'].hasError('required') && (receiptForm.controls['recipitVia'].touched|| isSubmitted)"
+                            class="failed-validation" style="color:red;">
+                            Received via Required
+                        </div>
+                    </div>
+                    <!-- SenderName -->
+                    <div class="col-md-3">
+                        <label>Sender Name <span class="requiredClass">*</span></label>
+                        <input type="text" class="form-control" formControlName="senderName"
+                            [ngClass]="{ 'is-invalid': f.senderName.invalid && (f.senderName.dirty || f.senderName.touched) }"
+                            placeholder="Sender Name">
+                        <div *ngIf="receiptForm.controls['senderName'].hasError('required') && (receiptForm.controls['senderName'].touched|| isSubmitted)"
+                            class="failed-validation" style="color:red;">
+                            Sender Name Required
+                        </div>
+                        <!-- <div *ngIf="receiptForm.controls['senderName'].hasError('pattern')" class="failed-validation" class="errorColor">
+                                    Invalid Sender Name
+                                </div> -->
+                    </div>
+                    <!-- Subject -->
+                    <div class="col-md-6 form-group">
+                        <label>Subject <span class="requiredClass">*</span></label><br>
+                        <textarea type="text" class="form-control" formControlName="subject" placeholder="Enter Subject"
+                            [ngClass]="{ 'is-invalid': f.subject.invalid && (f.subject.dirty || f.subject.touched) }">
+                        </textarea>
+
+                        <div *ngIf="receiptForm.controls['subject'].hasError('required') && (receiptForm.controls['subject'].touched|| isSubmitted)"
+                            class="failed-validation" style="color:red;">
+                            Subject Required
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-md-4 form-group">
+                        <label>Assigned to <span class="errorColor">*</span></label>
+                        <input type="text" class="form-control" placeholder="Address To" formControlName="addressReceiptName" [ngClass]="{ 'is-invalid': submitted && item.controls.addressReceiptName.errors}">
+
+                        <div *ngIf="receiptForm.controls['addressReceiptName'].hasError('required') && (receiptForm.controls['addressReceiptName'].touched|| isSubmitted)" class="failed-validation" style="color:red;">
+                            Recipient Name Required
+                        </div>
+                    </div> -->
+                    <!-- Reference ID
+                      <div class="col-md-4">
+                         <label> Ref Id </label></b>
+                        <input type="text" class="form-control" formControlName="refId" placeholder="Ref Id"
+                            tabindex="7">
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label>Section Reference Number<span class="errorColor">*</span></label>
+                        <input type="text" class="form-control" placeholder="Section Reference"
+                            formControlName="refReferenceNumber" tabindex="7">
+
+                    </div> -->
+                    <!-- Reference ID
+                    <div class="col-md-4">
+                        <b> <label>Ref Id <span class="requiredClass">*</span></label></b>
+                        <input type="text" class="form-control" formControlName="refId" placeholder="Id" maxlength="6"
+                            (keypress)="keyPress($event)"
+                            [ngClass]="{ 'is-invalid': f.refId.invalid && (f.refId.dirty || f.refId.touched) }">
+                        <div *ngIf="receiptForm.controls['refId'].hasError('required') && receiptForm.controls['refId'].touched"
+                            class="failed-validation" style="color:red;">
+                            RefId Required
+                        </div>
+                    </div> -->
+                </div>
+
+
+
+                <br>
+
+
+
+                <!-- Categories -->
+
+
+                <div class="row">
+                    <div class="col-md-3 form-group">
+                        <label>Category/Others <span class="errorColor">*</span></label>
+                        <select class="form-control" formControlName="addressOrganization"
+                            [ngClass]="{ 'is-invalid': submitted && item.controls.addressOrganization.errors}"
+                            (change)="orgCategory($event.target.value)">
+                            <option value="" selected disabled>Select Org Category</option>
+                            <option *ngFor="let addcategory of addresscategory" [value]="addcategory.addressCategoryId">
+                                {{addcategory.name}}</option>
+                            <!-- <option *ngFor="let category of categoriesData" [value]="category.addressCategoryId">
+                                {{category.name}}</option> -->
+                            <!-- <option value="org">College</option>
+                            <option value="stateList">SDC</option>
+                            <option>Advocate</option>
+                            <option value="dentist">Dentist</option>
+                            <option>Applicant</option>
+                            <option value="others">Others</option> -->
+                        </select>
+                        <!-- <div *ngIf="receiptForm.controls['addressOrganization'].hasError('required') && (receiptForm.controls['addressOrganization'].touched|| isSubmitted)" class="failed-validation" style="color:red;">
+                            Organisation/Category Required
+                        </div> -->
+
+                    </div>
+                    <div class="col-md-3 form-group" *ngIf="showCategory">
+                        <label>Selected Category/Others </label>
+                        <input type="text" class="form-control" value=selectedCategory
+                            formControlName="selectedCategory">
+                    </div>
+                    <!-- States -->
+                    <!-- <div class="col-md-4 form-group" *ngIf="this.showState">
+                        <label>State <span class="requiredClass">*</span></label>
+                        <select class="form-control" formControlName="state"
+                            [ngClass]="{ 'is-invalid': f.state.invalid && (f.state.dirty || f.state.touched) }"
+                            (change)="getCities($event.target.value)">
+                            <option value="" disabled>Select State</option>
+                            <option>Telangana</option>
+                            <option>Karnataka</option>
+                            <option>Kerala</option>
+                        </select>
+                        <div *ngIf="receiptForm.controls['state'].hasError('required') && receiptForm.controls['state'].touched"
+                            class="failed-validation" style="color:red;">
+                            State Required
+                        </div>
+
+                    </div> -->
+
+                    <!--  College States -->
+                    <!-- <div class="col-md-4 form-group" *ngIf="this.showdropdown">
+                        <label>College State <span class="errorColor">*</span></label>
+                        <select class="form-control" formControlName="state"
+                            [ngClass]="{ 'is-invalid': submitted && item.controls.state.errors}"
+                            (change)="getCities($event.target.value)">
+                            <option value="" selected disabled>Select State</option>
+                            not
+                            <option value="stateList">State</option>
+                            not
+                            <option>Telangana</option>
+                            <option>Karnataka</option>
+                            <option>Kerala</option>
+                           not <option *ngFor="let states of statesList" [value]="states.stateId">
+                                {{states.stateName}}</option>
+                        </select>
+                        <div *ngIf=" submitted && item.controls.state.errors" class="invalid-feedback">
+                            State Required
+                        </div>
+
+                    </div> -->
+
+
+                    <!-- Colleges -->
+                    <!-- <div class="col-md-4 form-group" *ngIf="this.showdropdown">
+                        <label>Colleges <span class="errorColor">*</span></label>
+                        <select class="form-control" formControlName="college"
+                            [ngClass]="{ 'is-invalid': submitted && item.controls.college.errors}">
+                            <option value="" selected disabled>Select</option>
+                            <option value="clg">College</option>
+                            <option>Manav Rachana Dental College</option>
+                            <option>Meghana Bds College</option>
+                        </select>
+                        <div *ngIf=" submitted && item.controls.college.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && item.controls.college.errors.required">
+                                College Required
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- Others -->
+                    <!-- <div class="col-md-4 form-group" *ngIf="this.showothers">
+                        <label>Others </label>
+                        <input type="text" class="form-control" formControlName="others" placeholder="Enter Others"
+                            [ngClass]="{ 'is-invalid': submitted && item.controls.others.errors}">
+                        <div *ngIf=" submitted && item.controls.others.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && item.controls.others.errors.pattern">
+                                Invalid Others
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <!-- Designation -->
+                    <!-- <div class="col-md-4 form-group">
+                        *ngIf="item.get('radioOption').value ==='Single'">
+                        <label>Designation <span class="requiredClass">*</span></label>
+                        <select class="form-control" formControlName="senderDesignation">
+                            <option value="" disabled selected style="color:orange">Select Designation
+                            </option>
+                            <option *ngFor="let sec of designationList" [value]="sec.designationId">
+                                {{sec.designationName}}
+                            </option>
+                        </select>
+                        <div *ngIf="receiptForm.controls['senderDesignation'].hasError('required') && (receiptForm.controls['senderDesignation'].touched|| isSubmitted)"
+                            class="failed-validation" style="color:red;">
+                            Designation Required
+                        </div>
+                    </div> -->
+
+                    <!-- <div class="col-md-4 form-group" *ngIf="this.showdropdown">
+                        <label>Designation </label>
+                        <select class="form-control" formControlName="senderDesignation">
+                            <option value="" disabled selected> Select Designation
+                            </option>
+                        </select>
+
+                    </div> -->
+
+                    <!-- Email Id -->
+                    <div class="col-md-3 form-group">
+                        <!-- <span class="requiredClass">*</span> -->
+                        <!-- <label>Email Id <span *ngIf="hide" class="errorColor">*</span></label> -->
+                        <label>Email Id <span class="requiredClass">*</span></label>
+                        <input type="text" class="form-control" placeholder="Email ID"
+                            formControlName="addressReceiptEmailId"
+                            [ngClass]="{ 'is-invalid': f.addressReceiptEmailId.invalid && (f.addressReceiptEmailId.dirty || f.addressReceiptEmailId.touched) }">
+                        <div *ngIf="receiptForm.controls['addressReceiptEmailId'].hasError('required') && (receiptForm.controls['addressReceiptEmailId'].touched|| isSubmitted)"
+                            class="failed-validation" style="color:red;">
+                            Email Required
+                        </div>
+                        <div *ngIf="receiptForm.controls['addressReceiptEmailId'].hasError('pattern')"
+                            class="failed-validation" style="color:red;">
+                            Invalid Email Address
+                        </div>
+                    </div>
+
+
+                    <!-- Contact Number -->
+                    <div class="col-md-3 form-group">
+                        <label>Contact Number <span class="errorColor">*</span></label>
+                        <input type="text" class="form-control" (keypress)="keyPress($event)"
+                            placeholder="Contact Number" formControlName="addressContactNumber" minlength=10
+                            maxlength=15
+                            [ngClass]="{ 'is-invalid': f.addressContactNumber.invalid && (f.addressContactNumber.dirty || f.addressContactNumber.touched) }">
+                        <div *ngIf="receiptForm.controls['addressContactNumber'].hasError('required') && (receiptForm.controls['addressContactNumber'].touched|| isSubmitted)"
+                            class="failed-validation" style="color:red;">
+                            Contact Number Required
+                        </div>
+                        <div *ngIf="receiptForm.controls['addressContactNumber'].hasError('minlength')"
+                            class="failed-validation" style="color:red;">
+                            Invalid Contact Number
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 form-group">
+                        <label>Address Line 1 <span class="requiredClass">*</span></label>
+                        <input type="text" class="form-control" formControlName="line1"
+                            [ngClass]="{ 'is-invalid': f.line1.invalid && (f.line1.dirty || f.line1.touched) }"
+                            placeholder="Line 1">
+                        <div *ngIf="receiptForm.controls['line1'].hasError('required') && (receiptForm.controls['line1'].touched|| isSubmitted)"
+                            class="failed-validation" style="color:red;">
+                            Line 1 Required
+                        </div>
+                        <!-- <div *ngIf=" submitted && receiptForm.controls.line1.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && receiptForm.controls.line1.errors.pattern">
+                                Invalid Address 
+                            </div>
+                        </div> -->
+
+
+                    </div>
+
+                    <div class="col-md-3 form-group">
+                        <label>Address Line 2 <span class="requiredClass"></span></label>
+                        <input type="text" class="form-control" formControlName="line2" placeholder="Line 2">
+                        <!-- [ngClass]="{ 'is-invalid': f.line2.invalid && (f.line2.dirty || f.line2.touched) }" -->
+                        <!-- <div *ngIf="receiptForm.controls['line2'].hasError('required') && receiptForm.controls['line2'].touched"
+                            class="failed-validation" style="color:red;">
+                            Line 2 Required
+                        </div> -->
+                    </div>
+
+
+                    <div class="col-md-3 form-group">
+                        <label>Country <span class="requiredClass">*</span></label>
+
+                        <select class="form-control" formControlName="country"
+                            [ngClass]="{ 'is-invalid': f.country.invalid && (f.country.dirty || f.country.touched) }"
+                            (change)="getStates()">
+                            <option value="" disabled selected>Select Country</option>
+                            <option *ngFor="let country of countries" [value]="country.countryId">
+                                {{country.countryName}}</option>
+                        </select>
+                        <div *ngIf="receiptForm.controls['country'].hasError('required') && (receiptForm.controls['country'].touched|| isSubmitted)"
+                            class="failed-validation" style="color:red;">
+                            Country Required
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-md-3 form-group">
+                        <label>State <span class="requiredClass">*</span></label>
+                        <select class="form-control" formControlName="state"
+                            [ngClass]="{ 'is-invalid': f.state.invalid && (f.state.dirty || f.state.touched) }"
+                            (change)="getCities($event.target.value)">
+                            <option value="" disabled>Select State</option>
+                            <option *ngFor="let states of statesList" [value]="states.stateId">
+                                {{states.stateName}}</option>
+                        </select>
+                        <div *ngIf="receiptForm.controls['state'].hasError('required') && (receiptForm.controls['state'].touched|| isSubmitted)"
+                            class="failed-validation" style="color:red;">
+                            State Required
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-3 form-group">
+                        <label>City <span class="requiredClass">*</span></label>
+                        <select class="form-control" formControlName="city"
+                            [ngClass]="{ 'is-invalid': f.city.invalid && (f.city.dirty || f.city.touched) }">
+                            <option value="" disabled selected>Select City</option>
+                            <option *ngFor="let city of citiesList" [value]="city.cityId">
+                                {{city.cityName}}</option>
+                        </select>
+                        <div *ngIf="receiptForm.controls['city'].hasError('required') && (receiptForm.controls['city'].touched|| isSubmitted)"
+                            class="failed-validation" style="color:red;">
+                            City Required
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 form-group">
+                        <label>PinCode <span class="requiredClass">*</span></label>
+                        <input class="form-control" maxlength="6" minlength="6" (keypress)="keyPress($event)"
+                            formControlName="zipCode" placeholder="PinCode"
+                            [ngClass]="{ 'is-invalid': f.zipCode.invalid && (f.zipCode.dirty || f.zipCode.touched) }">
+                        <div *ngIf="receiptForm.controls['zipCode'].hasError('required') && (receiptForm.controls['zipCode'].touched|| isSubmitted)"
+                            class="failed-validation" style="color:red;">
+                            PinCode Required
+                        </div>
+                        <div *ngIf="receiptForm.controls['zipCode'].hasError('minlength')" class="failed-validation"
+                            style="color:red;">
+                            Enter Valid PinCode
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="col-md-4 form-group">
+                        <label>Address To <span class="aseticcolor">*</span></label>
+                        <input type="textbox" class="form-control" placeholder="Address" formControlName="addressto"
+                            [ngClass]="{ 'is-invalid': f.addressto.invalid && (f.addressto.dirty || f.addressto.touched) }">
+                        <div *ngIf="receiptForm.controls['addressto'].hasError('required') && receiptForm.controls['addressto'].touched"
+                            class="failed-validation" style="color:red;">
+                            Address To Required
+                        </div>
+                    </div> -->
+
+                    <div class="col-md-3 form-group">
+                        <label>Enclosure Details</label><br>
+                        <input type="textbox" class="form-control" placeholder="Address"
+                            formControlName="enclosureDetails" placeholder="Enter Details">
+                    </div>
+
+                </div>
+
+
+
+                <br>
+
+                <div class="row" *ngIf="showUploadDocuments">
+
+                    <div class="col-md-8">
+                        <b> <label>Upload Documents <span class="requiredClass">*</span></label><br></b>
+                        <div formArrayName="items"
+                            *ngFor="let item of receiptForm.get('items')['controls']; let i = index;">
+                            <div class="form-group row" [formGroupName]="i">
+                                <label class="control-label col-sm-4 ">Upload Document
+                                    {{i+1}}:</label>
+                                <div class="col-sm-4">
+                                    <input type="file" #myInput class="form-control-file border" formControlName="file"
+                                        (change)="onSelectFile($event)">
+
+                                </div>
+                                <div *ngIf="receiptForm.controls['file'].hasError('required') && (receiptForm.controls['file'].touched|| isSubmitted)"
+                                    class="failed-validation" style="color:red;">
+                                    Document Required
+                                </div>
+                                <!-- <div class="row col-md 2">
+                                    <input type="text" class="form-control" id="formGroupExampleInput"
+                                        placeholder="Enter Type">
+                                </div> -->
+                                <div class="col-md-2">
+                                    <button class="globalBtn submitBtn" *ngIf="i===0" (click)="addItem()"
+                                        style="width: 200px;"><i class="fas fa-plus-circle"></i> Add New
+                                        Document</button>
+                                    <button class="globalBtn clearBtn" *ngIf="i>=1" (click)="deleteFieldValue(i)"
+                                        style="width: 200px;"><i class="fas fa-minus-circle"></i> Remove Document
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+
+                <!-- new code for docs -->
+
+                <div class="row">
+
+                    <div class="col-md-4">
+
+                    </div>
+
+                </div>
+                <!-- ///// -->
+
+                <div class="row " *ngIf="showEvidance">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Upload Documents</h5>
+                    </div>
+                </div>
+                <div class="row" *ngIf="showEvidance">
+                    <div class="col-md-2" *ngFor="let document of documentsArray ;let i=index">
+                        <div class="iconCard" (click)="getDocumentId(document)">
+                            <span><i class="far fa-file-alt docIcons"></i> File{{i+1}}</span>
+                            <a href="{{downloadUrl}}" class="downloadView">
+                                <i class="fas fa-cloud-download-alt" style=" cursor: pointer;color: #3D78BE;"></i>
+                            </a>
+                            <a class="downloadView">
+                                <i class="fas fa-trash-alt" style=" cursor: pointer;color: #3D78BE;" title="Delete" (click)="deleteDocument(document.receiptDocumentId)"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="showcomments">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5 class="headingValue">Comments</h5>
+                        </div>
+
+                    </div>
+                    <hr>
+                    <div class="row" *ngFor="let item of history">
+                        <div class="col-md-10">
+
+                            <h5>
+                                {{(item.comments !==null && item.comments !=="")
+                                ?(item.whoAssignedUserId.firstName):''}}
+                                {{(item.comments !==null && item.comments !=="")
+                                ?(item.whoAssignedUserId.lastName):''}}&nbsp;
+                                {{(item.comments !==null && item.comments !=="")
+                                ?(item.whoAssignedUserId.designation.designationName):''}}
+
+                            </h5>
+                            <div>
+                                <p>
+                                    {{(item.comments !==null && item.comments !=="") ?(item.comments):'No Comments'}}
+                                </p>&nbsp;
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ///// -->
+                <!-- <div class="row" *ngIf="showEvidance">
+                    <div class="col-md-12">
+                        <h6 class="headingValue"> Documents</h6>
+                    </div>
+                </div>
+                <div class="row" *ngIf="showEvidance">
+                    <div class="col-md-2" *ngFor="let document of documentsArray ;let i=index">
+                        <div class="iconCard" (click)="getDocumentId(document)">
+                            <a href="{{downloadUrl}}"> <i class="far fa-file-alt docIcons"></i>
+                                <span style="   
+            cursor: pointer;
+        ">file{{i+1}}</span></a>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="row">
+                    <!-- [disabled]="!receiptForm.valid" to disable the button -->
+                    <div class="col-sm-12 ">
+                        <button type="button" (click)="createRecipit($event)" *ngIf="!showButton"
+                            class="btn btn-primary">Create <i class="fa fa-spinner fa-spin"
+                                *ngIf="loading"></i></button>&nbsp;&nbsp;
+                        <button type="button" *ngIf="!showButton" class="btn btn-danger"
+                            (click)="clearData(true)">Clear</button>&nbsp;
+                        <!-- *ngIf="showAssignReceiptButton" -->
+                        <div class="row" style="margin-bottom:10px;">
+                            <button type="button" (click)="updateReceiptData()" *ngIf="showButton"
+                                class="btn btn-primary">Update <i class="fa fa-spinner fa-spin"
+                                    *ngIf="loading"></i></button> &nbsp;
+                        </div>
+
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title headingValue">Forward To Section Head</h4>
+                <button type="button" class="close" data-dismiss="modal" style="cursor: pointer;">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <form [formGroup]="forwardReceiptForm">
+                        <!-- <div class="row">
+                            <label>Section Head <span class="requiredClass">*</span></label>
+                        </div> -->
+
+                        <!-- SecHead -->
+
+
+
+                        <!-- *ngFor="let via of allVias" [value]="via.receiptViaId" -->
+                        <!-- [disabled]="!receiptForm.valid" to disable the button -->
+                        <!-- <div class="row">
+                            <div class="col-md-10">
+                                <div class="row ">
+                                    <div class="col-md-12 pb-2" *ngFor="let user of userArray">
+
+                                        <label class="checkbox">
+                                            <input type="checkbox" (change)="selectedUsers($event)"
+                                                [value]="user.userId" />
+                                            <span class="default"></span>
+
+                                        </label> {{user.firstName}}
+                                        &nbsp;{{user.middleName}}&nbsp;{{user.lastName}}&nbsp;
+                                        -
+                                        {{user.section.sectionName}}
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div> -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row ">
+                                    <div class="col-md-12 pb-2" *ngFor="let user of userArray">
+                                        <!-- loggedin.section.sectionname!=list .get.sec.secname -->
+                                        <div *ngIf="loggedin?.section.sectionName!=user?.section.sectionName">
+
+                                            <label class="checkbox">
+                                                <input type="checkbox" (change)="selectedUsers($event)"
+                                                    [value]="user.userId" />
+                                                <span class="default"></span>
+
+                                            </label>
+                                            <!-- {{user.firstName |titlecase}}{{user.middleName !=="" ? (user.middleName|titlecase) : ''}} {{user.lastName !==""?(user.lastName|titlecase) :''}}&nbsp; -  -->
+                                            <!-- {{user.middleName ==="" ? '-':}} -->
+                                            <!-- &nbsp; -->
+                                            Section Head &nbsp;- {{user.section?.sectionName !== null ?
+                                            (user.section?.sectionName |titlecase) : '-'}}
+                                            &nbsp;
+                                            <input type="radio"  name="radio" [value]="user.userId" (change)="radioButton($event.target.value)" />&nbsp;Primary
+                                            
+
+
+                                        </div>
+
+                                    </div>
+                                    <div *ngIf="showerrormsg" style="color:red;">You should check at least one</div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- {{sectionname !== null ? (sectionname) : '-'}} -->
+
+                        <!-- Comments -->
+                        <div class="row">
+                            <label>Comments</label>
+                            <textarea rows="5" cols="20" minlength="5" formControlName="comments" placeholder="Comments"
+                                class="form-control">Write Comments</textarea>
+                            <!-- <div *ngIf="forwardReceiptForm.controls['comments'].hasError('required') && forwardReceiptForm.controls['comments'].touched" class="failed-validation" style="color:red;">
+                                Comments Required
+                            </div> -->
+                        </div>
+                    </form>
+                </div><br>
+                <div class="modal-footer">
+                    <!-- [disabled]="!forwardReceiptForm.valid"  -->
+                    <button type="button" class="btn btn-primary" *ngIf="this.userIdss.length==0"
+                        (click)="forwardReceipt()">Forward</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" *ngIf="this.userIdss.length>0"
+                        (click)="forwardReceipt()">Forward</button>
+                    <button type="button" class="btn btn-danger" (click)="cancel()" data-dismiss="modal">Cancel</button>
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+<!--  searching Dentist List  -->
+<button type="button" #openModal class="btn btn-primary" data-toggle="modal" data-backdrop="static" data-target="#dentistModal"
+    style="display: none;">
+    Open modal
+</button>
+
+
+<!-- The Modal -->
+<div class="modal" id="dentistModal">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">{{categoryname}} List</h4>
+                <button type="button" class="close" data-dismiss="modal" #dismissModal (click)="reset()">
+                    &times;</button>
+
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="searchForm">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <select class="form-control" formControlName="state">
+                                <option value="" disabled selected style="color:orange">Select State</option>
+                                <option *ngFor="let org of statesList" [value]="org.stateId">
+                                    {{org.stateName}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" placeholder="Search" formControlName="searchValue">
+
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary"
+                                (click)="SearchWithStateandValue()">Search</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="row" style="padding-top: 10px;">
+                    <div class="col-md-12" *ngIf="this.categoryname === 'Principal'">
+                        <div class="table-responsive-sm">
+                            <table class="table table-bordered table-hover">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Select</th>
+                                        <th style="width: 10%;">Id</th>
+                                        <th style="width: 25%;">Name</th>
+                                        <th colspan="2">Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let principal of principalList">
+                                    <tr>
+                                        <td> <input type="radio" name="optradio"
+                                                (change)="getPrincipalDetails(principal)"></td>
+                                        <td>{{principal.userId}}</td>
+                                        <td>{{principal.firstName}} {{principal.lastName}}</td>
+                                        <td>{{principal.address.line1}},{{principal.address.line2}},{{principal.address.state}},{{principal.address.zipCode}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="col-md-12 text-right" *ngIf="responsePageCount>1">
+                                <ul class="pagination float-right">
+                                    <li class="page-item hoverActive"><a class="page-link "
+                                            [class.my-class]="pageId === 0" (click)="previ()"><i
+                                                class="fas fa-chevron-left"> </i></a></li>
+                                    <li class="page-item"><a class="page-link">{{pageId+1}}/{{responsePageCount}}</a>
+                                    </li>
+                                    <li class="page-item hoverActive"><a class="page-link"
+                                            [class.my-class]="pageId+1 === responsePageCount" (click)="next()"><i
+                                                class="fas fa-chevron-right"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" *ngIf="this.categoryname === 'DME'">
+                        <div class="table-responsive-sm">
+                            <table class="table table-bordered table-hover">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Select</th>
+                                        <th style="width: 10%;">Id</th>
+                                        <th style="width: 25%;">Name</th>
+                                        <th colspan="2">Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let dme of dmeList">
+                                    <tr>
+                                        <td> <input type="radio" name="optradio" (change)="getDMEDetails(dme)"></td>
+                                        <td>{{dme.userId}}</td>
+                                        <td>{{dme.firstName}} {{dme.lastName}}</td>
+                                        <td>{{dme.address.line1}},{{dme.address.line2}},{{dme.address.state}},{{dme.address.zipCode}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="col-md-12 text-right" *ngIf="responseDmePageCount>1">
+                                <ul class="pagination float-right">
+                                    <li class="page-item hoverActive"><a class="page-link "
+                                            [class.my-class]="pageId === 0" (click)="previDme()"><i
+                                                class="fas fa-chevron-left"> </i></a></li>
+                                    <li class="page-item"><a class="page-link">{{pageId+1}}/{{responseDmePageCount}}</a>
+                                    </li>
+                                    <li class="page-item hoverActive"><a class="page-link"
+                                            [class.my-class]="pageId+1 === responseDmePageCount" (click)="nextDme()"><i
+                                                class="fas fa-chevron-right"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12" *ngIf="this.categoryname === 'Health Secretary'">
+                        <div class="table-responsive-sm">
+                            <table class="table table-bordered table-hover">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Select</th>
+                                        <th style="width: 10%;">Id</th>
+                                        <th style="width: 25%;">Name</th>
+                                        <th colspan="2">Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let healthsec of healthsecList">
+                                    <tr>
+                                        <td> <input type="radio" name="optradio"
+                                                (change)="getHealthSecDetails(healthsec)"></td>
+                                        <td>{{healthsec.userId}}</td>
+                                        <td>{{healthsec.firstName}} {{healthsec.lastName}}</td>
+                                        <td>{{healthsec.address.line1}},{{healthsec.address.line2}},{{healthsec.address.state}},{{healthsec.address.zipCode}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12" *ngIf="this.categoryname === 'Advocate'">
+                        <div class="table-responsive-sm">
+                            <table class="table table-bordered table-hover">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Select</th>
+                                        <th style="width: 10%;">Id</th>
+                                        <th style="width: 25%;">Name</th>
+                                        <th colspan="2">Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let advocate of advocateList">
+                                    <tr>
+                                        <td> <input type="radio" name="optradio"
+                                                (change)="getAdvocateDetails(advocate)"></td>
+                                        <td>{{advocate.userId}}</td>
+                                        <td>{{advocate.firstName}} {{advocate.lastName}}</td>
+                                        <td>{{advocate.address.line1}},{{advocate.address.line2}},{{advocate.address.state}},{{advocate.address.zipCode}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- <div class="modal" id="dentistModal">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Dentists List</h4>
+                <button type="button" class="close" data-dismiss="modal" #dismissModal>&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <select class="form-control">
+                            <option style="color:orange">Select State</option>
+                            <option>
+                                Telangana
+                            </option>
+                            <option>
+                                Karnataka
+                            </option>
+                            <option>
+                                Kerala
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" placeholder="Search Dentist">
+
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-primary" (click)="dentistSearch()">Search</button>
+                    </div>
+                </div>
+                <div class="row" style="padding-top: 10px;" *ngIf="dentistDataShow">
+                    <div class="col-md-12">
+                        <div class="table-responsive-sm">
+                            <table class="table table-bordered table-hover">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Select</th>
+                                        <th style="width: 10%;">Dentist Id</th>
+                                        <th style="width: 25%;">Dentist Name</th>
+                                        <th colspan="2">Dentist Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let dentist of dentistlist">
+                                    <tr>
+                                        <td> <input type="radio" name="optradio"></td>
+                                        <td>{{dentist.id}}</td>
+                                        <td>{{dentist.name}}</td>
+                                        <td>{{dentist.address}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr>
+                        <button class="btn btn-success" style="float: right;">Select</button>&nbsp;
+
+                    </div>
+                    not
+                    <div class="col-md-12 text-right" *ngIf="pageCount>1">
+                        <ul class="pagination float-right">
+                            <li class="page-item hoverActive"><a class="page-link " [class.my-class]="rowId === 0" (click)="previ()"><i class="fas fa-chevron-left"> </i></a></li>
+                            <li class="page-item"><a class="page-link">{{rowId+1}}/{{pageCount}}</a></li>
+                            <li class="page-item hoverActive"><a class="page-link" [class.my-class]="rowId+1 === pageCount" (click)="next()"><i class="fas fa-chevron-right"></i></a></li>
+                        </ul>
+                    </div>
+not
+
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div> -->
+
+
+
+
+<!-- Open others modal -->
+<button type="button" #openOthersModal class="btn btn-primary" data-toggle="modal" data-backdrop="static" data-target="#openOthersModal" style="display: none;">
+    Open modal
+</button>
+<!-- open others modal -->
+
+<!-- open Others Modal -->
+<div class="modal" id="openOthersModal">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">{{categoryname}} List</h4>
+                <button type="button" class="close" data-dismiss="modal" #openOthersModal (click)="resetSearchOthersForm()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="searchOthersForm">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" placeholder="Search With Name" formControlName="name">
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" placeholder="Search With Phone" formControlName="phoneno">
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary" (click)="SearchWithNameAndPhone()">Search</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="row" style="padding-top: 10px;">
+                    <div class="col-md-12" *ngIf="categoryname === 'Others'">
+                        <div class="table-responsive-sm">
+                            <table class="table table-bordered table-hover">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Select</th>
+                                        <th style="width: 25%;">Name</th>
+                                        <th>Email Id</th>
+                                        <th>Phone Number</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let others of otherList">
+                                    <tr>
+                                        <td> <input type="radio" name="optradio" (change)="getOthersDetails(others)"></td>
+                                        <td>{{others.firstName}} {{others.lastName}}</td>
+                                        <td>{{others.emailId}}</td>
+                                        <td>{{others.phoneNumber}}</td>
+                                       
+                                    </tr>
+                                    <tr *ngIf="otherList.length === 0">
+
+                                        <td colspan="5" style="text-align: center;padding: 50px !important;">No Data Available in Table</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="col-md-12 text-right" *ngIf="responseOthersPageCount>1">
+                                <ul class="pagination float-right">
+                                    <li class="page-item hoverActive"><a class="page-link "
+                                            [class.my-class]="pageId === 0" (click)="othersPaginationPrevi()"><i
+                                                class="fas fa-chevron-left"> </i></a></li>
+                                    <li class="page-item"><a class="page-link">{{pageId+1}}/{{responseOthersPageCount}}</a>
+                                    </li>
+                                    <li class="page-item hoverActive"><a class="page-link"
+                                            [class.my-class]="pageId+1 === responseOthersPageCount" (click)="othersPaginationNext()"><i
+                                                class="fas fa-chevron-right"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- open Others Modal -->

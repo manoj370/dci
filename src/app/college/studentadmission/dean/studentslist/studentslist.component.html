@@ -1,0 +1,186 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-8">
+                    <h5 class="headingValue">Student List</h5>
+                </div>
+                <div class="col-md-4 text-right">
+                    <button type="button" class="btn btn-primary" href="#demo"
+                        data-toggle="collapse">Search</button>&nbsp;
+                    <!-- <div class="form-group">
+                        <div class="icon-addon" style="height: 0;">
+                            <label class="fas fa-search iconValue"></label>
+                            <input type="text" placeholder="Search" class="form-control" href="#demo"
+                                data-toggle="collapse">
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            <div id="demo" class="collapse">
+                <form [formGroup]="searchForm">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Academic Year:</label>
+                            <input type="text" class="form-control" placeholder="ccyy-yy"
+                                formControlName="academicyear" />
+                        </div>
+                        <div class="col-md-4">
+                            <label>Course:</label>
+                            <select class="form-control" class="form-control" formControlName="course"
+                                (change)="courseId($event.target.value)">
+                                <option value="" disabled selected>Select Course</option>
+                                <option *ngFor="let course of courseList" [value]="course.courseId">
+                                    {{course.courseName}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Specialisation:</label>
+                            <select class="form-control" formControlName="Specialisation"
+                                (change)="specialization($event.target.value)">
+                                <option value="" disabled selected>Select Specialisation</option>
+                                <option *ngFor="let specialization of specializations"
+                                    [value]="specialization.specialisationId">
+                                    {{specialization.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Student Name:</label>
+                            <input type="text" placeholder="Student Name" class="form-control" formControlName="name" />
+                        </div>
+                        <!-- <div class="col-md-4">
+                            <label>Student RollNumber:</label>
+                            <input type="text" placeholder="Student Roll Number" class="form-control"
+                                formControlName="rollnumber" />
+                        </div> -->
+                        <!-- <div class="col-md-3">
+                            <label>Status:</label>
+                            <select class="form-control">
+                                <option value="" disabled selected>Select Status</option>
+                                <option *ngFor="let status of studentStatusCode" [value]="status.statusId"
+                                    formControlName="status">
+                                    {{status.statusName}}</option>
+                            </select>
+                        </div> -->
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary" (click)="search()">Search</button>&nbsp;&nbsp;
+                            <button type="button" class="btn btn-danger" (click)="reset()">Reset</button>&nbsp;
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <hr>
+            <div class="row" style="padding-top: 10px;padding-bottom: 50px;">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <!-- <th>RollNumber</th> -->
+                                    <th>Student Name</th>
+                                    <th>Father Name</th>
+                                    <th>Course</th>
+                                    <th>Specialisation</th>
+                                    <th>Academic Year</th>
+                                    <th>NEET Percentile</th>
+                                    <th>Date Of Admission</th>
+                                    <th>Created Date</th>
+                                    <!-- <th>Category</th> -->
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of studentsList" (click)="view(data)">
+                                    <!-- <td>{{data.studentNeetResultBDSDetails.neetRollNO}}</td> -->
+                                    <td>{{data.firstName | titlecase}}</td>
+                                    <td>{{data.fatherName | titlecase}}</td>
+                                    <td>{{data.collegeCourseOfferedSepcialisation.course.courseName | titlecase}}
+                                    </td>
+                                    <td>{{data.collegeCourseOfferedSepcialisation.collegeSpecialisation.name | titlecase}}
+                                    </td>
+                                    <td>{{data.academicYear}}</td>
+                                    <td>{{data.neetPercantage}}</td>
+                                    <td>{{data.admissionDate}}</td>
+                                    <td>{{data.createdDate}}</td>
+                                    <!-- <td>{{data.studentCategory.categoryName}}</td> -->
+                                    <td><span class="text-success" style="color: white;"
+                                            *ngIf="data.studentStatus.statusName === 'Enrolled'">{{data.studentStatus.statusName}}</span>
+                                            <span class="text-success" style="color: #ffffff;"
+                                            *ngIf="data.studentStatus.statusName === 'Passed-Out'">{{data.studentStatus.statusName}}</span>
+                                        <span class="text-success" style="color: white;"
+                                            *ngIf="data.studentStatus.statusName === 'Completed'">{{data.studentStatus.statusName}}</span>
+                                        <span class="text-primary" style="color: white;"
+                                            *ngIf="data.studentStatus.statusName === 'SubmittedToCA'">{{data.studentStatus.statusName}}</span>
+                                        <span class="text-warning" style="color: white;"
+                                            *ngIf="data.studentStatus.statusName === 'UnderClarification'">{{data.studentStatus.statusName}}</span>
+                                        <span class="text-success" style="color: white;"
+                                            *ngIf="data.studentStatus.statusName === 'Clarified'">{{data.studentStatus.statusName}}</span>
+                                        <span class="text-warning" style="color: white;"
+                                            *ngIf="data.studentStatus.statusName === 'UnderScrutiny'">{{data.studentStatus.statusName}}</span>
+                                        <span class="text-success" style="color: white;"
+                                            *ngIf="data.studentStatus.statusName === 'Verified'">{{data.studentStatus.statusName}}</span>
+                                        <span class="text-danger" style="color: white;"
+                                            *ngIf="data.studentStatus.statusName === 'Discharged'">{{data.studentStatus.statusName}}</span>
+                                        <span class="text-danger" style="color: white;"
+                                            *ngIf="data.studentStatus.statusName === 'Agreed_To_Discharge'">{{data.studentStatus.statusName}}</span>
+                                        <span class="text-danger" style="color: white;"
+                                            *ngIf="data.studentStatus.statusName === 'Terminated'">{{data.studentStatus.statusName}}</span>
+                                        <span class="text-warning" style="color: white;"
+                                            *ngIf="data.studentStatus.statusName === 'To_Be_Discharge'">{{data.studentStatus.statusName}}</span>
+                                            <span class="text-primary" style="color: white;"
+                                            *ngIf="data.studentStatus.statusName === '1st Year'">{{data.studentStatus.statusName}}</span>
+                                            <span class="text-primary" style="color: white;"
+                                            *ngIf="data.studentStatus.statusName === '2nd Year'">{{data.studentStatus.statusName}}</span>
+                                            <span class="text-success" style="color: white;"
+                                            *ngIf="data.studentStatus.statusName === 'Internship'">{{data.studentStatus.statusName}}</span>
+                                            <span class="text-primary" style="color: white;"
+                                            *ngIf="data.studentStatus.statusName === '3rd Year'">{{data.studentStatus.statusName}}</span>
+                                            <span class="text-primary" style="color: white;"
+                                            *ngIf="data.studentStatus.statusName === '4th Year'">{{data.studentStatus.statusName}}</span>
+
+                                    </td>
+                                    <!-- <td><span class="badge badge-pill badge-success" style="color: white;"
+                                            *ngIf="data.studentStatus.statusName === 'Enrolled'">{{data.studentStatus.statusName}}</span>
+                                        <span class="badge badge-pill badge-primary" style="color: white;"
+                                            *ngIf="data.studentStatus.statusName === 'SubmittedToCA'">{{data.studentStatus.statusName}}</span>
+                                            <span class="badge badge-pill badge-warning" style="color: white;"
+                                            *ngIf="data.studentStatus.statusName === 'UnderClarification'">{{data.studentStatus.statusName}}</span>
+                                            <span class="badge badge-pill badge-success" style="color: white;"
+                                            *ngIf="data.studentStatus.statusName === 'Clarified'">{{data.studentStatus.statusName}}</span>
+                                        </td> -->
+                                    <td style="text-align: center;"><span
+                                            *ngIf="data.studentStatus.statusName == '!SubmittedToCA' || data.studentStatus.statusName === 'Enrolled'||
+                                        
+                                        data.studentStatus.statusName === 'UnderClarification'|| data.studentStatus.statusName === '!Clarified'  "
+                                            (click)="edit(data)"><i class="fas fa-edit"
+                                                style="color:#74AEB5"></i></span>&nbsp;
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                        <div class="col-md-12 text-right" *ngIf="responsePageCount>1">
+                            <ul class="pagination float-right">
+                                <li class="page-item hoverActive"><a class="page-link " [class.my-class]="pageId === 0"
+                                        (click)="previ()"><i class="fas fa-chevron-left"> </i></a></li>
+                                <li class="page-item"><a class="page-link">{{pageId+1}}/{{responsePageCount}}</a></li>
+                                <li class="page-item hoverActive"><a class="page-link"
+                                        [class.my-class]="pageId+1 === responsePageCount" (click)="next()"><i
+                                            class="fas fa-chevron-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

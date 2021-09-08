@@ -1,0 +1,212 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-8">
+                    <h5 class="headingValue">Travel Agents</h5>
+                </div>
+                <div class="col-md-3 text-right">
+                    <div class="form-group">
+                        <div class="icon-addon" style="height: 0;">
+                            <input type="text" placeholder="Search" class="form-control searchValue" />
+                            <label class="fas fa-search iconValue"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <button class="btn btn-success" data-toggle="modal" data-target="#userModal"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add</button>
+                </div>
+            </div>
+            <hr />
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-hover">
+                            <thead class="theadRow">
+                                <tr>
+                                    <th>Agency Number</th>
+                                    <th>Name</th>
+                                    <th>Mobile</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr (click)="view()">
+                                    <td>102397</td>
+                                    <td>Mr.Ravi</td>
+                                    <td>9959562883</td>
+                                    <td>ramtrv@gmail.com</td>
+                                    <td><button class="btn success">Active&nbsp;</button></td>
+                                    <td>
+                                        <span class="btn btn-sm btn-danger" title="Delete" data-toggle="modal" data-target="#deletModal"><i class="fas fa-trash"></i></span>
+
+                                        <!-- <div class="btn-group">
+                                      <button type="button" class="btn success">Action</button>
+                                      <button type="button" class="btn success dropdown-toggle dropdown-toggle-split"
+                                          data-toggle="dropdown">
+                                      </button>
+                                      <div class="dropdown-menu">
+                                          <a class="dropdown-item" href="#">Link 1</a>
+                                          <a class="dropdown-item" href="#">Link 2</a>
+                                      </div>
+                                  </div> -->
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>102399</td>
+                                    <td>Rahul</td>
+                                    <td>1234567890</td>
+
+                                    <td>vivektrv@gmail.com</td>
+
+                                    <td><button class="btn return">Inactive&nbsp;</button></td>
+                                    <td>
+                                        <span class="btn btn-sm btn-danger" title="Delete" data-toggle="modal" data-target="#deletModal"><i class="fas fa-trash"></i></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>102391</td>
+
+                                    <td>Rahim</td>
+                                    <td>879456120</td>
+                                    <td>rahultrv@gmail.com</td>
+
+                                    <td><button class="btn successs">Active&nbsp;</button></td>
+                                    <td>
+                                        <span class="btn btn-sm btn-danger" title="Delete" data-toggle="modal" data-target="#deletModal"><i class="fas fa-trash"></i></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <!-- <p>No Data</p> -->
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="userModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-xl">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title pull-left text-left" style="position: absolute;">Personal Information</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="firstName" class="required"> Name: <span class="requiredClass">*</span></label>
+                                    <input type="text" class="form-control" id="Name" placeholder="Name" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="middleName">Travel Agency Number: <span class="requiredClass">*</span></label>
+                                    <input type="text" class="form-control" id="agencynumber" placeholder="Travel Agency Number" />
+                                    <!-- <div *ngIf="addUserForm.controls['middleName'].hasError('required') && addUserForm.controls['middleName'].touched" class="failed-validation" style="color:red;">
+                                      Middle Name Required
+                                   </div>
+                                   <div *ngIf="addUserForm.controls['middleName'].hasError('pattern')" class="failed-validation" style="color:red;">
+                                      Invalid Middle Name
+                                  </div> -->
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="lastName" class="required">Mobile Number: <span class="requiredClass">*</span></label>
+                                    <input type="text" class="form-control" id="mobilenumber" placeholder="Mobile Number" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="emailId" class="required">Email Id: <span class="requiredClass">*</span></label>
+                                    <input type="text" class="form-control" id="emailId" placeholder="Email Id" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- new Filed For User Name -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="pwd" class="required">Password:<span class="requiredClass">*</span></label>
+                                    <input type="password'" class="form-control" id="password" placeholder="Password" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="pwd" class="required">Confirm Password:<span class="requiredClass">*</span></label>
+                                    <input type="password'" class="form-control" id="password" placeholder="Confirm Password" />
+                                </div>
+                            </div>
+                            <!-- new Field for user name -->
+                            <div class="col-md-3">
+                                <!-- Group -->
+                                <div class="form-group">
+                                    <label for="phoneNo" class="required">Fax: <span class="requiredClass">*</span></label>
+                                    <input type="text" class="form-control" id="phoneNo" data-validation-error-msg="Phone number is required" placeholder="Fax" />
+                                    <!-- phone -->
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <!-- Group -->
+                                <div class="form-group">
+                                    <label for="phoneNo" class="required">Telephone Number: <span class="requiredClass">*</span></label>
+                                    <input type="text" class="form-control" id="phoneNo" data-validation-error-msg="Phone number is required" placeholder="Telephone Number" />
+                                    <!-- phone -->
+                                </div>
+                            </div>
+                        </div>
+                        <h4>Address Information</h4>
+                        <hr />
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label class="control-label">Address <span class="requiredClass">*</span></label>
+                                <input type="text" class="form-control" placeholder="Address" />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label">Country <span class="requiredClass">*</span></label>
+                                <!-- <input type="text" class="form-control" placeholder="Country" formControlName="country"> -->
+                                <select class="form-control">
+                                  <option value="Select Country" selected="">Select Country</option>
+                                  <option value=""> India</option>
+                              </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label">State <span class="requiredClass">*</span></label>
+                                <!-- <input type="text" class="form-control" placeholder="State" formControlName="state"> -->
+                                <select class="form-control">
+                                  <option value="Select State" selected>Select State</option>
+                                  <option value=""> Telangane</option>
+                              </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label">City <span class="requiredClass">*</span></label>
+                                <!-- <input type="text" class="form-control" placeholder="City" formControlName="city"> -->
+                                <select class="form-control">
+                                  <option value="" selected>Select City</option>
+                                  <option value=""> Hyderabad</option>
+                              </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label class="control-label">Zip Code <span class="requiredClass">*</span></label>
+                                <input type="text" class="form-control" placeholder="Zip Code" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="processSubmit" data-dismiss="modal">Submit</button> &nbsp;
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button> &nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

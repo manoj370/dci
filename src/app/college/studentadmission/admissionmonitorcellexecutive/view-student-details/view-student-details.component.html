@@ -1,0 +1,602 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+
+                <div class="col-md-5">
+                    <h5 class="headingValue" *ngIf="studentdetails">View <span>{{studentdetails.firstName | titlecase}}
+                            Details</span>&nbsp;
+                        <span *ngIf="this.status === 'Enrolled'" class="badge badge-pill badge-success"
+                            style="font-size: 60%;">{{this.status}}</span>
+                        <span *ngIf="this.status === 'SubmittedToCA'" class="badge badge-pill badge-primary"
+                            style="font-size: 60%;">{{this.status}}</span>
+                        <span *ngIf="this.status === 'UnderClarification'" class="badge badge-pill badge-warning"
+                            style="font-size: 60%;">{{this.status}}</span>
+                            <span *ngIf="this.status === 'UnderScrutiny'" class="badge badge-pill badge-warning"
+                            style="font-size: 60%;">{{this.status}}</span>
+                        <span *ngIf="this.status === 'Clarified'" class="badge badge-pill badge-success"
+                            style="font-size: 60%;">{{this.status}}</span>
+                            <span *ngIf="this.status === 'Verified'" class="badge badge-pill badge-success"
+                            style="font-size: 60%;">{{this.status}}</span>
+                           
+                            <span *ngIf="this.status === 'Discharged'" class="badge badge-pill badge-danger"
+                            style="font-size: 60%;">{{this.status}}</span>
+                            <span *ngIf="this.status === 'To_Be_Discharge'" class="badge badge-pill badge-warning"
+                            style="font-size: 60%;">{{this.status}}</span>
+                            <span *ngIf="this.status === 'Agreed_To_Discharge'" class="badge badge-pill badge-danger"
+                            style="font-size: 60%;">{{this.status}}</span>
+                    </h5>&nbsp;
+                </div>
+                <div class="col-md-7 text-right">
+
+                    <button type="button" *ngIf="this.status ==='!SubmittedToCA'||this.status === '!UnderClarification'||this.status === '!UnderScrutiny'||this.status === 'Enrolled'||this.status === '!Clarified'" class="btn btn-primary" data-toggle="modal" data-target="#samodal">
+                        Send To CA</button>&nbsp;
+                    <button type="button" class="btn btn-success" (click)="AgendaItemNumber()" data-toggle="modal" data-target="#agendaModal" *ngIf="this.status ==='UnderScrutiny' || this.status === 'Agreed_To_Discharge' || this.status === 'Clarified'">Makes
+                        Agenda</button>&nbsp;
+                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" *ngIf="this.showaction">
+                        Action
+                    </button>
+
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" style="cursor:pointer" data-toggle="modal" data-target="#myModall" *ngIf="this.status ==='UnderScrutiny'">Seek
+                            College
+                            Clarification</a>
+                        <a class="dropdown-item" style="cursor:pointer" data-toggle="modal" (click)="getList()" data-target="#stateGovt" >Seek Clarification From
+                        </a>
+                        <!-- <a class="dropdown-item" style="cursor:pointer" data-toggle="modal"
+                            data-target="#myModal">Discharge</a> -->
+                        <!-- <a class="dropdown-item" style="cursor:pointer" href="#">Allow</a> -->
+                        <a class="dropdown-item" data-toggle="modal" style="cursor:pointer" *ngIf="this.status ==='SubmittedToCA'"
+                            data-target="#updateinfo">Updates Information</a>
+                        <a class="dropdown-item" data-toggle="modal" style="cursor:pointer" 
+                            data-target="#changestatus" (click)="getAllStudentAdmissionChangeStatusList()">Change Status</a>
+                    </div>&nbsp;
+                    <button type="button" class="btn btn-primary backbtn" style="cursor: pointer;" (click)="back()"><span><i class="fas fa-angle-left"></i></span>&nbsp;Back</button>
+                </div>
+            </div>
+            <hr>
+            <div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Personal Information</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <b><label>Student Name </label></b>
+                        <p>{{studentdetails.firstName | titlecase}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>Father Name</label></b>
+                        <p>{{studentdetails.fatherName | titlecase}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>Gender</label></b>
+                        <p>{{studentdetails.gender | titlecase}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <b><label>Date Of Birth </label></b>
+                        <p>{{studentdetails.dateOfBirth}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>Email</label></b>
+                        <p>{{studentdetails.emailId}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>Mobile Number</label></b>
+                        <p>{{studentdetails.phoneNumber}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <b><label>Alternate Mobile Number</label></b>
+                        <p>{{studentdetails.alternativePhoneNumber}}</p>
+                    </div>
+                    <div class="col-md-4" *ngIf="studentdetails.studentCategory !==undefined">
+                        <b><label>Category </label></b>
+                        <p>{{studentdetails.studentCategory.categoryName | titlecase}}</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Academic Information</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <b><label>NEET RollNumber </label></b>
+                        <p>{{studentdetails.studentNeetResultBDSDetails.neetRollNO}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>NEET Score </label></b>
+                        <p>{{studentdetails.neetScore}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>NEET Percentile </label></b>
+                        <p>{{studentdetails.studentNeetResultBDSDetails.neetPercentile}}</p>
+                    </div>
+
+                </div>
+                <div class="row" *ngIf="this.coursee ==='BDS'">
+                    <div class="col-md-4">
+                        <b><label>+2 English</label></b>
+                        <p>{{studentdetails.plusTwoEnglish| titlecase}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>+2PCB(Average)</label></b>
+                        <p>{{studentdetails.plusTwoPcbAverage}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>10+2 Status * </label></b>
+                        <p>{{studentdetails.tenPlusTwoStatus | titlecase}}</p>
+                    </div>
+
+                </div>
+                <div class="row" *ngIf="this.coursee ==='MDS' || this.coursee ==='PG Diploma in Dental Materials'">
+
+                    <div class="col-md-4">
+                        <b><label>BDS Status</label></b>
+                        <p>{{studentdetails.bdsStatus | titlecase}}</p>
+                    </div>
+                    <div class="col-md-4" *ngIf="(studentdetails.bdsCollege !== null) && (studentdetails.bdsCollege !== undefined)">
+                        <b><label>College </label></b>
+                        <p>{{studentdetails.bdsCollege.collegeName | titlecase}}</p>
+                    </div>
+                    <!-- <div class="col-md-4" *ngIf=" (studentdetails.college !== undefined)">
+                        <b><label>University </label></b>
+                        <p>{{studentdetails.college.collegeName | titlecase}}</p>
+                    </div> -->
+                </div>
+                <div class="row" *ngIf="this.coursee ==='MDS' || this.coursee ==='PG Diploma in Dental Materials'">
+
+                    <div class="col-md-4">
+                        <b><label>Passing Year</label></b>
+                        <p>{{studentdetails.bdsYearOfPass | titlecase}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>BDS % </label></b>
+                        <p>{{studentdetails.bdsPercantage}}</p>
+                    </div>
+
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Admission Information</h5>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <b><label>Admission Date </label></b>
+                        <p>{{studentdetails.admissionDate}}</p>
+                    </div>
+                    <div class="col-md-4" *ngIf="(studentdetails.studentAdmissionQuota !==null) && (studentdetails.studentAdmissionQuota !==undefined)">
+                        <b><label>Admission Quota </label></b>
+                        <p>{{studentdetails.studentAdmissionQuota.name }}</p>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-4" *ngIf="(studentdetails.collegeCourseOfferedSepcialisation !== null) && (studentdetails.collegeCourseOfferedSepcialisation !== undefined)">
+                        <b><label>Course </label></b>
+                        <p>{{studentdetails.collegeCourseOfferedSepcialisation.collegeSpecialisation.collegeCourse.courseName | titlecase}}
+                        </p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <b><label>Academic Year </label></b>
+                        <p>{{studentdetails.academicYear}}</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Evidence Documents</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2" *ngFor="let document of docsarray; let i=index">
+                        <div class="iconCard" (click)="getDocumentId(document)">
+                            <span><i class="far fa-file-alt docIcons"></i> File{{i+1}}</span>
+                            <a href="{{downloadUrl}}" class="downloadView">
+                                <i class="fas fa-cloud-download-alt" style=" cursor: pointer;color: #3D78BE;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Discharge Modal Starts-->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title headingValue">Discharge</h4>
+                <button type="button" class="close" data-dismiss="modal" style="cursor: pointer;">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <!-- <form> -->
+                <div class="row">
+                    <input type="text" class="form-control" readonly placeholder="Discharge Invalid Student">
+
+                </div><br>
+                <div class="row">
+                    <label>Comments <span class="aseticcolor">*</span></label>
+                    <textarea rows="5" cols="20" class="form-control" placeholder="Write Comments">Write Comments</textarea>
+                </div>
+
+                <!-- </form> -->
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" style="cursor: pointer;">Discharge</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Discharge Modal Ends-->
+
+<!-- Clarification Modal Starts -->
+<div class="modal" id="myModall">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title headingValue">Seek College Clarification</h4>
+                <button type="button" class="close" data-dismiss="modal" style="cursor: pointer;" (click)="resetForm()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="seekCollegeForm">
+                    <div class="row">
+                        <label>Subject <span class="aseticcolor">*</span></label>
+                        <input type="text" placeholder="Subject" class="form-control" formControlName="subject" [ngClass]="{ 'is-invalid': s.subject.invalid && (s.subject.dirty || s.subject.touched) }">
+                        <div *ngIf="seekCollegeForm.controls['subject'].hasError('required') && seekCollegeForm.controls['subject'].touched" class="failed-validation" class="errorColor">
+                            Subject Required
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <label>Matter <span class="aseticcolor">*</span></label>
+                        <textarea rows="5" cols="20" class="form-control" placeholder="Matter" [ngClass]="{ 'is-invalid': s.matter.invalid && (s.matter.dirty || s.matter.touched) }" formControlName="matter"></textarea>
+                        <div *ngIf="seekCollegeForm.controls['matter'].hasError('required') && seekCollegeForm.controls['matter'].touched" class="failed-validation" class="errorColor">
+                            Matter Required
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <label>Attach File </label>
+                    </div>
+                    <div formArrayName="items" *ngFor="let item of seekCollegeForm.get('items')['controls']; let i = index;">
+                        <div class="form-group row" [formGroupName]="i">
+                            <label class="control-label col-sm-4 text-right">Upload Evidence {{i+1}}:</label>
+                            <div class="col-sm-4">
+                                <input type="file" #myInput class="form-control-file border" (change)="onSelectFile($event)">
+
+                            </div>
+                            <div class="col-md-3">
+                                <button class="globalBtn submitBtn" *ngIf="i===0" (click)="addItem()" style="width: 200px;"><i class="fas fa-plus-circle"></i> Add New
+                                    Evidence</button>
+                                <button class="globalBtn clearBtn" *ngIf="i>=1" (click)="deleteFieldValue(i)" style="width: 200px;"><i class="fas fa-minus-circle"></i> Remove Evidence
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" style="cursor: pointer;" [disabled]="!seekCollegeForm.valid" (click)="createClarification()">Send For
+                    Clarification</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" style="cursor: pointer;" (click)="resetForm()">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Clarification Modal Ends -->
+
+<!-- Agenda Creation  New Modal -->
+<div class="modal" id="agendaModal">
+    <div class="modal-dialog modal-md" style="top: 5%;">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header" style="padding: 20px;">
+                <h5 class="modal-title headingValue">Make Agenda</h5>
+                <button type="button" class="close" #agendaDismiss data-dismiss="modal" (click)="resetForm()">&times;</button>
+
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body container">
+                <form [formGroup]="agendaForm">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <label class="control-label col-md-10 ">Agenda Date</label>
+                            <input type="text" class="form-control" placeholder="Agenda Date*" formControlName="agendaDate">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <label class="control-label col-md-10 ">Agenda item Number</label>
+
+                            <input type="text" class="form-control" placeholder="Item Number *" formControlName="agendaItemNum">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <label class="control-label col-md-10 ">Agenda Subject</label>
+
+                            <textarea class="form-control" rows="5" placeholder="Agenda Subject *" formControlName="agendaItemSubj" 
+                           ></textarea>
+                           <!-- [ngClass]="{ 'is-invalid':  submitted && f.agendaItemSubj.errors }" -->
+                            <!-- <div *ngIf=" submitted && f.agendaItemSubj.errors && makesAgendaError" class="invalid-feedback">
+                                <div *ngIf=" submitted && f.agendaItemSubj.errors.required">
+                                    Please Enter Agenda Item Subject
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <label class="control-label col-md-10 ">Agenda Matter</label>
+
+                            <textarea class="form-control" rows="5" placeholder="Agenda Matter *" formControlName="agendaMatter" 
+                            ></textarea>
+                            <!-- [ngClass]="{ 'is-invalid':  submitted && f.agendaMatter.errors }" -->
+                            <!-- <div *ngIf=" submitted && f.agendaMatter.errors && makesAgendaError" class="invalid-feedback">
+                                <div *ngIf=" submitted && f.agendaMatter.errors.required">
+                                    Please Enter Agenda Agenda Matter
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                   
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button class="globalBtn submitBtn" data-dismiss="modal" [disabled]="!agendaForm.valid" (click)="nemodal()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Agenda Creation New Modal -->
+
+
+<!-- AOB FORM modal starts -->
+<button type="button" #confirmOpen class="btn btn-primary" data-toggle="modal" data-target="#confirm" style="display: none;">
+    Open modal
+</button>
+
+<div class="modal" id="confirm">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header" style="padding: 20px;">
+                <h5 class="modal-title headingValue">Confirmation</h5>
+                <button type="button" class="close" #confirmDismiss data-dismiss="modal" >&times;</button>
+
+            </div>
+            <div class="modal-body" id="confirmMessage">
+                <form [formGroup]="aobForm">
+                    <div class="custom-control custom-radio" *ngFor="let item of radioData">
+                        <input type="radio" class="custom-control-input" formControlName="value" id="{{item.status}}" [value]="item.status">
+                        <label class="custom-control-label" for="{{item.status}}">{{item.label}}</label>
+                        <p *ngIf="item.status === true">
+                            For the meeting date this agenda item will fall under AOB, Did u take permission from chair create AOB Agenda?</p>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success " id="confirmOk" >Yes</button>
+                <button type="button" class="btn btn-danger" #confirmDismiss data-dismiss="modal">No</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Aob form modal ends -->
+<!-- Ask State Government for clarification Modal Starts-->
+<div class="modal" id="stateGovt">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title headingValue">Seek Clarification</h4>
+                <button type="button" class="close" data-dismiss="modal" style="cursor: pointer;" (click)="resetForm()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="seekCollegeFormFromParty">
+                    <div class="row">
+                        <label>Seek Clarification From </label>
+                        <select class="form-control" formControlName="selectparty" (change)="entity($event.target.value)" [ngClass]="{ 'is-invalid': sf.selectparty.invalid && (sf.selectparty.dirty || sf.selectparty.touched) }">
+                            <option value="" selected disabled>Select </option>
+                            <option *ngFor="let entity of entitytypes" [value]="entity.entityTypeId">
+                                {{entity.type}}</option>
+                        </select>
+                        <div *ngIf="seekCollegeFormFromParty.controls['selectparty'].hasError('required') && seekCollegeFormFromParty.controls['selectparty'].touched" class="failed-validation" class="errorColor">
+                            Select Party Required
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <label>Seek Clarification From Specific </label>
+                        <select class="form-control" formControlName="specific" [ngClass]="{ 'is-invalid': sf.specific.invalid && (sf.specific.dirty || sf.specific.touched) }">
+                            <option value="" selected disabled>Select </option>
+                            <option *ngFor="let entitymaster of entitymaster" [value]="entitymaster.entityMasterId">
+                                {{entitymaster.name}}</option>
+                        </select>
+                        <div *ngIf="seekCollegeFormFromParty.controls['specific'].hasError('required') && seekCollegeFormFromParty.controls['specific'].touched" class="failed-validation" class="errorColor">
+                            Specific Party Required
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <label>Subject <span class="aseticcolor">*</span></label>
+                        <input type="text" placeholder="Subject" class="form-control" formControlName="subject" [ngClass]="{ 'is-invalid': sf.subject.invalid && (sf.subject.dirty || sf.subject.touched) }">
+                        <div *ngIf="seekCollegeFormFromParty.controls['subject'].hasError('required') && seekCollegeFormFromParty.controls['subject'].touched" class="failed-validation" class="errorColor">
+                            Subject Required
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <label>Matter <span class="aseticcolor">*</span></label>
+                        <textarea rows="5" cols="20" class="form-control" placeholder="Matter" [ngClass]="{ 'is-invalid': sf.matter.invalid && (sf.matter.dirty || sf.matter.touched) }" formControlName="matter"></textarea>
+                        <div *ngIf="seekCollegeFormFromParty.controls['matter'].hasError('required') && seekCollegeFormFromParty.controls['matter'].touched" class="failed-validation" class="errorColor">
+                            Matter Required
+                        </div>
+                    </div><br>
+
+                    <div class="row">
+                        <label>Attach File </label>
+                    </div>
+                    <div formArrayName="sitems" *ngFor="let item of seekCollegeFormFromParty.get('sitems')['controls']; let i = index;">
+                        <div class="form-group row" [formGroupName]="i">
+                            <label class="control-label col-sm-4 text-right">Upload Evidence {{i+1}}:</label>
+                            <div class="col-sm-4">
+                                <input type="file" #myInput class="form-control-file border" (change)="onSelectFiles($event)">
+
+                            </div>
+                            <div class="col-md-3">
+                                <button class="globalBtn submitBtn" *ngIf="i===0" (click)="addItems()" style="width: 200px;"><i class="fas fa-plus-circle"></i> Add New
+                                    Evidence</button>
+                                <button class="globalBtn clearBtn" *ngIf="i>=1" (click)="deleteFieldValues(i)" style="width: 200px;"><i class="fas fa-minus-circle"></i> Remove Evidence
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" style="cursor: pointer;" (click)="sendClarificationtoParty()" [disabled]="!seekCollegeFormFromParty.valid">Send</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" style="cursor: pointer;" (click)="resetForm()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Clarification Modal Ends-->
+
+<!-- Modal -->
+<div class="modal fade" id="samodal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title headingValue">Send To Counselling Authority</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure to send to counselling authority ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="sendToCA()" data-dismiss="modal">Send</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="changestatus" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title headingValue">Change Student Status</h4>
+                <button type="button" class="close" data-dismiss="modal" (click)="reset()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="changeForm">
+                    <div class="row">
+                        <label>Status <span class="aseticcolor">*</span></label>
+                        <select class="form-control" formControlName="studentstatus" [ngClass]="{ 'is-invalid': cf.studentstatus.invalid && (cf.studentstatus.dirty || cf.studentstatus.touched) }" >
+                            <option value="" selected disabled>Select</option>
+                            <option *ngFor="let list of statuslist">{{list.statusName}}</option>
+                            <!-- <option value="Verified">Verified</option>
+                            <option value="UnderScrutiny">UnderScrutiny</option>
+                            <option value="Discharged">Discharged</option>
+                            <option value="To_Be_Discharge">To_Be_Discharge</option> -->
+                            <!-- <option value="Enrolled">Allow</option> -->
+                        </select>
+                        <div *ngIf="changeForm.controls['studentstatus'].hasError('required') && changeForm.controls['studentstatus'].touched" class="failed-validation" class="errorColor">
+                            Status Required
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <label>Matter</label>
+                        <textarea rows="5" cols="20" class="form-control" placeholder="Matter"
+                            formControlName="matter"></textarea>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" [disabled]="!changeForm.valid"(click)="updateStatus()">Send</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="reset()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="updateinfo" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title headingValue">Update</h4>
+                <button type="button" class="close" data-dismiss="modal" (click)="resetForm()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form [formGroup]="updateForm">
+                        <div class="row">
+                            <label>Attach File <span class="aseticcolor">*</span></label>
+                        </div>
+                        <div class="row">
+                            <div formArrayName="updatefiles"
+                            *ngFor="let updatefile of updateForm.get('updatefiles')['controls']; let i = index;">
+                            <div class="form-group row" [formGroupName]="i">
+                                <label class="control-label col-sm-4 text-right">Upload Evidence {{i+1}}:</label>
+                                <div class="col-sm-4">
+                                    <input type="file" #myInput class="form-control-file border"
+                                        (change)="onSelectUpdateFile($event)">
+
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="globalBtn submitBtn" *ngIf="i===0" (click)="addUpdateFile()"
+                                        style="width: 200px;"><i class="fas fa-plus-circle"></i> Add New
+                                        Evidence</button>
+                                    <button class="globalBtn clearBtn" *ngIf="i>=1" (click)="deleteUpdateFile(i)"
+                                        style="width: 200px;"><i class="fas fa-minus-circle"></i> Remove Evidence
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                           
+                        </div><br>
+                        <div class="row">
+                            <label>Matter</label>
+                        </div>
+                        <div class="row">
+                            <textarea rows="5" cols="20" placeholder="Write Matter" formControlName="matter" class="form-control"></textarea>
+                        </div>
+                    </form>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="fileUpdateWithStatus()">Send</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="resetForm()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

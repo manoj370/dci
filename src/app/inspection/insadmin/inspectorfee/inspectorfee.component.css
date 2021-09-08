@@ -1,0 +1,41 @@
+.expand-icon-wrap {
+    border-color: #fff;
+    color: #fff;
+}
+
+.tab-collapsed .expand-icon:before {
+    content: "\f056";
+}
+
+.expand-icon-wrap {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-left: 1px solid #d9d7d7;
+    font-size: 24px;
+    line-height: 46px;
+    color: #03C6FE;
+}
+
+.expand-icon-wrap:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.expand-icon {
+    padding: 0 18px;
+    vertical-align: middle;
+}
+
+.expand-icon:before {
+    content: "\f055";
+}
+
+.headstyle {
+    padding-left: 0px;
+    font-weight: 700;
+    font-size: 17px;
+}

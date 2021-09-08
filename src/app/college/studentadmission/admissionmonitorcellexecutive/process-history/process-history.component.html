@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card" >
+            <div class="row">
+                <div class="col-md-9">
+                    <h5 class="headingValue">Chronological History</h5>
+                    <span class="badge badge-pill badge-success" style="font-size: 60%;"></span>
+                </div>
+            </div>
+            <hr>
+      
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="theadRow thead-light">
+                                <tr>
+                                    <th>User</th>
+                                    <th>Start Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="tbodyRow">
+                                <tr *ngFor="let item of chronicaldata" [routerLink]="['../../view-history', item.studentWorkflowID]">
+                                    <td class="name-transfer"> {{item.studentDecisionWorkflowCodes.workflowCodeName}}</td>
+                                    <td>{{item.createdDate}}</td>
+                                    <td>
+                                        <span class="badge badge-pill badge-success" style="color: white;">{{item.studentStatus.statusName}}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

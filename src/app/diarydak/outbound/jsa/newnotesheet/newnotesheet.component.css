@@ -1,0 +1,38 @@
+/* .form-control {
+    text-transform: capitalize !important;
+} */
+
+.modal-dialog {
+    height: 90%;
+    /* = 90% of the .modal-backdrop block = %90 of the screen */
+}
+
+.modal-content {
+    /* = 100% of the .modal-dialog block */
+}
+
+input.largerCheckbox {
+    width: 40px;
+    height: 30px;
+}
+
+
+/* apply CSS to the select tag of  
+         .dropdown-container div*/
+
+.dropdown-container select {
+    /* for Firefox */
+    -moz-appearance: none;
+    /* for Safari, Chrome, Opera */
+    -webkit-appearance: none;
+}
+
+hr{
+    margin-top:2px !important;
+    margin-bottom:2px !important;
+}
+/* for IE10 */
+
+.dropdown-container select::-ms-expand {
+    display: none;
+}

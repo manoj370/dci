@@ -1,0 +1,45 @@
+<div class="container-fluid" *ngIf="inspectorDetails">
+    <div class="row">
+        <div class="col-md-6">
+            <h5 class="headingValue">Inspector Details </h5>
+            <span class="badge badge-pill badge-success" style="font-size: 60%;" *ngIf="inspectorDetails.status!==null">{{inspectorDetails.status}}</span>
+        </div>
+    </div>
+    <hr>
+    <div class="row" style="margin-bottom: 10px;">
+        <div class="col-md-6">
+            <div class="card">
+                <h5 class="headingValue">Basic Details</h5>
+                <hr>
+                <div class="row" *ngFor="let item of insAdminCont.detailsArray">
+                    <div class="col-md-6 pb-3">
+                        <h6>{{item.label}}</h6>
+                    </div>
+                    <div class="col-md-6 pb-3" *ngIf="inspectorDetails">
+                        {{inspectorDetails[item.key] !== null ? (inspectorDetails[item.key]): '-'}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <h5 class="headingValue">Address Details</h5>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6" *ngFor="let item of inspectorDetails.addresses; let i=index">
+                        <b>Address {{i+1}}</b>
+                        <hr>
+                        <div class="row" *ngFor="let key of insAdminCont.addressArray">
+                            <div class="col-md-4 pb-3">
+                                <h6>{{key.label}}</h6>
+                            </div>
+                            <div class="col-md-8 pb-3">
+                                {{item[key.key] !== null ? (item[key.key]): '-'}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

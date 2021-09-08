@@ -1,0 +1,64 @@
+<header>
+    <img src="./assets/login-header.jpg" style="width: 100%;">
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <h5 class="headingValue">Create Your DCI Account</h5>
+            </div>
+            <!-- <div class="col-md-6 text-right">
+                <button class="globalBtn clearBtn" routerLink="../login">Back</button>
+            </div> -->
+        </div>
+        <hr>
+    </div>
+</header>
+<div class="container h-100" style="background: #eee;padding: 15px;">
+    <div class="row">
+        <div class="col-md-12 p-0">
+            <div class="card">
+                <form class="new-added-form">
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-6 col-12 form-group">
+                            <br><label><strong>Name <span class="text-danger">*</span></strong> </label>
+                            <input type="text" placeholder="Enter Name" class="form-control">
+                        </div>
+                        <div class="col-xl-4 col-lg-6 col-12 form-group">
+                            <br><label><strong>College Name <span class="text-danger">*</span></strong> </label>
+                            <input type="text" placeholder="Enter College Name" class="form-control">
+                        </div>
+                        <div class="col-xl-4 col-lg-6 col-12 form-group">
+                            <br><label><strong>Email <span class="text-danger">*</span></strong> </label>
+                            <input type="text" placeholder="Enter Email" class="form-control">
+                        </div>
+
+                        <div class="col-xl-4 col-lg-6 col-12 form-group">
+                            <br><label><strong>Password <span class="text-danger">*</span></strong> </label>
+                            <input type="text" placeholder="Enter Password" class="form-control">
+                        </div>
+                        <div class="col-xl-4 col-lg-6 col-12 form-group">
+                            <br><label><strong>Confirm Password <span class="text-danger">*</span></strong> </label>
+                            <input type="text" placeholder="Confirm Password" class="form-control">
+                        </div>
+                        <div class="col-xl-4 col-lg-6 col-12 form-group">
+                            <br><label><strong>Mobile No <span class="text-danger">*</span></strong> </label>
+                            <input (click)="onClick()" type="text" placeholder="Enter Mobile No" class="form-control">
+                        </div>
+                        <div class="col-xl-4 col-lg-6 col-12 form-group" *ngIf="show">
+                            <br><label><strong>OTP <span class="text-danger">*</span></strong> </label>
+                            <input type="text" placeholder="Enter OTP" class="form-control">
+                        </div>
+
+
+                    </div>
+                    <br>
+                    <hr>
+                    <div style="text-align: center;" class="col-12 form-group mg-t-8">
+                        <button type="submit" class="globalBtn forwardBtn" routerLink="../register">Submit</button> &nbsp;
+                        <button type="reset" class="globalBtn" style="background-color: #c1c1c1;">Reset</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,301 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-8">
+                    <h5 class="headingValue">List Of Note Sheet/Dispatches</h5>
+                </div>
+            </div>
+            <hr>
+            <form [formGroup]="searchForm">
+                <div class="row">
+                <div class="col-md-12" style="display: flex;padding-bottom: 15px;">
+                
+                <div class="col-md-3">
+                <label>From Date:</label>
+                <input type="date" class="form-control" formControlName="fromDate" (change)="selecetdDate($event.target.value)">
+                </div>
+                <div class="col-md-3">
+                <label>To Date:</label>
+                <input type="date" class="form-control" formControlName="toDate"  [min]="maxDate">
+                </div>
+                <div class="col-md-3">
+                <label>Language :</label>
+                <select class="form-control" formControlName="language">
+                <option value="" disabled selected style="color:orange">Select Language</option>
+                <option *ngFor="let lan of languagesList" [value]="lan.receiptLanguageId">
+                {{lan.name}}
+                </option>
+                </select>
+                </div>
+                
+                
+                <div class="col-md-3">
+                <label>Status :</label>
+                <select class="form-control" formControlName="status">
+                <option value="" disabled selected style="color:orange">Select Status</option>
+                <option *ngFor="let status of statusList" [value]="status">
+                {{status}}
+                </option>
+                </select>
+                </div>
+                
+                
+                
+                
+                <!-- <div class="col-md-4">
+                </div> -->
+                
+                
+                </div>
+                <hr>
+                <div class="col-md-12" style="display: flex;">
+                <div class="col-md-4" style="border-right: 2px solid #eee">
+                <label>File No/Ref No:</label>
+                <input type="text" placeholder="Enter File No/Ref No" formControlName="filename" class="form-control" />
+                </div>
+                
+                <div class="col-md-5">
+                <label>DFA Subject</label>
+                <input type="text" class="form-control" formControlName="dfasubject" placeholder="Enter DFA Subject Keyword">
+                </div>
+                
+                <div class="col-md-3 text-right">
+                <label></label>
+                <button type="button" class="globalBtn acceptBtn" (click)="getAllDispatchesList()">Search</button>
+                <button type="button" class="globalBtn clearBtn" (click)="resetValidator()">Reset</button>
+                </div>
+                
+                </div></div>
+                
+                </form>
+            <!-- </div> -->
+            <hr>
+            <div class="row" style="padding-top: 10px;padding-bottom:50px;">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Dispatch No</th>
+                                    <th>Ref No/File No</th>
+                                    <th>Subject</th>
+                                    <th>Eng/Hi</th>
+                                    <th>Date</th>
+                                    <th>DFA</th>
+                                    <th>Process History</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of allDispatchList; let i=index">
+                                   
+                                    <td>{{item.dispatchNumber !==null ? (item.dispatchNumber):'-'}}</td>
+                                   <td>
+                                        <span style="color: #007bff; text-decoration: underline; cursor: pointer;" (click)="viewFileDetails(item,popupFromDate,popupTODate)">
+                                            {{item.referenceFileNo !==null ? item.referenceFileNo:'-'}}
+                                        </span>
+                                    </td>
+                                    <td>{{item.noteSheetSubject !=null ? (item.noteSheetSubject) : '-'}} </td>
+                                    <td>{{item.receiptLanguage !== null ? (item.receiptLanguage.name):'-'}} </td>
+                                    <td>{{item.noteSheetDate}} </td>
+                                    <td>{{item.withDFA===true ? 'Yes' : 'No'}}</td>
+                                    <td>
+                                        <a style="cursor: pointer;color: #2457A7;"
+                                            [routerLink]="['../../history', item.dispatchId]">Process
+                                            History</a>
+                                    </td>
+                                    <td>
+                                        <span class="text-success" style="color: white;">
+                                            {{item.dakStatus !== null ? item.dakStatus:'-'}}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-eye" title="View" style="color:#74AEB5" [routerLink]="['../noteSheetView',item.dispatchId]"></i>&nbsp;
+                                        <i *ngIf="roleName==='Senior Secretariat  Assistant'" class="fas fa-edit" title="Edit NoteSheet" style="color:#74AEB5" [routerLink]="['../correctionView',item.dispatchId]"></i>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="allDispatchList.length === 0">
+                                    <td colspan="7" style="text-align: center;padding: 50px !important;">No Data Available in Table</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-12 text-right" *ngIf="pageCount>1">
+                    <ul class="pagination float-right">
+                        <li class="page-item hoverActive"><a class="page-link " [class.my-class]="rowId === 0" (click)="prev()"><i class="fas fa-chevron-left"> </i></a></li>
+                        <li class="page-item"><a class="page-link">{{rowId+1}}/{{pageCount}}</a></li>
+                        <li class="page-item hoverActive"><a class="page-link" [class.my-class]="rowId+1 === pageCount" (click)="next()"><i class="fas fa-chevron-right"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal popup Starts  -->
+<button type="button" #confirmModal style="display: none;" class="btn btn-primary" data-toggle="modal" data-target="#fileModal">
+    Open modal
+</button>
+<!-- Modal -->
+<div class="modal fade" id="fileModal" role="dialog">
+    <div class="modal-dialog modal-xl">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title headingValue" *ngIf="fileDetails">File No -{{fileDetails.referenceFileNo}}</h4>
+                <button type="button" class="close" #dismissModal  data-dismiss="modal" (click)="resetPopup()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#dispatch">Dispatch List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#receipt">Receipt List</a>
+                    </li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div id="dispatch" class="container tab-pane active"><br>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>From Date:</label>
+                                <input type="date" class="form-control" [(ngModel)]="popupFromDate" (change)="popupViewFileDetails(fileDetails,popupFromDate,popupTODate)" />
+                            </div>
+                            <div class="col-md-3">
+                                <label>To Date:</label>
+                                <input type="date" class="form-control" [min]="popupFromDate" [disabled]="popupFromDate === ''" [(ngModel)]="popupTODate" (change)="popupViewFileDetails(fileDetails,popupFromDate,popupTODate)" />
+                            </div>
+                        </div>
+                        <hr>
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>To/From Address</th>
+                                    <th>Dispatch /Receipt No</th>
+                                    <th>Via</th>
+                                    <th>NoteSheet Id</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let file of popupFileList">
+                                    <td>
+                                        <span *ngIf="file.dispatch.receiptLanguageId.receiptLanguageId ===1">
+                                            {{file.dispatch.dfaSubject !== null ? file.dispatch.dfaSubject:'-'}}</span></td>
+                                    <td>
+                                        <span *ngIf="file.address !== null">{{file.address !== null ? (file.address.line1):'-'}},{{file.address !== null ? (file.address.line2):'-'}}, {{file.address !== null ? (file.address.country):'-'}},{{file.address !== null ? (file.address.state):'-'}},
+                                        {{file.address !== null ? (file.address.city):'-'}},{{file.address !== null ? (file.address.zipCode):'-'}}
+                                    </span>
+                                    <span *ngIf="file.address === null">
+                                        {{file.section.sectionName}}
+                                     </span>
+                                    </td>
+                                    <td>{{file.dispatchNumber !== null ? file.dispatchNumber :'-'}}</td>
+                                    <td>{{file.dispatchVia !== null ? file.dispatchVia.name:'-'}}</td>
+                                    <td>{{file.dispatch !== null ? file.dispatch.dispatchId:'-'}}</td>
+                                    <td>
+                                        <span class="text-success" style="color: white;">
+                                            {{file.dispatch !== null ? file.dispatch.dakStatus.statusName:'-'}}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="globalBtn acceptBtn dropdown-toggle m-0" type="button" data-toggle="dropdown">Action
+                                                <span class="caret"></span></button>
+                                            <ul class="dropdown-menu">
+                                                <li><a (click)="viewPage(file.dispatch.dispatchId)" style="cursor:pointer">View</a></li>
+                                                <li><a  *ngIf="(file.dispatch.isDispatchWithDfa === true)&&(file.dispatch.dakStatus.statusName !== 'Dispatched')" style="cursor:pointer" (click)="previewPdf(file.dispatch.dispatchId)" >Preview</a></li>
+                                                <li><a   *ngIf="(file.dispatch.isDispatchWithDfa === true)&&(file.dispatch.dakStatus.statusName === 'Dispatched')"  style="cursor:pointer" (click)="viewPage(file.dispatch.dispatchId)">Preview</a></li>
+                                                <li><a *ngIf="roleName==='Senior Secretariat  Assistant'" [routerLink]="['../createNoteSheet']" style="cursor:pointer">CreateNoteSheet</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="popupFileList.length === 0">
+                                    <td colspan="7" style="text-align: center;padding: 50px !important;">No Data Available in Table</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="col-md-12 text-right" *ngIf="responsePageCount>1">
+                            <ul class="pagination float-right">
+                                <li class="page-item hoverActive"><a class="page-link " [class.my-class]="popupRowId === 0" (click)="prevDispatches(this.dispatchfield)"><i class="fas fa-chevron-left"> </i></a></li>
+                                <li class="page-item"><a class="page-link">{{popupRowId+1}}/{{responsePageCount}}</a></li>
+                                <li class="page-item hoverActive"><a class="page-link" [class.my-class]="popupRowId+1 === responsePageCount" (click)="nextDispatches(this.dispatchfield)"><i class="fas fa-chevron-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="receipt" class="container tab-pane fade"><br>
+                        <div class="row">
+                            <!-- <div class="col-md-3">
+                                <label>From Date:</label>
+                                <input type="date" class="form-control" />
+                            </div>
+                            <div class="col-md-3">
+                                <label>To Date:</label>
+                                <input type="date" class="form-control"/>
+                            </div> -->
+                        </div>
+                        <hr>
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>To/From Address</th>
+                                    <th>Dispatch /Receipt No</th>
+                                    <th>Via</th>
+                                    <th>NoteSheet Id</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- <tr *ngFor="let file of popupFileList">
+                                    <td>{{file.dispatchSubject !== null ? file.dispatchSubject:'-'}}</td>
+                                    <td>{{file.address !== null ? file.address:'-'}}</td>
+                                    <td>{{file.dispatchNumber !== null ? file.dispatchNumber :'-'}}</td>
+                                    <td>{{file.dispatchVia !== null ? file.dispatchVia:'-'}}</td>
+                                    <td>{{file.dispatch !== null ? file.dispatch.dispatchId:'-'}}</td>
+                                    <td>
+                                        <span class="text-success" style="color: white;">
+                                            {{file.dispatch !== null ? file.dispatch.dakStatus.statusName:'-'}}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="globalBtn acceptBtn dropdown-toggle m-0" type="button" data-toggle="dropdown">Action
+                                                <span class="caret"></span></button>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">View</a></li>
+                                                <li><a href="#" (click)="createdispatch()">CreateNoteSheet</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr> -->
+                                <tr>
+                                    <td colspan="7" style="text-align: center;padding: 50px !important;">No Data Available in Table</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal popup Ends -->

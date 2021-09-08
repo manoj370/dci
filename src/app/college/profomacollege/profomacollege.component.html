@@ -1,0 +1,222 @@
+<div class="row">
+    <div class="col-md-12 p-0">
+        <div class="card">
+            <h5 class="headingValue">College Registration Application</h5>
+            <hr>
+             <div class="row" style="background: #eee;padding: 15px;">
+             <!--   <h5 class="font-weight-bold text-center">Medical College Attachment</h5>
+                <div class="card mb-3">
+
+                    <div class="card-body">
+                        <div class="row" *ngFor="let it of newData.flds">
+                            <div class="col-sm-9">
+                                <h6 class="mb-0">{{it.name}}</h6>
+                            </div>
+                            <div class="col-sm-3 text-secondary" *ngIf="it.type === 'YES_NO'">
+                                <div class="switchToggle">
+                                    <input type="checkbox" id="switch1" [checked]="it.collegeInput === 'YES'">
+                                    <label for="switch1">Toggle</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 text-secondary" *ngIf="it.type === 'TEXT'">
+                                <input type="text" class="form-control" value="{{it.collegeInput}}">
+                            </div>
+                            <div class="col-sm-3 text-secondary" *ngIf="it.type === 'INT'">
+                                <input type="number" class="form-control" value="{{it.collegeInput}}">
+                            </div>
+                        </div>
+                        <hr>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button class="globalBtn forwardBtn" id="next" [disabled]="rowId===(totLength-1)" (click)="next()">Next</button>&nbsp;
+                            <button class="globalBtn clearBtn" id="prev" [disabled]="rowId===0" (click)="previous()">Previous</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div> -->
+
+
+
+
+
+                        <div class="">
+                            <div class="">
+                                <div class="card height-auto">
+                            
+                           
+                        
+                        <form class="new-added-form">
+
+                           
+                            <div  class="heading-layout1">
+                                <div class="item-title">
+                                    <h5 class="headingValue">College Details</h5>
+                                </div>
+                            </div> 
+                            <!-- <div class="item-title">
+                                <h3>College Details</h3>
+                            </div> -->
+                            <div class="row">
+                                <div class="col-xl-4 col-lg-6 col-12 form-group">
+                                    <label>Name of College </label>
+                                    <input type="text" placeholder="" class="form-control">
+                                </div>
+                                <div class="col-xl-4 col-lg-6 col-12 form-group">
+                                    <label>College Email Id </label>
+                                    <input type="text" placeholder="" class="form-control">
+                                </div>
+                                <div class="col-xl-4 col-lg-6 col-12 form-group">
+                                    <label>Phone Number </label>
+                                    <input type="text" placeholder="" class="form-control">
+                                </div>
+                                <div class="col-xl-4 col-lg-6 col-12 form-group">
+                                    <label>Area of College </label>
+                                    <input type="text" placeholder="" class="form-control">
+                                </div>
+                                <div class="col-xl-4 col-lg-6 col-12 form-group">
+                                    <label>Area of Playground </label>
+                                    <input type="text" placeholder="" class="form-control">
+                                </div>
+                                <div class="col-xl-4 col-lg-6 col-12 form-group">
+                                    <label>Date of Establishment</label>
+                                    <input type="date" placeholder="" class="form-control">
+                                </div>
+                                 <div class="col-xl-4 col-lg-6 col-12 form-group">
+                                    <label>Type of College/Category  </label>
+                                    <select class="form-control">
+                                        <option>Select Category</option>
+                                         <option>Private</option>
+                                          <option>Government</option>
+                                    </select>
+                                </div>
+                                <div class="col-xl-4 col-lg-3 col-12 form-group">
+                                    <label>Sub category</label>
+                                   <select class="form-control">
+                                        <option>Select Sub Category</option>
+                                         <option>Trust</option>
+                                          <option>Society</option>
+                                          <option>Company</option>
+                                    </select>
+                                </div>
+                                <div class="col-xl-4 col-lg-6 col-12 form-group">
+                                    <label>Applying For Degree</label>
+                                    <select class="form-control">
+                                        <!-- <option value="">Please Select Degree </option> -->
+                                        <option value="1">BDS</option>
+                                        <option value="2">MDS</option>
+                                        <option value="3">PG Diploma</option>
+                                       
+                                    </select>
+                                </div><br>
+                            
+                                  
+                                <div class="col-xl-12 col-lg-6 col-12 form-group">
+                                    <div  class="heading-layout1">
+                                        <div class="item-title">
+                                            <h5 class="headingValue">Applicant Details</h5>
+                                        </div>
+                                    </div> 
+                                    <div class="row">
+                                <div class="col-xl-4 col-lg-6 col-12 form-group">
+                                    <label>Applicant Name </label>
+                                    <input type="text" placeholder="" class="form-control">
+                                </div>
+                                <div class="col-xl-4 col-lg-6 col-12 form-group">
+                                    <label>Designation of Applicant </label>
+                                    <input type="text" placeholder="" class="form-control">
+                                </div>
+                                <div class="col-xl-4 col-lg-6 col-12 form-group">
+                                    <label>Applicant Phone Number </label>
+                                    <input type="text" placeholder="" class="form-control">
+                                </div>
+                            </div>
+                                
+                           </div>
+                               
+                            <div class="col-xl-12 col-lg-6 col-12 form-group">
+                                <div class="heading-layout1">
+                                    <div class="item-title">
+                                        <h5 class="headingValue">Address Information</h5>
+                                    </div>
+                                </div> 
+                              
+
+
+                              
+                            <div class="row">
+                               <div class="col-xl-4 col-lg-6 form-group">
+                              <label>Country</label>
+                              <input type="text" placeholder="" class="form-control">
+                          </div>
+                             <div class="col-xl-4 col-lg-6 form-group">
+                              <label>State</label>
+                              <input type="text" placeholder="" class="form-control">
+                          </div>
+                            <div class="col-xl-4 col-lg-6 form-group ">
+                                <label>City</label>
+                                <input type="line" placeholder="" class="form-control">
+                            </div>
+                          
+                         
+                          <div class="col-xl-4 col-lg-6 form-group">
+                              <label>Pincode</label>
+                              <input type="text" placeholder="" class="form-control">
+                          </div>
+                          
+                          <div class="col-xl-4 col-lg-6 col-12 form-group">
+                                <label>Address Line 1</label>
+                                <input type="line" placeholder="" class="form-control">
+                            </div>
+                       
+                            <div class="col-xl-4 col-lg-6 col-12 form-group">
+                                <label>Address Line 2</label>
+                                <input type="line" placeholder="" class="form-control">
+                            </div>
+                        </div>
+                        </div>
+                          <br>
+                              <div class="col-lg-12 mt-3">
+                              <div class="heading-layout1">
+                                    <div class="item-title">
+                                        <h5 class="headingValue"> Document Required</h5>
+                                    </div>
+                                </div> 
+                              
+                              
+                              <div class="row">
+                              <div class="col-lg-3 ">
+                                <label class="text-dark-medium">Upload College Photograph</label>
+                                <input type="file" class="form-control-file">
+                            </div>
+                            <div class="col-lg-3 ">
+                                <label class="text-dark-medium">Upload Land Document</label>
+                                <input type="file" class="form-control-file">
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="text-dark-medium">Upload Trust Document</label>
+                                <input type="file" class="form-control-file">
+                            </div>
+                            </div>
+                        </div>
+<br>
+                               
+                         
+                           <div class="row text-right form-group" style="width: 100%">
+                                <div class="col-md-12 text-right mt-5" style="float: right;">
+                                    <button type="submit"  class="globalBtn forwardBtn" style="width:200px;">Proceed for Payment</button>&nbsp;
+                                    <button type="submit"  class="globalBtn submitBtn" style="width:200px;">Save and Pay Later</button>&nbsp;
+                                    <button type="reset" class="globalBtn">Reset</button>
+                                </div>
+</div>
+
+                                
+                            </div>
+                        </form>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>

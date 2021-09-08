@@ -1,0 +1,197 @@
+<div class="row">
+    <div class="col-md-12">
+        <!-- <div class="hedCard"> -->
+        <div class="card">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5 class="headingValue">Inspector List</h5>
+                </div>
+                <div class="col-md-2 text-right">
+                    <button class="globalBtn acceptBtn btn-block" data-toggle="modal" data-target="#userModal" (click)="getStates()">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Inspector</button>
+                </div>
+
+                <div class="col-md-3">
+                    <select class="form-control" [(ngModel)]="selecetdValue" (change)="getAllByStatus()">
+                        <option value="" disabled selected style="color:orange">Select Status</option>
+                        <option *ngFor="let item of status" [value]="item">
+                            {{item}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-3 text-right">
+                    <div class="form-group">
+                        <div class="icon-addon" style="height: 0;">
+                            <input type="text" placeholder="Search by Name" class="form-control searchValue" [(ngModel)]="myProperty" (keyup)="getAllInspectors()" />
+                            <label class="fas fa-search iconValue"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- </div> -->
+
+            <hr />
+            <!-- <div class="card"> -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th *ngFor="let theaders of insConst.inspectorTable">{{theaders}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let ins of allInspec">
+                                    <td>{{ins.name}}</td>
+                                    <td style="width: 20%;text-transform: capitalize;">
+                                        {{ins.collegeName !== null ?(ins.collegeName) : '-'}}</td>
+                                    <td style="width: 40%; text-transform: capitalize">
+                                        {{ins.specialisation !== null ?(ins.specialisation) : '-'}}</td>
+                                    <td>{{ins.mobile !== null ?(ins.mobile) : '-'}}</td>
+                                    <td>{{ins.emailId !== null ?(ins.emailId) : '-'}}</td>
+                                    <td style="width: 12%; text-transform: capitalize">
+                                        {{ins.workExperience !== null ?(ins.workExperience) : '-'}}</td>
+                                    <td>
+                                        <span class="badge badge-pill acceptBtn" style="color: white;" *ngIf="ins.status==='Active'">Active</span>
+                                        <span class="badge badge-pill badge-danger" style="color: white;" *ngIf="ins.status !=='Active'">InActive</span>
+                                    </td>
+                                    <td style="width: 10%;text-align: center;">
+                                        <span class="fas fa-eye added" [routerLink]="['../dashboard/inspectorView', ins.inspectorId]"></span>
+                                        <span class="fas fa-trash deleted" *ngIf="ins.status ==='Active'" (click)="deleteIns(ins.inspectorId)">
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="allInspec.length === 0">
+                                    <td colspan="8" style="text-align: center;padding: 50px !important;">No Data Available in Table
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-12 text-right" *ngIf="pageCount>1">
+                    <ul class="pagination float-right">
+                        <li class="page-item hoverActive"><a class="page-link " [class.my-class]="rowId === 0" (click)="previ()"><i class="fas fa-chevron-left"> </i></a></li>
+                        <li class="page-item"><a class="page-link">{{rowId+1}}/{{pageCount}}</a></li>
+                        <li class="page-item hoverActive"><a class="page-link" [class.my-class]="rowId+1 === pageCount" (click)="next()"><i class="fas fa-chevron-right"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="userModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-xl">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" (click)="cleraValdiadtions()" data-dismiss="modal" #dismissModal>&times;</button>
+                    <h4 class="modal-title pull-left text-left" style="position: absolute;">Add Inspectors</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <select class="custom-select-sm" #myDiv class="form-control" (change)="getCollegeName($event.target.value)">
+                                        <option value="" disabled selected style="color:orange">Select State *</option>
+                                        <option *ngFor="let ct of allStates" [value]="ct.stateName">
+                                            {{ct.stateName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <select class="custom-select-sm" #college class="form-control" (change)="getSpecilization($event.target.value)">
+                                        <option value="" disabled selected style="color:orange">Select College *</option>
+                                        <option *ngFor="let cs of collbyStates" [value]="cs.collegeId">
+                                            {{cs.collegeName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <select class="custom-select-sm" class="form-control" [(ngModel)]="specilizationId" [ngModelOptions]="{standalone: true}">
+                                        <option value="" disabled selected style="color:orange">Select Specialization
+                                        </option>
+                                        <option *ngFor="let sp of colSpeclization" [value]="sp.specialisationId">
+                                            {{sp.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <button type="button" [disabled]="collegeId ===''" class="globalBtn acceptBtn" (click)="getListOfCollegeStaff()">Search</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <div class="row" *ngIf="showSearchdata">
+                            <div class="col-md-12">
+                                <h5 class="modal-title">Search Result</h5>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="table-responsive-sm">
+                                    <table class="table table-bordered table-hover">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th *ngFor="let theaders of insConst.popupTable">
+                                                    {{theaders}}
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of collegStaff">
+                                                <td>{{item.name}} </td>
+                                                <td>{{item.collegeName}}</td>
+                                                <td>{{item.specialisation}}</td>
+                                                <td>{{item.mobile}} </td>
+                                                <td>{{item.emailId}}</td>
+                                                <td> {{item.workExperience}}</td>
+                                                <td>
+                                                    <span class="fas fa-plus-circle added" title="Add to List" (click)="adding(item.collegeStaffId)"></span>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="collegStaff.length === 0">
+                                                <td colspan="7" style="text-align: center;padding: 50px !important;">No Data Available in Table
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div id="deletModal" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="icon-box">
+                            <i class="fas fa-user-times remove"></i>
+                        </div>
+                        <br />
+                    </div>
+                    <h4 class="modal-title">Are you sure?</h4>
+                    <div class="modal-body">
+                        <p>Do you really want to Delete <b style="color: #f15e5e;">Rakesh</b> records?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-danger">Delete</button>
+                        <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>

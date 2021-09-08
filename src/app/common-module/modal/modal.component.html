@@ -1,0 +1,103 @@
+<button #modal type="button" class="btn btn-primary hideBtn" data-toggle="modal" data-target="#agendaModalPopup">
+  Open modal
+</button>
+
+<!-- The Modal -->
+<div class="modal fade" id="agendaModalPopup">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header modelpopHeader">
+                <h4 class="modal-title">Agenda</h4>
+                <button type="button" class="close" #dismissModal data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <ng-container [ngSwitch]="notification">
+                    <!--Agenda Creation -->
+                    <ng-container *ngSwitchCase="'Grievance'">
+                        <form [formGroup]="agendaForm">
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label class="control-label col-md-10 ">Agenda Date</label>
+                                    <input type="text" class="form-control" placeholder="Agenda Date*" formControlName="agendaDate">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label class="control-label col-md-10 ">Agenda item Number</label>
+                                    <input type="text" class="form-control" placeholder="Item Number *" formControlName="agendaItemNum">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label class="control-label col-md-10 ">Agenda Subject</label>
+                                    <textarea class="form-control" rows="5" placeholder="Agenda Subject *" formControlName="agendaItemSubj" [ngClass]="{ 'is-invalid':  submitted && f.agendaItemSubj.errors }"></textarea>
+                                    <div *ngIf=" submitted && f.agendaItemSubj.errors" class="invalid-feedback">
+                                        <div *ngIf=" submitted && f.agendaItemSubj.errors.required">
+                                            Please Enter Agenda Item Subject
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label class="control-label col-md-10 ">Agenda Matter</label>
+                                    <textarea class="form-control" rows="5" placeholder="Agenda Matter *" formControlName="agendaMatter" [ngClass]="{ 'is-invalid':  submitted && f.agendaMatter.errors }"></textarea>
+                                    <div *ngIf=" submitted && f.agendaMatter.errors" class="invalid-feedback">
+                                        <div *ngIf=" submitted && f.agendaMatter.errors.required">
+                                            Please Enter Agenda Agenda Matter
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </ng-container>
+                </ng-container>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="globalBtn acceptBtn" [disabled]="!agendaForm.valid" (click)="aobModal()">Submit</button>
+                <button type="button" class="globalBtn clearBtn">Reset</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<button type="button" #confirmOpen class="btn btn-primary" data-toggle="modal" data-target="#confirm" style="display: none;">
+  Open modal
+</button>
+
+<div class="modal" id="confirm">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header" style="padding: 20px;">
+                <h5 class="modal-title headingValue">Confirmation</h5>
+                <button type="button" class="close" #confirmDismiss data-dismiss="modal">&times;</button>
+
+            </div>
+            <div class="modal-body" id="confirmMessage">
+                <form [formGroup]="aobForm">
+                    <div class="custom-control custom-radio" *ngFor="let item of radioData">
+                        <input type="radio" class="custom-control-input" formControlName="value" id="{{item.status}}" [value]="item.status">
+                        <label class="custom-control-label" for="{{item.status}}">{{item.label}}</label>
+                        <p *ngIf="item.status === true">
+                            For the meeting date this agenda item will fall under AOB, Did u take permission from chair create AOB Agenda?</p>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" [disabled]="!aobForm.valid" id="confirmOk" (click)="agendaCreate(notification)">Yes</button>
+                <button type="button" class="btn btn-danger" #confirmDismiss data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>

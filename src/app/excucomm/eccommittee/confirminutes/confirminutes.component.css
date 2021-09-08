@@ -1,0 +1,7 @@
+.mce-last {
+    display: none !important;
+}
+
+textarea {
+    resize: none;
+}

@@ -1,0 +1,218 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-5">
+                    <h5 class="headingValue">Manage Inspection</h5>
+                </div>
+                <div class="col-md-3">
+                    <select class="custom-select-sm" class="form-control" (change)="getCollegeName($event)">
+                        <option value="" disabled selected style="color:orange">Select State *</option>
+                        <option *ngFor="let ct of allStates" [value]="ct.stateName">
+                            {{ct.stateName}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select class="custom-select-sm" class="form-control" [(ngModel)]="collegeId" [ngModelOptions]="{standalone: true}">
+                        <option value="" disabled selected style="color:orange">Select College</option>
+                        <option *ngFor="let cs of collbyStates" [value]="cs.collegeId">
+                            {{cs.collegeName}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button class="globalBtn acceptBtn" (click)="searchShedule()" [disabled]="stateId===''">Search</button>
+                </div>
+            </div>
+            <hr />
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th *ngFor="let theader of insAdminConst.inspectorTable">{{theader}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of allShedule; let i=index">
+                                    <td>{{item.collegeName}}</td>
+                                    <td>{{item.state}}</td>
+                                    <td>{{item.inspectionType}}</td>
+                                    <td>{{item.courseName}}</td>
+                                    <td>{{item.startDate | date: 'dd-MM-yyyy'}}</td>
+                                    <td>{{item.endDate | date: 'dd-MM-yyyy'}}</td>
+                                    <td>
+                                        <div class="dropdown dropup">
+                                            <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Action
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" (click)="resheduleData(item.inspectionId)">Reschedule</a>
+                                                <a class="dropdown-item" (click)="cancelPopup(item.inspectionId)">Cancel</a>
+                                            </div>
+                                        </div>
+                                        <td>
+                                            <button class="btn btn-info btn-sm" [routerLink]="['../manageinspec/inspectionresponse', item.inspectionId]">View
+                                            Inspector
+                                        </button>
+                                        </td>
+                                </tr>
+
+                                <tr *ngIf="allShedule.length === 0">
+                                    <td colspan="8" style="text-align: center;padding: 50px !important;">No Data Available in Table
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-12 text-right" *ngIf="pageCount>1">
+                    <ul class="pagination float-right">
+                        <li class="page-item hoverActive"><a class="page-link " [class.my-class]="rowId === 0" (click)="previ()"><i class="fas fa-chevron-left"> </i></a></li>
+                        <li class="page-item"><a class="page-link">{{rowId+1}}/{{pageCount}}</a></li>
+                        <li class="page-item hoverActive"><a class="page-link" [class.my-class]="rowId+1 === pageCount" (click)="next()"><i class="fas fa-chevron-right"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<button type="button" #openModal style="display: none;" class="btn btn-primary" data-toggle="modal" data-target="#assigndateauto">
+    Open modal
+</button>
+<div id="assigndateauto" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-xl">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" #dismissModal>&times;</button>
+                <h5 class="modal-title pull-left text-left" style="position: absolute;">ReSchedule Inspection - {{modalName}}
+                </h5>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="sheduleInspForm">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group required">
+                                <label for="Type" class="control-label">Type</label>
+                                <input type="text" formControlName="type" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group required">
+                                <label for="subType" class="control-label">Sub Type</label>
+                                <input type="text" formControlName="subtype" class="form-control" [ngClass]="{ 'is-invalid': f.subtype.invalid && (f.subtype.dirty || f.subtype.touched) }">
+                                <div *ngIf="f.subtype.invalid && (f.subtype.dirty || f.subtype.touched)" class="errorColor">
+                                    <div *ngIf="f.subtype.errors.required">
+                                        {{errorMsgs.required}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group required">
+                                <label for="purpose" class="control-label">Purpose</label>
+                                <input type="text" formControlName="purpose" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group required">
+                                <label for="Course" class="control-label">Course</label>
+                                <input type="text" formControlName="course" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group required">
+                                <label for="Specialisation" class="control-label">Specialization</label>
+                                <input type="text" formControlName="specilization" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group required">
+                                <label class="control-label">From Date</label>
+                                <input type="date" class="form-control" formControlName="fromDate" [min]="maxDate" (change)="selecetdDate($event.target.value)" [ngClass]="{ 'is-invalid': f.fromDate.invalid && (f.fromDate.dirty || f.fromDate.touched) }">
+                                <div *ngIf="f.fromDate.invalid && (f.fromDate.dirty || f.fromDate.touched)" class="errorColor">
+                                    <div *ngIf="f.fromDate.errors.required">
+                                        {{errorMsgs.required}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group required">
+                                <label class="control-label">To Date</label>
+                                <input type="date" formControlName="toDate" class="form-control" [max]="selecetdDat" [min]="minDate" [ngClass]="{ 'is-invalid': f.toDate.invalid && (f.toDate.dirty || f.toDate.touched) }">
+                                <div *ngIf="f.toDate.invalid && (f.toDate.dirty || f.toDate.touched)" class="errorColor">
+                                    <div *ngIf="f.toDate.errors.required">
+                                        {{errorMsgs.required}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group required">
+                                <label class="control-label">From Seat</label>
+                                <input type="text" class="form-control" formControlName="fromSeat" placeholder="From Seat">
+
+                            </div>
+                        </div>
+                        <div class="col-sm-3" *ngIf="popData">
+                            <div class="form-group required" *ngIf="popData.subType !=='Establish' && popData.subType !=='Starting'">
+                                <label class="control-label">To Seat</label>
+                                <input type="text" formControlName="toSeat" class="form-control" placeholder="To Seat">
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button class="globalBtn forwardBtn" [disabled]="!sheduleInspForm.dirty" (click)="resdhedule()">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button type="button" #cancelModal class="btn btn-primary" data-toggle="modal" data-target="#deletModal" style="display: none;">
+    Open modal
+</button>
+
+<div id="deletModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Cancel</h4>
+                <button type="button" class="close" (click)="cancelFrom.reset();" data-dismiss="modal" #canceldismiss>&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form [formGroup]="cancelFrom">
+                    <textarea class="form-control" rows="5" name="comments" placeholder="Cancel Comments *" formControlName="popupComments"></textarea>
+
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="globalBtn acceptBtn" [disabled]="!cancelFrom.valid" (click)="cancelInspection()">Submit</button>
+                <button type="button" class="globalBtn clearBtn" data-dismiss="modal" (click)="cancelFrom.reset();">Clear</button>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

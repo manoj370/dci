@@ -1,0 +1,65 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-8">
+                    <h5 class="headingValue">Track NoteSheet</h5>
+                </div>
+            </div>
+            <hr>
+            <div class="row" style="padding-top: 10px;padding-bottom:50px;">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th style="width:10%"  >Dispatch No.</th>
+                                    <th style="width:15%"  >Ref No. / File No.</th>
+                                    <th style="width:40%" >Subject</th>
+                                    <th style="width:10%" >Eng / Hin</th>
+                                    <th style="width:10%" >Date</th>
+                                    <th style="width:10%" >DFA</th>
+                                    <th style="width: 20px;" >Process History</th>
+                                    <th style="width:10%" >Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of trackNoteSheetList; let i=index">
+                                    <td>{{item.dispatchNumber !==null ? (item.dispatchNumber):'-'}}</td>
+                                    <td>
+                                        <!-- <span style="color: #007bff; text-decoration: underline; cursor: pointer;"> -->
+                                            {{item.referenceFileNo !==null ? item.referenceFileNo:'-'}}
+                                        <!-- </span> -->
+                                    </td>
+                                    <td>{{item.noteSheetSubject !=null ? (item.noteSheetSubject) : '-'}} </td>
+                                    <td>{{item.receiptLanguage !== null ? (item.receiptLanguage.name):'-'}} </td>
+                                    <td>{{item.noteSheetDate}} </td>
+                                    <td>{{item.withDFA===true ? 'Yes' : 'No'}}</td>
+                                    <td>
+                                        <a style="cursor: pointer;color: #2457A7;"
+                                            [routerLink]="['../../history', item.dispatchId]">Process
+                                            History</a>
+                                    </td>
+                                    <td>
+                                        <span class="text-success" style="color: white;">
+                                            {{item.dakStatus !== null ? item.dakStatus :'-'}}
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-12 text-right" *ngIf="responsePageCount>1">
+                    <ul class="pagination float-right">
+                        <li class="page-item hoverActive"><a class="page-link " [class.my-class]="pageId === 0" (click)="prev()"><i class="fas fa-chevron-left"> </i></a></li>
+                        <li class="page-item"><a class="page-link">{{pageId+1}}/{{responsePageCount}}</a></li>
+                        <li class="page-item hoverActive"><a class="page-link" [class.my-class]="pageId+1 === responsePageCount" (click)="next()"><i class="fas fa-chevron-right"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

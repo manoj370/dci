@@ -1,0 +1,283 @@
+<!-- Assistant Secretery -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-9">
+                    <h5 class="headingValue">Complaints Dashboard</h5>
+                </div>
+                <div class="col-md-3 text-right">
+                    <div class="form-group">
+                        <div class="icon-addon" style="height: 0;">
+                            <input type="text" placeholder="Search with Complaint Id" class="form-control searchValue" [(ngModel)]="myProperty" (keyup)="serachValue(myProperty)">
+                            <label class="fas fa-search iconValue"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row" style="padding: 15px 0px;" *ngIf="dashboardCount">
+                <div class="col-md-2 text-center">
+
+                    <div class="Count">
+                        {{dashboardCount.assigned}}
+                    </div>
+                    <div class="Value">
+                        <p class="subHeading">Assigned</p>
+                    </div>
+                </div>
+                <div class="col-md-2 text-center">
+                    <div class="Count" style="color: #21CCC0;">
+                        {{dashboardCount.forwarded}}
+
+                    </div>
+                    <div class="Value">
+                        <p class="subHeading">Forwarded</p>
+                    </div>
+                </div>
+                <div class="col-md-2 text-center">
+                    <div class="Count" style="color: #21CCC0;">
+                        {{dashboardCount.agendaCreated}}
+
+                    </div>
+                    <div class="Value">
+                        <p class="subHeading">Agenda Created</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover" *ngIf="allComplaintsList">
+                            <thead class="theadRow thead-light">
+                                <tr>
+                                    <th *ngFor="let theaders of tableHeaders">{{theaders}}</th>
+
+                                </tr>
+                            </thead>
+                            <tbody class="tbodyRow">
+                                <tr style="display: none;">
+                                    <td> DCI/GC/2020/15 </td>
+                                    <td>Sunil Sharma </td>
+                                    <td>sunildemo@gmail.com </td>
+                                    <td>Enquiry</td>
+                                    <td>28-08-2020</td>
+                                    <td>College</td>
+                                    <td><span class="badge badge-pill badge-warning" style="color: white;">OPEN</span>
+                                    </td>
+                                    <td align="center">-</td>
+                                </tr>
+                                <tr style="display: none;">
+                                    <td> DCI/GC/2020/16 </td>
+                                    <td>Sunil Sharma </td>
+                                    <td>sunildemo@gmail.com </td>
+                                    <td>Complaint</td>
+                                    <td>28-07-2020</td>
+                                    <td>Dentist</td>
+                                    <td><span class="badge badge-pill badge-warning" style="color: white;">OPEN</span>
+                                    </td>
+                                    <td align="center">-</td>
+                                </tr>
+                                <tr style="display: none;">
+                                    <td> DCI/GC/2020/17 </td>
+                                    <td>Sunil Sharma </td>
+                                    <td>sunildemo@gmail.com </td>
+                                    <td>Complaint</td>
+                                    <td>08-09-2020</td>
+                                    <td>DCI</td>
+                                    <td><span class="badge badge-pill badge-warning" style="color: white;">OPEN</span>
+                                    </td>
+                                    <td>
+                                        <div class="col-md-2 text-left">
+                                            <button type="button" class="btn-sm btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                Action
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" data-toggle="modal" data-toggle="modal" data-target="#agendaEditModal" style="cursor: pointer;">Edit </a>
+                                                <a class="dropdown-item" style="cursor:pointer" data-toggle="modal" data-target="#deletModal">Delete
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr style="display: none;">
+                                    <td> DCI/GC/2020/18 </td>
+                                    <td>Sunil Sharma </td>
+                                    <td>sunildemo@gmail.com </td>
+                                    <td>Enquiry</td>
+                                    <td>12-05-2020</td>
+                                    <td>College</td>
+                                    <td><span class="badge badge-pill badge-success" style="color: white;">COMPLETED</span></td>
+                                    <td align="center">-</td>
+                                </tr>
+                                <tr style="display: none;">
+                                    <td> DCI/GC/2020/19 </td>
+                                    <td>Sunil Sharma </td>
+                                    <td>sunildemo@gmail.com </td>
+                                    <td>Complaint</td>
+                                    <td>10-09-2020</td>
+                                    <td>DCI</td>
+                                    <td><span class="badge badge-pill badge-warning" style="color: white;">OPEN</span>
+                                    </td>
+                                    <td>
+                                        <div class="col-md-2 text-left">
+                                            <button type="button" class="btn-sm btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                Action
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" data-toggle="modal" data-toggle="modal" data-target="#agendaEditModal" style="cursor: pointer;">Edit </a>
+                                                <a class="dropdown-item" style="cursor:pointer" data-toggle="modal" data-target="#deletModal">Delete
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+
+
+
+
+
+
+                                <tr *ngFor="let item of allComplaintsList">
+                                    <td>
+                                        {{item.complaint.complainantNumber}} </td>
+                                    <td>{{item.complaint.complaintRaisedBy.firstName}} {{item.complaint.complaintRaisedBy.lastName}}
+                                    </td>
+                                    <td>{{item.complaint.complaintRaisedBy.emailId}} </td>
+                                    <td>{{item.complaint.complaintType.complaintTypeName}}</td>
+                                    <td style="text-align: center;">{{item.createdDate | date: 'dd-MM-yyyy'}}</td>
+                                    <td style="text-align: center;">{{item.complaint.complaintAgainst.name}}</td>
+                                    <td style="text-align: center;">
+                                        <span class="badge badge-pill badge-warning" style="color: white;" *ngIf="item.complaint.complaintStatus.complaintStatusName === 'OPEN'">{{item.complaint.complaintStatus.complaintStatusName}}</span>
+                                        <span class="badge badge-pill badge-success" style="color: white;background-color: #00E25B !important;" *ngIf="item.complaint.complaintStatus.complaintStatusName === 'COMPLETED'">{{item.complaint.complaintStatus.complaintStatusName}}</span>
+                                        <span class="badge badge-pill badge-info" style="color: white;background-color: #4ABDE8 !important;" *ngIf="item.complaint.complaintStatus.complaintStatusName === 'APPEAL'">{{item.complaint.complaintStatus.complaintStatusName}}</span>
+                                        <span class="badge badge-pill badge-primary" style="color: white;background-color: #5A95F5 !important;" *ngIf="item.complaint.complaintStatus.complaintStatusName === 'CLOSED'">{{item.complaint.complaintStatus.complaintStatusName}}</span>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <div *ngIf="(item.agendaId !==null && item.workflowCode.workflowCodeName !== 'EXECUTIVECOMMITTEE' && item.complaintStatus.complaintStatusName !=='AGEDNA_DELETE'); else loggedOut">
+                                            <button type="button" class="globalBtn submitBtn dropdown-toggle" data-toggle="dropdown">
+                                                Action
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" data-toggle="modal" data-toggle="modal" data-target="#agendaEditModal" style="cursor: pointer;" (click)="getAgendaDetails(item.complaint.cgrComplaintId)">Edit </a>
+                                                <a class="dropdown-item" style="cursor:pointer" data-toggle="modal" data-target="#deletModal" (click)="getId(item)">Delete
+                                                </a>
+                                                <a class="dropdown-item" style="cursor: pointer;" [routerLink]="['../compView', item.complaint.cgrComplaintId,item.workflowCode.workflowCodeName]">View </a>
+                                            </div>
+                                        </div>
+
+                                        <ng-template #loggedOut>
+                                            <button class="globalBtn submitBtn" [routerLink]="['../compView', item.complaint.cgrComplaintId,item.workflowCode.workflowCodeName]">View</button>
+                                        </ng-template>
+
+                                    </td>
+                                </tr>
+                                <tr *ngIf="allComplaintsList.length === 0">
+                                    <td colspan="8" style="text-align: center;padding: 50px !important;">No Data Available in Table</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-12 text-right" *ngIf="pageCount>1">
+                    <ul class="pagination float-right">
+                        <li class="page-item hoverActive"><a class="page-link " [class.my-class]="rowId === 0" (click)="previ()"><i class="fas fa-chevron-left"> </i></a></li>
+                        <li class="page-item"><a class="page-link">{{rowId+1}}/{{pageCount}}</a></li>
+                        <li class="page-item hoverActive"><a class="page-link" [class.my-class]="rowId+1 === pageCount" (click)="next()"><i class="fas fa-chevron-right"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Agenda Edit  -->
+
+<div class="modal" id="agendaEditModal">
+    <div class="modal-dialog modal-md" style="top: 5%;">
+        <div class="modal-content" *ngIf="agendaDetails">
+
+            <!-- Modal Header -->
+            <div class="modal-header" style="padding: 20px;border: none !important;">
+                <h5 class="modal-title headingValue">Update Agenda</h5>
+                <button type="button" class="close" #dismissModal data-dismiss="modal">&times;</button>
+
+            </div>
+            <p style="margin-left: 20px;color: red" *ngIf="agendaDetails.updateStatus!==true">Agenda Edit is not possible as the Agenda got Finalized</p>
+            <hr style="margin: 0px !important;">
+            <!-- Modal body -->
+            <div class="modal-body container">
+                <form [formGroup]="agendaForm">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <label class="control-label col-md-10 ">Agenda Date</label>
+                            <input type="text" class="form-control" placeholder="Agenda Date*" formControlName="agendaDate">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <label class="control-label col-md-10 ">Agenda item Number</label>
+
+                            <input type="text" class="form-control" placeholder="Item Number *" formControlName="agendaItemNum">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <label class="control-label col-md-10 ">Agenda Subject</label>
+
+                            <textarea class="form-control" rows="5" placeholder="Agenda Subject *" formControlName="agendaItemSubj" [ngClass]="{ 'is-invalid':  submitted && f.agendaItemSubj.errors }"></textarea>
+                            <div *ngIf=" submitted && f.agendaItemSubj.errors" class="invalid-feedback">
+                                <div *ngIf=" submitted && f.agendaItemSubj.errors.required">
+                                    Please Enter Agenda Item Subject
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <label class="control-label col-md-10 ">Agenda Matters</label>
+
+                            <textarea class="form-control" rows="5" placeholder="Agenda Matter *" formControlName="agendaMatter" [ngClass]="{ 'is-invalid':  submitted && f.agendaMatter.errors }"></textarea>
+                            <div *ngIf=" submitted && f.agendaMatter.errors" class="invalid-feedback">
+                                <div *ngIf=" submitted && f.agendaMatter.errors.required">
+                                    Please Enter Agenda Agenda Matter
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer" *ngIf="agendaDetails">
+                <button class="globalBtn submitBtn" [disabled]="agendaDetails.updateStatus!==true" (click)="updateAgenda()">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="deletModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content" *ngIf="agendaDetails">
+            <div class="modal-header" style="padding: 20px;border: none !important;">
+                <h5 class="modal-title headingValue">Delete Agenda</h5>
+                <button type="button" class="close" #deleteModal data-dismiss="modal">&times;</button>
+            </div>
+            <p style="margin-left: 20px;color: red" *ngIf="agendaDetails.updateStatus!==true">Agenda Delete is not possible as the Agenda got Finalized</p>
+            <hr style="margin: 0px !important;">
+            <div class="modal-body">
+                <p>Do you really want to delete agenda?</p>
+            </div>
+            <div class="modal-footer" *ngIf="agendaDetails">
+                <button [disabled]="agendaDetails.updateStatus!==true" type="button" class="globalBtn submitBtn" (click)="deleteAgenda()">Yes</button>
+                <button [disabled]="agendaDetails.updateStatus!==true" type="button" class="globalBtn clearBtn" data-dismiss="modal">No</button>
+
+            </div>
+        </div>
+    </div>
+</div>

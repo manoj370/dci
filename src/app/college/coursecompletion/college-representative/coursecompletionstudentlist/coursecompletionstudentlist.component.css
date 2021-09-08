@@ -1,0 +1,11 @@
+
+.aseticcolor{
+    color: red;
+}
+.badge-pill {
+    font-size: 12px !important;
+    height: 30px !important;
+    width: 130px !important;
+    border-radius: 4px !important;
+    padding-top: 10px !important;
+}

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>DCI</title>
+    <link rel="icon" type="image/x-icon" href="../favicion.png">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="./function.js"></script>
+</head>
+<style type="text/css">
+    input {
+        outline: 0;
+        border-width: 0 0 2px;
+        width: 100px;
+    }
+    
+    @page {
+        size: auto;
+        margin: 5mm;
+    }
+    
+    @media print {
+        #printPage {
+            display: none;
+        }
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $.ajax({
+            url: "http://localhost/profoma/JsonOutput.txt",
+            dataType: "text",
+            success: function(data) {
+                var data = JSON.parse(data);
+                console.log(data.sections)
+                render(data.sections);
+
+            }
+        });
+        $('#printPage').click(function() {
+            window.print();
+            return false;
+        });
+
+    });
+</script>
+
+<body>
+    <div class="row" style="padding-left: 15px; padding-right: 15px; margin-top: 42px">
+        <div class="col-md-10 text-right">
+            <h4 align="right">INSPECTION PROFORMA - 2018 ESTABLISHMENT OF NEW DENTAL COLLEGE</h4>
+            <hr width="50%" align="center" style="margin-top: 12px;border-top: 3px double #8c8b8b;">
+        </div>
+        <div class="col-md-2 text-right"><button class="btn btn-success btn-sm" id="printPage">Print</button></div>
+    </div>
+    <div class="container" style=" margin-left: 10px">
+        <div class="row">
+
+
+            <div class="col-md-10">
+                <div id="show_medicalattachment"></div>
+            </div>
+
+            <div class="col-md-12">
+                <p class="pl-3"><b>Hospital</b></p>
+                <hr width="10%" align="left" style="margin-left: 18px; margin-top: -12px;border-top: 3px double #8c8b8b;">
+                <div class="col-md-12" style="display: flex;">
+                    <div class="col-md-3" style="padding-left: 15px;margin-bottom: 12px;"><b>Number of Beds in Hospital</b></div>
+                    <div class="col-md-2 text-left"><span><b>Total :</b> <span id="bedsno"></span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-11">
+            <div id="show_department"></div>
+        </div>
+
+
+        <p class="pl-3"><b>Area Requirements (As per BIS/NABH)</b></p>
+        <hr width="10%" align="left" style="margin-left: 18px; margin-top: -12px;border-top: 3px double #8c8b8b;">
+        <div class="col-md-10">
+            <div id="show_areareq"></div>
+        </div>
+
+        <p class="pl-3"><b>Man Power Requirement - Medical Staff</b></p>
+        <hr width="10%" align="left" style="margin-left: 18px; margin-top: -12px;border-top: 3px double #8c8b8b;">
+
+        <div class="col-md-10">
+            <div id="show_medicalStaff"></div>
+        </div>
+
+        <p class="pl-3"><b>Man Power Requirement - Nursing Staff</b></p>
+        <hr width="10%" align="left" style="margin-left: 18px; margin-top: -12px;border-top: 3px double #8c8b8b;">
+        <div class="col-md-10">
+            <div id="show_nursingStaff"></div>
+        </div>
+
+        <p class="pl-3"><b>Man Power Requirement - Health Staff</b></p>
+        <hr width="10%" align="left" style="margin-left: 18px; margin-top: -12px;border-top: 3px double #8c8b8b;">
+        <div class="col-md-10">
+            <div id="show_healthStaff"></div>
+        </div>
+
+        <p class="pl-3"><b>Man Power Requirement - Engineering Staff</b></p>
+        <hr width="10%" align="left" style="margin-left: 18px; margin-top: -12px;border-top: 3px double #8c8b8b;">
+        <div class="col-md-10">
+            <div id="show_engineeringStaff"></div>
+        </div>
+
+        <p class="pl-3"><b>Man Power Requirement - Other Staff</b></p>
+        <hr width="10%" align="left" style="margin-left: 18px; margin-top: -12px;border-top: 3px double #8c8b8b;">
+        <div class="col-md-10">
+            <div id="show_otherStaff"></div>
+        </div>
+
+        <p class="pl-3"><b>Man Power Requirement - Administrative Staff</b></p>
+        <hr width="10%" align="left" style="margin-left: 18px; margin-top: -12px;border-top: 3px double #8c8b8b;">
+        <div class="col-md-10">
+            <div id="show_administrativeStaff"></div>
+        </div>
+
+        <p class="pl-3"><b>CLINICAL MATERIAL (No. of Patients) to be checked at the end of the OPD and filled by the Inspectors</b></p>
+        <hr width="10%" align="left" style="margin-left: 18px; margin-top: -12px;border-top: 3px double #8c8b8b;">
+        <div class="row" style="padding-left: 15px">
+            <div class="col-md-3">ATTACHED HOSPITAL Attendances</div>
+            <div class="row">
+                <div class="col-md-6">During Inspection:</div>
+                <div class="col-md-6" style="margin-bottom: 5px"><input type="text" name="" id="durinsp" style="text-align: right;"></div>
+                <div class="col-md-6">Average (Last 6 months):</div>
+                <div class="col-md-6"><input type="text" name="" id="avg_sixmonth" style="text-align: right;"></div>
+            </div>
+        </div>
+        <div class="row" style="padding-left: 15px; margin-top: 15px">
+            <div class="col-md-3">DENTAL COLLEGE HOSPITAL Attendances</div>
+            <div class="row">
+                <div class="col-md-6">During Inspection:</div>
+                <div class="col-md-6" style="margin-bottom: 5px"><input type="text" name="" id="denatal_durinsp" style="text-align: right;"></div>
+                <div class="col-md-6">Average (Last 6 months):</div>
+                <div class="col-md-6"><input type="text" name="" id="dental_avg_sixmonth" style="text-align: right;"></div>
+            </div>
+        </div>
+        <br>
+        <p class="pl-3"><b>NON-TEACHING STAFF/ MINISTERIAL STAFF</b></p>
+        <hr width="10%" align="left" style="margin-left: 18px; margin-top: -12px;border-top: 3px double #8c8b8b;">
+        <div class="col-md-10">
+            <div id="show_nonteachingStaff"></div>
+        </div>
+
+        <p class="pl-3"><b>CENTRAL LIBRARY</b></p>
+        <hr width="10%" align="left" style="margin-left: 18px; margin-top: -12px;border-top: 3px double #8c8b8b;">
+        <div class="col-md-10">
+            <div id="show_central_library"></div>
+        </div>
+        <br>
+        <p class="pl-3"><b>DENTAL CHAIRS / UNITS</b></p>
+        <hr width="10%" align="left" style="margin-left: 18px; margin-top: -12px;border-top: 3px double #8c8b8b;">
+        <div class="row" style="padding-left: 15px;">
+
+            <div class="row" style="padding-left: 15px; margin-bottom: 15px">
+                <div class="col-md-8">Electrical Dental Chairs Installed with all the attachments thereon (Required: *20 Dental Chairs) </div>
+                <div class="col-md-4" style="margin-bottom: 5px">: <input type="text" name="" id="denatal_chairs" style="text-align: right;"></div>
+                <div class="col-md-8">Whether all the chairs and units are functioning and electrically operated? </div>
+                <div class="col-md-4">: <input type="text" name="" id="dental_chair_unit" style="text-align: right;"></div>
+                <div class="col-md-8">Total No. of functional chairs </div>
+                <div class="col-md-4">: <input type="text" name="" id="dental_chair_no" style="text-align: right;"></div>
+            </div>
+        </div>
+        <br>
+        <p class="pl-3"><b>MAJOR EQUIPMENTS</b></p>
+        <hr width="10%" align="left" style="margin-left: 18px; margin-top: -12px;border-top: 3px double #8c8b8b;">
+        <p class="pl-3">DEPARTMENT: A. COMMON CLINIC </p>
+        <div class="col-md-10">
+            <div id="show_major_equ"></div>
+        </div>
+        <br>
+        <p class="pl-3"><b>DEPARTMENT : CONSERVATIVE DENTISTRY AND ENDODONTICS</b></p>
+        <hr width="10%" align="left" style="margin-left: 18px; margin-top: -12px;border-top: 3px double #8c8b8b;">
+        <div class="col-md-10">
+            <div id="show_conservative"></div>
+        </div>
+
+        <p class="pl-3"><b>DEPARTMENT: DENTAL ANATOMY, EMBRYOLOGY, ORAL HISTOLOGY AND 
+                        ORAL PATHOLOGY</b></p>
+        <hr width="10%" align="left" style="margin-left: 18px; margin-top: -12px;border-top: 3px double #8c8b8b;">
+        <p class="pl-3">AREA REQUIREMENTS </p>
+        <div class="col-md-10">
+            <div id="show_areareq_dental"></div>
+        </div>
+        <br>
+        <p class="pl-3"><b>EQUIPMENT REQUIREMENTS</b> </p>
+        <div class="col-md-10">
+            <div id="show_equipmentreq"></div>
+        </div>
+
+        <p class="pl-3"><b>CONSTRUCTED AREA -DENTAL COLLEGE BUILDING</b></p>
+        <hr width="10%" align="left" style="margin-left: 18px; margin-top: -12px;border-top: 3px double #8c8b8b;">
+        <div class="col-md-10">
+            <div id="show_constructedarea"></div>
+        </div>
+
+
+        <p class="pl-3"><b>STAFF QUARTERS (SEPARATE FROM HOSTEL)</b></p>
+        <hr width="10%" align="left" style="margin-left: 18px; margin-top: -12px;border-top: 3px double #8c8b8b;">
+        <div class="col-md-10">
+            <div id="show_staffquaters"></div>
+        </div>
+
+
+
+
+
+        <div class="col-md-10">
+            <div id="show_hostel"></div>
+        </div>
+
+        <p class="pl-3"><b>INFRASTRUCTURE & FUNCTIONAL REQUIREMENTS</b></p>
+        <hr width="10%" align="left" style="margin-left: 18px; margin-top: -12px;border-top: 3px double #8c8b8b;">
+        <p class="pl-3">(60% of the total constructed area should be completed before the start of college & total construction should be completed before the start of 3rd year) </p>
+        <div class="col-md-10">
+            <div id="show_infrastructure"></div>
+        </div>
+
+        <div class="col-md-10">
+            <div id="show_acadamicblock"></div>
+        </div>
+
+        <div class="col-md-10">
+            <div id="show_areareq_Anatomy"></div>
+        </div>
+        <div class="col-md-10">
+            <div id="show_equpreq_Anatomy"></div>
+        </div>
+        <div class="col-md-10">
+            <div id="show_departmentphy"></div>
+        </div>
+        <div class="col-md-10">
+            <div id="show_equpreqphy"></div>
+        </div>
+        <div class="col-md-10">
+            <div id="show_equpreqclinical"></div>
+        </div>
+        <div class="col-md-10">
+            <div id="show_departmentbioche"></div>
+        </div>
+        <div class="col-md-10">
+            <div id="show_landinfraDetails"></div>
+        </div>
+        <div class="col-md-10">
+            <div id="show_observations"></div>
+        </div>
+        <div class="col-md-10">
+            <div id="show_checkinspectorlist"></div>
+        </div>
+    </div>
+</body>
+
+</html>

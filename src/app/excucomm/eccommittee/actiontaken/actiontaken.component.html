@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <h5 class="headingValue" *ngIf="upcomingMeeting">Action Taken on Minutes of Preceding Meeting -
+                <span style="color: #000; font-size: 16px">Current EC Meeting Date
+                    :{{upcomingMeeting.meetingDate}}</span> </h5>
+            <hr>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group row" *ngIf="previousMeetings">
+                        <label class="control-label col-md-2">Previous Meeting Date : </label>
+                        <div class="col-sm-4">
+                            {{previousMeetings.meetingDate}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <form [formGroup]="commentsForm">
+                        <label class="control-label">Write Note <span class="text-danger">
+                                *</span></label>
+                        <div class="form-group">
+                            <div>
+                                <textarea formControlName="comments" placeholder="Write Note" cols="3" rows="5" class="form-control" [ngClass]="{ 'is-invalid':  submitted && f.comments.errors }"></textarea>
+                                <div *ngIf=" submitted && f.comments.errors" class="invalid-feedback">
+                                    <div *ngIf=" submitted && f.comments.errors.required">
+                                        Please Enter Comments
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <button class="globalBtn clearBtn" (click)="commentsForm.reset()">Reset</button>
+                    <button class="globalBtn forwardBtn" [disabled]="!commentsForm.valid" (click)="commented()">Submit</button>&nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

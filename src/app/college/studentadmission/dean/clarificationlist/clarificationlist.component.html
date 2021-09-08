@@ -1,0 +1,134 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-8">
+                    <h5 class="headingValue">Clarification List</h5>
+                </div>
+                <div class="col-md-4 text-right">
+                    <button type="button" class="btn btn-primary" href="#demo"
+                        data-toggle="collapse">Search</button>&nbsp;
+                </div>
+            </div>
+            <div id="demo" class="collapse">
+                <form [formGroup]="searchForm">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Academic Year:</label>
+                            <input type="text" class="form-control" placeholder="ccyy-yy"
+                                formControlName="academicyear" />
+                        </div>
+                        <div class="col-md-4">
+                            <label>Course:</label>
+                            <select class="form-control" class="form-control" formControlName="course"
+                                (change)="courseId($event.target.value)">
+                                <option value="" disabled selected>Select Course</option>
+                                <option *ngFor="let course of courseList" [value]="course.courseId">
+                                    {{course.courseName}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Specialisation:</label>
+                            <select class="form-control" formControlName="Specialisation"
+                                (change)="specialization($event.target.value)">
+                                <option value="" disabled selected>Select Specialisation</option>
+                                <option *ngFor="let specialization of specializations"
+                                    [value]="specialization.specialisationId">
+                                    {{specialization.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Student Name:</label>
+                            <input type="text" placeholder="Student Name" class="form-control" formControlName="name" />
+                        </div>
+                        <!-- <div class="col-md-4">
+                            <label>Student RollNumber:</label>
+                            <input type="text" placeholder="Student Roll Number" class="form-control"
+                                formControlName="rollnumber" />
+                        </div> -->
+                    </div><br>
+                    <div class="row">
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary" (click)="search()">Search</button>&nbsp;&nbsp;
+                            <button type="button" class="btn btn-danger" (click)="reset()">Reset</button>&nbsp;
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row" style="padding-top: 10px;padding-bottom: 50px;">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Student Name</th>
+                                    <th>Father Name</th>
+                                    <th>Course</th>
+                                    <th>Specialisation</th>
+                                    <th>Academic Year</th>
+                                    <th>NEET Percentile</th>
+                                    <th>Clarification Subject</th>
+                                    <th>Date Of Admission</th>
+                                    <!-- <th>Category</th> -->
+                                    <th>Status</th>
+                                    <th>Process History</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let data of clarificationList">
+                                <tr (click)="view(data)">
+                                    <td>{{data.studentAdmission.firstName | titlecase}}</td>
+                                    <td>{{data.studentAdmission.fatherName | titlecase}}</td>
+                                    <td>{{data.studentAdmission.collegeCourseOfferedSepcialisation.collegeSpecialisation.collegeCourse.courseName | titlecase}}
+                                    </td>
+                                    <td>{{data.studentAdmission.collegeCourseOfferedSepcialisation.collegeSpecialisation.name | titlecase}}
+                                    </td>
+                                    <td>{{data.studentAdmission.academicYear}}</td>
+                                    <td>{{data.studentAdmission.neetPercantage}}</td>
+                                    <td>{{data.clarificationSubject | titlecase}}</td>
+                                    <td>{{data.studentAdmission.admissionDate}}</td>
+                                    <td>
+                                        <span class="text-warning" style="color: white;"
+                                            *ngIf="data.studentStatus.statusName === 'UnderClarification'">{{data.studentStatus.statusName}}</span>
+                                        <span class="text-success" style="color: white;"
+                                            *ngIf="data.studentStatus.statusName === 'Clarified'">{{data.studentStatus.statusName}}</span>
+                                        <!-- <span class="badge badge-pill badge-warning" style="color: white;"
+                                        *ngIf="data.studentStatus.statusName === 'UnderClarification'">{{data.studentStatus.statusName}}</span>
+                                        <span class="badge badge-pill badge-success" style="color: white;"
+                                        *ngIf="data.studentStatus.statusName === 'Clarified'">{{data.studentStatus.statusName}}</span> -->
+                                    </td>
+                                    <td>
+                                        <a style="cursor: pointer;color: #2457A7;"
+                                            [routerLink]="['../processhistory', data.studentAdmission.admissionId]">Process
+                                            History</a>
+                                    </td>
+                                    <td style="text-align: center;"><span
+                                            *ngIf="data.studentStatus.statusName === 'UnderClarification'"><i
+                                                class="fas fa-edit" (click)="edit(data)"
+                                                style="color:#74AEB5"></i></span>&nbsp;
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="col-md-12 text-right" *ngIf="responsePageCount>1">
+                            <ul class="pagination float-right">
+                                <li class="page-item hoverActive"><a class="page-link " [class.my-class]="pageId === 0"
+                                        (click)="previ()"><i class="fas fa-chevron-left"> </i></a></li>
+                                <li class="page-item"><a class="page-link">{{pageId+1}}/{{responsePageCount}}</a></li>
+                                <li class="page-item hoverActive"><a class="page-link"
+                                        [class.my-class]="pageId+1 === responsePageCount" (click)="next()"><i
+                                            class="fas fa-chevron-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

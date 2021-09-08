@@ -1,0 +1,393 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+
+                <div class="col-md-4">
+                    <h5 class="headingValue">Other Section Dispatches</h5>
+
+                </div>
+
+
+            </div>
+
+
+            <hr>
+            <div class="row" style="padding-top: 10px;margin-bottom: 100px;">
+
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Dispatch No</th>
+                                    <!-- <th>Reference/File Number</th> -->
+                                    <th>Subject</th>
+                                    <th>Eng/Hin</th>
+                                    <th>Date</th>
+                                    <th>From Section</th>
+                                    <th>Action</th>
+
+
+                                </tr>
+                            </thead>
+                            <!-- <tbody>
+                                <tr>
+                                    <td>Mukesh</td>
+                                    <td>DCI/ARPL/BDS/01/2020-21 </td>
+                                    <td>13-08-2020</td>
+                                    <td>Admisstion BDS</td>
+                                    <td>
+                                        <i class="fas fa-edit" style="color:#74AEB5" title="View">
+                                        </i>&nbsp;
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>Rakesh</td>
+                                    <td>DCI/ARPL/MDS/01/2020-21 </td>
+                                    <td>20-08-2020</td>
+                                    <td>Admisstion MDS</td>
+                                    <td>
+                                        <i class="fas fa-edit" style="color:#74AEB5" title="View"
+                                        [routerLink]="['/main/internal/inbound/sectionincharge/OtherSecDispatchView/', 1]">
+
+                                        </i>&nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Abhinav</td>
+                                    <td>DCI/ARPL/BDS/02/2020-21 </td>
+                                    <td>02-08-2020</td>
+                                    <td>Admisstion BDS</td>
+                                    <td>
+                                        <i class="fas fa-edit" style="color:#74AEB5" title="View">
+                                        </i>&nbsp;
+
+                                    </td>
+
+
+                                </tr>
+                            </tbody> -->
+                            <tbody>
+                                <tr *ngFor="let list of sectionslist">
+                                    <!-- *ngFor="let list of sectionslist" -->
+                                    <td>{{list.dispatchNumber !==null ?(list.dispatchNumber) :'-'}}</td>
+                                    <td>{{list.subject}} </td>
+                                    <td>{{list.receiptLanguage.name}} </td>
+                                    <td>{{list.noteSheetDate}} </td>
+                                    <td>{{list.sectionName}} </td>
+                                     <!-- <td>12</td>
+                                    <td>Subject</td>
+                                    <td>Hindi</td>
+                                    <td>28-12-2020</td>
+                                    <td>ARPM</td> -->
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="globalBtn acceptBtn dropdown-toggle m-0" type="button" data-toggle="dropdown" (click)="workflowcode(list.workFlowCode)">Action
+                                                <span class="caret"></span></button>
+                                            <ul class="dropdown-menu">
+                                                <!-- <li><a  class="dropdown-item" style="cursor:pointer" (click)="viewPage(list.dispatchId)">Preview</a></li> -->
+                                                <li><a href="{{downloadUrl}}" class="dropdown-item" style="cursor:pointer" (click)="download(list.documentId)">Preview</a></li>
+                                                <li *ngIf="(roleName ==='Section Officer'||roleName ==='InspectionSectionOfficer'
+                                                ||roleName ==='AcademicSectionOfficer' ||roleName ==='AcademicAssistantSectionOfficer'
+                                                ||roleName ==='AESectionofficer'||roleName ==='AFAssistantSectionOfficer'||roleName ==='AFSectionOfficer' 
+                                                ||roleName ==='AFAssistantSectionOfficer'||roleName ==='LegalAssistantSectionOfficer')"> <a class="dropdown-item" data-toggle="modal" data-target="#askCorrectionModal"  style="cursor:pointer" *ngIf="showassign&&(list.fileNumStatus ===false)"  (click)="correctionUserList(list.ccFileTaggingId)">Assign</a></li>
+                                                <li> <a class="dropdown-item" data-toggle="modal" data-target="#myModal2" *ngIf="list.fileNumStatus ===false"  style="cursor:pointer"  (click)="tagFile(list.ccFileTaggingId)">Tag File</a></li>
+                                                <li> <a class="dropdown-item" data-toggle="modal"  style="cursor:pointer" *ngIf="list.fileNumStatus ===true" (click)="ccFiletaggingToCreateNoteSheet(list.ccFileTaggingId)">Create NoteSheet</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="myModal2">
+    <div class="modal-dialog modal-xl">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" (click)="reset()" #closeModal>&times;</button>
+            </div>
+
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Search With Existing File</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" (click)="reset()" aria-controls="profile" aria-selected="false">Create Reference/File Number</a>
+
+                </li>
+
+
+                <!-- <button type="button" class="close" data-dismiss="modal" #dismissModal>&times;</button> -->
+
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                    <div class="modal-body">
+                        <form [formGroup]="searchForm">
+                            <div class="row">
+                                <div class="col-md-3 form-group mb-1">
+                                    <label>File Number :</label>
+                                </div>
+                                <div class="col-md-6 form-group" >
+                                    <div class="form-group">
+                                        <div class="icon-addon" style="height: 0;">
+                                            <input type="text" placeholder="Enter File Number" class="form-control" formControlName="fileno">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 form-group mb-5" >
+                                    <button type="button" class="btn btn-primary" (click)="search()">Search</button>
+
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-md-12" *ngIf="showradio">
+                                <div class="table-responsive-sm">
+                                    <table class="table table-bordered table-hover">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>Select</th>
+                                                <th>Reference No/File No</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngFor="let existingfile of existingFilesList">
+                                            <tr>
+                                                <td> <input type="radio" name="optradio" (change)="tagFileNumToCCFile(existingfile)" #closeBtn></td>
+                                                <td>{{existingfile.dakDispatchFileNo}}</td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <br>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <h5 class="headingValue"> Reference/File Number</h5>
+                        </div>
+                    </div>
+                    <form [formGroup]="refForm">
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label>Section <span class="errorColor">*</span></label>
+                                <input type="textbox" class="form-control" readonly tabindex="0" formControlName="refSection">
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label>Sub Section <span class="errorColor">*</span></label>
+                                <select class="form-control" tabindex="1" formControlName="refSubSection" (change)="subSection($event.target.value)" [ngClass]="{ 'is-invalid': receipt.refSubSection.invalid && (receipt.refSubSection.dirty || receipt.refSubSection.touched) }">
+                                    <option value="" disabled selected style="color:orange">Select Sub Section</option>
+                                    <option *ngFor="let sec of subSectionList" [value]="sec.subSectionId">
+                                        {{sec.name}}
+                                    </option>
+
+                                </select>
+                                <div *ngIf="refForm.controls['refSubSection'].hasError('required') && refForm.controls['refSubSection'].touched" class="failed-validation" class="errorColor">
+                                    SubSection Required
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label>Category <span class="errorColor">*</span></label>
+                                <select class="form-control" formControlName="category" (change)="category($event.target.value)" [ngClass]="{ 'is-invalid': receipt.category.invalid && (receipt.category.dirty || receipt.category.touched) }">
+                                    <option value="" disabled selected style="color:orange">Select Category</option>
+                                    <option *ngFor="let category of categoriesList" [value]="category.fileCategoryId">
+                                        {{category.name}}
+                                    </option>
+                                
+                                </select>
+                                <div *ngIf="refForm.controls['category'].hasError('required') && refForm.controls['category'].touched" class="failed-validation" class="errorColor">
+                                    Category Required
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label>Sub Category <span class="errorColor">*</span></label>
+                                <select class="form-control" tabindex="3" formControlName="subCategory" [ngClass]="{ 'is-invalid': receipt.subCategory.invalid && (receipt.subCategory.dirty || receipt.subCategory.touched) }" (change)="subcategory($event.target.value)">
+                                        <option value="" disabled selected style="color:orange">Select Sub Category</option>
+                                        <option *ngFor="let subcategory of subcategoriesList" [value]="subcategory.fileSubCategoryId">
+                                            {{subcategory.name}}
+                                        </option>
+                                    
+                                    </select>
+                                <div *ngIf="refForm.controls['subCategory'].hasError('required') && refForm.controls['subCategory'].touched" class="failed-validation" class="errorColor">
+                                    Sub Category Required
+                                </div>
+
+                            </div>
+                            <div class="col-md-4 form-group" *ngIf="showcollege">
+                                <label>College <span class="errorColor">*</span></label>
+                                <select class="form-control" formControlName="college" tabindex="4" (change)="referenceValue($event.target.value)">
+                                            <option value="" disabled selected style="color:orange">Select College</option>
+                                            <option *ngFor="let college of collegeList" [value]="college.collegeId">
+                                                {{college.collegeName}}
+                                            </option>
+                                        </select>
+                                        <div *ngIf="refForm.controls['college'].hasError('required') && refForm.controls['college'].touched" class="failed-validation" class="errorColor">
+                                            College Required
+                                        </div>
+                            </div>
+                            <div class="col-md-4 form-group" *ngIf="showcollege">
+                                <label>Reference Id <span class="errorColor">*</span></label>
+                                <input type="text" readonly class="form-control" placeholder="Reference Id" tabindex="5" maxlength="30" formControlName="refCollegeId" tabindex="3" >
+                                <div *ngIf="refForm.controls['refCollegeId'].hasError('required') && refForm.controls['refCollegeId'].touched" class="failed-validation" class="errorColor">
+                                    Reference Id Required
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 form-group" *ngIf="showreference">
+                                <label>Reference </label>
+                                <select class="form-control"  readonly formControlName="reference" tabindex="4">
+                                    <option value="" disabled selected style="color:orange">Select Reference</option>
+                                    <option *ngFor="let reference of subcategoryReference" [value]="reference.fileSubCategoryReferenceId">
+                                        {{reference.name}}
+                                    </option>
+                                </select>
+                                </div>
+                            
+                            <div class="col-md-4 form-group" *ngIf="showreference">
+                                <label>Reference Id <span class="errorColor">*</span></label>
+                                <select class="form-control" formControlName="refSubjectId" tabindex="5"   (change)="referenceIdValue($event.target.value)">
+                                    <option value="" disabled selected style="color:orange">Select Reference Id</option>
+                                    <option *ngFor="let references of referenceValues" [value]="references.fileSubjectReferenceId">
+                                        {{references.shortName}}
+                                    </option>
+                                </select> 
+                                <div *ngIf="refForm.controls['refSubjectId'].hasError('required') && refForm.controls['refSubjectId'].touched" class="failed-validation" class="errorColor">
+                                    Reference Id Required
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4 form-group">
+                                <label>Academic Session/Financial year <span class="errorColor">*</span></label>
+                                <select class="form-control" formControlName="refAcademicYear" (click)="refno()" [ngClass]="{ 'is-invalid': receipt.refAcademicYear.invalid && (receipt.refAcademicYear.dirty || receipt.refAcademicYear.touched) }" (change)="changeAcademic($event.target.value)">
+                                    <option value="" disabled selected style="color:orange">Select</option>
+                                    <option>2021-22</option>
+                                    <option>2020-21</option>
+                                    <option>2019-20</option>
+                                    <option>2018-19</option>
+                                    <option>2017-18</option>
+                                    <option>2016-17</option>
+                                    <option>2015-16</option>
+                                    <option>2014-15</option>
+                                    <option>2013-14</option>
+                                    <option>2012-13</option>
+                                    <option>2011-12</option>
+                                    <option>2010-11</option>
+                                    <option>2009-10</option>
+                                </select>
+                                <div *ngIf="refForm.controls['refAcademicYear'].hasError('required') && refForm.controls['refAcademicYear'].touched" class="failed-validation" class="errorColor">
+                                    Academic Session/Financial year
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label>Year <span class="errorColor">*</span></label>
+                                <input type="text" class="form-control" placeholder="Year" tabindex="4" formControlName="refYear">
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label>Section Reference No/File No <span class="errorColor">*</span></label>
+                                <input type="text" class="form-control" placeholder="Section Reference" formControlName="refReferenceNumber" tabindex="7">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button class="btn btn-secondary" (click)="reset()">Reset</button>&nbsp;
+                                <button class="btn btn-success" [disabled]="!refForm.valid" data-dismiss="modal" (click)="updateNewFile()">Tag To File</button>&nbsp;
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Ask Correction Modal Starts -->
+<!-- Modal -->
+<div class="modal fade" id="askCorrectionModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title headingValue">Assign</h4>
+                <button type="button" class="close" #assignModal data-dismiss="modal"  (click)="resetFields()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="returnCorrection">
+                    <div class="row">
+                        <label>Select Designations <span class="aseticcolor">*</span></label>&nbsp;
+                        <select class="custom-select-sm" class="form-control" formControlName="designation" (change)="selectedCorrectionDesignation($event.target.value)" [ngClass]="{ 'is-invalid':  submitted && g.designation.errors }">
+                            <option value="" disabled selected style="color:orange">Select Designation</option>
+                            <option *ngFor="let sc of correctionDesignationList" [value]="sc">
+                                {{sc}}
+                            </option>
+                        </select>
+
+                        <div *ngIf=" submitted && g.designation.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && g.designation.errors.required">
+                              Designation Required
+                            </div>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <label>Select Person <span class="aseticcolor">*</span></label>
+
+                        <select class="custom-select-sm" class="form-control" formControlName="person" (change)="personUserId($event.target.value)" [ngClass]="{ 'is-invalid':  submitted && g.person.errors }">
+                            <option value="" disabled selected style="color:orange">Select Person</option>
+                            <option *ngFor="let person of correctionPersonList" [value]="person.userId">
+                                {{person.firstName}}
+                            </option>
+                        </select>
+                        <div *ngIf=" submitted && g.person.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && g.person.errors.required">
+                              Person Required
+                            </div>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <label>Comments <span class="aseticcolor">*</span></label>
+                        <textarea class="form-control" rows="5" cols="20" placeholder="Write Comment" formControlName="comment" [ngClass]="{ 'is-invalid':  submitted && g.comment.errors }"></textarea>
+                        <div *ngIf=" submitted && g.comment.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && g.comment.errors.required">
+                              Comments Required
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="globalBtn acceptBtn" style="width: 170px;" [disabled]="!returnCorrection.valid" (click)="assignCCFile()">Assign</button>
+                <button type="button" class="globalBtn clearBtn" data-dismiss="modal" (click)="resetFields()">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Ask Correction Modal Ends -->

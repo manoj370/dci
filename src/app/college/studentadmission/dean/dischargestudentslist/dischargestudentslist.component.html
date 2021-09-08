@@ -1,0 +1,165 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+           
+            <div class="row">
+                <div class="col-md-8">
+                    <h5 class="headingValue">Discharged Students List</h5>
+                </div>
+               
+                <div class="col-md-4 text-right">
+                    <button type="button" class="btn btn-primary"  href="#demo"
+                    data-toggle="collapse">Search</button>&nbsp;
+                    <!-- <div class="form-group">
+                        <div class="icon-addon" style="height: 0;">
+                            <label class="fas fa-search iconValue"></label>
+                            <input type="text" placeholder="Search" class="form-control" href="#demo"
+                                data-toggle="collapse">
+
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+                <div id="demo" class="collapse">
+                    <form [formGroup]="searchForm">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <label>Academic Year:</label>
+                            <input type="text" class="form-control" placeholder="ccyy-yy"
+                                formControlName="academicyear" />
+                        </div>
+                        <div class="col-md-4">
+                            <label>Course:</label>
+                            <select class="form-control" class="form-control" formControlName="course"
+                                (change)="courseId($event.target.value)">
+                                <option value="" disabled selected>Select Course</option>
+                                <option *ngFor="let course of courseList" [value]="course.courseId">
+                                    {{course.courseName}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Specialisation:</label>
+                            <select class="form-control" formControlName="Specialisation"
+                                (change)="specialization($event.target.value)">
+                                <option value="" disabled selected>Select Specialisation</option>
+                                <option *ngFor="let specialization of specializations"
+                                    [value]="specialization.specialisationId">
+                                    {{specialization.name}}</option>
+                            </select>
+                        </div>
+                       
+        
+                    </div>
+                    <div class="row">
+        
+                        <div class="col-md-4">
+                            <label>Student Name:</label>
+                            <input type="text" placeholder="Student Name" class="form-control" formControlName="name" />
+                        </div>
+                        <!-- <div class="col-md-4">
+                            <label>Student RollNumber:</label>
+                            <input type="text" placeholder="Student Roll Number" class="form-control"
+                                formControlName="rollnumber" />
+                        </div> -->
+                       
+                        <!-- <div class="col-md-3">
+                            <label>Status:</label>
+                            <select class="form-control" >
+                                <option value="" disabled selected>Select Status</option>
+                                <option value="Enrolled">Enrolled</option>
+                                <option value="UnderSrutiny">UnderSrutiny</option>
+                                <option value="Incapacitated">Incapacitated</option>
+                                <option value="Discharged">Discharged</option>
+                            </select>
+                        </div> -->
+                    </div><br>
+                    <div class="row">
+        
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-4">
+        
+                            <button type="button" class="btn btn-primary" (click)="search()">Search</button>&nbsp;&nbsp;
+                            <button type="button" class="btn btn-danger" (click)="reset()">Reset</button>&nbsp;
+        
+                        </div>
+        
+                        <div class="col-md-4">
+                        </div>
+        
+        
+        
+                    </div>
+                </form>
+                </div>
+           
+
+            <hr>
+            <!-- <div class="row">
+                <div class="col-md-8">
+                    <h5 class="headingValue">Discharged Students List</h5>
+                </div>
+                <div class="col-md-4 text-right">
+                    <div class="form-group">
+                        <div class="icon-addon" style="height: 0;">
+                            <input type="text" placeholder="Search" class="form-control searchValue">
+                            <label class="fas fa-search iconValue"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr> -->
+
+            <div class="row" style="padding-top: 10px;padding-bottom:50px;">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Father Name</th>
+                                    <th>Course</th>
+                                    <th>Specialisation</th>
+                                    <th>Academic Year</th>
+                                    <th>Neet Percentile</th>
+                                    <th>Date Of Admission</th>
+                                    <!-- <th>Process History</th> -->
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of studentsDischargeList" (click)="view(data)">
+                                    <td>{{data.firstName | titlecase}}</td>
+                                    <td>{{data.fatherName | titlecase}}</td>
+                                    <td>{{data.collegeCourseOfferedSepcialisation.collegeSpecialisation.collegeCourse.courseName | titlecase}}
+                                    </td>
+                                    <td>{{data.collegeCourseOfferedSepcialisation.collegeSpecialisation.name | titlecase}}</td>
+                                    <td>{{data.academicYear}}</td>
+                                    <td>{{data.neetPercantage}}</td>
+                                    <td>{{data.admissionDate}}</td>
+                                    <!-- <td><a href="#">History</a> </td> -->
+                                    <td><span class="text-danger" style="color: white;"*ngIf="data.studentStatus.statusName === 'Discharged'">{{data.studentStatus.statusName}}</span>
+                                        <span class="text-warning" style="color: white;"*ngIf="data.studentStatus.statusName === 'To_Be_Discharge'">{{data.studentStatus.statusName}}</span>
+                                                                     
+                                    </td> <span class="text-succes" style="color: white;"*ngIf="data.studentStatus.statusName === 'Agreed_To_Discharge'">{{data.studentStatus.statusName}}</span>
+                                    
+                                </tr>
+                               
+                            </tbody>
+                        </table>
+                        <div class="col-md-12 text-right" *ngIf="responsePageCount>1" >
+                            <ul class="pagination float-right">
+                                <li class="page-item hoverActive"><a class="page-link " [class.my-class]="pageId === 0" (click)="previ()"><i class="fas fa-chevron-left"> </i></a></li>
+                                <li class="page-item"><a class="page-link">{{pageId+1}}/{{responsePageCount}}</a></li>
+                                <li class="page-item hoverActive"><a class="page-link" [class.my-class]="pageId+1 === responsePageCount" (click)="next()"><i class="fas fa-chevron-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

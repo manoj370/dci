@@ -1,0 +1,131 @@
+<!-- <style>
+    th[sortable].asc:before {
+    content: '';
+    display: block;
+    background: url(https://image.flaticon.com/icons/png/512/36/36861.png) no-repeat;
+    background-size: 15px;
+    width: 22px;
+    height: 22px;
+    float: right;
+
+}
+th[sortable].desc:before {
+
+    content: '';
+    display: block;
+    background: url(https://image.flaticon.com/icons/png/512/36/36861.png) no-repeat;
+    background-size: 15px;
+    width: 22px;
+    height: 22px;
+    float: right;
+ 
+}
+</style> -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-8">
+                    <h5 class="headingValue">Correction Note Sheet List</h5>
+                </div>
+            </div>
+            <div>
+                <form [formGroup]="searchForm">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>From Date :</label>
+                            <input type="date" class="form-control" formControlName="fromDate" />
+                        </div>
+                        <div class="col-md-3">
+                            <label>To Date :</label>
+                            <input type="date" class="form-control" formControlName="toDate" />
+                        </div>
+                        <div class="col-md-3">
+                            <label>Status :</label>
+                            <select class="form-control" formControlName="status">
+                            <option value="" disabled selected style="color:orange">Select Status</option>
+                           <option *ngFor="let sc of correctionStatusList" [value]="sc">
+                                {{sc}}
+                            </option>
+                        </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Name :</label>
+                            <input type="text" placeholder="Name" class="form-control" formControlName="sender" />
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                   
+                        <div class="col-md-4">
+                            <button class="btn btn-primary acceptBtn" (click)="getCorrectionList()">Search</button>&nbsp;&nbsp;
+                            &nbsp;<button class="btn btn-danger clearBtn" (click)="resetSearch()">Reset</button>&nbsp;
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <hr>
+
+            <div class="row " style="padding-top: 10px;padding-bottom:50px; ">
+                <div class="col-md-12 ">
+                    <div class="table-responsive-sm ">
+                        <table class="table table-bordered table-hover ">
+                            <thead class="thead-light ">
+                                <tr>
+                                    <th sortable="createdDate" (sort)="onSort($event)">Date</th>
+                                    <!-- <th sortable="dakDispatchFileNos" (sort)="onSort($event)">File No.</th> -->
+                                    <th sortable="dfaSubject" (sort)="onSort($event)">Subject</th>
+                                    <th sortable="senderName" (sort)="onSort($event)">Sender Name</th>
+                                    <th sortable="dispatchConfidentialityType" (sort)="onSort($event)">Confidentiality</th>
+                                    <th sortable="statusName" (sort)="onSort($event)">Status</th>
+                                    <th >Action</th>
+                                   <!-- <th  *ngFor="let item of jsaConst.correctionTable " sortable="Date" (sort)="onSort($event)">{{item}}</th>  -->
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of allCorrectionList ">
+                                    <td>{{item.createdDate}} </td>
+                                    <!-- <td>{{item.dakDispatch.dakDispatchFileNos !==null ? (item.dakDispatch.dakDispatchFileNos.dakDispatchFileNo):'-'}}</td> -->
+                                    <td>{{item.dakDispatch.dfaSubject !== null ? (item.dakDispatch.dfaSubject) : '-'}}</td>
+                                    <td>{{item.dakDispatch.senderName !== null ? (item.dakDispatch.senderName) : '-'}}</td>
+                                    <td>{{item.dakDispatch.dispatchConfidentialityType !== null ? (item.dakDispatch.dispatchConfidentialityType.name) : '-'}}
+                                    </td>
+                                    <td><span class="text-success" style="color: white;"
+                                        *ngIf="item.dakStatus.statusName === 'Corrected'">{{item.dakStatus.statusName}}</span>
+                                        <span class="text-secondary" style="color: white;"
+                                            *ngIf="item.dakStatus.statusName === 'underCorrection'">Under Correction</span></td>
+                                    <!-- <td>
+                                        <span class="text-success" style="color: white;">
+                                            {{item.dakStatus !== null ? item.dakStatus :'-'}}
+                                        </span>
+                                    </td> -->
+                                    <!-- <td>
+                                        <span [ngClass]="item.dakStatus.statusName === 'Corrected' ? 'text-success': 'text-secondary'">
+                                            {{item.dakStatus !== null ? (item.dakStatus.statusName) : '-'}}
+                                        </span>
+                                    </td> -->
+                                    <td align="center">
+                                        <i class="fas fa-edit" title="Edit NoteSheet" style="color:#74AEB5" [routerLink]="['../correctionView',item.dakDispatch.dispatchId,item.dakStatus.statusName]"></i>
+
+                                        <!-- <i class="fas fa-pencil-alt " style="color:#74AEB5 " [routerLink]="[ '../correctionView', item.dakDispatch.dispatchId,item.whoAssignedUserId.userId] "></i> -->
+                                    </td>
+                                </tr>
+                                <tr *ngIf="allCorrectionList.length===0 ">
+                                    <td colspan="4" style="text-align: center;padding: 50px !important; ">No Data Available in Table</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-12 text-right " *ngIf="pageCount>1">
+                    <ul class="pagination float-right">
+                        <li class="page-item hoverActive"><a class="page-link " [class.my-class]="rowId === 0" (click)="previ()"><i class="fas fa-chevron-left"> </i></a></li>
+                        <li class="page-item"><a class="page-link">{{rowId+1}}/{{pageCount}}</a></li>
+                        <li class="page-item hoverActive"><a class="page-link" [class.my-class]="rowId+1 === pageCount" (click)="next()"><i class="fas fa-chevron-right"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,493 @@
+<!-- <div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="headingValue">Course Completion Form</h5>
+                </div>
+            </div>
+            <hr>
+            <form>
+             
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Apply For <span class="aseticcolor">*</span></label>
+                        <select class="form-control">
+                            <option value=""> Select </option>
+                            <option value="1">Ist year</option>
+                            <option value="2">2nd year</option>
+                            <option value="3">3rd year</option>
+                            <option value="4">4th year</option>
+                            <option value="3">Intern</option>
+                            <option value="4">Passed-out</option>
+                        </select>
+                    </div>
+                        <div class="col-md-6">
+                            <label class="text-dark-medium">Upload Student List</label>
+                            <input type="file" class="form-control-file">
+                        </div>
+                       
+                </div><br>
+                <div class="row">
+                    <label>Message <span class="aseticcolor">*</span></label>
+                    <textarea rows="5" cols="20" class="form-control"
+                        placeholder="Write Comments">Write Message</textarea>
+                </div><br>
+                <div class="row">
+                    <div class="col-sm-12 text-right">
+                        <button type="button" class="btn btn-primary">Save</button>&nbsp;
+                        <button type="button" class="btn btn-danger">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> -->
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+
+                <div class="col-md-4">
+                    <label>Course:</label>
+                    <select class="form-control">
+                        <option value="" disabled selected>Select Course </option>
+                        <option value="UG">UG</option>
+                        <option value="PG">PG</option>
+
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label>Specialisation:</label>
+                    <select class="form-control">
+                        <option value="" disabled selected>Select Specialisation </option>
+                        <option value="Prosthodontics">Prosthodontics</option>
+                      
+                    </select>
+                </div>
+                <!-- <div class="col-md-4">
+                    <label>Student Name/Student RollNumber :</label>
+                    <input type="text" placeholder="Student Name/Student RollNumber " class="form-control" />
+
+                </div> -->
+
+            </div>
+            <div class="row pt-3">
+
+                <div class="col-md-4">
+                    <label>Select Status:</label>
+                    <select class="form-control">
+                        <option>Select Status</option>
+                        <option value="3">Intern</option>
+                        <option value="4">Completed</option>
+                    </select>
+                </div>
+
+            </div><br>
+            <div class="row">
+
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+
+                    <button type="button" class="btn btn-primary">Search</button>&nbsp;&nbsp;
+                    <button type="button" class="btn btn-danger">Reset</button>&nbsp;
+
+                </div>
+
+                <div class="col-md-4">
+                </div>
+
+
+
+            </div>
+            <hr>
+            <div class="row">
+
+                <div class="col-md-10">
+                    <h5 class="headingValue">Course Completion - Manav Rachana Dental College - Telangana </h5>&nbsp;
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-sm btn-info">PassOut Selected Ones</button>
+                </div>
+
+            </div>
+            <hr>
+
+
+            <div class="row" style="padding-top: 10px;padding-bottom: 50px;">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th><input type="checkbox" name=""></th>
+                                    <th>Student Name</th>
+                                    <th>Roll No</th>
+                                    <th>Course</th>
+                                    <th>Specialisation</th>
+                                    <th>Last Pursuing Yr</th>
+                                    <th>Completion Date</th>
+                                    <th style="width:15%">Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- <tr>
+                                    <td>{{item.firstName}} {{item.lastName}}</td>
+                                    <td>{{item.studentNeetResultBDSDetails !== null ? (item.studentNeetResultBDSDetails.neetRollNO) : '-'}}</td>
+                                    <td>{{item.studentNeetResultBDSDetails !== null ? (item.studentNeetResultBDSDetails.course) :'-'}}</td>
+                                    <td>NA</td>
+                                    <td>{{item.admissionDate}}</td>
+                                    <td>{{item.academicYear}}</td>
+                                    <td><span class="text-primary">1st Year(static1)</span>
+                                    </td>
+                                </tr> -->
+                                <tr>
+                                    <td><input type="checkbox" name=""></td>
+                                    <td>N.P.SWATHI</td>
+                                    <td>(Enrollment No)</td>
+                                    <td>MDS</td>
+                                    <td>Oral Medicine and Radiology</td>
+                                    <td>3rd Yr</td>
+                                    <td>07-09-2020</td>
+                                    <!-- <td>3rd</td> -->
+                                    <td><span class="text-success">
+                                            Completed</span>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label data-toggle="modal" data-target="#Modallmds"><i class="fa fa-eye"></i></label>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" name=""></td>
+                                    <td>S.NEEHARIKA</td>
+                                    <td>(Enrollment No)</td>
+                                    <td>PG Diploma</td>
+                                    <td>Orthodontics</td>
+                                    <td>2nd Yr</td>
+                                    <td>06-09-2020</td>
+                                    <!--  <td>2nd</td> -->
+                                    <td><span class="text-success">Completed</span>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label data-toggle="modal" data-target="#Modallpg"><i class="fa fa-eye"></i></label>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" name=""></td>
+                                    <td>A.SRUJANA REDDY</td>
+                                    <td>(Enrollment No)</td>
+                                    <td>Diploma</td>
+                                    <td>Dental Hygienist</td>
+                                    <td>2nd Yr</td>
+                                    <td>05-09-2020</td>
+                                    <!-- <td>2nd</td> -->
+                                    <td><span class="text-success">Completed</span>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label data-toggle="modal" data-target="#Modallpg"><i class="fa fa-eye"></i></label>
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+
+
+                            </tbody>
+                        </table>
+                        <div class="modal" id="myModall" style="z-index: 99999999">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title headingValue">Progression Summary - <b style="color: #000">K.AJAY KUMAR - BDS</b></h4>
+                                        <button type="button" class="close" data-dismiss="modal" style="cursor: pointer;">&times;</button>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <div class="row">
+
+                                            <div class="table-responsive-sm" style="width: 100%;">
+                                                <div class="col-md-12">
+                                                    <table class="table table-bordered table-hover">
+                                                        <thead class="thead-light">
+                                                            <tr>
+                                                                <th>Pursuing Yr</th>
+                                                                <th>Start Date</th>
+                                                                <th>End Date</th>
+                                                                <th>Promotion Date</th>
+                                                                <th>Total Marks</th>
+                                                                <th>Marks Obtained</th>
+
+                                                                <th>Supporting Doc</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>1st Yr</td>
+                                                                <td>
+                                                                    01-07-16
+                                                                </td>
+                                                                <td>
+                                                                    06-05-17
+                                                                </td>
+                                                                <td>01-07-17</td>
+                                                                <td>250</td>
+                                                                <td>150</td>
+                                                                <td>NA</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>2nd Yr</td>
+                                                                <td>
+                                                                    01-07-17
+                                                                </td>
+                                                                <td>
+                                                                    06-05-18
+                                                                </td>
+                                                                <td>01-07-18</td>
+                                                                <td>250</td>
+                                                                <td>150</td>
+                                                                <td>NA</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>3rd Yr</td>
+                                                                <td>
+                                                                    01-07-18
+                                                                </td>
+                                                                <td>
+                                                                    06-05-19
+                                                                </td>
+                                                                <td>01-07-19</td>
+                                                                <td>250</td>
+                                                                <td>150</td>
+                                                                <td>NA</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>4th Yr</td>
+                                                                <td>
+                                                                    01-07-19
+                                                                </td>
+                                                                <td>
+                                                                    06-05-20
+                                                                </td>
+                                                                <td>11-07-20</td>
+                                                                <td>250</td>
+                                                                <td>150</td>
+                                                                <td>NA</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td>Intern</td>
+                                                                <td>
+                                                                    01-04-20
+                                                                </td>
+                                                                <td>06-08-20</td>
+                                                                <td>06-09-20</td>
+                                                                <td>NA</td>
+                                                                <td>NA</td>
+                                                                <td>View</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal" style="cursor: pointer;">Passout</button>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal" style="cursor: pointer;">Cancel</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- passoutmodal Ends -->
+
+
+
+                        </div>
+                        <div class="modal" id="Modallpg">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title headingValue">Progression Summary - <b style="color: #000">S.NEEHARIKA - PG Diploma</b></h4>
+                                        <button type="button" class="close" data-dismiss="modal" style="cursor: pointer;">&times;</button>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <div class="row">
+
+                                            <div class="table-responsive-sm" style="width: 100%;">
+                                                <div class="col-md-12">
+                                                    <table class="table table-bordered table-hover" style="">
+                                                        <thead class="thead-light">
+                                                            <tr>
+                                                                <th>Pursuing Yr</th>
+                                                                <th>Start Date</th>
+                                                                <th>End Date</th>
+                                                                <th>Promotion Date</th>
+                                                                <th>Total Marks</th>
+                                                                <th>Marks Obtained</th>
+
+
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>1st Yr</td>
+                                                                <td>
+                                                                    01-07-16
+                                                                </td>
+                                                                <td>06-05-17</td>
+                                                                <td>01-07-17</td>
+                                                                <td>250</td>
+                                                                <td>150</td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td>2nd Yr</td>
+                                                                <td>
+                                                                    01-07-17
+                                                                </td>
+                                                                <td>06-05-18</td>
+                                                                <td>01-07-18</td>
+                                                                <td>250</td>
+                                                                <td>150</td>
+
+                                                            </tr>
+
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal" style="cursor: pointer;">Passout
+                    </button>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal" style="cursor: pointer;">Cancel</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="modal" id="Modallmds">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title headingValue">Progression Summary - <b style="color: #000">N.P.SWATHI - MDS</b></h4>
+                                    <button type="button" class="close" data-dismiss="modal" style="cursor: pointer;">&times;</button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <div class="row">
+
+                                        <div class="table-responsive-sm" style="width: 100%;">
+                                            <div class="col-md-12">
+
+
+                                                <table class="table table-bordered table-hover" style="">
+                                                    <thead class="thead-light">
+                                                        <tr>
+
+                                                            <th>Pursuing Yr</th>
+                                                            <th>Start Date</th>
+                                                            <th>End Date</th>
+                                                            <th>Promotion Date</th>
+                                                            <th>Total Marks</th>
+                                                            <th>Marks Obtained</th>
+
+
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>1st Yr</td>
+                                                            <td>
+                                                                01-07-16
+                                                            </td>
+                                                            <td>06-05-17</td>
+                                                            <td>01-07-17</td>
+                                                            <td>250</td>
+                                                            <td>150</td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td>2nd Yr</td>
+                                                            <td>
+                                                                01-07-17
+                                                            </td>
+                                                            <td>06-05-18</td>
+                                                            <td>01-07-18</td>
+                                                            <td>250</td>
+                                                            <td>150</td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td>3rd Yr</td>
+                                                            <td>
+                                                                01-07-18
+                                                            </td>
+                                                            <td>06-05-19</td>
+                                                            <td>01-07-19</td>
+                                                            <td>250</td>
+                                                            <td>150</td>
+
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal" style="cursor: pointer;">Passout</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" style="cursor: pointer;">Cancel</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>

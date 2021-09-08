@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <h5 class="headingValue">ARPL Matters</h5>
+            <hr>
+            <div class="row" style="padding-top: 10px;padding-bottom: 50px;">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th *ngFor="let header of tableHeaders">{{header}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of arplMatterList">
+                                    <td>{{item.agendaCategroyItemRefNumber}}</td>
+                                    <td>{{item.agendaSubSectionDTO !== null ?(item.agendaSubSectionDTO.agendaSubSectionName) : '-'}}
+                                    </td>
+                                    <td>{{ item.agendaItemSubject !== null ?(item.agendaItemSubject) : '-' }}</td>
+                                    <td style="text-align: center;" [routerLink]="['../arplmatterview',item.agendaId, '6','ARPL']">
+                                        <i class="fas fa-edit" style="color:#74AEB5"></i>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="arplMatterList.length === 0">
+                                    <td colspan="4" style="text-align: center;padding: 50px !important;">No Data Available in Table
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-12 text-right" *ngIf="pageCount>1">
+                    <ul class="pagination float-right">
+                        <li class="page-item hoverActive"><a class="page-link " [class.my-class]="rowId === 0" (click)="previ()"><i class="fas fa-chevron-left"> </i></a></li>
+                        <li class="page-item"><a class="page-link">{{rowId+1}}/{{pageCount}}</a></li>
+                        <li class="page-item hoverActive"><a class="page-link" [class.my-class]="rowId+1 === pageCount" (click)="next()"><i class="fas fa-chevron-right"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

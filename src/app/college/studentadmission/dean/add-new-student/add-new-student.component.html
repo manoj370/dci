@@ -1,0 +1,927 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5 class="headingValue">Student Admission Form</h5>
+                </div>
+                <div class="col-md-8 text-right">
+                    <button type="button" *ngIf="showUpdateButton" class="btn btn-info backbtn" style="cursor: pointer;"
+                        data-toggle="modal" data-target="#myModall"><span>
+
+                        </span>&nbsp;Response To Clarification</button>&nbsp;
+                    <button type="button" (click)="back()" class="btn btn-primary backbtn"
+                        style="cursor: pointer;"><span><i class="fas fa-angle-left"></i></span>&nbsp;Back</button>
+                </div>
+            </div>
+            <hr>
+            <form [formGroup]="addStudentForm">
+
+                <div class="row" style="margin-bottom: 20px;">
+                    <div class="col-md-2">
+                        <label>Course <span class="aseticcolor">*</span>&nbsp;:</label>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-control" class="form-control" formControlName="course"
+                            [ngClass]="{ 'is-invalid': f.course.invalid && (f.course.dirty || f.course.touched) }"
+                            (change)="courseId($event.target.value)">
+                            <option value="" disabled selected>Select Course</option>
+                            <option *ngFor="let course of courseList" [value]="course.courseId">
+                                {{course.courseName}}</option>
+                        </select>
+                        <div *ngIf="addStudentForm.controls['course'].hasError('required') && addStudentForm.controls['course'].touched"
+                            class="failed-validation" class="errorColor">
+                            Course Required
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Specialisation <span class="aseticcolor">*</span>&nbsp;:</label>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-control" formControlName="Specialisation"
+                            (change)="specializationId($event.target.value)"
+                            [ngClass]="{ 'is-invalid': f.Specialisation.invalid && (f.Specialisation.dirty || f.Specialisation.touched) }">
+                            <option value="" disabled selected>Select Specialisation</option>
+                            <option *ngFor="let specialization of specializations"
+                                [value]="specialization.specialisationId">
+                                {{specialization.name}}</option>
+
+                        </select>
+                        <div *ngIf="addStudentForm.controls['Specialisation'].hasError('required') && addStudentForm.controls['Specialisation'].touched"
+                            class="failed-validation" class="errorColor">
+                            Specialisation Required
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <form [formGroup]="neetForm">
+                    <div *ngIf="showneetdetails">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>NEET Roll No.<span class="aseticcolor">*</span></label>
+                                <input type="text" placeholder="Enter Roll No" maxlength="9" class="form-control"
+                                    formControlName="neetrollNo"
+                                    [ngClass]="{ 'is-invalid': f.neetrollNo.invalid && (f.neetrollNo.dirty || f.neetrollNo.touched) }"
+                                    (keypress)="keyPress($event)">
+                                <div *ngIf="neetForm.controls['neetrollNo'].hasError('required') && neetForm.controls['neetrollNo'].touched"
+                                    class="failed-validation" class="errorColor">
+                                    NEET Roll No Required
+                                </div>
+                                <div *ngIf="neetForm.controls['neetrollNo'].hasError('maxlength')"
+                                    class="failed-validation" class="errorColor">
+                                    NEET Roll No should have maximum 9 characters
+                                </div>
+                                <div *ngIf="neetForm.controls['neetrollNo'].hasError('minlength')"
+                                    class="failed-validation" class="errorColor">
+                                    NEET Roll No should have minimum 9 characters
+                                </div>
+                                <div *ngIf="neetForm.controls['neetrollNo'].hasError('pattern')"
+                                    class="failed-validation" class="errorColor">
+                                    Invalid NEET Roll No
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Academic Year <span class="aseticcolor">*</span></label>
+                                <input type="text" placeholder="Academic Year" maxlength="9" class="form-control"
+                                    formControlName="academicYear" maxlength="9"
+                                    [ngClass]="{ 'is-invalid': f.academicYear.invalid && (f.academicYear.dirty || f.academicYear.touched) }">
+                                <div *ngIf="neetForm.controls['academicYear'].hasError('required') && neetForm.controls['academicYear'].touched"
+                                    class="failed-validation" class="errorColor">
+                                    Academic Year Required
+                                </div>
+                                <div *ngIf="neetForm.controls['academicYear'].hasError('pattern')"
+                                    class="failed-validation" class="errorColor">
+                                    Invalid Academic Year
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 ">
+                                <button type="button" class="btn btn-primary" style="position: absolute;
+                            top: 28px;" (click)="getNeetDetails()" [disabled]="!neetForm.valid">Search</button>
+
+                            </div>
+                            <div class="col-md-3">
+
+                            </div>
+                        </div><br>
+
+                        <hr>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Personal Information</h5>
+                    </div>
+                </div><br>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>First Name <span class="aseticcolor">*</span></label>
+                        <input type="text" placeholder="First Name" class="form-control" readonly formControlName="firstName"
+                            maxlength="70"
+                            [ngClass]="{ 'is-invalid': f.firstName.invalid && (f.firstName.dirty || f.firstName.touched) }">
+                        <div *ngIf="addStudentForm.controls['firstName'].hasError('required') && addStudentForm.controls['firstName'].touched"
+                            class="failed-validation" class="errorColor">
+                            First Name Required
+                        </div>
+                        <div *ngIf="addStudentForm.controls['firstName'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid First Name
+                        </div>
+
+                    </div>
+                    <div class="col-md-3">
+                        <label>Middle Name </label>
+                        <input type="text" placeholder="Middle Name" class="form-control" formControlName="middleName"
+                            maxlength="70"
+                            [ngClass]="{ 'is-invalid': f.middleName.invalid && (f.middleName.dirty || f.middleName.touched) }">
+                        <div *ngIf="addStudentForm.controls['middleName'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid Middle Name
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Last Name <span class="aseticcolor">*</span></label>
+                        <input type="text" placeholder="Last Name" class="form-control" formControlName="lastName"
+                            maxlength="70"
+                            [ngClass]="{ 'is-invalid': f.lastName.invalid && (f.lastName.dirty || f.lastName.touched) }">
+                        <div *ngIf="addStudentForm.controls['lastName'].hasError('required') && addStudentForm.controls['lastName'].touched"
+                            class="failed-validation" class="errorColor">
+                            Last Name Required
+                        </div>
+                        <div *ngIf="addStudentForm.controls['lastName'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid Last Name
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Father's Name <span class="aseticcolor">*</span></label>
+                        <input type="text" placeholder="Father's Name" class="form-control" readonly
+                            formControlName="fathersName" maxlength="70"
+                            [ngClass]="{ 'is-invalid': f.fathersName.invalid && (f.fathersName.dirty || f.fathersName.touched) }">
+                        <div *ngIf="addStudentForm.controls['fathersName'].hasError('required') && addStudentForm.controls['fathersName'].touched"
+                            class="failed-validation" class="errorColor">
+                            Father's Name Required
+                        </div>
+                        <div *ngIf="addStudentForm.controls['fathersName'].hasError('pattern')"
+                            class="failed-validation" class="errorColor">
+                            Invalid Father's Name
+                        </div>
+                    </div>
+
+                </div><br>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Gender <span class="aseticcolor">*</span></label>
+                        <select class="form-control" formControlName="gender" readonly
+                            [ngClass]="{ 'is-invalid': f.gender.invalid && (f.gender.dirty || f.gender.touched) }">
+                            <option value="">Please Select Gender *</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Others">Others</option>
+                        </select>
+                        <div *ngIf="addStudentForm.controls['gender'].hasError('required') && addStudentForm.controls['gender'].touched"
+                            class="failed-validation" class="errorColor">
+                            Gender Required
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Date Of Birth <span class="aseticcolor">*</span></label>
+                        <input type="date" placeholder="dd/mm/yyyy" class="form-control" formControlName="dob" readonly
+                            [ngClass]="{ 'is-invalid': f.dob.invalid && (f.dob.dirty || f.dob.touched) }">
+                        <div *ngIf="addStudentForm.controls['dob'].hasError('required') && addStudentForm.controls['dob'].touched"
+                            class="failed-validation" class="errorColor">
+                            Date Of Birth Required
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>E-Mail <span class="aseticcolor">*</span></label>
+                        <input type="email" placeholder="E-Mail" class="form-control" formControlName="email"
+                            maxlength="255"
+                            [ngClass]="{ 'is-invalid': f.email.invalid && (f.email.dirty || f.email.touched) }">
+                        <div *ngIf="addStudentForm.controls['email'].hasError('required') && addStudentForm.controls['email'].touched"
+                            class="failed-validation" class="errorColor">
+                            E-Mail Required
+                        </div>
+                        <div *ngIf="addStudentForm.controls['email'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid Email ID 
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Mobile Number <span class="aseticcolor">*</span></label>
+                        <input type="text" placeholder="Enter Mobile Number" class="form-control"
+                            formControlName="mobileNumber" maxlength="10"
+                            [ngClass]="{ 'is-invalid': f.mobileNumber.invalid && (f.mobileNumber.dirty || f.mobileNumber.touched) }"
+                            (keypress)="keyPress($event)"
+                            data-validation-error-msg='Phone number is required'  data-validation-regexp="^[2-9][0-9]*$" data-validation="required length number custom" data-validation-length="10-10"
+                            >
+                        <div *ngIf="addStudentForm.controls['mobileNumber'].hasError('required') && addStudentForm.controls['mobileNumber'].touched"
+                            class="failed-validation" class="errorColor">
+                            Contact Number Required
+                        </div>
+                        <!-- <div *ngIf="addStudentForm.controls['mobileNumber'].hasError('maxlength')"
+                            class="failed-validation" class="errorColor">
+                            Contact number should have maximum 10 characters
+                        </div>
+                        <div *ngIf="addStudentForm.controls['mobileNumber'].hasError('minlength')"
+                            class="failed-validation" class="errorColor">
+                            Contact number should have minimum 10 characters
+                        </div> -->
+                        <div *ngIf="addStudentForm.controls['mobileNumber'].hasError('pattern')"
+                            class="failed-validation" class="errorColor">
+                            Contact number should have starts with 9,8,7,6 and length 10 Digits
+                        </div>
+                    </div>
+
+                </div><br>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Alternate Mobile Number</label>
+                        <input type="text" placeholder="Enter Alternate Mobile Number" maxlength="10"
+                            class="form-control" formControlName="alternatemobileNumber"
+                            [ngClass]="{ 'is-invalid': f.alternatemobileNumber.invalid && (f.alternatemobileNumber.dirty || f.alternatemobileNumber.touched) }"
+                            (keypress)="keyPress($event)"
+                            data-validation-error-msg='Phone number is required'  data-validation-regexp="^[2-9][0-9]*$" data-validation="required length number custom" data-validation-length="10-10"
+ >
+                        <!-- <div *ngIf="addStudentForm.controls['alternatemobileNumber'].hasError('maxlength')"
+                            class="failed-validation" class="errorColor">
+                            Contact number should have maximum 10 characters
+                        </div>
+                        <div *ngIf="addStudentForm.controls['alternatemobileNumber'].hasError('minlength')"
+                            class="failed-validation" class="errorColor">
+                            Contact number should have minimum 10 characters
+                        </div> -->
+                        <div *ngIf="addStudentForm.controls['alternatemobileNumber'].hasError('pattern')"
+                            class="failed-validation" class="errorColor">
+                            Contact number should have starts with 9,8,7,6 and length 10 Digits
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Handicap Status <span class="aseticcolor">*</span></label>
+                        <select class="form-control" formControlName="handicapStatus"
+                            [ngClass]="{ 'is-invalid': f.handicapStatus.invalid && (f.handicapStatus.dirty || f.handicapStatus.touched) }">
+                            <option value="" selected disabled>Select Status</option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                        <div *ngIf="addStudentForm.controls['handicapStatus'].hasError('required') && addStudentForm.controls['handicapStatus'].touched"
+                            class="failed-validation" class="errorColor">
+                            Handicap Status Required
+                        </div>
+
+                    </div>
+                    <div class="col-md-3">
+                        <label>Nationality <span class="aseticcolor">*</span></label>
+                        <input type="text" placeholder="Nationality" class="form-control" formControlName="nationality"
+                            maxlength="20"
+                            [ngClass]="{ 'is-invalid': f.nationality.invalid && (f.nationality.dirty || f.nationality.touched) }">
+                        <div *ngIf="addStudentForm.controls['nationality'].hasError('required') && addStudentForm.controls['nationality'].touched"
+                            class="failed-validation" class="errorColor">
+                            Nationality Required
+                        </div>
+                        <div *ngIf="addStudentForm.controls['nationality'].hasError('pattern')"
+                            class="failed-validation" class="errorColor">
+                            Invalid Nationality
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Aadhar</label>
+                        <input type="text" placeholder="Aadhar" class="form-control" formControlName="aadhar"
+                            maxlength="12"
+                            [ngClass]="{ 'is-invalid': f.aadhar.invalid && (f.aadhar.dirty || f.aadhar.touched) }"
+                            (keypress)="keyPress($event)">
+                        <div *ngIf="addStudentForm.controls['aadhar'].hasError('maxlength')" class="failed-validation"
+                            class="errorColor">
+                            Aadhar should have maximum 12 characters
+                        </div>
+                        <div *ngIf="addStudentForm.controls['aadhar'].hasError('minlength')" class="failed-validation"
+                            class="errorColor">
+                            Aadhar should have minimum 12 characters
+                        </div>
+                        <div *ngIf="addStudentForm.controls['aadhar'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid Aadhar
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Category <span class="aseticcolor">*</span></label>
+                        <select class="form-control" formControlName="category" (change)="category($event.target.value)"
+                            [ngClass]="{ 'is-invalid': f.fathersName.invalid && (f.fathersName.dirty || f.fathersName.touched) }">
+                            <option value="" disabled selected>Select Category</option>
+                            <option *ngFor="let category of categoriesList" [value]="category.categoryId">
+                                {{category.categoryName}}</option>
+                        </select>
+                        <div *ngIf="addStudentForm.controls['category'].hasError('required') && addStudentForm.controls['category'].touched"
+                            class="failed-validation" class="errorColor">
+                            Category Name Required
+                        </div>
+                    </div>
+
+                </div><br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Address Information<span *ngIf="showneetdetails">(Address as per NEET
+                                Exam)</span></h5>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <label>Country <span class="aseticcolor">*</span></label>
+                        <select class="form-control" formControlName="country" (change)="getStates($event.target.value)"
+                            [ngClass]="{ 'is-invalid': f.country.invalid && (f.country.dirty || f.country.touched) }">
+                            <option value="" disabled selected>Select Country</option>
+                            <option *ngFor="let country of countries" [value]="country.countryId">
+                                {{country.countryName}}</option>
+                        </select>
+                        <div *ngIf="addStudentForm.controls['country'].hasError('required') && addStudentForm.controls['country'].touched"
+                            class="failed-validation" class="errorColor">
+                            Country Required
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>State <span class="aseticcolor">*</span></label>
+                        <select class="form-control" formControlName="state" (change)="getCities($event.target.value)"
+                            [ngClass]="{ 'is-invalid': f.state.invalid && (f.state.dirty || f.state.touched) }">
+                            <option value="" disabled>Select State</option>
+                            <option *ngFor="let states of statesList" [value]="states.stateId">
+                                {{states.stateName}}</option>
+                        </select>
+                        <div *ngIf="addStudentForm.controls['state'].hasError('required') && addStudentForm.controls['state'].touched"
+                            class="failed-validation" class="errorColor">
+                            State Required
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>City <span class="aseticcolor">*</span></label>
+                        <select class="form-control" formControlName="city"
+                            [ngClass]="{ 'is-invalid': f.city.invalid && (f.city.dirty || f.city.touched) }">
+                            <option value="" disabled selected>Select City</option>
+                            <option *ngFor="let city of citiesList" [value]="city.cityId">
+                                {{city.cityName}}</option>
+                        </select>
+                        <div *ngIf="addStudentForm.controls['city'].hasError('required') && addStudentForm.controls['city'].touched"
+                            class="failed-validation" class="errorColor">
+                            City Required
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Address Line 1 <span class="aseticcolor">*</span></label>
+                        <input type="text" placeholder="line 1" class="form-control" formControlName="line1"
+                            [ngClass]="{ 'is-invalid': f.line1.invalid && (f.line1.dirty || f.line1.touched) }">
+                        <div *ngIf="addStudentForm.controls['line1'].hasError('required') && addStudentForm.controls['line1'].touched"
+                            class="failed-validation" class="errorColor">
+                            Address Line 1 Required
+                        </div>
+                        <div *ngIf="addStudentForm.controls['line1'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid Address Line 1
+                        </div>
+                    </div>
+                </div><br>
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <label>Address Line 2 </label>
+                        <input type="text" placeholder="line 2" class="form-control" formControlName="line2">
+                        <div *ngIf="addStudentForm.controls['line2'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid Address Line 2
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Pin Code <span class="aseticcolor">*</span></label>
+                        <input type="text" placeholder="Pin Code" class="form-control" formControlName="pincode"
+                            maxlength="6"
+                            [ngClass]="{ 'is-invalid': f.pincode.invalid && (f.pincode.dirty || f.pincode.touched) }">
+                        <div *ngIf="addStudentForm.controls['pincode'].hasError('required') && addStudentForm.controls['pincode'].touched"
+                            class="failed-validation" class="errorColor">
+                            PinCode Required
+                        </div>
+                        <div *ngIf="addStudentForm.controls['pincode'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid PinCode
+                        </div>
+                    </div>
+                </div><br>
+                <!-- <h6>IF PRESENT ADDRESS IS PERMANENT ADDRESS</h6> -->
+                <div class="row">
+                    <div class="col-md-3">
+                        <h5>Corresponding Address</h5>
+                    </div>
+                    <div class="col-md-6 text-left" style="margin-top: 2px;">
+                        <input type="checkbox" id="vehicle1" name="addres" (change)="checkbox($event)">&nbsp;
+                        <label for="address">Same As Permenant Address</label>
+                    </div>
+
+                </div>
+                <hr>
+                <div class="row" *ngIf="this.show">
+
+                    <div class="col-md-3">
+                        <label>Country <span class="aseticcolor">*</span></label>
+                        <select class="form-control" formControlName="countryy"
+                            (change)="getStates($event.target.value)"
+                            [ngClass]="{ 'is-invalid': f.countryy.invalid && (f.countryy.dirty || f.countryy.touched) }">
+                            <option value="" disabled selected>Select Country</option>
+                            <option *ngFor="let country of countries" [value]="country.countryId">
+                                {{country.countryName}}</option>
+                        </select>
+                        <div *ngIf="addStudentForm.controls['countryy'].hasError('required') && addStudentForm.controls['countryy'].touched"
+                            class="failed-validation" class="errorColor">
+                            Country Required
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>State <span class="aseticcolor">*</span></label>
+                        <select class="form-control" formControlName="statee" (change)="getCities($event.target.value)"
+                            [ngClass]="{ 'is-invalid': f.statee.invalid && (f.statee.dirty || f.statee.touched) }">
+                            <option value="" disabled>Select State</option>
+                            <option *ngFor="let states of statesList" [value]="states.stateId">
+                                {{states.stateName}}</option>
+                        </select>
+                        <div *ngIf="addStudentForm.controls['statee'].hasError('required') && addStudentForm.controls['statee'].touched"
+                            class="failed-validation" class="errorColor">
+                            State Required
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>City <span class="aseticcolor">*</span></label>
+                        <select class="form-control" formControlName="cityy"
+                            [ngClass]="{ 'is-invalid': f.cityy.invalid && (f.cityy.dirty || f.cityy.touched) }">
+                            <option value="" disabled selected>Select City</option>
+                            <option *ngFor="let city of citiesList" [value]="city.cityId">
+                                {{city.cityName}}</option>
+                        </select>
+                        <div *ngIf="addStudentForm.controls['cityy'].hasError('required') && addStudentForm.controls['cityy'].touched"
+                            class="failed-validation" class="errorColor">
+                            City Required
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Address Line 1 <span class="aseticcolor">*</span></label>
+                        <input type="text" placeholder="line 1" class="form-control" formControlName="cline1"
+                            maxlength="70"
+                            [ngClass]="{ 'is-invalid': f.cline1.invalid && (f.cline1.dirty || f.cline1.touched) }">
+                        <div *ngIf="addStudentForm.controls['cline1'].hasError('required') && addStudentForm.controls['cline1'].touched"
+                            class="failed-validation" class="errorColor">
+                            Address Line 1 Required
+                        </div>
+                        <div *ngIf="addStudentForm.controls['cline1'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid Address Line 1
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row" *ngIf="this.show">
+
+                    <div class="col-md-3">
+                        <label>Address Line 2 </label>
+                        <input type="text" placeholder="line 2" class="form-control" formControlName="cline2"
+                            maxlength="70">
+                        <div *ngIf="addStudentForm.controls['cline2'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid Address Line 2
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Pin Code <span class="aseticcolor">*</span></label>
+                        <input type="text" placeholder="Pin Code" class="form-control" formControlName="pincodee"
+                            maxlength="6"
+                            [ngClass]="{ 'is-invalid': f.pincode.invalid && (f.pincodee.dirty || f.pincodee.touched) }"
+                            formControlName="pincodee">
+                        <div *ngIf="addStudentForm.controls['pincodee'].hasError('required') && addStudentForm.controls['pincodee'].touched"
+                            class="failed-validation" class="errorColor">
+                            PinCode Required
+                        </div>
+                        <div *ngIf="addStudentForm.controls['pincodee'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid PinCode
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Academic Information</h5>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+
+
+                    <div class="col-md-3" *ngIf="showneetdetails">
+                        <label>NEET Score <span class="aseticcolor">*</span></label>
+                        <input type="text" placeholder="Enter Score" class="form-control" maxlength="3" readonly
+                            [ngClass]="{ 'is-invalid': f.neetScore.invalid && (f.neetScore.dirty || f.neetScore.touched) }"
+                            formControlName="neetScore">
+                        <div *ngIf="addStudentForm.controls['neetScore'].hasError('required') && addStudentForm.controls['neetScore'].touched"
+                            class="failed-validation" class="errorColor">
+                            NEET Score Required
+                        </div>
+                        <div *ngIf="addStudentForm.controls['neetScore'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid NEET Score
+                        </div>
+                    </div>
+                    <div class="col-md-3" *ngIf="showneetdetails">
+                        <label>NEET Percentile <span class="aseticcolor">*</span></label>
+                        <input type="text" placeholder="Enter %" class="form-control" maxlength="10" readonly
+                            (blur)="neetPercentileValidation($event.target.value)"
+                            [ngClass]="{ 'is-invalid': f.neetPercentile.invalid && (f.neetPercentile.dirty || f.neetPercentile.touched) }"
+                            formControlName="neetPercentile">
+                        <div *ngIf="addStudentForm.controls['neetPercentile'].hasError('required') && addStudentForm.controls['neetPercentile'].touched"
+                            class="failed-validation" class="errorColor">
+                            NEET Percentile Required
+                        </div>
+                        <div *ngIf="addStudentForm.controls['neetPercentile'].hasError('pattern')"
+                            class="failed-validation" class="errorColor">
+                            Invalid NEET Percentile
+                        </div>
+                        <div *ngIf="showNeetPercentile" class="failed-validation" class="errorColor">
+                            Maximum Greaterthan 50
+                        </div>
+                        <div *ngIf="showNeetobcPercentile" class="failed-validation" class="errorColor">
+                            Maximum Greaterthan 40
+                        </div>
+                    </div>
+                    <div class="col-md-3" *ngIf="this.showdetails">
+                        <label>+2 English <span class="aseticcolor">*</span></label>
+                        <select class="form-control" formControlName="english"
+                            (blur)="subjectValidation($event.target.value)"
+                            [ngClass]="{ 'is-invalid': f.english.invalid && (f.english.dirty || f.english.touched) }">
+                            <option value="">Select</option>
+                            <option value="pass">Pass</option>
+                            <option value="fail">Fail</option>
+                        </select>
+                        <div *ngIf="addStudentForm.controls['english'].hasError('required') && addStudentForm.controls['english'].touched"
+                            class="failed-validation" class="errorColor">
+                            +2 English Required
+                        </div>
+                        <div *ngIf="showErrorForEnglish" class="failed-validation" class="errorColor">
+                            English pass Must
+                        </div>
+                    </div>
+                    <div class="col-md-3" *ngIf="showdetails">
+                        <label>+2 PCB(Average) <span class="aseticcolor">*</span></label>
+                        <input type="text" placeholder="Enter %" class="form-control" maxlength="2"
+                            formControlName="pcbaverage" (blur)="pcbValidation($event.target.value)"
+                            [ngClass]="{ 'is-invalid': f.pcbaverage.invalid && (f.pcbaverage.dirty || f.pcbaverage.touched) }">
+                        <div *ngIf="addStudentForm.controls['pcbaverage'].hasError('required') && addStudentForm.controls['pcbaverage'].touched"
+                            class="failed-validation" class="errorColor">
+                            +2 PCB(Average) Required
+                        </div>
+                        <div *ngIf="showErrorForPcb" class="failed-validation" class="errorColor">
+                            Maximum Greaterthan 50
+                        </div>
+                        <div *ngIf="showErrorobcForPcb" class="failed-validation" class="errorColor">
+                            Maximum Greaterthan 40
+                        </div>
+                        <div *ngIf="addStudentForm.controls['pcbaverage'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid +2 PCB(Average)
+                        </div>
+                    </div>
+
+                </div><br>
+                <div class="row">
+                    <div class="col-md-3" *ngIf="showdetails">
+                        <label>+2 Status <span class="aseticcolor">*</span></label>
+
+                        <select class="form-control" formControlName="tenthstatus"
+                            [ngClass]="{ 'is-invalid': f.tenthstatus.invalid && (f.tenthstatus.dirty || f.tenthstatus.touched) }">
+                            <option value="">Please Select Status</option>
+                            <option value="pass">Pass</option>
+                            <option value="fail">Fail</option>
+                        </select>
+                        <div *ngIf="addStudentForm.controls['tenthstatus'].hasError('required') && addStudentForm.controls['tenthstatus'].touched"
+                            class="failed-validation" class="errorColor">
+                            +2 Status Required
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3" *ngIf="mdsdetails">
+                        <label>BDS <span class="aseticcolor">*</span></label>
+                        <select class="form-control" (change)="selectingAgainst($event.target.value)"
+                            formControlName="bdsstatus"
+                            [ngClass]="{ 'is-invalid': f.bdsstatus.invalid && (f.bdsstatus.dirty || f.bdsstatus.touched) }">
+                            <option value="">Please Select Status</option>
+                            <option value="1">Passed</option>
+                            <option value="2">Pursuing</option>
+                        </select>
+                        <div *ngIf="addStudentForm.controls['bdsstatus'].hasError('required') && addStudentForm.controls['bdsstatus'].touched"
+                            class="failed-validation" class="errorColor">
+                            BDS Status Required
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" *ngIf="mdsdetails">
+                        <label>Select College <span class="aseticcolor">*</span></label>
+                        <select class="form-control" formControlName="college"
+                            [ngClass]="{ 'is-invalid': f.college.invalid && (f.college.dirty || f.college.touched) }">
+                            <option value="">Please Select College</option>
+                            <option *ngFor="let college of collegeslist" [value]="college.collegeId">
+                                {{college.collegeName}}</option>
+                        </select>
+                        <div *ngIf="addStudentForm.controls['college'].hasError('required') && addStudentForm.controls['college'].touched"
+                            class="failed-validation" class="errorColor">
+                            College Required
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" *ngIf="mdsdetails">
+                        <label>Select University <span class="aseticcolor">*</span></label>
+                        <select class="form-control" formControlName="university"
+                            [ngClass]="{ 'is-invalid': f.university.invalid && (f.university.dirty || f.university.touched) }">
+                            <option value="">Please Select University</option>
+                            <option *ngFor="let university of universitiesList" [value]="university.universityId">
+                                {{university.universityName}}</option>
+                        </select>
+                        <div *ngIf="addStudentForm.controls['university'].hasError('required') && addStudentForm.controls['university'].touched"
+                            class="failed-validation" class="errorColor">
+                            University Required
+                        </div>
+                    </div>
+                    <div class="col-md-3" *ngIf="mdsdetails">
+                        <label>Passing Year <span class="aseticcolor">*</span></label>
+                        <input type="text" placeholder="ccyy" class="form-control" maxlength="4"
+                            formControlName="passingYear"
+                            [ngClass]="{ 'is-invalid': f.passingYear.invalid && (f.passingYear.dirty || f.passingYear.touched) }">
+                        <div *ngIf="addStudentForm.controls['passingYear'].hasError('required') && addStudentForm.controls['passingYear'].touched"
+                            class="failed-validation" class="errorColor">
+                            Passing Year Required
+                        </div>
+                        <div *ngIf="addStudentForm.controls['passingYear'].hasError('pattern')"
+                            class="failed-validation" class="errorColor">
+                            Invalid Passing Year
+                        </div>
+                    </div>
+
+                </div><br>
+                <div class="row" *ngIf="universitydropdown && !diplomadetails &&!showdetails">
+
+                    <div class="col-md-3">
+                        <label>BDS Percentile <span class="aseticcolor">*</span></label>
+                        <input type="text" placeholder="Enter %" class="form-control" maxlength="2"
+                            formControlName="bdspercent"
+                            [ngClass]="{ 'is-invalid': f.bdspercent.invalid && (f.bdspercent.dirty || f.bdspercent.touched) }" />
+                        <div *ngIf="addStudentForm.controls['bdspercent'].hasError('required') && addStudentForm.controls['bdspercent'].touched"
+                            class="failed-validation" class="errorColor">
+                            BDS Percentile Required
+                        </div>
+                        <div *ngIf="addStudentForm.controls['bdspercent'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid BDS Percentile
+                        </div>
+
+                    </div>
+                    <div class="col-md-3">
+                        <label>State Dental Council <span class="aseticcolor">*</span></label>
+                        <select class="form-control" formControlName="sdc"
+                            [ngClass]="{ 'is-invalid': f.sdc.invalid && (f.sdc.dirty || f.sdc.touched) }">
+                            <option value="">Select SDC</option>
+                            <option *ngFor="let sdc of sdcsList" [value]="sdc.sdcMasterId">
+                                {{sdc.sdcName}}</option>
+                        </select>
+
+                        <div *ngIf="addStudentForm.controls['sdc'].hasError('required') && addStudentForm.controls['sdc'].touched"
+                            class="failed-validation" class="errorColor">
+                            State Dental Council Required
+                        </div>
+
+                    </div>
+                    <div class="col-md-3">
+                        <label>Registration Number <span class="aseticcolor">*</span></label>
+                        <input type="text" placeholder="Enter Reg.No" class="form-control" maxlength="12"
+                            formControlName="regno"
+                            [ngClass]="{ 'is-invalid': f.regno.invalid && (f.regno.dirty || f.regno.touched) }">
+                        <div *ngIf="addStudentForm.controls['regno'].hasError('required') && addStudentForm.controls['regno'].touched"
+                            class="failed-validation" class="errorColor">
+                            Registration Number Required
+                        </div>
+                        <div *ngIf="addStudentForm.controls['regno'].hasError('pattern')" class="failed-validation"
+                            class="errorColor">
+                            Invalid Registration Number
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3" *ngIf="diplomadetails">
+                        <label>+2 Science <span class="aseticcolor">*</span></label>
+                        <select class="form-control" formControlName="science"
+                            [ngClass]="{ 'is-invalid': f.science.invalid && (f.science.dirty || f.science.touched) }">
+                            <option value="">Select</option>
+                            <option value="1">Pass</option>
+                            <option value="2">Fail</option>
+                        </select>
+                        <div *ngIf="addStudentForm.controls['science'].hasError('required') && addStudentForm.controls['science'].touched"
+                            class="failed-validation" class="errorColor">
+                            +2 Science Required
+                        </div>
+                    </div>
+
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Admission Information</h5>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Counselling Authority <span class="aseticcolor">*</span></label>
+                        <select class="form-control" formControlName="councellingauthorithy"
+                            [ngClass]="{ 'is-invalid': f.councellingauthorithy.invalid && (f.councellingauthorithy.dirty || f.councellingauthorithy.touched) }">
+                            <option value="" selected disabled>Select Counselling Authority</option>
+                            <option *ngFor="let counselling of counsellingauthoritiesList"
+                                [value]="counselling.stateId">
+                                {{counselling.dmeName}}</option>
+                        </select>
+                        <div *ngIf="addStudentForm.controls['councellingauthorithy'].hasError('required') && addStudentForm.controls['councellingauthorithy'].touched"
+                            class="failed-validation" class="errorColor">
+                            Counselling Authorithy Required
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Student Allotment Number</label>
+                        <input type="text" placeholder="Enter Allotment Number" class="form-control" maxlength="12"
+                            formControlName="studentallotmentno"
+                            [ngClass]="{ 'is-invalid': f.studentallotmentno.invalid && (f.studentallotmentno.dirty || f.studentallotmentno.touched) }"
+                            (keypress)="keyPress($event)">
+                        <!-- <div *ngIf="addStudentForm.controls['studentallotmentno'].hasError('required') && addStudentForm.controls['studentallotmentno'].touched"
+                        class="failed-validation" class="errorColor">
+                       Student Allotment Number
+                    </div> -->
+                        <div *ngIf="addStudentForm.controls['studentallotmentno'].hasError('maxlength')"
+                            class="failed-validation" class="errorColor">
+                            Student Allotment Number No should have maximum 12 characters
+                        </div>
+                        <div *ngIf="addStudentForm.controls['studentallotmentno'].hasError('minlength')"
+                            class="failed-validation" class="errorColor">
+                            Student Allotment Number No should have minimum 12 characters
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Student Allotment Date <span class="aseticcolor">*</span></label>
+                        <input type="date" placeholder="dd/mm/yyyy" [max]="today" class="form-control "
+                            formControlName="allotmentdate"
+                            [ngClass]="{ 'is-invalid': f.allotmentdate.invalid && (f.allotmentdate.dirty || f.allotmentdate.touched) }">
+                        <div *ngIf="addStudentForm.controls['allotmentdate'].hasError('required') && addStudentForm.controls['allotmentdate'].touched"
+                            class="failed-validation" class="errorColor">
+                            Student Allotment Date Required
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Admission Quota <span class="aseticcolor">*</span></label>
+                        <select class="form-control" class="form-control" formControlName="admissionQuota"
+                            [ngClass]="{ 'is-invalid': f.admissionQuota.invalid && (f.admissionQuota.dirty || f.admissionQuota.touched) }">
+                            <option value="" disabled selected>Select Admission Quota</option>
+                            <option *ngFor="let quota of admissionQuotaList" [value]="quota.admissionQuotaId">
+                                {{quota.name}}</option>
+                        </select>
+
+                        <div *ngIf="addStudentForm.controls['admissionQuota'].hasError('required') && addStudentForm.controls['admissionQuota'].touched"
+                            class="failed-validation" class="errorColor">
+                            Admission Quota Required
+                        </div>
+                    </div>
+
+                </div><br>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Admission Date <span class="aseticcolor">*</span></label>
+                        <input type="date" placeholder="dd/mm/yyyy" [max]="today" class="form-control" formControlName="admissiondate"
+                            [ngClass]="{ 'is-invalid': f.admissiondate.invalid && (f.admissiondate.dirty || f.admissiondate.touched) }">
+                        <div *ngIf="addStudentForm.controls['admissiondate'].hasError('required') && addStudentForm.controls['admissiondate'].touched"
+                            class="failed-validation" class="errorColor">
+                            Admission Date Required
+                        </div>
+
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Upload Relevant Documents </label><br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div formArrayName="items"
+                            *ngFor="let item of addStudentForm.get('items')['controls']; let i = index;">
+                            <div class="form-group row" [formGroupName]="i">
+                                <label class="control-label col-sm-4 text-right">Upload Document {{i+1}}:</label>
+                                <div class="col-sm-4">
+                                    <input type="file" #myInput class="form-control-file border"
+                                        (change)="onSelectFile($event)">
+
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="globalBtn submitBtn" *ngIf="i===0" (click)="addItem()"
+                                        style="width: 200px;"><i class="fas fa-plus-circle"></i> Add New
+                                        Document</button>
+                                    <button class="globalBtn clearBtn" *ngIf="i>=1" (click)="deleteFieldValue(i)"
+                                        style="width: 200px;"><i class="fas fa-minus-circle"></i> Remove Document
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><br>
+                <!-- [disabled]="!addStudentForm.valid" -->
+                <div class="row">
+                    <div class="col-sm-12 text-right">
+                        <button type="button" class="btn btn-primary" *ngIf="!showUpdateButton" [disabled]="!addStudentForm.valid"
+                            (click)="submit()">Save</button>&nbsp;
+                        <button type="button" class="btn btn-primary" *ngIf="showUpdateButton"
+                            (click)="updateStudentAdmissionForm()" [disabled]="!addStudentForm.valid">Update</button>&nbsp;
+                        <button type="button" class="btn btn-danger" (click)="resetForm()">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Clarification Modal Starts -->
+<!-- The Modal -->
+<div class="modal" id="myModall">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title headingValue">Send Clarification Response</h4>
+                <button type="button" class="close" data-dismiss="modal" style="cursor: pointer;"
+                    (click)="reset()">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form [formGroup]="clarificationForm">
+                    <div class="row">
+                        <label>Subject <span class="aseticcolor">*</span></label>
+                        <input type="text" placeholder={{this.subject}} class="form-control" readonly>
+                    </div><br>
+                    <div class="row">
+                        <label>Matter <span class="aseticcolor">*</span></label>
+                        <textarea rows="5" cols="20" class="form-control"
+                        placeholder={{this.matter}} readonly></textarea>
+                    </div><br>
+                    <div class="row">
+                        <label>Clarification Response <span class="aseticcolor">*</span></label>
+                        <textarea rows="5" cols="20" class="form-control" placeholder="Clarification Response"
+                            formControlName="clarification"
+                            [ngClass]="{ 'is-invalid': s.clarification.invalid && (s.clarification.dirty || s.clarification.touched) }"></textarea>
+                        <div *ngIf="clarificationForm.controls['clarification'].hasError('required') && clarificationForm.controls['clarification'].touched"
+                            class="failed-validation" class="errorColor">
+                            Clarification Response Required
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <label>Attach File </label>
+                            </div>
+                            <div formArrayName="items"
+                                *ngFor="let item of clarificationForm.get('item')['controls']; let i = index;">
+                                <div class="form-group row" [formGroupName]="i">
+                                    <label class="control-label col-sm-4 text-right">Upload Evidence {{i+1}}:</label>
+                                    <div class="col-sm-4">
+                                        <input type="file" #myInput class="form-control-file border"
+                                            (change)="onSelectFiles($event)">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button class="globalBtn submitBtn" *ngIf="i===0" (click)="addItems()"
+                                            style="width: 200px;"><i class="fas fa-plus-circle"></i> Add New
+                                            Evidence</button>
+                                        <button class="globalBtn clearBtn" *ngIf="i>=1" (click)="deleteFieldValues(i)"
+                                            style="width: 200px;"><i class="fas fa-minus-circle"></i> Remove Evidence
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" style="cursor: pointer;"
+                    [disabled]="!clarificationForm.valid" (click)="createResponse()">Send Response</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" style="cursor: pointer;"
+                    (click)="reset()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,100 @@
+.success {
+    border-color: #4CAF50;
+    color: green;
+    
+}
+
+.secondary {
+    border-color: black;
+    color: black;
+}
+
+.recieved {
+    border-color: tomato;
+    color: tomato;
+    padding-right: 22px;
+}
+.badge-success {
+    color: #fff;
+    background-color: #28a745;
+    padding: 15px 25px 12px 26px;
+}
+.badge-secondary {
+    color: #fff;
+    background-color: #6c757d;
+    padding: 15px 25px 12px 26px;
+}
+/* .card {
+    border: 1px solid #495057;
+} */
+
+
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 106px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    margin-left: 326px;
+    margin-top: -11px;
+    cursor: pointer;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 7px 58px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+  }
+  
+  
+  .dropdown:hover .dropdown-content {display: block;}
+
+  @media only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px) {
+
+    .calendar
+{
+  margin-left: -64px;
+   
+  position: absolute;
+  margin-top: -26px;
+
+  font-size: 25px;
+}
+}
+@media screen and (device-width: 412px) and (device-height: 823px) and (-webkit-device-pixel-ratio: 3.5) and (orientation: landscape) {
+ .calendar
+ {
+  margin-left: -63px;
+  position: absolute;
+  margin-top: -26px;
+  font-size: 25px;
+ } 
+}
+.created {
+    border-color:orange;
+    color:orange;
+    /* / position: absolute; / */
+}
+.badge-pill {
+  font-size: 12px !important;
+  height: 30px !important;
+  width: 110px !important;
+  border-radius: 4px !important;
+  padding-top: 10px !important;
+}
+
+.calendar
+{
+  margin-left: -64px;
+   
+  position: absolute;
+  margin-top: -26px;
+
+  font-size: 25px;
+}

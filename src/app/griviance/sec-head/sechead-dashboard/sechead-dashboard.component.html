@@ -1,0 +1,93 @@
+<!-- Assistant Secretery -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-9">
+                    <h5 class="headingValue">Complaints Dashboard</h5>
+                </div>
+                <div class="col-md-3 text-right">
+                    <div class="form-group">
+                        <div class="icon-addon" style="height: 0;">
+                            <input type="text" placeholder="Search with ID" class="form-control searchValue" [(ngModel)]="myProperty" (keyup)="serachValue(myProperty)">
+                            <label class="fas fa-search iconValue"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row" style="padding: 15px 0px;" *ngIf="dashboardCount">
+                <div class="col-md-2 text-center">
+                    <div class="Count">
+                        {{dashboardCount.pending}}
+                    </div>
+                    <div class="Value">
+                        <p class="subHeading">Pending Complaints</p>
+                    </div>
+                </div>
+                <div class="col-md-3 text-center">
+                    <div class="Count" style="color: #21CCC0;">
+                        {{dashboardCount.assigned}}
+
+                    </div>
+                    <div class="Value">
+                        <p class="subHeading">Assigned Complaints</p>
+                    </div>
+                </div>
+                <div class="col-md-2 text-center">
+                    <div class="Count" style="color: #2457A7;">
+                        {{dashboardCount.totalCount}}
+
+                    </div>
+                    <div class="Value">
+                        <p class="subHeading">Total Complaints</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover" *ngIf="allComplaintsList">
+                            <thead class="theadRow thead-light">
+                                <tr>
+                                    <th *ngFor="let theaders of tableHeaders">{{theaders}}</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbodyRow">
+                                <tr *ngFor="let item of allComplaintsList" [routerLink]="['../compView', item.complaint.cgrComplaintId,item.complaintStatus.complaintStatusName]">
+                                    <td> {{item.complaint.complainantNumber}}</td>
+                                    <td>{{item.complaint.complaintRaisedBy.firstName}} {{item.complaint.complaintRaisedBy.lastName}}
+                                    </td>
+                                    <td> {{item.complaint.complaintAgainst.name}}</td>
+                                    <td>{{item.complaint.complaintType.complaintTypeName}}</td>
+                                    <td>{{item.createdDate | date: 'dd-MM-yyyy' }}</td>
+
+                                    <td>
+                                        <span class="badge badge-pill badge-warning" style="color: white;" *ngIf="item.complaint.complaintStatus.complaintStatusName === 'OPEN'">{{item.complaint.complaintStatus.complaintStatusName}}</span>
+                                        <span class="badge badge-pill badge-success" style="color: white;background-color: #00E25B !important;" *ngIf="item.complaint.complaintStatus.complaintStatusName === 'COMPLETED'">{{item.complaint.complaintStatus.complaintStatusName}}</span>
+                                        <span class="badge badge-pill badge-info" style="color: white;background-color: #4ABDE8 !important;" *ngIf="item.complaint.complaintStatus.complaintStatusName === 'APPEAL'">{{item.complaint.complaintStatus.complaintStatusName}}</span>
+                                        <span class="badge badge-pill badge-primary" style="color: white;background-color: #5A95F5 !important;" *ngIf="item.complaint.complaintStatus.complaintStatusName === 'CLOSED'">{{item.complaint.complaintStatus.complaintStatusName}}</span>
+                                    </td>
+                                    <td>
+                                        <a style="cursor: pointer;color: #2457A7;" [routerLink]="['../history', item.complaint.cgrComplaintId]">Process History</a>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="allComplaintsList.length === 0">
+                                    <td colspan="7" style="text-align: center;padding: 50px !important;">No Data Available in Table</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-12 text-right" *ngIf="pageCount>1">
+                        <ul class="pagination float-right">
+                            <li class="page-item hoverActive"><a class="page-link " [class.my-class]="rowId === 0" (click)="previ()"><i class="fas fa-chevron-left"> </i></a></li>
+                            <li class="page-item"><a class="page-link">{{rowId+1}}/{{pageCount}}</a></li>
+                            <li class="page-item hoverActive"><a class="page-link" [class.my-class]="rowId+1 === pageCount" (click)="next()"><i class="fas fa-chevron-right"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,114 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card" *ngIf="historybyid">
+            <div class="row" style="border-bottom: 1px solid #0000000d;">
+                <div class="col-md-6">
+                    <h5 class="headingValue">View</h5>&nbsp;
+                    <span class="badge badge-pill badge-success"
+                        style="font-size: 60%;">{{historybyid.studentStatus.statusName}}</span>
+                </div>
+                <div class="col-md-6 text-right">
+                    <!-- <button class="globalBtn submitBtn" [routerLink]="['../../processhistory']">History</button> -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="heading">
+                        Admission Id
+                    </div>
+                    <div class="subheadingValue">
+                        {{historybyid.studentAdmission.admissionId}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="heading">
+                        Name
+                    </div>
+                    <div class="subheadingValue">
+                        {{historybyid.name}}
+                    </div>
+                </div>
+
+            </div>
+
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <h6 class="headingValue">Student Details</h6>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-4">
+                    <b><label>Student Name </label></b>
+                    <p>{{historybyid.studentAdmission.firstName | titlecase}}</p>
+                </div>
+                <div class="col-md-4">
+                    <b><label>Father Name</label></b>
+                    <p>{{historybyid.studentAdmission.fatherName | titlecase}}</p>
+                </div>
+                <div class="col-md-4">
+                    <b><label>Gender</label></b>
+                    <p>{{historybyid.studentAdmission.gender | titlecase}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <b><label>Date Of Birth </label></b>
+                    <p>{{historybyid.studentAdmission.dateOfBirth}}</p>
+                </div>
+                <div class="col-md-4">
+                    <b><label>Email</label></b>
+                    <p>{{historybyid.studentAdmission.emailId}}</p>
+                </div>
+                <div class="col-md-4">
+                    <b><label>Mobile Number</label></b>
+                    <p>{{historybyid.studentAdmission.phoneNumber}}</p>
+                </div>
+            </div>
+
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="headingValue">Admission Information</h5>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-4">
+                    <b><label>Admission Date </label></b>
+                    <p>{{historybyid.studentAdmission.admissionDate}}</p>
+                </div>
+                <div class="col-md-4">
+                    <b><label>Admission Quota </label></b>
+                    <p>{{historybyid.studentAdmission.studentAdmissionQuota.name | titlecase}}</p>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <b><label>Course </label></b>
+                    <p>{{historybyid.studentAdmission.collegeCourseOfferedSepcialisation.collegeSpecialisation.collegeCourse.courseName | titlecase}}
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    <b><label>Academic Year </label></b>
+                    <p>{{historybyid.studentAdmission.academicYear}}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="headingValue">Comments</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>{{historybyid.assigneeComments}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

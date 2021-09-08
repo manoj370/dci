@@ -1,0 +1,55 @@
+<div class="row">
+    <div class="col-md-12" *ngIf="dashboardInfo">
+        <div class="card">
+            <h5 class="headingValue">Dashboard <span class="font-weight-bold" style="color: #000; font-size: 17px">-
+                    Upcoming EC Meeting </span></h5>
+            <hr>
+            <div class="row">
+                <div class="col-md-3">
+                    <p><b> Meeting Date :</b> {{dashboardInfo.upcomingMeetingDate | date:'dd/MM/yyyy'}}</p>
+                </div>
+
+                <div class="col-md-7">
+                    <p><b>Venue:</b> {{dashboardInfo.meetingVenue}}
+                </div>
+                <div class="col-md-2">
+                    <p><b>Total Item Count:</b> {{dashboardInfo.itemTotalCount}}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Section</th>
+                                    <th>Item Count</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="dashboardInfo.mainAgendaListDTO.itemTotalCount!==0">
+                                    <td>Main Agenda List</td>
+                                    <td>{{dashboardInfo.mainAgendaListDTO.itemTotalCount}} &nbsp;&nbsp;<i class="fas fa-eye" (click)="showData()"></i></td>
+                                </tr>
+                                <span *ngIf="show" style="display:contents;">
+                                    <tr *ngFor="let item of dashboardInfo.mainAgendaListDTO.sectionWiseCountDTOs">
+                                        <td >{{item.sectionName}}</td>
+                                        <td >{{item.itemCount}}</td>
+                                    </tr>
+                                </span>
+                                <tr *ngFor="let item of dashboardInfo.sectionWiseCountDTOs">
+                                    <td>{{item.sectionName}}</td>
+                                    <td>{{item.itemCount}}</td>
+                                </tr>
+                                <tr *ngIf="dashboardInfo.sectionWiseCountDTOs.length === 0  && dashboardInfo.mainAgendaListDTO.itemTotalCount===0">
+                                    <td colspan="2" style="text-align: center;padding: 50px !important;">No Data Available in Table</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

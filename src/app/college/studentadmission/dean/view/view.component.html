@@ -1,0 +1,221 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+
+                <div class="col-md-6">
+                    <h5 class="headingValue" *ngIf="studentdetails">View <span>{{studentdetails.firstName | titlecase}}
+                            Details</span>&nbsp;
+                        <span *ngIf="this.status === 'Enrolled'" class="badge badge-pill badge-success"
+                            style="font-size: 60%;">{{this.status}}</span>
+                        <span *ngIf="this.status === 'SubmittedToCA'" class="badge badge-pill badge-primary"
+                            style="font-size: 60%;">{{this.status}}</span>
+                        <span *ngIf="this.status === 'UnderClarification'" class="badge badge-pill badge-warning"
+                            style="font-size: 60%;">{{this.status}}</span>
+                        <span *ngIf="this.status === 'Clarified'" class="badge badge-pill badge-success"
+                            style="font-size: 60%;">{{this.status}}</span>
+                        <span *ngIf="this.status === 'Discharged'" class="badge badge-pill badge-danger"
+                            style="font-size: 60%;">{{this.status}}</span>
+                        <span *ngIf="this.status === 'To_Be_Discharge'" class="badge badge-pill badge-warning"
+                            style="font-size: 60%;">{{this.status}}</span>
+                            <span *ngIf="this.status === 'Agreed_To_Discharge'" class="badge badge-pill badge-danger"
+                            style="font-size: 60%;">{{this.status}}</span>
+                    </h5>&nbsp;
+                </div>
+                <div class="col-md-6 text-right">
+                    <button type="button" *ngIf="this.status === 'To_Be_Discharge'" class="btn btn-success backbtn"
+                        style="cursor: pointer;" data-toggle="modal" data-target="#myModal">&nbsp;Reply</button>&nbsp;
+                    <button type="button" class="btn btn-primary backbtn" style="cursor: pointer;"
+                        (click)="back()"><span><i class="fas fa-angle-left"></i></span>&nbsp;Back</button>
+                </div>
+            </div>
+            <hr>
+            <div >
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Personal Information</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <b><label>Student Name </label></b>
+                        <p>{{studentdetails.firstName | titlecase}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>Father Name</label></b>
+                        <p>{{studentdetails.fatherName | titlecase}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>Gender</label></b>
+                        <p>{{studentdetails.gender | titlecase}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <b><label>Date Of Birth </label></b>
+                        <p>{{studentdetails.dateOfBirth}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>Email</label></b>
+                        <p>{{studentdetails.emailId}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>Mobile Number</label></b>
+                        <p>{{studentdetails.phoneNumber}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <b><label>Alternate Mobile Number</label></b>
+                        <p>{{studentdetails.alternativePhoneNumber}}</p>
+                    </div>
+                    <div class="col-md-4" *ngIf="studentdetails.studentCategory !==undefined">
+                        <b><label>Category </label></b>
+                        <p>{{studentdetails.studentCategory.categoryName | titlecase}}</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Academic Information</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <b><label>NEET RollNumber </label></b>
+                        <p>{{studentdetails.studentNeetResultBDSDetails.neetRollNO}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>NEET Score </label></b>
+                        <p>{{studentdetails.neetScore}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>NEET Percentile </label></b>
+                        <p>{{studentdetails.studentNeetResultBDSDetails.neetPercentile}}</p>
+                    </div>
+
+                </div>
+                <div class="row" *ngIf="this.coursee ==='BDS'">
+                    <div class="col-md-4">
+                        <b><label>+2 English</label></b>
+                        <p>{{studentdetails.plusTwoEnglish | titlecase}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>+2PCB(Average)</label></b>
+                        <p>{{studentdetails.plusTwoPcbAverage}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>10+2 Status * </label></b>
+                        <p>{{studentdetails.tenPlusTwoStatus | titlecase}}</p>
+                    </div>
+
+                </div>
+                <div class="row" *ngIf="this.coursee ==='MDS' || this.coursee ==='PG Diploma in Dental Materials'">
+
+                    <div class="col-md-4">
+                        <b><label>BDS Status</label></b>
+                        <p>{{studentdetails.bdsStatus | titlecase}}</p>
+                    </div>
+                    <div class="col-md-4" *ngIf="(studentdetails.bdsCollege !== null) && (studentdetails.bdsCollege !== undefined)">
+                        <b><label>College </label></b>
+                        <p>{{studentdetails.bdsCollege.collegeName | titlecase}}</p>
+                    </div>
+                    <!-- <div class="col-md-4" *ngIf=" (studentdetails.college !== undefined)">
+                        <b><label>University </label></b>
+                        <p>{{studentdetails.college.collegeName | titlecase}}</p>
+                    </div> -->
+                </div>
+                <div class="row" *ngIf="this.coursee ==='MDS' || this.coursee ==='PG Diploma in Dental Materials'">
+
+                    <div class="col-md-4">
+                        <b><label>Passing Year</label></b>
+                        <p>{{studentdetails.bdsYearOfPass | titlecase}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>BDS % </label></b>
+                        <p>{{studentdetails.bdsPercantage}}</p>
+                    </div>
+
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Admission Information</h5>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <b><label>Admission Date </label></b>
+                        <p>{{studentdetails.admissionDate}}</p>
+                    </div>
+                    <div class="col-md-4" *ngIf="(studentdetails.studentAdmissionQuota !==null) && (studentdetails.studentAdmissionQuota !==undefined)">
+                        <b><label>Admission Quota </label></b>
+                        <p>{{studentdetails.studentAdmissionQuota.name}}</p>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-4" *ngIf="(studentdetails.collegeCourseOfferedSepcialisation !== null) && (studentdetails.collegeCourseOfferedSepcialisation !== undefined)">
+                        <b><label>Course </label></b>
+                        <p>{{studentdetails.collegeCourseOfferedSepcialisation.course.courseName | titlecase}}
+                        </p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <b><label>Academic Year </label></b>
+                        <p>{{studentdetails.academicYear}}</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row" *ngIf="this.studentdetails !==null">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Evidence Documents</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2" *ngFor="let document of docsarray; let i=index">
+                        <div class="iconCard" (click)="getDocumentId(document)">
+                            <span><i class="far fa-file-alt docIcons"></i> File{{i+1}}</span>
+                            <a href="{{downloadUrl}}" class="downloadView">
+                                <i class="fas fa-cloud-download-alt" style=" cursor: pointer;color: #3D78BE;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title headingValue">Agree</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Did You Agree To Discharge the Student?</p>
+                <label class="checkbox-inline"><input type="checkbox" value="Yes" (change)="checkbox($event.target.value)">Agree</label>&nbsp;
+                <label class="checkbox-inline"><input type="checkbox" value="No" (change)="checkbox($event.target.value)">DisAgree</label><br>
+               <form [formGroup]="commentform">
+                <div class="row" *ngIf="commentbox">
+     
+                        <label>Comments <span class="aseticcolor">*</span></label>
+                        <textarea rows="5" cols="20" class="form-control" formControlName="comment" placeholder="Write Comments">Write Comments</textarea>
+                    
+                </div>
+            </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" [disabled]="!commentform.valid" (click)="updateStatus()">Send</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

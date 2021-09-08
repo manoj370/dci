@@ -1,0 +1,7 @@
+.badge-pill {
+    font-size: 12px !important;
+    height: 30px !important;
+    /* width: 120px !important; */
+    border-radius: 4px !important;
+    padding-top: 10px !important;
+}

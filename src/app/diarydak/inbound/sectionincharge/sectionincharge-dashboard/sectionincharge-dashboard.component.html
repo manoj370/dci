@@ -1,0 +1,173 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card" *ngIf="receiptCounts">
+            <form [formGroup]="searchForm">
+                <div class="row ">
+
+                    <div class="col-md-6">
+                        <h1 class="headingValue">Section InCharge Dashboard</h1>
+
+                    </div>
+                    <!-- <button class="btn btn-primary" onclick="printDiv('printableArea')">
+                <i class="fa fa-print" aria-hidden="true"> Print</i></button> -->
+
+                </div>
+                <br>
+
+                <div class="row">
+
+                    <div class="  col-md-3 ">
+                        <label>From:</label>
+                        <input type="date" class="form-control" formControlName="startDate" />
+                    </div>
+                    <div class="  col-md-3 ">
+                        <label>To:</label>
+
+                        <input type="date" class="form-control" formControlName="endDate" />
+                    </div>
+
+
+                    <div class="col-md-3 " >
+                        <label>Status:</label>
+                        <!-- (change)="getFilterValue($event.target.value)" -->
+                        <select class="form-control" formControlName="receiptStatus">
+                            <option value="" disabled selected>Select Status</option>
+                            <option *ngFor="let language of ReceiptStatuses" [value]="language.statusName">
+                                {{language.statusName}}</option>
+                        </select>
+                    </div>
+                    <hr>
+                    <!-- <option value="" disabled selected>Select Status</option>
+                    <option *ngFor="let status of receiptData" [value]="status.statusId">
+                        {{status.statusName}}
+                    </option> -->
+                    <!-- <option value="NEW">Created</option>
+                    <option value="FWD">Forwarded</option>
+                    <option value="ASG">Assigned</option>
+                    <option value="RSG">ReAssigned</option>
+                    <option value="RTN">Returned</option> -->
+
+
+
+                    <div class="col-md-3 ">
+                        <label>Language:</label>
+
+                        <select class="form-control" formControlName="receiptLanguage">
+                            <option value="" disabled selected>Select Language</option>
+                            <option *ngFor="let language of allLanguages" [value]="language.name">
+                                {{language.name}}</option>
+
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+           
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-primary submitBtn" (click)="fetchResults()">Search</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-danger clearBtn" (click)="resetSearch()">Reset</button>&nbsp;
+                    </div>
+                  
+                </div>
+            </form>
+           
+
+
+            <div class="row" style="margin-top: 15px !important; margin: 0px;padding: 15px 0px;background: #f4f4f4;  border-radius: 10px; box-shadow: 0 0 30px rgb(0 0 0 / 5%);">
+                <div class="col-md-2 text-center">
+                    <div class="Count" style="color: #2457A7;">
+                        {{receiptCounts.totalReceipts}}
+                    </div>
+                    <div class="Value">
+                        <b>
+                            <p class="subHeading">Total</p>
+                        </b>
+                    </div>
+                </div>
+                <div class="col-md-2 text-center">
+                    <div class="Count" style="color: #21CCC0;">
+                        {{receiptCounts.ASG}}
+                    </div>
+                    <div class="Value">
+                        <b>
+                            <p class="subHeading">Assigned</p>
+                        </b>
+                    </div>
+                </div>
+                <div class="col-md-2 text-center">
+                    <div class="Count" style="color: red;">
+                        {{receiptCounts.RTN}}
+                    </div>
+                    <div class="Value">
+                        <b>
+                            <p class="subHeading">Returned</p>
+                        </b>
+                    </div>
+                </div>
+                <div class="col-md-2 text-center">
+                    <div class="Count" style="color:green">
+                        {{receiptCounts.FWD}}
+                    </div>
+                    <div class="Value">
+                        <b>
+                            <p class="subHeading">Forwarded</p>
+                        </b>
+                    </div>
+                </div>
+            </div>
+           
+
+            <div class="row" style="padding-top: 10px;padding-bottom: 50px;">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Receipt No.</th>
+                                    <th>Eng / Hin</th>
+                                    <th>File No.</th>
+                                    <th>Sender Name</th>
+                                    <th>Subject</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr style="cursor: pointer;" *ngFor="let list of receiptData">
+                                    <td>{{list.receiptId}}</td>
+                                    <td>{{list.receiptLanguageId.name}}</td>
+                                    <td>{{list.receiptFileNum !==null ? (list.receiptFileNum.dakDispatchFileNo) : '-'}}
+                                    </td>
+                                    <td>{{list.senderName }} </td>
+                                    <td>{{list.receiptSubject}}</td>
+                                    <td>{{list.createdDate}} </td>
+                                    <!-- <td>{{list.dakStatus.statusName}} </td> -->
+                                    <!-- <td>{{list.dakStatus.statusName === 'Disposed' ? 'Finalized' :list.dakStatus.statusName }} </td> -->
+                                    <td>{{list.dakStatus !==null ?(list.dakStatus.statusName):'-'}} </td>
+                                    <td align="center">
+                                        <i class="fas fa-eye" style="color:#74AEB5" [routerLink]="['../view-receipt',list.id,list.receiptId]"></i>
+
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="col-md-12 text-right" *ngIf="responsePageCount>1">
+                            <ul class="pagination float-right">
+                                <li class="page-item hoverActive"><a class="page-link " [class.my-class]="pageId === 0" (click)="previ()"><i class="fas fa-chevron-left"> </i></a></li>
+                                <li class="page-item"><a class="page-link">{{pageId+1}}/{{responsePageCount}}</a></li>
+                                <li class="page-item hoverActive">
+                                    <a class="page-link" [class.my-class]="pageId+1 === responsePageCount" (click)="next()"><i class="fas fa-chevron-right"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,238 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-9">
+            <h4 class="headingValue">Upload Booking Details</h4>
+        </div>
+        <hr>
+        <div id="accordion" class="accordion">
+            <div class="card" *ngFor="let item of cardsList">
+                <div class="card-header" id="{{item.headingValue}}">
+                    <h2 class="mb-0">
+                        <button class="d-flex align-items-center justify-content-between btn btn-link" data-toggle="collapse" [attr.data-target]="'#' + item.collapsing" aria-expanded="true" aria-controls="collapseOne">
+                            {{item.label}}
+                            <span class="fa-stack fa-sm">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </button>
+                    </h2>
+                </div>
+                <div id="{{item.collapsing}}" class="collapse" [attr.aria-labelledby]="'#' + item.headingValue" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h5 class="header">{{item.label}} <span style="text-transform: capitalize">details</span></h5>
+                            </div>
+                            <div class="col-md-8  text-right">
+                                <button class="globalBtn forwardBtn" (click)="addItem()">Add More Details</button>
+                            </div>
+                        </div>
+                        <hr>
+                        <form [formGroup]="uploadForm">
+                            <div>
+                                <h5 class="removeIcon">Hotel Details</h5>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-3 form-group">
+                                        <label for="email">From <span class="errorColor">*</span></label>
+                                        <input type="date" [min]="today" class="form-control" formControlName="hotelFrom" (change)="maxDateSelction($event)" [ngClass]="{ 'is-invalid':  submitted && f.hotelFrom.errors }" />
+                                        <div *ngIf=" submitted && f.hotelFrom.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && f.hotelFrom.errors.required">
+                                                {{errorMsgs.fromDate}}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 form-group">
+                                        <label for="email">To <span class="errorColor">*</span></label>
+                                        <input type="date" class="form-control" [min]="maxDateValue" formControlName="hotelTO" [ngClass]="{ 'is-invalid': submitted && f.hotelTO.errors }">
+                                        <div *ngIf=" submitted && f.hotelTO.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && f.hotelTO.errors.required">
+                                                {{errorMsgs.toDate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label for="email">Hotel Receipt <span class="errorColor">*</span></label>
+                                        <input type="file" class="form-control" formControlName="hotelFile" (change)="getFileDetails($event,'0',null)" [ngClass]="{ 'is-invalid': submitted && f.hotelFile.errors }">
+                                        <div *ngIf=" submitted && f.hotelFile.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && f.hotelFile.errors.required">
+                                                {{errorMsgs.file}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label for="email">Amount <span class="errorColor">*</span></label>
+                                        <input type="text" placeholder="RS" class="form-control" formControlName="hotelAmount" [ngClass]="{ 'is-invalid': submitted && f.hotelAmount.errors }">
+                                        <div *ngIf=" submitted && f.hotelAmount.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && f.hotelAmount.errors.required">
+                                                {{errorMsgs.amount}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label for="email">Charges <span class="errorColor">*</span></label>
+                                        <input type="text" placeholder="RS" class="form-control" formControlName="hotelCharges" [ngClass]="{ 'is-invalid': submitted && f.hotelCharges.errors }">
+                                        <div *ngIf=" submitted && f.hotelCharges.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && f.hotelCharges.errors.required">
+                                                {{errorMsgs.charges}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label for="email">GST Type<span class="errorColor">*</span></label>
+                                        <select class="form-control" formControlName="hotelGst" [ngClass]="{ 'is-invalid': submitted && f.hotelGst.errors }">
+                                            <option value="" disabled selected style="color:orange">Select Tax Type
+                                            </option>
+                                            <option *ngFor="let ct of taxList" [value]="ct.taxTypeMstrId">
+                                                {{ct.taxTypeName}}
+                                            </option>
+                                        </select>
+                                        <div *ngIf=" submitted && f.hotelGst.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && f.hotelGst.errors.required">
+                                                {{errorMsgs.GstType}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label for="email">GST Amount <span class="errorColor">*</span></label>
+                                        <input type="text" placeholder="RS" class="form-control" formControlName="hotelGstAmount" [ngClass]="{ 'is-invalid': submitted && f.hotelGstAmount.errors }">
+                                        <div *ngIf=" submitted && f.hotelGstAmount.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && f.hotelGstAmount.errors.required">
+                                                {{errorMsgs.Gstamt}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div formArrayName="products" *ngFor="let a of uploadForm.get('products')['controls']; let i = index">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h5 class="removeIcon">Details</h5>
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        <h3 class="removeIcon" (click)="removeTktRows(i,typeId)"><i class="fas fa-minus-circle"></i></h3>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row" [formGroupName]="i">
+                                    <div class="col-md-4 form-group">
+                                        <label for="email">Journey Type <span class="errorColor">*</span></label>
+                                        <select class="form-control" formControlName="type" (change)="selectedType($event,i)" [ngClass]="{ 'is-invalid': submitted && a.controls.type.errors }">
+                                            <option value="" disabled selected style="color:orange">
+                                                Select Type
+                                            </option>
+                                            <option *ngFor="let ct of typesList" [value]="ct.travelByTypeId">
+                                                {{ct.name}}
+                                            </option>
+                                        </select>
+                                        <div *ngIf="submitted && a.controls.type.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && a.controls.type.errors.required">
+                                                {{errorMsgs.journType}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="email">Journey Date <span class="errorColor">*</span></label>
+                                        <input type="date" class="form-control" [min]="today" formControlName="fromDate" [ngClass]="{ 'is-invalid': submitted && a.controls.fromDate.errors }">
+                                        <div *ngIf="submitted && a.controls.fromDate.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && a.controls.fromDate.errors.required">
+                                                {{errorMsgs.journeyDate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="email">From <span class="errorColor">*</span></label>
+                                        <input type="text" class="form-control" formControlName="fromPlace" [ngClass]="{ 'is-invalid': submitted && a.controls.fromPlace.errors }">
+                                        <div *ngIf="submitted && a.controls.fromPlace.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && a.controls.fromPlace.errors.required">
+                                                {{errorMsgs.fromPlace}}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 form-group">
+                                        <label for="email">To <span class="errorColor">*</span></label>
+                                        <input type="text" class="form-control" formControlName="PlaceTO" [ngClass]="{ 'is-invalid': submitted && a.controls.PlaceTO.errors }">
+                                        <div *ngIf="submitted && a.controls.PlaceTO.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && a.controls.PlaceTO.errors.required">
+                                                {{errorMsgs.toPlace}}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 form-group" *ngIf="(typeId !== '4') && (typeId !== '5')">
+                                        <label for="email">Ticket <span class="errorColor">*</span></label>
+                                        <input type="file" #myInput class="form-control" formControlName="tktFile" (change)="getFileDetails($event,typeId,i)" [ngClass]="{ 'is-invalid': submitted && a.controls.tktFile.errors }">
+                                        <div *ngIf="submitted && a.controls.tktFile.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && a.controls.tktFile.errors.required">
+                                                {{errorMsgs.file}}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 form-group">
+                                        <label for="email">Amount <span class="errorColor">*</span></label>
+                                        <input type="text" placeholder="RS" class="form-control" formControlName="Amount" [ngClass]="{ 'is-invalid': submitted && a.controls.Amount.errors }">
+                                        <div *ngIf="submitted && a.controls.Amount.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && a.controls.Amount.errors.required">
+                                                {{errorMsgs.amount}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="email">Charges <span class="errorColor">*</span></label>
+                                        <input type="text" placeholder="RS" class="form-control" formControlName="Charges" [ngClass]="{ 'is-invalid': submitted && a.controls.Charges.errors }">
+                                        <div *ngIf="submitted && a.controls.Charges.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && a.controls.Charges.errors.required">
+
+                                                {{errorMsgs.charges}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="email">GST Type <span class="errorColor">*</span></label>
+                                        <select class="form-control" formControlName="Gst" [ngClass]="{ 'is-invalid': submitted && a.controls.Gst.errors }">
+                                            <option value="" disabled selected style="color:orange">Select
+                                                Tax Type
+                                            </option>
+                                            <option *ngFor="let ct of taxList" [value]="ct.taxTypeMstrId">
+                                                {{ct.taxTypeName}}
+                                            </option>
+                                        </select>
+
+                                        <div *ngIf="submitted && a.controls.Gst.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && a.controls.Gst.errors.required">
+                                                {{errorMsgs.GstType}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="email">GST Amount <span class="errorColor">*</span></label>
+                                        <input type="text" placeholder="RS" class="form-control" formControlName="GstAmount" [ngClass]="{ 'is-invalid': submitted && a.controls.GstAmount.errors }">
+                                        <div *ngIf="submitted && a.controls.GstAmount.errors" class="invalid-feedback">
+                                            <div *ngIf=" submitted && a.controls.GstAmount.errors.required">
+                                                {{errorMsgs.Gstamt}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="offset-8 col-md-2 text-right">
+                                    <button class="globalBtn clearBtn" (click)="clearValidations()">Reset</button>
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="globalBtn submitBtn" (click)="traveldetails(item.keyValue)">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

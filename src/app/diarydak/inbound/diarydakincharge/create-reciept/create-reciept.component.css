@@ -1,0 +1,93 @@
+input:focus {
+    color: #007bff;
+}
+
+select:focus {
+    color: #007bff;
+}
+
+
+/* .card {
+    border: 1px solid #495057;
+} */
+
+.aligncard {
+    border: 1px solid #007bff;
+    color: black !important;
+    border-radius: 2px;
+    padding: 5px 15px;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.icon-left {
+    text-align: left;
+}
+
+.icon-right {
+    text-align: right;
+}
+
+input:focus {
+    color: #007bff;
+}
+
+select:focus {
+    color: #007bff;
+}
+
+.iconCard {
+    height: 40px;
+    width: 150px;
+    box-shadow: 1px 1px 5px #88888852;
+}
+
+
+/* new code for docs */
+
+.cards {
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    width: 100%;
+    padding: 5px 0px 5px 0px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+   
+}
+
+
+/* new code for docs */
+
+.iconCard {
+    height: 40px;
+    width: 150px;
+    box-shadow: 1px 1px 5px #88888852;
+    border-radius: 5px;
+}
+
+.requiredClass {
+    color: red;
+}
+
+input:focus {
+    color: black;
+}
+
+select:focus {
+    color: black;
+}
+.aseticcolor{
+    color: red;
+}
+.iconCard {
+    height: 40px;
+    width: 150px;
+    box-shadow: 1px 1px 5px #88888852;
+    border-radius: 5px;
+}

@@ -1,0 +1,129 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" style="padding: 0;" style="background-image: url('./../../../assets/bg.png');background-repeat: no-repeat;background-size: cover;">
+            <img src="./../../../assets/logo-banner.png" style="width: 50%;">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" style="padding: 0;">
+            <div class="headingRibban"></div>
+        </div>
+    </div>
+    <div class="row logoutsec" style="padding: 0;height:80px;margin-bottom:20px;box-shadow: 0px 0px 15px 0px rgba(46,61,73,0.15);">
+        <div class="col-md-6 col-sm-6">
+            <h5 style="padding: 25px;">Home</h5>
+        </div>
+        <div class="col-md- col-sm-6 text-right">
+            <!-- <h5 style="padding: 25px;">Logout</h5> -->
+            <button class="globalBtn" [routerLink]="['/']" style="margin-top: 10px;background-color: #F76A21;color: white;" (click)="logout()"> &nbsp;
+                <i class="fas fa-sign-out-alt"></i>Logout</button>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <!-- Team member -->
+        <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="image-flip">
+                <div class="mainflip flip-0">
+                    <div class="frontside">
+                        <div class="card">
+                            <div class="card-body text-center" style="padding: 0;">
+                                <p style="font-size: 80px;color: #346DB4;">
+                                    <img src="./../../assets/human.svg" height="100">
+                                </p>
+                                <h5 class="card-title">
+                                    <a routerLink="/internal/userManagment/dashboard">Modules for Internal User Only</a></h5>
+                                <div class="row" style="position: absolute;">
+                                    <a class="entrycontent mr-2 mb-2" routerLink="./internal/usrmgt/internalApp">User Management</a>
+                                    <a href="" class="entrycontent mr-2 mb-2">SLA Monitoring</a>
+                                    <a href="" class="entrycontent mr-2 mb-2">Document Management</a>
+                                    <a href="" class="entrycontent mr-2 mb-2">DiaryDak</a>
+                                    <a href="" class="entrycontent mr-2 mb-2">Master Data Management</a>
+                                </div>
+
+                            </div>
+                            <div style="color: #F76A21;font-size: 25px;text-align: center;" routerLink="./internal/dashboard">
+                                <i class="fas fa-arrow-circle-right"></i>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="image-flip">
+                <div class="mainflip flip-0">
+                    <div class="frontside">
+                        <div class="card">
+                            <div class="card-body text-center" style="padding: 0;">
+                                <p style="font-size: 80px;color: #346DB4;">
+                                    <!-- <i class="fas fa-user-circle"></i> -->
+                                    <img src="./../../assets/application.svg" height="100">
+
+                                </p>
+                                <h5 class="card-title"><a href="">Modules for External User Also</a></h5>
+                                <div class="row" style="position: absolute;">
+                                    <a href="" class="entrycontent mr-2 mb-2">Anti Ragging</a>
+                                    <a href="" class="entrycontent mr-2 mb-2">Grievance</a>
+                                    <a href="" class="entrycontent mr-2 mb-2">Help Desk</a>
+                                    <a href="" class="entrycontent mr-2 mb-2">Legal</a>
+
+                                    <a href="" class="entrycontent mr-2 mb-2">IDR-NewRegistration</a>
+                                    <a href="" class="entrycontent mr-2 mb-2">Student Admission</a>
+                                    <a href="" class="entrycontent mr-2 mb-2">NDC-Establish</a>
+                                </div>
+                            </div>
+                            <p style="color: #F76A21;font-size: 25px;text-align: center;"><i class="fas fa-arrow-circle-right"></i></p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="image-flip">
+                <div class="mainflip flip-0">
+                    <div class="frontside">
+                        <div class="card">
+                            <div class="card-body text-center" style="padding: 0;">
+                                <p style="font-size: 80px;color: #346DB4;">
+                                    <img src="./../../../assets/internalapp.svg" height="100">
+                                </p>
+                                <h5 class="card-title"><a href="">ERP HR & Procurement ?</a></h5>
+                                <p class="card-text">
+                                </p>
+                            </div>
+                            <p style="color: #F76A21;font-size: 25px;text-align: center;"><i class="fas fa-arrow-circle-right"></i></p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="image-flip">
+                <div class="mainflip flip-0">
+                    <div class="frontside">
+                        <div class="card">
+                            <div class="card-body text-center" style="padding: 0;">
+                                <p style="font-size: 80px;color: #346DB4;">
+                                    <!-- <i class="fas fa-user-circle"></i> -->
+                                    <img src="./../../assets/document.svg" height="100">
+
+                                </p>
+                                <h5 class="card-title"><a href="">ERP Accounting & Finance ?</a></h5>
+                                <p class="card-text">
+                                </p>
+                            </div>
+                            <p style="color: #F76A21;font-size: 25px;text-align: center;"><i class="fas fa-arrow-circle-right"></i></p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

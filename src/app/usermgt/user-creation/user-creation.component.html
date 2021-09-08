@@ -1,0 +1,489 @@
+<div class="container-fluid">
+    <div class="row">
+        <!-- <div style="margin-left: 90%;">
+            <button type="button" class="btn btn-primary " style="cursor: pointer;float: right;" (click)="getBackUserManagment()"><span><i class="fas fa-angle-left"></i></span>&nbsp;Back</button>
+        </div> -->
+
+        <div class="col-md-12">
+            <div id="accordion" class="myaccordion">
+                <div class="card">
+                    <div class="card-header" id="headingOne" *ngIf="showUpdateButtonForUser">
+                        <h2 class="mb-0">
+                            <button class="d-flex align-items-center justify-content-between btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Edit User
+                                <span class="badge badge-pill badge-danger" style="color: white;"
+                                    *ngIf="checkActiveStatus == false">InActive</span>
+                                <span class="badge badge-pill badge-success" style="color: white;"
+                                    *ngIf="checkActiveStatus == true">Active</span>
+                                <span class="fa-stack fa-sm">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fas fa-minus fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </button>
+                        </h2>
+                    </div>
+                    <div class="card-header" id="headingOne" *ngIf="!showUpdateButtonForUser  && checkActiveStatus !== true">
+                        <h5 class="headingValue">Add New User</h5>
+                    </div>
+                    <hr>
+                    <!-- class="collapse show" -->
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            <form [formGroup]="addUserForm">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="firstName" class="required">First Name: <span
+                                                    class="requiredClass">*</span></label>
+                                            <input type="text" class="form-control" id="firstName" formControlName="firstName" data-validation="required custom length" placeholder="First Name" data-validation-regexp="^[a-zA-Z. ]+$" data-validation-length="1-60" data-validation-error-msg='Please enter valid first name'
+                                                (keypress)="validation.allowingToPressOnlyAlphabates($event)">
+                                            <!-- <div *ngIf="editJobForm.controls['jobCode'].hasError('pattern')" class="failed-validation">
+                                                Invalid Job Code
+                                            </div> -->
+                                            <div *ngIf="addUserForm.controls['firstName'].hasError('required') && addUserForm.controls['firstName'].touched" class="failed-validation" style="color:red;">
+                                                First Name Required
+                                            </div>
+                                            <div *ngIf="addUserForm.controls['firstName'].hasError('pattern')" class="failed-validation" style="color:red;">
+                                                Invalid First Name
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="middleName">Middle Name: </label>
+                                            <input type="text" class="form-control" id="middleName" formControlName="middleName" data-validation="custom" placeholder="Middle Name" data-validation-regexp="^[a-zA-Z. ]+$" data-validation-optional="true" data-validation-length="1-60" data-validation-error-msg='Please enter valid middle name'
+                                                (keypress)="validation.allowingToPressOnlyAlphabates($event)">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="lastName" class="required">Last Name:</label>
+                                            <input type="text" class="form-control" id="lastName" formControlName="lastName" data-validation="required custom length" data-validation-regexp="^[a-zA-Z. ]+$" placeholder="Last Name" data-validation-length="1-60" data-validation-error-msg='Please enter valid last name'
+                                                (keypress)="validation.allowingToPressOnlyAlphabates($event)">
+                                                <!-- <span
+                                                class="requiredClass">*</span> -->
+                                                <!-- <div *ngIf="addUserForm.controls['lastName'].hasError('required') && addUserForm.controls['lastName'].touched" class="failed-validation" style="color:red;">
+                                                Last Name Required
+                                            </div>
+                                            <div *ngIf="addUserForm.controls['lastName'].hasError('pattern')" class="failed-validation" style="color:red;">
+                                                Invalid Last Name
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group" *ngIf="!showUpdateButtonForUser">
+                                            <label for="emailId" class="required">Email Id: <span
+                                                    class="requiredClass">*</span></label>
+                                            <input type="text" class="form-control" id="emailId" formControlName="emailId" data-validation-error-msg='Please enter valid email' placeholder="Email" data-validation-length="1-50" data-validation="required length email">
+
+                                            <div *ngIf="addUserForm.controls['emailId'].hasError('required') && (addUserForm.controls['emailId'].touched)" class="failed-validation" style="color:red;">
+                                                Email Id Required
+                                            </div>
+                                            <!-- <div *ngIf="addUserForm.controls['emailId'].hasError('email') 
+                                             && (addUserForm.controls['emailId'].touched)" class="failed-validation" style="color:red;">
+                                                Proper Email Id Required
+                                            </div> -->
+                                            <div *ngIf="addUserForm.controls['emailId'].hasError('pattern') && (addUserForm.controls['emailId'].touched)" class="failed-validation" style="color:red;">
+                                                Valid Email Id Required
+                                            </div>
+                                            <!-- <div *ngIf="addUserForm.controls['emailId'].hasError('pattern')">
+                                                Official Email not valid.
+                                            </div> -->
+
+                                        </div>
+                                        <div class="form-group" *ngIf="showUpdateButtonForUser">
+                                            <label for="emailId" class="required">Email Id: <span
+                                                    class="requiredClass">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" id="emailId" formControlName="emailId" disabled>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <!-- new Filed For User Name -->
+                                    <div class="col-md-3" *ngIf="!showUpdateButtonForUser">
+                                        <div class="form-group">
+                                            <label for="pwd" class="required">Password:<span
+                                                    class="requiredClass">*</span></label>
+                                            <input [type]="showpassword ? 'text' : 'password'" class="form-control" placeholder="Password" formControlName="password">
+                                            <span (click)="eyeToggel()"><i class="icon"
+                                                    [ngClass]="eyeShow ? 'fa fa-eye ' : 'fa fa-eye-slash '"
+                                                    aria-hidden="true"></i></span>
+                                            <div *ngIf="addUserForm.controls['password'].hasError('required') && addUserForm.controls['password'].touched" class="failed-validation" style="color:red;">
+                                                Password Required
+                                            </div>
+                                            <div *ngIf="(addUserForm.controls['password'].hasError('passwordStrength'))" class="failed-validation" style="color:red">
+                                                Password must have One Upper,LowerCase,Alphabetic And Special Character
+                                            </div>
+                                            <div *ngIf="addUserForm.controls['password'].hasError('minlength')" class="failed-validation" style="color:red">
+                                                Password must have 8 characters
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="!showUpdateButtonForUser">
+                                        <div class="form-group">
+                                            <label for="pwd" class="required">Confirm Password:<span
+                                                    class="requiredClass">*</span></label>
+                                            <input [type]="showConformPassword ? 'text' : 'password'" class="form-control" placeholder="Confirm Password" formControlName="conformPassword">
+                                            <span (click)="eyeToggelForComformPassword()"><i
+                                                    [ngClass]="eyeShowForConform ? 'fa fa-eye' : 'fa fa-eye-slash '"
+                                                    class="icon" aria-hidden="true"></i></span>
+                                            <div *ngIf="addUserForm.controls['conformPassword'].hasError('required') && addUserForm.controls['conformPassword'].touched" class="failed-validation" style="color:red;">
+                                                Confirm Password Required
+                                            </div>
+                                            <div *ngIf="addUserForm.controls['conformPassword'].hasError('mustMatch')" style="color:red;">
+                                                Passwords must match
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- new Field for user name -->
+                                    <div class="col-md-3">
+                                        <!-- Group -->
+                                        <div class="form-group">
+                                            <label for="phoneNo" class="required">Phone Number: <span
+                                                    class="requiredClass">*</span></label>
+                                            <input type="text" class="form-control" id="phoneNo" data-validation-error-msg='Phone number is required' placeholder="Phone Number" formControlName="phoneNumber" data-validation-regexp="^[2-9][0-9]*$" data-validation="required length number custom" data-validation-length="10-10"
+                                                maxlength="10" (keypress)="keyPress($event)">
+                                            <!-- phone -->
+                                            <div *ngIf="addUserForm.controls['phoneNumber'].hasError('required') && addUserForm.controls['phoneNumber'].touched" class="failed-validation" style="color:red;">
+                                                Phone Number Required
+                                            </div>
+                                            <!-- <div *ngIf="addUserForm.controls['phoneNumber'].hasError('maxlength')" class="failed-validation" style="color:red">
+                                                Contact number should have minimum 10 characters
+                                            </div>
+                                            <div *ngIf="(addUserForm.controls['phoneNumber'].hasError('minlength') && (addUserForm.controls['phoneNumber'].hasError('pattern')))" class="failed-validation" style="color:red">
+                                                Contact number should have minimum 10 characters
+                                            </div> -->
+                                            <div *ngIf="addUserForm.controls['phoneNumber'].hasError('pattern')" class="failed-validation" style="color:red">
+                                                Contact number should have starts with 9,8,7,6 and length 10 Digits
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="control-label">Address Line 1 <span
+                                                class="requiredClass">*</span></label>
+                                        <input type="text" class="form-control" placeholder="Address Line 1" formControlName="addressline1">
+                                        <div *ngIf="addUserForm.controls['addressline1'].hasError('required') && addUserForm.controls['addressline1'].touched" class="failed-validation" style="color:red;">
+                                            Address Line 1 Required
+                                        </div>
+                                        <div *ngIf="addUserForm.controls['addressline1'].hasError('pattern')" class="failed-validation" style="color:red">
+                                            Invalid Address Line 1
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-3">
+                                        <label>Address Line 2 </label>
+                                        <input type="text" class="form-control" placeholder="Address Line 2" formControlName="addressline2">
+                                        <div *ngIf="addUserForm.controls['addressline2'].hasError('pattern')" class="failed-validation">
+                                            Invalid Address Line 2
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="control-label">Country <span
+                                                class="requiredClass">*</span></label>
+
+                                        <select class="form-control" formControlName="country" (change)="getStates($event.target.value)">
+                                            <option value="" disabled selected>Select Country</option>
+                                            <option *ngFor="let country of countries" [value]="country.countryId">
+                                                {{country.countryName}}</option>
+                                        </select>
+                                        <div *ngIf="addUserForm.controls['country'].hasError('required') && addUserForm.controls['country'].touched" class="failed-validation" style="color:red;">
+                                            Country Required
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="control-label">State <span class="requiredClass">*</span></label>
+
+                                        <select class="form-control" formControlName="state" (change)="getCities($event.target.value)">
+                                            <option value="" disabled>Select State</option>
+                                            <option *ngFor="let states of statesList" [value]="states.stateId">
+                                                {{states.stateName}}</option>
+                                        </select>
+                                        <div *ngIf="addUserForm.controls['state'].hasError('required') && addUserForm.controls['state'].touched" class="failed-validation" style="color:red;">
+                                            State Required
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="control-label">City <span class="requiredClass">*</span></label>
+
+                                        <select class="form-control" formControlName="city">
+                                            <option value="" disabled selected>Select City</option>
+                                            <option *ngFor="let city of citiesList" [value]="city.cityId">
+                                                {{city.cityName}}</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-md-3">
+                                        <label class="control-label">Pin Code <span
+                                                class="requiredClass">*</span></label>
+                                        <input type="text" class="form-control" placeholder="Pin Code" formControlName="pincode" maxlength="6" (keypress)="keyPress($event)">
+                                        <div *ngIf="addUserForm.controls['pincode'].hasError('required') && addUserForm.controls['pincode'].touched" class="failed-validation" style="color:red;">
+                                            PinCode Required
+                                        </div>
+                                        <div *ngIf="addUserForm.controls['pincode'].hasError('pattern')" class="failed-validation" style="color:red">
+                                            PinCode length 6 Digits
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="control-label">Organization <span
+                                                class="requiredClass">*</span></label>
+                                        <select class="form-control" formControlName="organisation" (change)="entitySelection($event.target.value)">
+                                            <option value="" disabled selected>Select Organization</option>
+                                            <option *ngFor="let entity of entityMaster" [value]="entity.entityMasterId">
+                                                {{entity.name}}</option>
+                                        </select>
+                                        <div *ngIf="addUserForm.controls['organisation'].hasError('required') && addUserForm.controls['organisation'].touched" class="failed-validation" style="color:red;">
+                                            Organization Required
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3" *ngIf="showSectionDropDown">
+                                        <label class="control-label">Section </label>
+                                        <select class="form-control" formControlName="section" (change)="SectionId($event.target.value)">
+                                            <option value="" disabled selected>Select Section</option>
+
+                                            <option *ngFor="let section of entitySelectedData"
+                                                [value]="section.sectionId">
+                                                {{section.sectionName | titlecase }}</option>
+
+                                        </select>
+
+                                    </div>
+
+                                    <div class="form-group col-md-3">
+                                        <label class="control-label">Designation </label>
+                                        <select class="form-control" formControlName="designation" (change)="designationId($event.target.value)">
+                                            <option value="" disabled selected>Select Designation</option>
+                                            <option *ngFor="let entity of designData" [value]="entity.designationId">
+                                                {{entity.designationName}}</option>
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                </div>
+                            </form>
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <button *ngIf="showUpdateButtonForUser && checkActiveStatus === true" class="globalBtn acceptBtn" (click)="updateUser()">Update</button>
+                                    <button (click)="createUser()" [disabled]="!addUserForm.valid" class="globalBtn acceptBtn" *ngIf="!showUpdateButtonForUser">Submit</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card" *ngIf="showAssignRolesTab && checkActiveStatus === true">
+                    <div class="card-header" id="headingTwo">
+                        <h2 class="mb-0">
+                            <button class="d-flex align-items-center justify-content-between btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Assign Role
+
+                                <span class="fa-stack fa-2x">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <div class="row ">
+                                            <div class="col-md-4 pb-2" *ngFor="let role of allRoles">
+
+                                                <label class="checkbox">
+                                                    <input type="checkbox" (change)="selectedRoles($event)"
+                                                        [value]="role.roleId" [checked]="role.checked" />
+                                                    <span class="default"></span>
+                                                </label> {{role.roleName}}
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <label><b>Select Default Role</b></label>
+                                <div class="row">
+                                    <div class="col-md-3" *ngFor="let role of names">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="optradio" [checked]="role.checked"
+                                                (change)="getingRoleId($event)"
+                                                [value]="role.roleId" />{{role.rolename}}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 text-right">
+                                <button class="globalBtn acceptBtn" (click)="assignRole()">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" *ngIf="showUpdateButtonForUser">
+                    <div class="card-header" id="headingThree">
+                        <h2 class="mb-0">
+                            <button class="d-flex align-items-center justify-content-between btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Status
+                                <span class="fa-stack fa-2x">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                        <div class="card-body">
+                            <span class="btn-danger btn-sm text-light" style="cursor: pointer;" data-toggle="modal" data-target="#deletModal" *ngIf="checkActiveStatus == true">Inactivate</span>
+                            <span class="btn-success btn-sm text-light" style="cursor: pointer;" data-toggle="modal" data-target="#activeModal" *ngIf="checkActiveStatus == false">Activate</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" *ngIf="showUpdateButtonForUser && checkActiveStatus === true">
+                    <div class="card-header" id="headingFour">
+                        <h2 class="mb-0">
+                            <button class="d-flex align-items-center justify-content-between btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                Password Change
+                                <span class="fa-stack fa-2x">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                        <div class="card-body">
+                            <form [formGroup]="ResetPasswordForm">
+                                <div class="row">
+
+                                    <!-- new Filed For User Name -->
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="pwd" class="required">Password:<span
+                                                    class="requiredClass">*</span></label>
+                                            <input [type]="showpassword ? 'text' : 'password'" class="form-control" id="password" placeholder="Password" formControlName="resetPassword"><span (click)="eyeToggel()"><i
+                                                    class="icon" [ngClass]="eyeShow ? 'fa fa-eye ' : 'fa fa-eye-slash '"
+                                                    aria-hidden="true"></i></span>
+                                            <div *ngIf="ResetPasswordForm.controls['resetPassword'].hasError('required') && ResetPasswordForm.controls['resetPassword'].touched" class="failed-validation" style="color:red;">
+                                                Password Required
+                                            </div>
+                                            <div *ngIf="(ResetPasswordForm.controls['resetPassword'].hasError('passwordStrength'))" class="failed-validation" style="color:red">
+                                                Password must have One Upper,LowerCase,Alphabetic And Special Character
+                                            </div>
+                                            <div *ngIf="ResetPasswordForm.controls['resetPassword'].hasError('minlength')" class="failed-validation" style="color:red">
+                                                Password must have 8 characters
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="pwd" class="required">Confirm Password:<span
+                                                    class="requiredClass">*</span></label>
+                                            <input [type]="showConformPassword ? 'text' : 'password'" class="form-control" id="password" placeholder="Confirm Password" formControlName="resetConformPassword">
+                                            <span (click)="eyeToggelForComformPassword()"><i
+                                                    [ngClass]="eyeShowForConform ? 'fa fa-eye' : 'fa fa-eye-slash '"
+                                                    class="icon" aria-hidden="true"></i></span>
+                                            <div *ngIf="ResetPasswordForm.controls['resetConformPassword'].hasError('required') && ResetPasswordForm.controls['resetConformPassword'].touched" class="failed-validation" style="color:red;">
+                                                Confirm Password Required
+                                            </div>
+                                            <div *ngIf="ResetPasswordForm.controls['resetConformPassword'].hasError('mustMatch')" style="color:red;">
+                                                Passwords must match
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <button class="globalBtn acceptBtn" (click)="resetPassword()" [disabled]="!ResetPasswordForm.valid">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Inactive Model -->
+<div id="deletModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="icon-box">
+                    <i class="fas fa-user-times remove"></i>
+
+                </div> <br>
+            </div>
+            <h4 class="modal-title">Are you sure?</h4>
+            <div class="modal-body">
+                <p>Do you really want to Inactive <b style="color:#f15e5e">{{userName}}</b> record?
+                </p>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" (click)="inActiveTheuser()" data-dismiss="modal" class="btn btn-danger">Inactive</button>
+                <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Active Modal -->
+<div id="activeModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="icon-box">
+                    <i class="fa fa-user-plus addingStyle"></i>
+
+                </div> <br>
+            </div>
+            <h4 class="modal-title">Are you sure?</h4>
+            <div class="modal-body">
+                <p>Do you really want to active <b style="color:#f15e5e">{{userName}}</b> record?
+                </p>
+
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" (click)="ActiveTheuser()" data-dismiss="modal" class="btn btn-success">Active</button>
+                <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

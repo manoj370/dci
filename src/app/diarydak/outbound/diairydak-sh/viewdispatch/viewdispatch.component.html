@@ -1,0 +1,283 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+
+                <div class="col-md-6">
+                    <h5 class="headingValue">View Despatch </h5>
+                    <span *ngIf="this.statuss === 'Approved'" class="badge badge-pill badge-success" style="font-size: 60%;">{{this.statuss}}</span>
+                    <span *ngIf="this.statuss === 'Dispatched'" class="badge badge-pill badge-primary" style="font-size: 60%;">{{this.statuss}}</span>
+                   
+                </div>
+                <div class="col-md-12 text-right">
+
+                    <button *ngIf="updatedespatch" type="button" class="btn btn-success reponsivebtn"
+                        data-toggle="modal" data-target="#myModal" style="cursor: pointer;"><span><i
+                                class="fas fa-check-circle"></i></span>&nbsp;Update Despatch Details</button>&nbsp;
+                    <button *ngIf="printdispatch" type="button" class="btn btn-warning printbtn"
+                        style="cursor: pointer;"><span><i class="fa fa-print"></i></span>&nbsp;Print</button>&nbsp;
+                    <button *ngIf="printbarcode" type="button" class="btn btn-danger printbtn"
+                        style="cursor: pointer;"><span><i class="fa fa-barcode"></i></span>&nbsp;Print Bar
+                        Code</button>&nbsp;
+                    <button type="button" class="btn btn-primary backbtn" style="cursor: pointer;"
+                        (click)="back()"><span><i class="fas fa-angle-left"></i></span>&nbsp;Back</button>
+                </div>
+            </div>
+            <hr>
+
+
+
+            <div *ngIf="despatchinfo">
+                <div class="row">
+                    <div class="col-md-4">
+                        <b><label>Despatch Ref.ID </label></b>
+                        <p>{{despatchinfo.dispatchRefNumber}}</p>
+
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>Section </label></b>
+                        <p>{{despatchinfo.section.sectionName}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>Sub Section </label></b>
+                        <p>{{despatchinfo.subSection.name}}</p>
+                    </div>
+
+
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <b><label>Subject </label><br></b>
+                        <p>{{despatchinfo.dispatchSubject}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b> <label>Despatch Date </label></b><br>
+                        <p>{{despatchinfo.createdDate}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>Despatch Via </label></b>
+                        <p>{{despatchinfo.dispatchType.name}}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Sender Section</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <b><label>Sender Name </label></b>
+                        <p>{{despatchinfo.senderName}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b> <label>File Heading </label></b><br>
+                        <p>{{despatchinfo.senderFileHeading}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>Sending Section *</label></b>
+                        <p>{{despatchinfo.senderSection.sectionName}}</p>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <b><label>Designation *</label><br></b>
+                        <p>{{despatchinfo.senderDesignation.designationName}}</p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <b> <label>File Number</label></b><br>
+                        <p>{{despatchinfo.senderFileNumber}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Recipient</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <b> <label>Recipient Name </label></b><br>
+                        <p>{{despatchinfo.recipeintName}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b> <label>Email Id </label></b><br>
+                        <p>{{despatchinfo.recipeintEmail}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b> <label>Contact Number </label></b><br>
+                        <p>{{despatchinfo.recipeintMobile}}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">To Address</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <b><label>Organization / Others *</label><br></b>
+                        <p>{{despatchinfo.entityMaster.name}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <b><label>Address *</label><br></b>
+                        <p>{{despatchinfo.address.line1}}</p>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Dak Info</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <b> <label>Matter *</label></b><br>
+                        <p>{{despatchinfo.dakMatterOrComments}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <b> <label>Comments *</label></b><br>
+                        <p>{{despatchinfo.comment}}</p>
+                    </div>
+                </div>
+               
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Evidence Documents</h5>
+                    </div>
+                </div>
+                <div class="row">
+                        <div class="col-md-2" *ngFor="let document of docsarray; let i=index">
+                            <div class="iconCard" (click)="getDocumentId(document)">
+                                <span><i class="far fa-file-alt docIcons"></i> File{{i+1}}</span>
+                                <a href="{{downloadUrl}}" class="downloadView">
+                                    <i class="fas fa-cloud-download-alt" style=" cursor: pointer;color: #3D78BE;"></i>
+                                </a>
+                            </div>
+                        </div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Section Incharge</h5><br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+
+
+                        <p>{{despatchinfo.approverName}}</p>
+                        <p>{{despatchinfo.approvedDate}}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Status</p>
+                        <td><span class="badge badge-pill badge-success" style="color: white;"
+                                *ngIf="despatchinfo.dakStatus.statusName === 'Approved'">{{despatchinfo.dakStatus.statusName}}</span>
+                            <span class="badge badge-pill badge-primary" style="color: white;"
+                                *ngIf="despatchinfo.dakStatus.statusName === 'Dispatched'">{{despatchinfo.dakStatus.statusName}}</span>
+
+                        </td>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title headingValue">Despatched Details</h4>
+                <button type="button" class="close" data-dismiss="modal" style="cursor: pointer;"
+                    (click)="reset()">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" *ngIf="despatchinfo">
+                <form [formGroup]="updateForm">
+                    <div class="row">
+                       <label>Despatch Reference Number <span class="aseticcolor">*</span></label>
+
+                        <input type="text" class="form-control" readonly placeholder={{despatchinfo.dispatchRefNumber}}>
+                    </div><br>
+                    <div class="row">
+                        <label>Despatch Type <span class="aseticcolor">*</span></label>
+
+                        <select class="form-control" aria-placeholder="Select type"
+                            (change)="dispatchId($event.target.value)" formControlName="despatchType"
+                            [ngClass]="{ 'is-invalid': f.despatchType.invalid && 
+                            (f.despatchType.dirty || f.despatchType.touched) }"
+                            >
+                            <option value="" selected disabled>Select Type</option>
+                            <option *ngFor="let type of dispatchtypes" [value]="type.dispatchTypeId">{{type.name}}
+                            </option>
+                        </select>
+                        <div *ngIf="updateForm.controls['despatchType'].hasError('required') && updateForm.controls['despatchType'].touched"
+                            class="failed-validation" 
+                            class="errorColor">
+                            Despatch Type Required
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <label>Despatch Date <span class="aseticcolor">*</span></label>
+
+                        <input type="date" class="form-control" placeholder="Date" formControlName="date"
+                        [ngClass]="{ 'is-invalid': f.date.invalid && 
+(f.date.dirty || f.date.touched) }"
+
+                        >
+                        <div *ngIf="updateForm.controls['date'].hasError('required') && updateForm.controls['date'].touched"
+                            class="failed-validation" 
+                            class="errorColor">
+                            Despatch Date Required
+                        </div>
+                    </div><br>
+                    <div class="row">
+                     <label>Despatch Id <span class="aseticcolor">*</span></label>
+
+                        <input type="text" class="form-control" placeholder="Update Id" formControlName="despatchid"
+                        [ngClass]="{ 'is-invalid': f.despatchid.invalid && 
+(f.despatchid.dirty || f.despatchid.touched) }"
+
+                        >
+                        <div *ngIf="updateForm.controls['despatchid'].hasError('required') && updateForm.controls['despatchid'].touched"
+                            class="failed-validation" 
+                            class="errorColor">
+                            DespatchId Required
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <label>Comments <span class="aseticcolor">*</span></label>
+                        <textarea rows="5" class="form-control" placeholder="Comments"
+                            formControlName="comments"
+                            
+ [ngClass]="{ 'is-invalid': f.comments.invalid && 
+ (f.comments.dirty || f.comments.touched) }"
+ 
+                            ></textarea>
+                        <div *ngIf="updateForm.controls['comments'].hasError('required') && updateForm.controls['comments'].touched"
+                            class="failed-validation" 
+                            class="errorColor">
+                            Comments Required
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" style="cursor: pointer;"
+                    [disabled]="!updateForm.valid" (click)="updatedispatchdetails()">Update </button>
+            </div>
+
+        </div>
+    </div>
+</div>

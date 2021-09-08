@@ -1,0 +1,120 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-9">
+                    <h5 class="headingValue">Proforma</h5>
+                </div>
+            </div>
+            <hr />
+            <div class="row" style="padding: 5px 0px 15px;"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-hover">
+                            <thead class="theadRow">
+                                <tr>
+                                    <th>Inspection Types</th>
+                                    <th>Status</th>
+
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Starting of a new college</td>
+                                    <td><span class="success">Uploaded</span></td>
+
+                                    <td>
+                                        <span class="btn btn-sm btn-success" title="Download"><i class="fas fa-download" aria-hidden="true"></i></span>&nbsp;
+                                        <span class="btn btn-sm btn-danger" title="Delete"><i class="fa fa-trash"></i></span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Introduction of higher courses in current colleges</td>
+                                    <td><span class="success">Uploaded</span></td>
+
+                                    <td>
+                                        <span class="btn btn-sm btn-success" title="Download"><i class="fas fa-download" aria-hidden="true"></i></span>&nbsp;
+                                        <span class="btn btn-sm btn-danger" title="Delete"><i class="fa fa-trash"></i></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Increase of seats in college</td>
+
+                                    <td><span class="return">Not Uploaded</span></td>
+
+                                    <td>
+                                        <span class="btn btn-sm btn-primary" title="Upload" data-toggle="modal" data-target="#userModal"><i class="fa fa-upload" aria-hidden="true"></i></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Renewal of seats in college</td>
+
+                                    <td><span class="return">Not Uploaded</span></td>
+
+                                    <td>
+                                        <span class="btn btn-sm btn-primary" title="Upload" data-toggle="modal" data-target="#userModal"><i class="fa fa-upload" aria-hidden="true"></i></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Recognition of the college</td>
+                                    <td><span class="success">Uploaded</span></td>
+
+                                    <td>
+                                        <span class="btn btn-sm btn-success" title="Download"><i class="fas fa-download" aria-hidden="true"></i></span>&nbsp;
+                                        <span class="btn btn-sm btn-danger" title="Delete"><i class="fa fa-trash"></i></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Periodic general inspection</td>
+                                    <td><span class="success">Uploaded</span></td>
+
+                                    <td>
+                                        <span class="btn btn-sm btn-success" title="Download"><i class="fas fa-download" aria-hidden="true"></i></span>&nbsp;
+                                        <span class="btn btn-sm btn-danger" title="Delete"><i class="fa fa-trash"></i></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <!-- <p>No Data</p> -->
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="userModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title pull-left text-left" style="position: absolute;">Upload Performs</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="firstName" class="required">Performs Type: </label>
+                            </div>
+                            <div class="col-md-8">
+                                <p>Increase of seats in college</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="middleName">File: <span class="requiredClass">*</span></label>
+                            </div>
+                            <div class="col-md-8"><input type="file" class="btn btn-primary" style="overflow: hidden; width: 100%;" /></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="processSubmit" data-dismiss="modal">Submit</button> &nbsp;
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button> &nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

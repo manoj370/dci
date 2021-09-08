@@ -1,0 +1,15 @@
+tr {
+    cursor: default;
+}
+
+.text-success {
+    cursor: pointer;
+}
+
+tr td {
+    text-transform: lowercase !important;
+}
+
+tr td::first-letter {
+    text-transform: uppercase !Important;
+}

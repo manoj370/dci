@@ -1,0 +1,16 @@
+label {
+    font-size: 18px;
+}
+.btn-successs {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+    padding-left: 7px;
+
+}
+.btn-processed {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+    padding-left: 2px;
+}

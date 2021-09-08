@@ -1,0 +1,220 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Search By Meeting Date</h5>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <input type="date" class="form-control" [(ngModel)]="newDateValue">
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <button class="globalBtn acceptBtn" (click)="agendaList()">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row" *ngIf="showTable===false">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="theadRow thead-light">
+                                <tr>
+                                    <th>Meeting Date</th>
+                                    <th>Meeting Venue</th>
+                                    <!-- <th>Status</th> -->
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbodyRow">
+                                <tr *ngFor="let item of agendaListData">
+                                    <td>{{item.meetingDate }}</td>
+                                    <td>{{item.completeMeetingVenue}}</td>
+                                    <!-- <td>{{item.ecStatus.statusName}}</td> -->
+                                    <td><span class="text-primary" (click)="getAgendaList(item)"><i
+                                              class="fas fa-eye"> </i></span></td>
+                                </tr>
+                                <tr *ngIf="agendaListData.length === 0">
+                                    <td colspan="4" style="text-align: center;padding: 50px !important;">No Data Available in Table</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container" *ngIf="(agendaListValue.length !==0 && showTable===true && meetingData)">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Agenda List</h5>
+                    </div>
+                    <div class="col-md-4  text-right">
+                        <select class="custom-select-sm" class="form-control" [(ngModel)]="sectionId">
+                          <option value="" disabled selected style="color:orange">Select Section</option>
+                          <option *ngFor="let sc of sectionList" [value]="sc.agendaSectionId">
+                              {{sc.agendaSectionName}}
+                          </option>
+                      </select>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <button type="button" class="globalBtn acceptBtn" (click)="getAgendaList(meetingId)">Search</button>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive-sm">
+                            <table class="table table-bordered table-hover">
+                                <thead class="theadRow thead-light">
+                                    <tr>
+                                        <th *ngFor="let headers of tableHeaders">{{headers}}</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbodyRow">
+                                    <span *ngFor="let item of agendaListValue;let i=index" style="display: contents;">
+                                      <tr>
+                                          <td>{{item.aegndaSectionId }}</td>
+                                          <td>{{item.agendaSectionName}}</td>
+                                          <td>{{item.agendaSubSectionName !== null ? (item.agendaSubSectionName) :'-'}}
+                                          </td>
+                                          <td>{{item.agendaSubject}}</td>
+                                          <td>{{item.createdOn !== null ? (item.createdOn):'-'}}</td>
+                                          <td>
+                                              <span *ngIf="item.action !== true">---</span>
+                                    <i class="fas fa-eye" *ngIf="item.action === true" (click)="view(item.aegndaSectionId)"></i>
+                                    <!-- <i class="fas fa-plus" data-toggle="modal" data-target="#createAgenda" *ngIf="item.agendaSectionName==='Confirm Minutes of Preceeding Meeting'"></i> -->
+                                    </td>
+                                    </tr>
+                                    <span *ngIf="item.aegndaSectionId===itemNumber && viewToggle" style="display: contents;">
+                                          <tr *ngFor="let item of subList">
+                                              <td>{{item.agendaCategroyItemRefNumber}}</td>
+                                              <td>{{item.agendaSectionDTO !== null ? (item.agendaSectionDTO.agendaSectionName) : '-'}}
+                                              </td>
+                                              <td>{{item.agendaSubSectionDTO !== null ? (item.agendaSubSectionDTO.agendaSubSectionName):'-'}}
+                                              </td>
+                                              <td>{{item.agendaItemSubject}}</td>
+                                              <td>{{item.createdOn}}</td>
+                                              <td>---</td>
+                                          </tr>
+                                      </span>
+                                    </span>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="downloadModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title pull-left text-left" style="position: absolute;">Download Agenda List</h4>
+
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-4 " for="email">Select Section <span
+                              class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                            <select class="form-control">
+                              <option selected="selected">All</option>
+                              <option>ARPL</option>
+                              <option>Legal</option>
+                          </select>
+
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="processSubmit" data-dismiss="modal">Download</button> &nbsp;
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Ask Correction Modal Starts -->
+<!-- Modal -->
+<div class="modal fade" id="createAgenda" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title headingValue">Create Agenda</h4>
+                <button type="button" class="close" #dismissModal data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label class="col-md-3">Select Meeting Date <span class="text-danger">*</span></label>
+                    <div class="col-md-7">
+                        <select class="form-control" class="form-control" [(ngModel)]="selectedDate">
+                          <option value="" disabled selected>Select Date</option>
+                          <option *ngFor="let course of meetingDatesList" [value]="course.meetingId">
+                              {{course.meetingDate }}</option>
+                      </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3">Item Number <span class="text-danger">*</span></label>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control" placeholder="Item Number" [(ngModel)]="itemNumber">
+                    </div>
+                    <div class="col-sm-2'">
+                        <p style="color: brown; font-weight: 600; cursor: pointer; font-size: 14px; margin-top: 9px" (click)="viewData()">
+                            View
+                        </p>
+                    </div>
+                </div>
+                <form [formGroup]="agendaForm">
+                    <div class="form-group row">
+                        <label class="col-md-3">Subject <span class="text-danger">*</span> </label>
+                        <div class="col-md-7">
+                            <textarea class="form-control" rows="2" placeholder="Item Subject" formControlName="meetingSubject"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3">Matter <span class="text-danger">*</span> </label>
+                        <div class="col-md-7">
+                            <textarea class="form-control" rows="5" placeholder="Write Matter" formControlName="meetingMatter">
+                        </textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3">Discussion <span class="text-danger">*</span> </label>
+                        <div class="col-md-7">
+                            <textarea class="form-control" rows="5" placeholder="Write Discussion" formControlName="meetingDiscussion"></textarea>
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3">Decision <span class="text-danger">*</span></label>
+                        <div class="col-md-7">
+                            <!-- <app-tinyeditor formControlName="meetingDecision"></app-tinyeditor> -->
+                            <tinymce [config]="appConst.config" formControlName="meetingDecision"></tinymce>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="globalBtn forwardBtn" style="width: 180px" (click)="createAgenda()">Save As New
+                  Agenda</button>&nbsp;
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Ask Correction Modal Ends -->

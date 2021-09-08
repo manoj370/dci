@@ -1,0 +1,316 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-8">
+                    <h5 class="headingValue">Active Students List</h5>
+                </div>
+                <div class="col-md-4 text-right">
+                    <button type="button" class="btn btn-primary"  href="#demo"
+                    data-toggle="collapse">Search</button>&nbsp;
+                    <!-- <div class="form-group">
+                        <div class="icon-addon" style="height: 0;">
+                            <label class="fas fa-search iconValue"></label>
+                            <input type="text" placeholder="Search" class="form-control" href="#demo"
+                                data-toggle="collapse">
+
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            <div id="demo" class="collapse">
+                <form [formGroup]="searchForm">
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <label>Academic Year:</label>
+                        <input type="text" class="form-control" placeholder="ccyy-yy"
+                            formControlName="academicyear" />
+                    </div>
+                    <div class="col-md-4">
+                        <label>Course:</label>
+                        <select class="form-control" class="form-control" formControlName="course"
+                            (change)="courseId($event.target.value)">
+                            <option value="" disabled selected>Select Course</option>
+                            <option *ngFor="let course of courseList" [value]="course.courseId">
+                                {{course.courseName}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Specialisation:</label>
+                        <select class="form-control" formControlName="Specialisation"
+                            (change)="specialization($event.target.value)">
+                            <option value="" disabled selected>Select Specialisation</option>
+                            <option *ngFor="let specialization of specializations"
+                                [value]="specialization.specialisationId">
+                                {{specialization.name}}</option>
+                        </select>
+                    </div>
+                   
+    
+                </div>
+                <div class="row">
+    
+                    <div class="col-md-4">
+                        <label>Student Name:</label>
+                        <input type="text" placeholder="Student Name" class="form-control" formControlName="name" />
+                    </div>
+                    <!-- <div class="col-md-4">
+                        <label>Student RollNumber:</label>
+                        <input type="text" placeholder="Student Roll Number" class="form-control"
+                            formControlName="rollnumber" />
+                    </div> -->
+                   
+                    <!-- <div class="col-md-3">
+                        <label>Status:</label>
+                        <select class="form-control" >
+                            <option value="" disabled selected>Select Status</option>
+                            <option value="Enrolled">Enrolled</option>
+                            <option value="UnderSrutiny">UnderSrutiny</option>
+                            <option value="Incapacitated">Incapacitated</option>
+                            <option value="Discharged">Discharged</option>
+                        </select>
+                    </div> -->
+                </div><br>
+                <div class="row">
+    
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-4">
+    
+                        <button type="button" class="btn btn-primary" (click)="search()">Search</button>&nbsp;&nbsp;
+                        <button type="button" class="btn btn-danger" (click)="reset()">Reset</button>&nbsp;
+    
+                    </div>
+    
+                    <div class="col-md-4">
+                    </div>
+    
+    
+    
+                </div>
+            </form>
+            </div>
+           
+
+            <hr>
+
+            <!-- <div class="row">
+                <div class="col-md-8">
+                    <h5 class="headingValue">Active Students List</h5>
+                </div>
+                <div class="col-md-4 text-right">
+                    <div class="form-group">
+                        <div class="icon-addon" style="height: 0;">
+                            <input type="text" placeholder="Search" class="form-control searchValue">
+                            <label class="fas fa-search iconValue"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr> -->
+
+            <div class="row" style="padding-top: 10px;padding-bottom:50px;">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Father Name</th>
+                                    <th>Course</th>
+                                    <th>Specialisation</th>
+                                    <th>Academic Year</th>
+                                    <th>Neet Percentile</th>
+                                    <th>Date Of Admission</th>
+                                    <!-- <th>Process History</th> -->
+                                    <th>Status</th>
+                                    <!-- <th>Action</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of activelist"  (click)="view(data)">
+                                    <td>{{data.firstName | titlecase}}</td>
+                                    <td>{{data.fatherName | titlecase}}</td>
+                                    <td>{{data.collegeCourseOfferedSepcialisation.collegeSpecialisation.collegeCourse.courseName | titlecase}}
+                                    </td>
+                                    <td>{{data.collegeCourseOfferedSepcialisation.collegeSpecialisation.name | titlecase}}</td>
+                                    <td>{{data.academicYear}}</td>
+                                    <td>{{data.neetPercantage}}</td>
+                                    <td>{{data.admissionDate}}</td>
+                                    <!-- <td><a href="#">History</a> </td> -->
+                                    <td><span class="text-success" style="color: white;"*ngIf="data.studentStatus.statusName === 'Verified'">{{data.studentStatus.statusName}}</span>
+                                                                         </td>
+                                    <!-- <td style="text-align: center;"><span
+                                            
+                                        ><i class="fas fa-edit" title="Allow"
+                                            style="color:green"></i></span>&nbsp;
+                                </td> -->
+                                </tr>
+                            </tbody>
+                            <!-- <tbody>
+                                <tr>
+                                    <td>#0033</td>
+                                    <td>121221</td>
+                                    <td>Mark Willy</td>
+                                    <td>MDS</td>
+                                    <td>Prosthodontics</td>
+                                    <td>Male</td>
+                                    <td>02-05-2001</td>
+                                    <td>2020-2021</td>
+                                    <td>
+                                        <span class="badge badge-pill badge-success"
+                                            style="color: white">Enrolled</span>
+    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#0022</td>
+                                    <td>121222</td>
+                                    <td>Jessia Rose</td>
+                                    <td>MDS</td>
+                                    <td>Prosthodontics</td>
+                                    <td>Female</td>
+                                    <td>02-05-2001</td>
+                                    <td>2020-2021</td>
+                                    <td>
+                                        <span class="badge badge-pill badge-success"
+                                            style="color: white">Enrolled</span>
+    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#0024</td>
+                                    <td>121223</td>
+                                    <td>Jessia Rose</td>
+                                    <td>MDS</td>
+                                    <td>Prosthodontics</td>
+                                    <td>Female</td>
+                                    <td>02-05-1995</td>
+                                    <td>2020-2021</td>
+                                    <td>
+                                        <span class="badge badge-pill badge-success"
+                                            style="color: white">Enrolled</span>
+    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#0025</td>
+                                    <td>121224</td>
+                                    <td>Mark Willy</td>
+                                    <td>MDS</td>
+                                    <td>Prosthodontics</td>
+                                    <td>Male</td>
+                                    <td>02-05-2001</td>
+                                    <td>2020-2021</td>
+                                    <td>
+                                        <span class="badge badge-pill badge-success"
+                                            style="color: white">Enrolled</span>
+    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#0026</td>
+                                    <td>121225</td>
+                                    <td>Jessia Rose</td>
+                                    <td>MDS</td>
+                                    <td>Prosthodontics</td>
+                                    <td>Female</td>
+                                    <td>02-05-1995</td>
+                                    <td>2020-2021</td>
+                                    <td>
+                                        <span class="badge badge-pill badge-success"
+                                            style="color: white">Enrolled</span>
+    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#0026</td>
+                                    <td>121225</td>
+                                    <td>Jessia Rose</td>
+                                    <td>MDS</td>
+                                    <td>Prosthodontics</td>
+                                    <td>Female</td>
+                                    <td>02-05-1995</td>
+                                    <td>2020-2021</td>
+                                    <td>
+                                        <span class="badge badge-pill badge-success"
+                                            style="color: white">Enrolled</span>
+    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#0026</td>
+                                    <td>121226</td>
+                                    <td>Mark Willy</td>
+                                    <td>MDS</td>
+                                    <td>Prosthodontics</td>
+                                    <td>Male</td>
+                                    <td>02-05-2002</td>
+                                    <td>2020-2021</td>
+                                    <td>
+                                        <span class="badge badge-pill badge-success"
+                                            style="color: white">Enrolled</span>
+    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#0027</td>
+                                    <td>121227</td>
+                                    <td>Mark Willy</td>
+                                    <td>MDS</td>
+                                    <td>Prosthodontics</td>
+                                    <td>Male</td>
+                                    <td>02-05-2002</td>
+                                    <td>2020-2021</td>
+                                    <td>
+                                        <span class="badge badge-pill badge-success"
+                                            style="color: white">Enrolled</span>
+    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#0028</td>
+                                    <td>121228</td>
+                                    <td>Jessia Rose</td>
+                                    <td>MDS</td>
+                                    <td>Prosthodontics</td>
+                                    <td>Female</td>
+                                    <td>02-05-2002</td>
+                                    <td>2020-2021</td>
+                                    <td>
+                                        <span class="badge badge-pill badge-success"
+                                            style="color: white">Enrolled</span>
+    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#0029</td>
+                                    <td>121229</td>
+                                    <td>Mark Willy</td>
+                                    <td>MDS</td>
+                                    <td>Prosthodontics</td>
+                                    <td>Male</td>
+                                    <td>02-05-2002</td>
+                                    <td>2020-2021</td>
+                                    <td>
+                                        <span class="badge badge-pill badge-success"
+                                            style="color: white">Enrolled</span>
+    
+                                    </td>
+                                </tr>
+                            </tbody> -->
+                        </table>
+                        <div class="col-md-12 text-right" *ngIf="responsePageCount>1" >
+                            <ul class="pagination float-right">
+                                <li class="page-item hoverActive"><a class="page-link " [class.my-class]="pageId === 0" (click)="previ()"><i class="fas fa-chevron-left"> </i></a></li>
+                                <li class="page-item"><a class="page-link">{{pageId+1}}/{{responsePageCount}}</a></li>
+                                <li class="page-item hoverActive"><a class="page-link" [class.my-class]="pageId+1 === responsePageCount" (click)="next()"><i class="fas fa-chevron-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

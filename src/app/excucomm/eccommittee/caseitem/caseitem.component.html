@@ -1,0 +1,221 @@
+<!-- Assistant Secretary -->
+<div class="row" *ngIf="showComplaint">
+    <div class="col-md-12">
+        <div class="card" *ngIf="complaintDetails">
+            <div class="row">
+                <div class="col-md-9">
+                    <h5 class="headingValue">Chronological History</h5>
+                    <span class="badge badge-pill badge-success" style="font-size: 60%;"></span>
+                </div>
+                <!-- <div class="col-md-3 text-right" *ngIf="navigateObj">
+                    <button type="button" class="globalBtn submitBtn" [routerLink]="['./../../../arplmatterview',navigateObj.agendaId,navigateObj.agendaStatus]">Back</button>
+                </div> -->
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="heading">
+                        Complaint Id
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintDetails.complainantNumber}}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="heading">
+                        Complaint Against
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintDetails.complaintAgainst.name}}
+                    </div>
+                </div>
+            </div>
+
+            <table class="table table-bordered table-hover">
+                <thead class="theadRow thead-light">
+                    <tr>
+                        <th>User</th>
+                        <th>Start Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody class="tbodyRow">
+                    <tr *ngFor="let item of processHistory" (click)="showDetails()">
+                        <td class="name-transfer"> {{item.workflowCode.workflowCodeName}}</td>
+                        <td>{{item.createdDate }}</td>
+                        <td><span class="badge badge-pill badge-success" style="color: white;">{{item.complaintStatus.complaintStatusName}}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<!-- Assistant Secretery -->
+<div class="row" *ngIf="complaintDetails && !showComplaint">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="headingValue">Case Item Detailed View </h5>
+
+                </div>
+                <div class="col-md-6 text-right">
+
+                    <button class="globalBtn submitBtn" (click)="showDetails()"> Back</button>
+
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="heading">
+                        Complaint Id
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintDetails.complainantNumber}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="heading">
+                        Complaint Against
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintDetails.complaintAgainst.name}}
+                    </div>
+                </div>
+
+            </div>
+            <hr>
+            <div class="row" *ngIf="complaintDetails.commentSections.length !== 0">
+                <div class="col-md-10">
+                    <div *ngFor="let item of complaintDetails.commentSections">
+                        <h5 class="headingValue">{{item.sectionAt}}</h5>
+                        <p style="font-size: 12px;">{{item.createdDate}}</p>
+                        <div class="subheadingValue">
+                            <p>
+                                {{item.comments !== null ? item.comments : '-'}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <h6 class="headingValue">Complainant Details</h6>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="heading">
+                        Name
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintDetails.complaintRaisedBy.firstName}} {{complaintDetails.complaintRaisedBy.lastName}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="heading">
+                        Mobile Number
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintDetails.complaintRaisedBy.phoneNumber}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="heading">
+                        Email ID
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintDetails.complaintRaisedBy.emailId}}
+                    </div>
+                </div>
+                <div class="col-md-3" *ngIf="complaintDetails.addresses">
+                    <div class="heading">
+                        Address
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintDetails.addresses[0].line1}},{{complaintDetails.addresses[0].line2}},<br> {{complaintDetails.addresses[0].city}},{{complaintDetails.addresses[0].state}}
+                        <br> {{complaintDetails.addresses[0].country}},{{complaintDetails.addresses[0].zipCode}}
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <h6 class="headingValue">Complaint Details</h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="heading">
+                        Subject
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintDetails.complainantSubject}}
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="heading">
+                        Complaint Type
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintDetails.complaintType.complaintTypeName}}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="heading">
+                        Complaint Description
+                    </div>
+                    <div class="subheadingValue">
+                        {{complaintDetails.complainantDescription}}
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="(complaintDetails.workflowDocuments!==null) && (complaintDetails.workflowDocuments.length!==0)">
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h6 class="headingValue">Evidence Documents</h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6" *ngFor="let item of complaintDetails.workflowDocuments; let i=index">
+                        <div class="iconCard" (click)="download(item.documentId)">
+                            <span><i class="far fa-file-alt docIcons"></i> {{item.documentLocation}}</span>
+                            <a href="{{downloadUrl}}" class="downloadView">
+                                <i class="fas fa-cloud-download-alt" style=" cursor: pointer;color: #3D78BE;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row" *ngFor="let item of complaintDetails.commentSections">
+                <div class="col-md-12" *ngIf="item.sectionAt === 'EXECUTIVECOMMITTEE'">
+                    <div *ngIf="item.comments!==null">
+                        <h5 class="headingValue" style="text-transform: capitalize;">{{item.sectionAt}} - Decision</h5>
+                    </div>
+                    <div class="subheadingValue">
+                        <p>
+                            {{item.comments}}
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

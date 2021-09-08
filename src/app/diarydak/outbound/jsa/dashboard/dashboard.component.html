@@ -1,0 +1,123 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-5">
+                    <h5 class="headingValue">Dashboard</h5>
+                </div>
+                <div class="col-md-3 text-right">
+                    <input type="text" ngxDaterangepickerMd placeholder="From Date - To Date" class="form-control " (change)="selectDateRange($event)" />
+                    <label class="fa fa-calendar fa-lg imagecalender calendar"></label>
+                </div>
+                <div class="col-md-2 text-right">
+                    <select class="custom-select-sm" class="form-control" (change)="statusGetAllDispatchList($event.target.value)">
+                        <option value="" disabled selected style="color:orange">Select Section</option>
+                        <option *ngFor="let sc of dashboardStatus" [value]="sc.statusName">
+                            {{sc.statusName}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-2 text-right">
+                    <div class="form-group">
+                        <div class="icon-addon" style="height: 0;">
+                            <input type="text" placeholder="Search" class="form-control" (keyup)="searchEvent($event.target.value)">
+
+                            <label class="fas fa-search iconValue"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row" style="padding-top: 10px;padding-bottom:50px;">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th *ngFor="let item of jsaConst.dashboardTable">{{item}}</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of allDispatchList">
+                                    <td>{{item.sectionRefNo !== null ? (item.sectionRefNo) : '-'}} </td>
+                                    <td>{{item.dispatchVia !== null ? (item.dispatchVia.name) : '-'}} </td>
+                                    <td>{{item.senderName !== null ? (item.senderName) : '-'}} </td>
+                                    <td>{{item.createdDate !== null ? (item.createdDate) : '-'}} </td>
+                                    <td>{{item.dispatchConfidentialityType !== null ? (item.dispatchConfidentialityType.name) : '-'}} </td>
+
+                                    <td><a [routerLink]="['../process', item.dispatchId]" style="color:#74AEB5">Process History</a></td>
+
+                                    <td>{{item.dakStatus !== null ? (item.dakStatus.statusName) : '-'}} </td>
+                                    <!-- <td> <span class="text-success" style="color: white;">Created</span>
+                                    </td> -->
+                                    <td>
+                                        <!-- <i class="fas fa-edit" style="color:#74AEB5"></i> -->
+                                        <i class="fas fa-eye" style="color:#74AEB5" [routerLink]="['../sheetView', item.dispatchId]"></i>
+
+                                    </td>
+
+                                </tr>
+                                <tr *ngIf="allDispatchList.length === 0">
+                                    <td colspan="8" style="text-align: center;padding: 50px !important;">No Data Available in Table</td>
+                                </tr>
+                                <!-- <tr>
+                                    <td>ACA/NC/2020/989</td>
+                                    <td>Print</td>
+
+                                    <td>Kiran</td>
+                                    <td>ABC College</td>
+                                    <td>21-08-2020 </td>
+                                    <td>Secret</td>
+                                    <td><span class="text-warning" style="color: white;">Forwarded</span>
+
+                                    </td>
+                                    <td style="text-align:center">--</td>
+
+                                </tr>
+                                <tr>
+                                    <td>ACA/NC/2020/900</td>
+                                    <td>Both</td>
+
+                                    <td>Rahul</td>
+                                    <td>ABC College</td>
+                                    <td>01-07-2020 </td>
+                                    <td>Top Secret</td>
+                                    <td> <span class="text-success" style="color: white;">Created</span>
+                                    </td>
+                                    <td style="text-align:center">--</td>
+                                </tr>
+                                <tr>
+                                    <td>ACA/NC/2020/997 </td>
+                                    <td>Email</td>
+
+                                    <td>Viktam Kumar</td>
+                                    <td>Gandhi College</td>
+                                    <td>15-08-2020 </td>
+                                    <td>Secret</td>
+                                    <td><span class="text-secondary" style="color: white;">Returned</span>
+
+                                    </td>
+                                    <td style="text-align: center;"><span><i class="fas fa-edit" style="color:#74AEB5"
+                                          ></i></span>&nbsp;
+                                    </td>
+                                </tr> -->
+
+
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+                <div class="col-md-12 text-right" *ngIf="pageCount>1">
+                    <ul class="pagination float-right">
+                        <li class="page-item hoverActive"><a class="page-link " [class.my-class]="rowId === 0" (click)="previ()"><i class="fas fa-chevron-left"> </i></a></li>
+                        <li class="page-item"><a class="page-link">{{rowId+1}}/{{pageCount}}</a></li>
+                        <li class="page-item hoverActive"><a class="page-link" [class.my-class]="rowId+1 === pageCount" (click)="next()"><i class="fas fa-chevron-right"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

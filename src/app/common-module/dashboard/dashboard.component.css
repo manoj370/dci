@@ -1,0 +1,40 @@
+section .section-title {
+    text-align: center;
+    color: #007b5e;
+    margin-bottom: 50px;
+    text-transform: uppercase;
+}
+
+.card {
+    border: none;
+    /* background: red; */
+    box-shadow: 12px 15px 20px 0px rgba(46, 61, 73, 0.15);
+}
+
+.frontside .card {
+    min-height: 402px;
+}
+
+.frontside .card .card-title {
+    color: #1B8C42 !important;
+}
+
+.card-text,
+.card-body {
+    height: 100px;
+}
+
+.entrycontent {
+    color: #fff !important;
+    text-decoration: none !important;
+    background-color: cadetblue;
+    font-size: 12px;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.card-title a {
+    font-size: 14px;
+    color: #000 !important;
+    font-weight: 600;
+}

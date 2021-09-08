@@ -1,0 +1,34 @@
+.badge-pill {
+    font-size: 12px !important;
+    height: 30px !important;
+    width: 110px !important;
+    border-radius: 4px !important;
+    padding-top: 10px !important;
+}
+
+.deleted {
+    font-size: 16px;
+    margin-left: 10px;
+    color: #FF4F5E !important;
+}
+
+.added {
+    font-size: 16px;
+    color: #00C851 !important;
+}
+
+th,
+td {
+    text-align: center;
+}
+
+.hedCard {
+    padding: 0 15px;
+}
+
+.hedCard .form-control {
+    background-color: #e9ecef;
+}
+
+
+/*  */

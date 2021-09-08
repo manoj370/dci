@@ -1,0 +1,571 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card" *ngIf="despatchinfo">
+            <div class="row">
+
+                <div class="col-md-3">
+                    <h5 class="headingValue">View Note Sheet &nbsp;
+                        <!-- <span class="badge badge-pill badge-primary" style="color: white; font-size: 60%">
+                        {{despatchinfo.dakStatus.statusName}}
+                        </span> -->
+                    </h5>
+                </div>
+                <div class="col-md-7 text-right">
+                    <div class="row">
+                        <div class="col-md-4" style="margin-top:5px" *ngIf="((despatchinfo.dakStatus.statusName !== 'ApprovedFinalised')&&(despatchinfo.dakStatus.statusName !== 'SendForDispatch')&&(despatchinfo.dakStatus.statusName !== 'Dispatched')&&(despatchinfo.dakStatus.statusName !== 'underCorrection'))">
+                            EC Circulation
+                        </div>
+                        <div class="col-md-2" *ngIf="((despatchinfo.dakStatus.statusName !== 'ApprovedFinalised')&&(despatchinfo.dakStatus.statusName !== 'SendForDispatch')&&(despatchinfo.dakStatus.statusName !== 'Dispatched')&&(despatchinfo.dakStatus.statusName !== 'underCorrection'))">
+                            <label class="switch">
+                                <input type="checkbox" id="togBtn" [(ngModel)]="flag" (change)="ecToggle()">
+                                <div class="slider round"></div>
+                            </label>
+                        </div>
+                        <div class="col-md-6 text-right" *ngIf="((despatchinfo.dakStatus.statusName !== 'SendForDispatch')&&(despatchinfo.dakStatus.statusName !== 'Dispatched')&&(despatchinfo.dakStatus.statusName !== 'underCorrection'))">
+                            <button type="button" class="globalBtn submitBtn dropdown-toggle" data-toggle="dropdown">
+                                Action
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" data-toggle="modal" data-target="#askCorrectionModal" style="cursor:pointer" *ngIf="((despatchinfo.dakStatus.statusName !=='underCorrection')&&(despatchinfo.dakStatus.statusName !== 'ApprovedFinalised'))">Return For Correction</a>
+                                <a class="dropdown-item" style="cursor:pointer" data-toggle="modal" style="cursor:pointer" *ngIf="((despatchinfo.dakStatus.statusName !== 'ApprovedFinalised')&&(despatchinfo.isDispatchWithDfa === true))"  (click)="previewPdf()">Preview
+                                </a>
+                                <a class="dropdown-item" data-toggle="modal" data-toggle="modal" data-target="#myModall" style="cursor: pointer;" *ngIf="despatchinfo.dakStatus.statusName !== 'ApprovedFinalised'">Approve & Finalize</a>
+
+                                <!--NEW ACTION ITEMS  -->
+                                <a class="dropdown-item" style="cursor: pointer;" *ngIf="((despatchinfo.dakStatus.statusName === 'ApprovedFinalised')&&(despatchinfo.isDispatchWithDfa === true))" (click)="downloadUnsignedPdf(this.doucumentunsignedId)" href="{{downloadunsignedpdf}}">Download letter </a>
+                                <a class="dropdown-item" style="cursor: pointer;" data-toggle="modal" data-toggle="modal" data-target="#uploadfile" *ngIf="((despatchinfo.dakStatus.statusName === 'ApprovedFinalised')&&(despatchinfo.isDispatchWithDfa === true))">Upload Signed letter </a>
+                                <a class="dropdown-item" style="cursor: pointer;" data-toggle="modal" data-toggle="modal" data-target="#confirmdispatch" *ngIf="((despatchinfo.dakStatus.statusName === 'ApprovedFinalised')&&(despatchinfo.isDispatchWithDfa === true))">Send for Dispatch</a>
+                                <!-- <a class="dropdown-item"  style="cursor: pointer;" *ngIf="despatchinfo.dakStatus.statusName === 'ApprovedFinalised'">Print Address</a> -->
+                                <!-- NEW ACTION ITEMS -->
+
+                            </div>
+                        </div>
+                        <div class="col-md-2 text-right" *ngIf="((despatchinfo.isDispatchWithDfa === true)&&(despatchinfo.dakStatus.statusName === 'Dispatched'))">
+                            <!-- <button *ngIf="((despatchinfo.isDispatchWithDfa === true)&&(despatchinfo.dakStatus.statusName === 'Dispatched'))" class="finalBtn submitBtn" style="cursor:pointer" data-toggle="modal" (click)="previewFinalLetter(this.doucumentunsignedId)">View Final Letter
+                            </button> -->
+                            <button *ngIf="((despatchinfo.isDispatchWithDfa === true)&&(despatchinfo.dakStatus.statusName === 'Dispatched'))" class="finalBtn submitBtn" style="cursor:pointer"  data-toggle="modal" >
+                                <a href="{{finaldownloadUrl}}" style="color: #ffffff;text-decoration: none;" (click)="previewFinalLetter(this.finalDocumentId)">View Final Letter</a> </button>
+                        </div>
+                        <!-- <div class="col-md-2 text-right" *ngIf="((despatchinfo.dakStatus.statusName === 'Dispatched')||(despatchinfo.dakStatus.statusName === 'SendForDispatch'))">
+                            <button *ngIf="((despatchinfo.dakStatus.statusName === 'Dispatched')||(despatchinfo.dakStatus.statusName === 'SendForDispatch'))" class="globalBtn submitBtn" style="cursor:pointer" data-toggle="modal" (click)="previewPdf()">Preview
+                            </button>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="col-md-2 text-right">
+                    <button type="button" class="globalBtn submitBtn" (click)="back()">Back</button>
+            </div>
+            </div>
+            <hr>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <b><label>Section </label></b>
+                    <p>{{despatchinfo.dakDispatchFileNos !== null ? (despatchinfo.dakDispatchFileNos.section.sectionName):'-'}}
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <b><label>Sub Section </label></b>
+                    <p>{{despatchinfo.dakDispatchFileNos !== null ? (despatchinfo.dakDispatchFileNos.subSection.name):'-'}}
+                    </p>
+                </div>
+                <!-- <div class="col-md-4" *ngIf="despatchinfo.dakDispatchFileNos.dakFileSubCategoryReference !==null">
+                    <b><label>Reference</label><br></b>
+                    <p>{{despatchinfo.dakDispatchFileNos !== null ? (despatchinfo.dakDispatchFileNos.dakFileSubCategoryReference.name):'-'}}
+                    </p>
+                </div>
+                <div class="col-md-4" *ngIf="despatchinfo.dakDispatchFileNos.dakFileSubCategoryReference ===null">
+                    <b><label>Reference</label><br></b>
+                    <p>-
+                    </p>
+                </div> -->
+                <div class="col-md-4">
+                    <b><label>Category</label><br></b>
+                    <p>{{despatchinfo.dakDispatchFileNos !== null ? (despatchinfo.dakDispatchFileNos.dakFileCategory.name):'-'}}
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <b><label>Sub Category</label><br></b>
+                    <p>{{despatchinfo.dakDispatchFileNos !== null ? (despatchinfo.dakDispatchFileNos.dakFileSubCategory.name):'-'}}
+                    </p>
+                </div>
+                <div class="col-md-4" *ngIf="despatchinfo.dakDispatchFileNos.dakFileSubjectReferenceNonCollege ===null">
+                    <b><label>Reference</label><br></b>
+                    <p>{{despatchinfo.dakDispatchFileNos !== null ? (despatchinfo.dakDispatchFileNos.college.collegeName):'-'}}
+                    </p>
+                </div>
+                <div class="col-md-4" *ngIf="despatchinfo.dakDispatchFileNos.dakFileSubjectReferenceNonCollege ===null">
+                    <b><label>Reference ID</label><br></b>
+                    <p>{{despatchinfo.dakDispatchFileNos !== null ? (despatchinfo.dakDispatchFileNos.college.collegeId):'-'}}
+                    </p>
+                </div>
+                <div class="col-md-4" *ngIf="despatchinfo.dakDispatchFileNos.dakFileSubCategoryReference !==null">
+                    <b><label>Reference</label><br></b>
+                    <p>{{despatchinfo.dakDispatchFileNos !== null ? (despatchinfo.dakDispatchFileNos.dakFileSubCategoryReference.name):'-'}}
+                    </p>
+                </div>
+                <div class="col-md-4" *ngIf="despatchinfo.dakDispatchFileNos.college ===null">
+                    <b><label>Reference ID</label><br></b>
+                    <p>{{despatchinfo.dakDispatchFileNos !== null ? (despatchinfo.dakDispatchFileNos.dakFileSubjectReferenceNonCollege.shortName):'-'}}
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <b> <label>Academic/Financial Year </label></b><br>
+                    <p>{{despatchinfo.dakDispatchFileNos !== null ? (despatchinfo.dakDispatchFileNos.financialYear):'-'}}
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <b> <label>Current Year </label></b><br>
+                    <p>{{despatchinfo.dakDispatchFileNos !== null ? (despatchinfo.dakDispatchFileNos.dispatchYear):'-'}}
+                    </p>
+                </div>
+                <!-- <div class="col-md-4">
+                    <b> <label>Complete By</label></b><br>
+                    <p>{{despatchinfo.dakDispatchFileNos !== null ? (despatchinfo.dakDispatchFileNos.dispatchByDate):'-'}}
+                    </p>
+                </div> -->
+                <div class="col-md-4">
+                    <b><label>Section Reference Number </label></b>
+                    <p>{{despatchinfo.dakDispatchFileNos !== null ? (despatchinfo.dakDispatchFileNos.dakDispatchFileNo):'-'}}
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="headingValue">Dispatch Details</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <b><label>Category </label></b>
+                    <p>{{despatchinfo.dispatchCategories.name}}</p>
+                </div>
+                <div class="col-md-3">
+                    <b><label>Language </label></b>
+                    <p>{{despatchinfo.receiptLanguageId !== null ? (despatchinfo.receiptLanguageId.name):'-'}}</p>
+                </div>
+
+                <div class="col-md-3">
+                    <b><label>Urgency </label><br></b>
+                    <p>{{despatchinfo.dispatchUrgency.name}}</p>
+                </div>
+                <div class="col-md-3">
+                    <b> <label>Confidentiality </label></b><br>
+                    <p>{{despatchinfo.dispatchConfidentialityType !== null ?(despatchinfo.dispatchConfidentialityType.name) :'-'}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="headingValue">Issuing Authority</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <b><label>Designation </label><br></b>
+                    <p>{{despatchinfo.senderDesignation.designationName}}</p>
+                </div>
+                <div class="col-md-4">
+                    <b><label>Sender Name </label></b>
+                    <p>{{despatchinfo.senderName}}</p>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="headingValue">Note Sheet Contents</h5><br>
+                    <p [innerHTML]="despatchinfo.noteSheetContents"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="headingValue">Comments</h5>
+                </div>
+               
+            </div>
+            <hr>
+            <div class="row" *ngFor="let item of despatchinfo.dakWorkflowCommentsDTO">
+                <div class="col-md-10">
+                    <div>
+                        <h5 class="headingValue">{{item.senderActor}}</h5><span class="badge badge-pill badge-primary" style="color: white; font-size: 60%">{{item.dakStatus.statusName}}</span>
+                    </div>
+                    <p style="font-size: 12px;">
+                        {{item.createdDate}}
+                    </p>
+                    <p style="margin-bottom: 4px;">
+                        {{(item.comments !==null && item.comments !==" ") ?(item.comments):'-'}}
+                    </p>
+                    <!-- <div class="subheadingValue">
+                        <p>
+                            {{(item.comments !==null && item.comments !==" ") ?(item.comments):'-'}}
+                        </p>
+                    </div> -->
+                </div>
+            </div><hr>
+            <div *ngIf="hidedfadetails">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="headingValue">Draft For Approval</h5>
+                    </div>
+                </div>
+                <div class="row" *ngIf="despatchinfo.receiptLanguageId.receiptLanguageId === 1">
+                    <div class="col-md-12">
+                        <b><label>DFA Subject </label></b>
+                        <p [innerHTML]="despatchinfo.dfaSubject"></p>
+                    </div>
+                    <div class="col-md-12">
+                        <b><label>DFA Contents </label></b>
+                        <p [innerHTML]="despatchinfo.dfaContents"></p>
+                    </div>
+                </div>
+                <div class="row" *ngIf="despatchinfo.receiptLanguageId.receiptLanguageId === 2">
+                    <div class="col-md-12">
+                        <b><label>DFA Hindi Subject </label></b>
+                        <p [innerHTML]="despatchinfo.dfaHindiSubject"></p>
+                    </div>
+                    <div class="col-md-12">
+                        <b><label>DFA Contents </label></b>
+                        <p [innerHTML]="despatchinfo.dfaHindiContents"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="headingValue"> Addresses</h5>
+                </div>
+            </div>
+            <div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5 class="headingValue">To </h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <span style="width:100%;">
+                        <span *ngIf="despatchinfo.dakDispatchRecipientDetails !==null"> 
+                    <div class="col-md-6" *ngFor="let add of despatchinfo.dakDispatchRecipientDetails let i=index" style="float:left">
+                       
+                        <span *ngIf="add.dakAddressType.addressTypeId ==1">
+                            <b><p style="margin:0px; margin-left:10px !important;"
+                            *ngIf="despatchinfo.dakDispatchRecipientDetails.dakAddressCategories !==undefined ||despatchinfo.dakDispatchRecipientDetails.dakAddressCategories !==null">
+                            {{add.dakAddressCategories !== null ? (add.dakAddressCategories.name) :'-'}} -  <span style="margin:0px; "
+                            *ngIf="despatchinfo.dakDispatchRecipientDetails.recipientName !==undefined ||despatchinfo.dakDispatchRecipientDetails.recipientName !==null">
+                            {{add.recipientName !== null ? (add.recipientName) :'-'}}</span></p></b>
+                               
+                                <p style="margin:0px; margin-left:10px !important;"
+                                    *ngIf="despatchinfo.dakDispatchRecipientDetails.recipientEmailId !==undefined ||despatchinfo.dakDispatchRecipientDetails.recipientEmailId !==null">
+                                    {{add.recipientEmailId !== null ? (add.recipientEmailId) :'-'}}, <span style="margin:0px;"
+                                    *ngIf="despatchinfo.dakDispatchRecipientDetails.recipientContactNumber !==undefined ||despatchinfo.dakDispatchRecipientDetails.recipientContactNumber !==null">
+                                    {{add.recipientContactNumber !== null ? (add.recipientContactNumber) :'-'}}</span></p>
+                                
+         
+                                <p style="margin:0px;margin-bottom:10px !important; margin-left:10px !important;"
+                                    *ngIf="despatchinfo.dakDispatchRecipientDetails.address !==null">
+                                    {{add.address !== null ? (add.address.line1) :'-'}},
+                                    {{add.address !== null ? (add.address.line2) :'-'}},
+                                    {{add.address !== null ? (add.address.zipCode) :'-'}}. ( <span style="margin:0px; "
+                                    *ngIf="despatchinfo.dakDispatchRecipientDetails.dispatchVia !==undefined ||despatchinfo.dakDispatchRecipientDetails.dispatchVia !==null">
+                                    {{add.dispatchVia !== null ? (add.dispatchVia.name) :'-'}}</span>)
+                                </p>
+                        </span>
+                        
+                      
+                    </div>
+                    </span>
+                    <span *ngIf="despatchinfo.dakDispatchBulkCategory !==null">
+                        <div *ngFor="let add of despatchinfo.dakDispatchBulkCategory; let i=index" > <!-- {{i>0 && sheetDetails.dakDispatchRecipientDetails[i-1].dakDispatchBulkCategory !==null ==add.dakDispatchBulkCategory !==null?'':add.dakDispatchBulkCategory.name}} -->
+                   {{add.name}}
+                 </div>
+                     </span>
+                </span>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5 class="headingValue">Endorsee </h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <span style="width:100%;">
+                        <div class="col-md-6" *ngFor="let add of despatchinfo.dakDispatchRecipientDetails"
+                            style="float:left">
+                            <span *ngIf="add.dakAddressType.addressTypeId ==2">
+                               <b> <p style="margin:0px; margin-left:10px !important;"
+                                *ngIf="despatchinfo.dakDispatchRecipientDetails.dakAddressCategories !==undefined ||despatchinfo.dakDispatchRecipientDetails.dakAddressCategories !==null">
+                                {{add.dakAddressCategories !== null ? (add.dakAddressCategories.name) :'-'}} - <span style="margin:0px;"
+                                *ngIf="despatchinfo.dakDispatchRecipientDetails.recipientName !==undefined ||despatchinfo.dakDispatchRecipientDetails.recipientName !==null">
+                                {{add.recipientName !== null ? (add.recipientName) :'-'}}</span></p></b>
+                                
+                                <p style="margin:0px; margin-left:10px !important;"
+                                    *ngIf="despatchinfo.dakDispatchRecipientDetails.recipientEmailId !==undefined ||despatchinfo.dakDispatchRecipientDetails.recipientEmailId !==null">
+                                    {{add.recipientEmailId !== null ? (add.recipientEmailId) :'-'}}, <span style="margin:0px; "
+                                    *ngIf="despatchinfo.dakDispatchRecipientDetails.recipientContactNumber !==undefined ||despatchinfo.dakDispatchRecipientDetails.recipientContactNumber !==null">
+                                    {{add.recipientContactNumber !== null ? (add.recipientContactNumber) :'-'}}</span></p>
+                                
+           
+                                <p style="margin:0px; margin-bottom:10px !important; margin-left:10px !important;"
+                                    *ngIf="despatchinfo.dakDispatchRecipientDetails.address !==null">
+                                    {{add.address !== null ? (add.address.line1) :'-'}},
+                                    {{add.address !== null ? (add.address.line2) :'-'}},
+                                    {{add.address !== null ? (add.address.zipCode) :'-'}}. ( <span style="margin:0px; "
+                                    *ngIf="despatchinfo.dakDispatchRecipientDetails.dispatchVia !==undefined ||despatchinfo.dakDispatchRecipientDetails.dispatchVia !==null">
+                                    {{add.dispatchVia !== null ? (add.dispatchVia.name) :'-'}}</span>)
+                                </p>
+                            </span>
+                        </div>
+                    </span>
+                </div>
+
+
+            </div>
+                   <div class="row">
+                    <div class="col-md-12">
+                        <h5 class="headingValue">CC</h5><br>
+                        <div *ngFor="let cc of despatchinfo.dakDispatchRecipientDetails">
+                            <div class="row" *ngIf="cc.dakAddressType.addressTypeId ===3">
+                                <!-- <div class="col-md-4" *ngIf="despatchinfo.dakDispatchRecipientDetails.section !==undefined ||despatchinfo.dakDispatchRecipientDetails.section !==null">
+                                    {{cc.section !== null ? (cc.section.sectionName) :'-'}}
+                                </div> -->
+                                <span *ngIf="cc.ccType ==='SECTION'">
+                                    <div class="col-md-12" *ngIf="despatchinfo.dakDispatchRecipientDetails.section !==undefined ||despatchinfo.dakDispatchRecipientDetails.section !==null">
+                                        {{cc.section !== null ? (cc.section.sectionName) :'-'}}
+                                    </div>
+                                </span>
+                                <span *ngIf="cc.ccType ==='FILE'">
+                                    <div class="col-md-12" *ngIf="despatchinfo.dakDispatchRecipientDetails.dakDispatchFileNos !==undefined ||despatchinfo.dakDispatchRecipientDetails.dakDispatchFileNos !==null">
+                                        {{cc.dakDispatchFileNos !== null ? (cc.dakDispatchFileNos.dakDispatchFileNo) :'-'}}
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><br>
+            <div class="row" *ngIf="despatchinfo.dispatchDocuments.length!==0">
+                <div class="col-md-3">
+                    <h5 class="headingValue">Dispatch Documents</h5>
+                    <hr>
+                    <div *ngFor="let item of despatchinfo.dispatchDocuments; let i=index">
+                        <div class="iconCard" (click)="download(item.documentId)">
+                            <span><i class="far fa-file-alt docIcons"></i> File {{i+1}}</span>
+                            <a href="{{downloadUrl}}" class="downloadView">
+                                <i class="fas fa-cloud-download-alt" style=" cursor: pointer;color: #3D78BE;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row" *ngIf="despatchinfo.receiptDocuments!==null">
+
+                <div class="col-md-3">
+                    <h5 class="headingValue">Receipt Documents</h5>
+                    <hr>
+                    <div *ngFor="let item of despatchinfo.receiptDocuments; let i=index">
+                        <div class="iconCard" (click)="download(item.documentId)">
+                            <span><i class="far fa-file-alt docIcons"></i> File {{i+1}}</span>
+                           
+                            <a href="{{downloadUrl}}" class="downloadView">
+                                <i class="fas fa-cloud-download-alt" style=" cursor: pointer;color: #3D78BE;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title headingValue">Ask President</h4>
+                <button type="button" class="close" data-dismiss="modal" style="cursor: pointer;">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <input type="text" class="form-control" readonly placeholder="President">
+                    </div><br>
+                    <div class="row">
+                        <label>Subject <span class="aseticcolor">*</span></label>
+                        <input type="text" placeholder="subject" class="form-control">
+                    </div><br>
+                    <div class="row">
+                        <label>Matter <span class="aseticcolor">*</span></label>
+                        <textarea rows="5" cols="20" class="form-control" placeholder="Write Matter"></textarea>
+                    </div><br>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" style="cursor: pointer;">Send</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="myModall">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title headingValue">Approve & Finalize</h4>
+                <button type="button" class="close" #approveDismissModal data-dismiss="modal" style="cursor: pointer;" (click)=" reset()">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form [formGroup]="approveForm">
+                    <div class="row">
+                        <label>Comments <span class="aseticcolor">*</span></label>
+                        <textarea rows="5" cols="20" class="form-control" formControlName="comment" placeholder="Write Comments"></textarea>
+                    </div>
+                    <div *ngIf="approveForm.controls['comment'].hasError('required') && approveForm.controls['comment'].touched" class="failed-validation" class="errorColor">
+                        Comments Required
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="globalBtn acceptBtn" (click)="dispatchApprove()" [disabled]="!approveForm.valid">
+                    <i class="fa fa-spinner fa-spin"
+                    *ngIf="loading"></i>Submit</button>
+                <button type="button" class="globalBtn clearBtn" (click)=" reset()">Reset</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Ask Correction Modal Starts -->
+<!-- Modal -->
+<div class="modal fade" id="askCorrectionModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title headingValue">Return For Correction</h4>
+                <button type="button" class="close" #dismissModal data-dismiss="modal" (click)="reset()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="returnCorrection">
+                    <div class="row">
+                        <label>Select Designations <span class="aseticcolor">*</span></label>&nbsp;
+                        <select class="custom-select-sm" class="form-control" formControlName="designation" (change)="selectedCorrectionDesignation($event.target.value)" [ngClass]="{ 'is-invalid':  submitted && g.designation.errors }">
+                            <option value="" disabled selected style="color:orange">Select Designation</option>
+                            <option *ngFor="let sc of correctionDesignationList" [value]="sc">
+                                {{sc}}
+                            </option>
+                        </select>
+
+                        <div *ngIf=" submitted && g.designation.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && g.designation.errors.required">
+                                {{jsaConst.seekFormErrors.designation}}
+                            </div>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <label>Select Person <span class="aseticcolor">*</span></label>
+
+                        <select class="custom-select-sm" class="form-control" formControlName="person" [ngClass]="{ 'is-invalid':  submitted && g.person.errors }">
+                            <option value="" disabled selected style="color:orange">Select Person</option>
+                            <option *ngFor="let person of correctionPersonList" [value]="person.userId">
+                                {{person.firstName}}
+                            </option>
+                        </select>
+                        <div *ngIf=" submitted && g.person.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && g.person.errors.required">
+                                {{jsaConst.seekFormErrors.person}}
+                            </div>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <label>Comments <span class="aseticcolor">*</span></label>
+                        <textarea class="form-control" rows="5" cols="20" placeholder="Write Comment" formControlName="comment" [ngClass]="{ 'is-invalid':  submitted && g.comment.errors }"></textarea>
+                        <div *ngIf=" submitted && g.comment.errors" class="invalid-feedback">
+                            <div *ngIf=" submitted && g.comment.errors.required">
+                                {{jsaConst.seekFormErrors.comments}}
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" style="width: 170px;" class="globalBtn acceptBtn" [disabled]="!returnCorrection.valid" (click)="sendCorrection()">Send For Correction</button>
+                <button type="button" class="globalBtn clearBtn" #dismissModal (click)="reset()">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Ask Correction Modal Ends -->
+
+<!-- Upload Signed PDF -->
+<div class="modal" id="uploadfile">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title headingValue">Upload Digitally Signed Letter</h4>
+                <button type="button" class="close" data-dismiss="modal" style="cursor: pointer;" (click)=" reset()">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form [formGroup]="approveSignForm">
+                    <div class="row">
+                        <label>Upload <span class="aseticcolor">*</span></label>
+                        <input type="file" name="" class="form-control" (change)="SelectFile($event)" formControlName="file">
+                    </div>
+
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <!-- <div class="modal-footer">
+                <button type="button" class="globalBtn acceptBtn" style="width:170px" [disabled]="!seekApprovalForm.valid" (click)="seekApproval()">Send For Approval</button>
+
+            </div> -->
+
+
+            <div class="modal-footer">
+                <button type="button" class="globalBtn acceptBtn" [disabled]="!approveSignForm.valid" (click)="getuploadSignedPdf()" data-dismiss="modal">Upload</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Upload Signed Pdf -->
+<!-- sendMailDispatch -->
+<div id="confirmdispatch" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title headingValue">Send for Dispatch</h5>
+                <button type="button" class="close" #dismissModal data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure want to send for dispatch?</p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="globalBtn submitBtn" data-dismiss="modal" (click)="sendMailDispatch()">Yes</button>
+                <button type="button" class="globalBtn clearBtn" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--sendMailDispatch  -->

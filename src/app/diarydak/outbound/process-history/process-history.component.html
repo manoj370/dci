@@ -1,0 +1,63 @@
+<!-- Assistant Secretary -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card" >
+            <div class="row" >
+                <div class="col-md-9" >
+                    <h5 class="headingValue">Chronological History</h5>
+                    <!-- <span class="badge badge-pill badge-success" *ngFor="let item of history"
+                        style="font-size: 60%;">{{item.dakStatus.statusName}}</span> -->
+                </div>
+                <div class="col-md-2 text-right">
+                    <button type="button" class="globalBtn submitBtn" (click)="back()">Back</button>
+            </div>
+            </div>
+            <hr>
+            <!-- <div class="row">
+                <div class="col-md-6">
+                    <div class="heading">
+                        Reference Number/File Number
+                    </div>
+                    <div class="subheadingValue">
+                       {{this.fileno}}
+                    </div>
+                </div>
+               
+            </div> -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="theadRow thead-light">
+                                <tr>
+                                    <th>Forwarded By</th>
+                                    <th>To</th>
+                                    <th>Comments</th>
+                                    <th>Create Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr  *ngFor="let item of history">
+                                    <td>
+                                        {{item.senderActor !== null ? (item.senderActor):'-'}}
+                                    </td>
+                                    <td>
+                                        {{item.receiverActor !== null ? (item.receiverActor):'-'}}
+                                    </td>
+                                    <td> {{item.comments !== null ? item.comments:'-'}}</td>
+                                    <td> {{item.createdDate !== null ? item.createdDate:'-'}}</td>
+                                    <td>
+                                        <span class="badge badge-pill badge-success" style="color: white;">
+                                            {{item.dakStatus !==null ? item.dakStatus.statusName :'-'}}
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,234 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-5">
+                    <h5 class="headingValue">Maintain Date & Venue of Next EC Meetings </h5>
+                </div>
+                <div class="col-md-7 text-right">
+                    <button class="globalBtn acceptBtn" style="width:12rem" (click)="openModalData('new')">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Date & Venue</button>
+                    <button class="globalBtn acceptBtn" data-toggle="modal" data-target="#venueModel" (click)="stateList()">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i> Add venue</button>
+                </div>
+            </div>
+            <hr>
+            <div class="row" style="width: -webkit-fill-available;">
+                <div class="col-md-12" style="padding-top: 20px;">
+                    <div class="table-responsive-sm">
+                        <table id="userTable" class="table table-bordered table-hover" *ngIf="meetingHistoryData">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th *ngFor="let header of meetingVenueHeaders">{{header}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let history of meetingHistoryData">
+                                    <td>
+                                        {{history.meetingDate !== null ?(history.meetingDate ) : '-'}}
+                                    </td>
+                                    <td>{{history.meetingVenue.meetingVenueName}}--{{history.meetingVenue.address.line1}}, {{history.meetingVenue.address.line2}}, {{history.meetingVenue.address.city}}, {{history.meetingVenue.address.state}}, {{history.meetingVenue.address.country}},
+                                        {{history.meetingVenue.address.zipCode}}
+                                    </td>
+
+                                    <!-- <td>{{history.finalizedDate !== null ?(history.finalizedDate | date:'dd/MM/yyyy') : '-'}}
+                                    </td> -->
+                                    <!-- <td>{{history.finalizedSupplementaryDate !== null ?(history.finalizedSupplementaryDate | date:'dd/MM/yyyy') : '-'}} -->
+                                    <td>
+                                        <span *ngIf="history.finalizedDate !== null || history.finalizedSupplementaryDate !== null; else loggedOut">
+                                            -
+                                        </span>
+
+                                        <ng-template #loggedOut>
+                                            <i class="fas fa-edit" style="color:#74AEB5" (click)="openModalData(history.meetingId)"></i>
+                                        </ng-template>
+
+                                    </td>
+                                    <!-- <span><i class="fa fa-print"></i></span></td> -->
+                                </tr>
+                                <tr *ngIf="meetingHistoryData.length === 0">
+                                    <td colspan="3" style="text-align: center;padding: 50px !important;">
+                                        No Data Available in Table
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 text-right" *ngIf="pageCount>1">
+                <ul class="pagination float-right">
+                    <li class="page-item hoverActive"><a class="page-link " [class.my-class]="rowId === 0" (click)="previ()"><i class="fas fa-chevron-left"> </i></a></li>
+                    <li class="page-item"><a class="page-link">{{rowId+1}}/{{pageCount}}</a></li>
+                    <li class="page-item hoverActive"><a class="page-link" [class.my-class]="rowId+1 === pageCount" (click)="next()"><i class="fas fa-chevron-right"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button type="button" style="display: none;" #openModal class="btn btn-primary" data-toggle="modal" data-target="#roleModel">
+    Open modal
+  </button>
+
+<div id="roleModel" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" #dismissModal (click)="clearValidations()">&times;</button>
+                <h4 class="modal-title pull-left text-left" style="position: absolute;">{{popupHeadersName}} </h4>
+
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="newMeetingForm">
+                    <div class="form-group row">
+                        <label class="control-label col-sm-4 text-right">Venue <span
+                                class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                            <select class="custom-select-sm" class="form-control" formControlName="venueId" [ngClass]="{ 'is-invalid':  submitted && f.venueId.errors }">
+                                <option value="" disabled selected style="color:orange">Select Venue</option>
+                                <option *ngFor="let venue of meetingVenueList" [value]="venue.meetingVenueId">
+                                    {{venue.meetingVenueName}}
+                                    <span *ngIf="venue.address !==null">
+                                        -- {{venue.address.line1}},{{venue.address.line2}}
+                                        ,{{venue.address.city}},{{venue.address.state}},{{venue.address.country}},{{venue.address.zipCode}}
+                                    </span>
+                                </option>
+                            </select>
+                            <div *ngIf=" submitted && f.venueId.errors" class="invalid-feedback">
+                                <div *ngIf=" submitted && f.venueId.errors.required">
+                                    {{errorMsgs.venueName}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-4  text-right">Date <span class="text-danger">
+                                *</span></label>
+                        <div class="col-sm-8">
+                            <input type="date" [min]="today" class="form-control" formControlName="meetingDate" [ngClass]="{ 'is-invalid':  submitted && f.meetingDate.errors }">
+                            <div *ngIf=" submitted && f.meetingDate.errors" class="invalid-feedback">
+                                <div *ngIf=" submitted && f.meetingDate.errors.required">
+                                    {{errorMsgs.meetingDate}}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="globalBtn clearBtn" #dismissModal (click)="clearValidations()">Reset</button>
+                <button type="submit" class="globalBtn acceptBtn" [disabled]="!newMeetingForm.valid" (click)="addNewMeeting(buttonName)">{{buttonName}}</button> &nbsp;
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="venueModel" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" #venueDismissModal (click)="clearValidations()">&times;</button>
+                <h4 class="modal-title pull-left text-left" style="position: absolute;">Add Venue </h4>
+
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="addNewVenue">
+                    <div class="form-group row">
+                        <label class="control-label col-sm-4  text-right">Venue Name <span class="text-danger">
+                                *</span></label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" formControlName="venueName" [ngClass]="{ 'is-invalid':  submitted && g.venueName.errors }">
+                            <div *ngIf="submitted && g.venueName.errors" class="invalid-feedback">
+                                <div *ngIf=" submitted && g.venueName.errors.required">
+                                    {{errorMsgs.venueName}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-4  text-right">Address Line 1 <span class="text-danger">
+                                *</span></label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" formControlName="AddressLine1" [ngClass]="{ 'is-invalid':  submitted && g.AddressLine1.errors }">
+                            <div *ngIf="submitted && g.AddressLine1.errors" class="invalid-feedback">
+                                <div *ngIf=" submitted && g.AddressLine1.errors.required">
+                                    {{errorMsgs.line1}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-4  text-right">Address Line 2 <span class="text-danger">
+                                *</span></label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" formControlName="AddressLine2" [ngClass]="{ 'is-invalid':  submitted && g.AddressLine2.errors }">
+                            <div *ngIf="submitted && g.AddressLine2.errors" class="invalid-feedback">
+                                <div *ngIf=" submitted && g.AddressLine2.errors.required">
+                                    {{errorMsgs.line2}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="control-label col-sm-4  text-right">State <span
+                                class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                            <select class="custom-select-sm" class="form-control" formControlName="state" (change)="cityState($event.target.value)" [ngClass]="{ 'is-invalid':  submitted && g.state.errors }">
+                                <option value="" disabled selected style="color:orange">Select State *</option>
+                                <option *ngFor="let ct of statesList" [value]="ct.stateId">
+                                    {{ct.stateName}}
+                                </option>
+                            </select>
+                            <div *ngIf=" submitted && g.state.errors" class="invalid-feedback">
+                                <div *ngIf=" submitted && g.state.errors.required">
+                                    {{errorMsgs.state}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-4  text-right">City <span
+                                class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                            <select class="custom-select-sm" class="form-control" formControlName="city" [ngClass]="{ 'is-invalid':  submitted && g.city.errors }">
+                                <option value="" disabled selected style="color:orange">Select City</option>
+                                <option *ngFor="let ct of cityList" [value]="ct.cityId">
+                                    {{ct.cityName}}
+                                </option>
+                            </select>
+                            <div *ngIf=" submitted && g.city.errors" class="invalid-feedback">
+                                <div *ngIf=" submitted && g.city.errors.required">
+                                    {{errorMsgs.city}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-4  text-right">ZipCode <span class="text-danger">
+                                *</span></label>
+                        <div class="col-sm-8">
+                            <input type="number" placeholder="6 digits [0-9] Zip Code" class="form-control" formControlName="zipCode" [ngClass]="{ 'is-invalid':  submitted && g.zipCode.errors }">
+                            <div *ngIf="submitted && g.zipCode.errors" class="invalid-feedback">
+                                <div *ngIf=" submitted && g.zipCode.errors.required">
+                                    {{errorMsgs.zipCode}}
+                                </div>
+                                <div *ngIf="submitted && g.zipCode.errors.pattern">
+                                    {{errorMsgs.zipCodeLength}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="globalBtn clearBtn" #venueDismissModal (click)="clearValidations()">Reset</button>
+                <button type="submit" class="globalBtn acceptBtn" (click)="addNewVenueDetails()">Submit</button> &nbsp;
+            </div>
+        </div>
+    </div>
+</div>

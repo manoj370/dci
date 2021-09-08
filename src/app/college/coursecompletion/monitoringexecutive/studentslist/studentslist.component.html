@@ -1,0 +1,101 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <form [formGroup]="searchForm">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>State:</label>
+                        <select class="form-control" (change)="colleges($event.target.value)" [(ngModel)]="stateName" formControlName="state">
+                        <option value="" disabled selected style="color:orange">Select State *</option>
+                        <option *ngFor="let sec of stateList" [value]="sec.stateName">
+                            {{sec.stateName}}
+                        </option>
+                    </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label>College:</label>
+                        <select class="form-control" [(ngModel)]="collegeName" formControlName="college">
+                        <option value="" disabled selected style="color:orange">Select College</option>
+                        <option *ngFor="let sec of collegesList" [value]="sec.collegeName">
+                            {{sec.collegeName}}
+                        </option>
+                    </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Pursuing Year:</label>
+                        <select class="form-control" [(ngModel)]="pursuingYear" formControlName="academicPursingYear">
+                        <option value="" disabled selected style="color:orange">Select Pursuing Year </option>
+                        <option *ngFor="let sec of monConst.academicYear" [value]="sec">
+                            {{sec}}
+                        </option>
+                    </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Course:</label>
+                        <select class="form-control" (change)="specializations($event.target.value)" [(ngModel)]="course" formControlName="academicCourse">
+                        <option value="" disabled selected style="color:orange">Select Course </option>
+                        <option *ngFor="let sec of courseList" [value]="sec.courseId">
+                            {{sec.courseName}}
+                        </option>
+                    </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Specialization:</label>
+                        <select class="form-control" [(ngModel)]="specializationName" formControlName="academicSpe">
+                        <option value="" disabled selected style="color:orange">Select Specialization </option>
+                        <option *ngFor="let sec of specializationData" [value]="sec.specialisationId">
+                            {{sec.name}}
+                        </option>
+                    </select>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button type="button" class="globalBtn submitBtn" (click)="searchData()">Search</button>
+                        <button type="button" class="globalBtn clearBtn" (click)="reset()">Reset</button>
+                    </div>
+                </div>
+            </form>
+            <hr>
+            <div class="row" style="padding-top: 10px;padding-bottom: 50px;">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th *ngFor="let item of monConst.dashboardTable">{{item}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of listOfColleges" [routerLink]="['../viewCollegeList', 
+                                item.entityMasterId,item.collegeName,item.pursuingYear,item.enrolledAcademicYear,item.courseName,item.specializationName]">
+
+                                    <td>{{item.collegeName}}</td>
+                                    <td>{{item.stateName !== null ?(item.stateName) : '-'}}</td>
+                                    <td>{{item.pursuingYear}}</td>
+                                    <td>{{item.courseName}}</td>
+                                    <td>{{item.specializationName}}</td>
+                                    <td>{{item.currentlyApprovedCapacity}}</td>
+                                    <td>{{item.enrolledAcademicYear}}</td>
+                                    <td>{{item.studentCount}} </td>
+                                </tr>
+                                <tr *ngIf="listOfColleges.length === 0">
+                                    <td colspan="8" style="text-align: center;padding: 50px !important;">No Data Available in Table</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-12 text-right" *ngIf="pageCount>1">
+                    <ul class="pagination float-right">
+                        <li class="page-item hoverActive"><a class="page-link " [class.my-class]="rowId === 0" (click)="previ()"><i class="fas fa-chevron-left"> </i></a></li>
+                        <li class="page-item"><a class="page-link">{{rowId+1}}/{{pageCount}}</a></li>
+                        <li class="page-item hoverActive"><a class="page-link" [class.my-class]="rowId+1 === pageCount" (click)="next()"><i class="fas fa-chevron-right"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
